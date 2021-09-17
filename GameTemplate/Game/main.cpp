@@ -17,6 +17,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
+	NewGO<Render::Lighting>(0,Render::LIGHTING_NAME);
+	NewGO<MainGame::Game>(0);
 	
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
