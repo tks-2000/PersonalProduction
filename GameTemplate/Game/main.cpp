@@ -17,7 +17,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
-	NewGO<Render::Lighting>(0,Render::LIGHTING_NAME);
+	NewGO<Render::RenderingEngine>(0);
 	NewGO<MainGame::Game>(0);
 	
 	//////////////////////////////////////

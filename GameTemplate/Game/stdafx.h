@@ -3,6 +3,7 @@
 
 #include "MiniEngine.h"
 #include "ExEngine.h"
+#include "RenderingEngine.h"
 #include "Lighting.h"
 #include "SkinModelRender.h"
 #include "Game.h"
@@ -10,6 +11,7 @@
 /// @brief 他の場所でも必要になるレンダリングエンジンの定数
 namespace Render {
 
+	static const char* RENDERING_ENGINE_NAME = "RenderingEngine";
 	static const char* LIGHTING_NAME = "Lighting";
 	
 	/// @brief 無色

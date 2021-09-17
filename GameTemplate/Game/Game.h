@@ -13,8 +13,8 @@ namespace MainGame {
 		void Update();
 
 	private:
-		SkinModelRender* m_unityChanModel = nullptr;
-		SkinModelRender* m_backGroundModel = nullptr;
+		Render::SkinModelRender* m_unityChanModel = nullptr;
+		Render::SkinModelRender* m_backGroundModel = nullptr;
 		Render::Lighting* m_lig = nullptr;
 	};
 

@@ -11,19 +11,16 @@ namespace MainGame {
 	Game::~Game()
 	{
 		DeleteGO(m_unityChanModel);
+		DeleteGO(m_backGroundModel);
 	}
 
 	bool Game::Start()
 	{
-		m_unityChanModel = NewGO<SkinModelRender>(0);
+		m_unityChanModel = NewGO<Render::SkinModelRender>(0);
 		m_unityChanModel->Init("Assets/modelData/unityChan.tkm");
-		m_backGroundModel = NewGO<SkinModelRender>(0);
+		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/bg.tkm");
-		m_lig->SetHemiSphereLifhtGroundColor({ 0.5f,0.0f,0.0f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.5f });
-		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
-		m_lig->SetPointLightRange(0, 300.0f);
-		m_lig->SetSpotLightColor(0,{ -1.0f,-1.0f,-1.0f });
+		
 		return true;
 	}
 
