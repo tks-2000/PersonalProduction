@@ -71,6 +71,7 @@ void Model::ChangeAlbedoMap(const char* materialName, Texture& albedoMap)
 	m_meshParts.CreateDescriptorHeaps();
 	
 }
+
 void Model::Draw(RenderContext& rc)
 {
 	m_meshParts.Draw(
@@ -78,5 +79,20 @@ void Model::Draw(RenderContext& rc)
 		m_world, 
 		g_camera3D->GetViewMatrix(), 
 		g_camera3D->GetProjectionMatrix()
+	);
+}
+
+void Model::Draw(RenderContext& rc, Camera& camera)
+{
+	Draw(rc, camera.GetViewMatrix(), camera.GetProjectionMatrix());
+}
+
+void Model::Draw(RenderContext& rc, const Matrix& viewMatrix, const Matrix& projMatrix)
+{
+	m_meshParts.Draw(
+		rc,
+		m_world,
+		viewMatrix,
+		projMatrix
 	);
 }

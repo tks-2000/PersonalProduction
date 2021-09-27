@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "system/system.h"
+#include "../../MiniEngine/RenderTarget.h"
 
+void InitRootSignature(RootSignature& rs);
 
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
@@ -13,12 +15,27 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//////////////////////////////////////
 	// ここから初期化を行うコードを記述する。
 	//////////////////////////////////////
+	/*RootSignature rs;
+	InitRootSignature(rs);*/
 
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
 	NewGO<Render::RenderingEngine>(0);
 	NewGO<MainGame::Game>(0);
+
+	/*float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
+	RenderTarget shadow;
+
+	shadow.Create(
+		1024,
+		1024,
+		1,
+		1,
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		DXGI_FORMAT_D32_FLOAT,
+		clearColor
+	)*/;
 	
 	//////////////////////////////////////
 	// 初期化を行うコードを書くのはここまで！！！
@@ -49,3 +66,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	return 0;
 }
 
+// ルートシグネチャの初期化
+void InitRootSignature(RootSignature& rs)
+{
+	rs.Init(D3D12_FILTER_MIN_MAG_MIP_LINEAR,
+		D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+		D3D12_TEXTURE_ADDRESS_MODE_WRAP,
+		D3D12_TEXTURE_ADDRESS_MODE_WRAP);
+}

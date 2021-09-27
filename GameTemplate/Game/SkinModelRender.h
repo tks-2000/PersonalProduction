@@ -2,6 +2,7 @@
 #include "Lighting.h"
 class AnimationClip;
 class Lighting;
+class Shadow;
 
 namespace Render {
 	/// @brief 3Dモデルの表示を行うクラス
@@ -15,10 +16,11 @@ namespace Render {
 		void Update();
 		void Render(RenderContext& rc);
 
-		Model& GetModel() { return m_model; }
+		/// @brief モデルの状態を入手
+		/// @return モデルのconst参照
+		const Model& GetModel() const { return m_model; }
 
-
-
+		
 
 		/// @brief モデルの座標を設定
 		/// @param pos 座標
@@ -39,15 +41,16 @@ namespace Render {
 		/// @return 座標
 		Vector3 GetPosition() { return m_position; }
 
-
-		/// @brief モデルの初期化
-		/// @param modelFilePath モデルのファイルパス
-		/// @param lig ライティング構造体のアドレス
-		void Init(const char* modelFilePath, Render::Light* lig);
-
 		/// @brief モデルの初期化
 		/// @param modelFilePath モデルのファイルパス
 		void Init(const char* modelFilePath);
+
+		/// @brief モデルのシェーダーファイルパスを変更
+		/// @param fxFilePath シェーダーファイルパス
+		void ChangeFxFilePath(const char* fxFilePath) { m_modelInitData.m_fxFilePath = fxFilePath; m_model.Init(m_modelInitData); }
+
+		/// @brief 影を生成する
+		void CreateShadow();
 
 		void InitA(const char* modelFilePath, const char* skeletonPath, EnModelUpAxis enAxis, AnimationClip* animation, int animationNum, bool cullMode);
 
@@ -58,9 +61,23 @@ namespace Render {
 		Matrix GetModelWorldMatrix() { return m_model.GetWorldMatrix(); }
 
 	private:
-		Model m_model;								//モデル
-		ModelInitData m_modelInitData;				//モデルの初期化情報
-		Lighting* m_lig = nullptr;					//ライティング
+		/// @brief モデルのファイルパス
+		const char* m_modelFilePath = nullptr;
+		/// @brief モデル
+		Model m_model;
+		/// @brief モデルの初期化情報
+		ModelInitData m_modelInitData;
+		/// @brief 影を生成するかどうかのフラグ
+		bool m_shadowFlag = false;
+		/// @brief 影描写用のモデル
+		Model m_shadowModel;
+		/// @brief 影描写用のモデル初期化情報
+		ModelInitData m_shadowModelInitData;
+		/// @brief ライティング
+		Lighting* m_lig = nullptr;
+		/// @brief シャドウ
+		Shadow* m_shadow = nullptr;
+
 		Vector3 m_position = Vector3::Zero;			//座標
 		Vector3 m_scale = Vector3::One;				//拡大率
 		Quaternion m_qRot = Quaternion::Identity;	//回転

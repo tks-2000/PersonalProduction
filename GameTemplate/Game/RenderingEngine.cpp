@@ -5,11 +5,13 @@ namespace Render {
 	RenderingEngine::RenderingEngine()
 	{
 		m_lig = NewGO<Lighting>(0, LIGHTING_NAME);
+		m_shadow = NewGO<Shadow>(0, SHADOW_NAME);
 	}
 
 	RenderingEngine::~RenderingEngine()
 	{
 		DeleteGO(m_lig);
+		DeleteGO(m_shadow);
 	}
 
 	bool RenderingEngine::Start()

@@ -6,6 +6,9 @@ namespace Render {
 	SkinModelRender::SkinModelRender()
 	{
 		m_lig = FindGO<Lighting>(LIGHTING_NAME);
+		m_shadow = FindGO<Shadow>(SHADOW_NAME);
+		m_shadowFlag = false;
+		m_modelFilePath = nullptr;
 	}
 
 	SkinModelRender::~SkinModelRender()
@@ -19,20 +22,9 @@ namespace Render {
 		return true;
 	}
 
-	void SkinModelRender::Init(const char* modelFilePath, Light* lig)
-	{
-		m_modelInitData.m_tkmFilePath = modelFilePath;
-		m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
-
-		m_modelInitData.m_expandConstantBuffer = lig;
-		m_modelInitData.m_expandConstantBufferSize = sizeof(*lig);
-
-		//‰Šú‰»î•ñ‚Åƒ‚ƒfƒ‹‚ð‰Šú‰»‚·‚é
-		m_model.Init(m_modelInitData);
-	}
-
 	void SkinModelRender::Init(const char* modelFilePath)
 	{
+		m_modelFilePath = modelFilePath;
 		m_modelInitData.m_tkmFilePath = modelFilePath;
 		m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
 
@@ -41,6 +33,14 @@ namespace Render {
 
 		//‰Šú‰»î•ñ‚Åƒ‚ƒfƒ‹‚ð‰Šú‰»‚·‚é
 		m_model.Init(m_modelInitData);
+	}
+
+	void SkinModelRender::CreateShadow()
+	{
+		m_shadowModelInitData.m_tkmFilePath = m_modelFilePath;
+		m_shadowModelInitData.m_fxFilePath = "Assets/shader/shadowMap.fx";
+		m_shadowModel.Init(m_shadowModelInitData);
+		m_shadow->SetShadowModel(&m_shadowModel);
 	}
 
 	void SkinModelRender::InitA(const char* modelFilePath, const char* skeletonPath, EnModelUpAxis enAxsis, AnimationClip* animationClip, int animationNum, bool cullMode)
@@ -88,6 +88,15 @@ namespace Render {
 
 	void SkinModelRender::Render(RenderContext& rd)
 	{
+		if (m_shadowFlag == true) {
+			RenderTarget shadowMap = m_shadow->GetShadowMap();
+			rd.WaitUntilToPossibleSetRenderTarget(shadowMap);
+			rd.SetRenderTargetAndViewport(shadowMap);
+			rd.ClearRenderTargetView(shadowMap);
+			m_shadowModel.Draw(rd);
+
+			rd.WaitUntilFinishDrawingToRenderTarget(shadowMap);
+		}
 		m_model.Draw(rd);
 	}
 }
