@@ -62,6 +62,7 @@ namespace Render {
 		Vector3 eyePos = Vector3::Zero;			//視点の位置
 		float pad0 = 0.0f;						//パディング
 		Vector3 ambientlight = Vector3::Zero;	//環境光
+		float pad1 = 0.0f;
 	};
 
 	/// @brief ライティングを行うクラス

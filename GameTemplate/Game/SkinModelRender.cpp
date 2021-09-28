@@ -28,8 +28,13 @@ namespace Render {
 		m_modelInitData.m_tkmFilePath = modelFilePath;
 		m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
 
-		m_modelInitData.m_expandConstantBuffer = m_lig->GetLightAddress();
-		m_modelInitData.m_expandConstantBufferSize = sizeof(m_lig->GetLight());
+		m_modelInitData.m_expandConstantBuffer[0] = m_lig->GetLightAddress();
+		m_modelInitData.m_expandConstantBufferSize[0] = sizeof(m_lig->GetLight());
+
+		m_modelInitData.m_expandShaderResoruceView[0] = &m_shadow->GetShadowMapTexture();
+
+		m_modelInitData.m_expandConstantBuffer[1] = (void*)&m_shadow->GetLightCameraMatrix();
+		m_modelInitData.m_expandConstantBufferSize[1] = sizeof(m_shadow->GetLightCameraMatrix());
 
 		//‰Šú‰»î•ñ‚Åƒ‚ƒfƒ‹‚ð‰Šú‰»‚·‚é
 		m_model.Init(m_modelInitData);
@@ -41,6 +46,7 @@ namespace Render {
 		m_shadowModelInitData.m_fxFilePath = "Assets/shader/shadowMap.fx";
 		m_shadowModel.Init(m_shadowModelInitData);
 		m_shadow->SetShadowModel(&m_shadowModel);
+		m_shadowFlag = true;
 	}
 
 	void SkinModelRender::InitA(const char* modelFilePath, const char* skeletonPath, EnModelUpAxis enAxsis, AnimationClip* animationClip, int animationNum, bool cullMode)
@@ -57,8 +63,8 @@ namespace Render {
 
 		m_modelInitData.m_modelUpAxis = enAxsis;
 
-		m_modelInitData.m_expandConstantBuffer = m_lig->GetLightAddress();
-		m_modelInitData.m_expandConstantBufferSize = sizeof(m_lig->GetLight());
+		m_modelInitData.m_expandConstantBuffer[0] = m_lig->GetLightAddress();
+		m_modelInitData.m_expandConstantBufferSize[0] = sizeof(m_lig->GetLight());
 
 		m_animationClip = animationClip;
 
@@ -82,21 +88,17 @@ namespace Render {
 
 		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 
+		if (m_shadowFlag == true) {
+			m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+		}
+
 		m_skeleton.Update(m_model.GetWorldMatrix());
 
 	}
 
 	void SkinModelRender::Render(RenderContext& rd)
 	{
-		if (m_shadowFlag == true) {
-			RenderTarget shadowMap = m_shadow->GetShadowMap();
-			rd.WaitUntilToPossibleSetRenderTarget(shadowMap);
-			rd.SetRenderTargetAndViewport(shadowMap);
-			rd.ClearRenderTargetView(shadowMap);
-			m_shadowModel.Draw(rd);
-
-			rd.WaitUntilFinishDrawingToRenderTarget(shadowMap);
-		}
+		
 		m_model.Draw(rd);
 	}
 }

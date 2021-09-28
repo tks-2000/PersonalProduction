@@ -27,6 +27,9 @@ namespace MainGame {
 
 	void Game::Update()
 	{
+		m_pos.x -= g_pad[0]->GetLStickXF();
+		m_pos.z -= g_pad[0]->GetLStickYF();
 
+		m_unityChanModel->SetPosition(m_pos);
 	}
 }

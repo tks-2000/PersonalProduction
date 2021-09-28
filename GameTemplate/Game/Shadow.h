@@ -1,5 +1,6 @@
 #pragma once
 #include "../../MiniEngine/RenderTarget.h"
+#include "../../MiniEngine/Camera.h"
 
 namespace Render {
 	const int MAX_SHADOW_MODEL_NUM = 100;
@@ -15,9 +16,13 @@ namespace Render {
 		/// @return シャドウマップのconst参照
 		const RenderTarget& GetShadowMap() const { return m_shadowMap; }
 
+		Texture& GetShadowMapTexture() { return m_shadowMap.GetRenderTargetTexture(); }
+
 		/// @brief ライトカメラを取得
 		/// @return ライトカメラのconst参照
 		const Camera& GetLightCamera() const { return m_lightCamera; }
+
+		const Matrix& GetLightCameraMatrix() { return m_lightCamera.GetViewProjectionMatrix(); }
 
 		/// @brief ライトカメラの座標を設定
 		/// @param pos ライトカメラに設定する座標のconst参照
@@ -42,7 +47,7 @@ namespace Render {
 		/// @brief ライトカメラの注視点
 		Vector3 m_ligCameraTarget = g_vec3Zero;
 		/// @brief ライトカメラの上方向
-		Vector3 m_ligCameraUp = { 1.0f,0.0f,0.0f };
+		Vector3 m_ligCameraUp = { -1.0f,0.0f,0.0f };
 		/// @brief ライトカメラの画角
 		float m_ligCameraViewAngle = 20.0f;
 		/// @brief シャドウマップに書き込むモデルの合計数

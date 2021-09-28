@@ -28,6 +28,7 @@ struct SPSIn{
 	float2 uv 			: TEXCOORD0;	//uv座標。
 	float3 worldPos 	: TEXCOORD1;
 	float3 normalInView : TEXCOORD2;	//カメラ空間の法線
+	float4 posInLVP		: TEXCOORD3;	//ライトビュースクリーン空間でのピクセルの座標
 };
 
 //ディレクションライト
@@ -84,6 +85,11 @@ cbuffer LightCb : register(b1)
 	float3 ambientLight;				//環境光
 };
 
+cbuffer shadowCb : register(b2)
+{
+	float4x4 mLVP;
+}
+
 ////////////////////////////////////////////////
 //関数宣言
 ////////////////////////////////////////////////
@@ -91,11 +97,13 @@ float3 CalculateLambertDiffuse(float3 lightDirection, float3 lightColor, float3 
 float3 CalculatePhoneSpecular(float3 lightDirection, float3 lightColor, float3 worldPos, float3 normal);
 float CalculateImpactRate(float3 ligPos, float ligRange, float3 worldPos);
 float3 CalculateRimlight(float3 lightDirection, float3 lightColor, float3 normal, float normalInViewZ);
+float3 CalculateShadow(float4 psLvp);
 
 ////////////////////////////////////////////////
 // グローバル変数。
 ////////////////////////////////////////////////
 Texture2D<float4> g_albedo : register(t0);				//アルベドマップ
+Texture2D<float4> g_shadowMap : register(t10);
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
 
@@ -135,6 +143,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 		m = mWorld;
 	}
 	psIn.pos = mul(m, vsIn.pos);
+	float4 worldPos = mul(m,vsIn.pos);
 	psIn.worldPos = psIn.pos;
 	psIn.pos = mul(mView, psIn.pos);
 	psIn.pos = mul(mProj, psIn.pos);
@@ -143,6 +152,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.uv = vsIn.uv;
 
 	psIn.normalInView = mul(mView,psIn.normal);	//カメラ空間の法線を求める
+	psIn.posInLVP = mul(mLVP,worldPos);
 
 	return psIn;
 }
@@ -316,6 +326,23 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 	//テクスチャカラーに求めた光を乗算して最終出力カラーを求める。
 	albedoColor.xyz *= lig;
 
+    // 【注目】ライトビュースクリーン空間からUV座標空間に変換している
+    float2 shadowMapUV = psIn.posInLVP.xy / psIn.posInLVP.w;
+    shadowMapUV *= float2(0.5f, -0.5f);
+    shadowMapUV += 0.5f;
+
+    //UV座標を使ってシャドウマップから影情報をサンプリング
+    float3 shadowMap = 1.0f;
+    if(shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+        && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
+    {
+        shadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
+    }
+
+    // テクスチャカラーにシャドウマップからサンプリングした情報を掛け算する
+    // 影が描き込まれていたら0.5になるので、色味が落ちて影っぽくなる
+    albedoColor.xyz *= shadowMap;
+
 	return albedoColor;
 }
 
@@ -393,4 +420,20 @@ float3 CalculateRimlight(float3 lightDirection, float3 lightColor, float3 normal
 	float3 limColor = limPower * lightColor;
 
 	return limColor;
+}
+
+float3 CalculateShadow(float4 psLvp)
+{
+	float2 shadowMapUV = psLvp.xy / psLvp.w;
+	shadowMapUV *= float2(0.5f,-0.5f);
+	shadowMapUV += 0.5f;
+
+	float3 shadowMap = 1.0f;
+	if(shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+	&& shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
+	{
+		shadowMap = g_shadowMap.Sample(g_sampler,shadowMapUV);
+	}
+
+	return shadowMap;
 }

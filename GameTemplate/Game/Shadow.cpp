@@ -29,44 +29,44 @@ namespace Render {
 
 	void Shadow::Update()
 	{
-		m_ligCameraPos.y = 500.0f;
+		m_ligCameraPos = { 0.0f,300.0f,0.0f };
 		LightCameraUpdate();
 
-		if (m_shadowModel.size() > 0) {
-			//レンダリングコンテキストを取得
-			auto& renderContext = g_graphicsEngine->GetRenderContext();
 
-			//レンダリングターゲットとして使用できるようになるまで待つ
-			renderContext.WaitUntilToPossibleSetRenderTarget(m_shadowMap);
-			renderContext.SetRenderTargetAndViewport(m_shadowMap);
-			//レンダリングターゲットをクリア
-			renderContext.ClearRenderTargetView(m_shadowMap);
+		//レンダリングコンテキストを取得
+		auto& renderContext = g_graphicsEngine->GetRenderContext();
 
-			//影を生成するモデルの数だけ影のモデルをドローする
-			for (int count = 0; count < m_shadowModel.size(); count++) {
-				std::vector<Model*>::iterator it;
-				it = std::find(
-					m_shadowModel.begin(),
-					m_shadowModel.end(),
-					nullptr
-				);
-				if (it != m_shadowModel.end()) {
-					m_shadowModel.erase(it);
-					continue;
-				}
-				m_shadowModel[count]->Draw(renderContext,m_lightCamera);
-			}
+		//レンダリングターゲットとして使用できるようになるまで待つ
+		renderContext.WaitUntilToPossibleSetRenderTarget(m_shadowMap);
+		renderContext.SetRenderTargetAndViewport(m_shadowMap);
+		//レンダリングターゲットをクリア
+		renderContext.ClearRenderTargetView(m_shadowMap);
 
-			//レンダリングターゲットへ書き込み終了
-			renderContext.WaitUntilFinishDrawingToRenderTarget(m_shadowMap);
-
-			// レンダリングターゲットをフレームバッファに戻す
-			renderContext.SetRenderTarget(
-				g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
-				g_graphicsEngine->GetCurrentFrameBuffuerDSV()
+		//影を生成するモデルの数だけ影のモデルをドローする
+		for (int count = 0; count < m_shadowModel.size(); count++) {
+			std::vector<Model*>::iterator it;
+			it = std::find(
+				m_shadowModel.begin(),
+				m_shadowModel.end(),
+				nullptr
 			);
-			renderContext.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+			if (it != m_shadowModel.end()) {
+				m_shadowModel.erase(it);
+				continue;
+			}
+			m_shadowModel[count]->Draw(renderContext, m_lightCamera);
 		}
+		
+		//レンダリングターゲットへ書き込み終了
+		renderContext.WaitUntilFinishDrawingToRenderTarget(m_shadowMap);
+
+		// レンダリングターゲットをフレームバッファに戻す
+		renderContext.SetRenderTarget(
+			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
+			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
+		);
+		renderContext.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+
 	}
 
 	void Shadow::SetShadowModel(Model* shadowModel)
