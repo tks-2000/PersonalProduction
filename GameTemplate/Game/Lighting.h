@@ -137,7 +137,7 @@ namespace Render {
 		/// @brief スポットライトの座標を入手
 		/// @param num 入手するスポットライトの番号
 		/// @return スポットライトの座標
-		Vector3 GetSpotLightPos(int num) { return m_light.spotLight[num].position; }
+		const Vector3& GetSpotLightPos(int num) { return m_light.spotLight[num].position; }
 
 		/// @brief スポットライトの座標を設定
 		/// @param num 設定したいスポットライトの番号

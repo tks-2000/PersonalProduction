@@ -21,6 +21,7 @@ namespace Render {
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 300.0f);
 		m_lig->SetSpotLightColor(0, { 1.0f,1.0f,1.0f });
+		
 
 		return true;
 	}

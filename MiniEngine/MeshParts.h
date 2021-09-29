@@ -49,7 +49,8 @@ public:
 		const char* psEntryPointFunc,
 		void* const expandData[3],
 		const int expandDataSize[3],
-		const std::array<IShaderResource*, MAX_MODEL_EXPAND_SRV>& expandShaderResourceView
+		const std::array<IShaderResource*, MAX_MODEL_EXPAND_SRV>& expandShaderResourceView,
+		const std::array<DXGI_FORMAT, MAX_RENDERING_TARGET>& colorBufferFormat
 	);
 	/// <summary>
 	/// ï`âÊÅB
@@ -101,7 +102,8 @@ private:
 		const wchar_t* fxFilePath,
 		const char* vsEntryPointFunc,
 		const char* vsSkinEntryPointFunc,
-		const char* psEntryPointFunc );
+		const char* psEntryPointFunc ,
+		const std::array<DXGI_FORMAT, MAX_RENDERING_TARGET>& colorBufferFormat);
 
 	
 private:

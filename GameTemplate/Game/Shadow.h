@@ -35,6 +35,8 @@ namespace Render {
 		/// @brief 影を生成するモデルを作成
 		/// @param shadowModel 影を生成するモデル
 		void SetShadowModel(Model* shadowModel);
+
+		void Render(RenderContext& rc);
 	private:
 		/// @brief シャドウマップ
 		RenderTarget m_shadowMap;
@@ -47,7 +49,7 @@ namespace Render {
 		/// @brief ライトカメラの注視点
 		Vector3 m_ligCameraTarget = g_vec3Zero;
 		/// @brief ライトカメラの上方向
-		Vector3 m_ligCameraUp = { -1.0f,0.0f,0.0f };
+		Vector3 m_ligCameraUp = { 0.0f,1.0f,0.0f };
 		/// @brief ライトカメラの画角
 		float m_ligCameraViewAngle = 20.0f;
 		/// @brief シャドウマップに書き込むモデルの合計数

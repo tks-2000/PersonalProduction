@@ -19,8 +19,11 @@ namespace MainGame {
 		m_unityChanModel = NewGO<Render::SkinModelRender>(0);
 		m_unityChanModel->Init("Assets/modelData/unityChan.tkm");
 		m_unityChanModel->CreateShadow();
+		m_unityChanModel2 = NewGO<Render::SkinModelRender>(0);
+		m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
 		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/bg.tkm");
+		//m_backGroundModel->CreateShadow();
 		
 		return true;
 	}

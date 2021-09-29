@@ -44,6 +44,7 @@ namespace Render {
 	{
 		m_shadowModelInitData.m_tkmFilePath = m_modelFilePath;
 		m_shadowModelInitData.m_fxFilePath = "Assets/shader/shadowMap.fx";
+		m_shadowModelInitData.m_colorBufferFormat[0] = DXGI_FORMAT_R32_FLOAT;
 		m_shadowModel.Init(m_shadowModelInitData);
 		m_shadow->SetShadowModel(&m_shadowModel);
 		m_shadowFlag = true;
@@ -86,11 +87,13 @@ namespace Render {
 
 		m_animation.Progress(1.0f / 60.0f);
 
-		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
-
 		if (m_shadowFlag == true) {
 			m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 		}
+
+		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+
+		
 
 		m_skeleton.Update(m_model.GetWorldMatrix());
 

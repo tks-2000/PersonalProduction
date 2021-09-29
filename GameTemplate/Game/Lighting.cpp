@@ -63,7 +63,7 @@ namespace Render {
 	{
 		//ディレクションライトの方向
 		m_light.directionLight.direction.x = 0.0f;
-		m_light.directionLight.direction.y = 1.0f;
+		m_light.directionLight.direction.y = 0.0f;
 		m_light.directionLight.direction.z = -1.0f;
 		//正規化する
 		m_light.directionLight.direction.Normalize();

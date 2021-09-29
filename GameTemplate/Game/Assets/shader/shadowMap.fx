@@ -14,17 +14,25 @@ cbuffer ModelCb : register(b0)
 struct SVSIn
 {
     float4 pos : POSITION; // モデルの頂点座標
+    float3 normal : NORMAL;//法線
+    float2 uv : TEXCOORD0; //UV座標
 };
 
 // ピクセルシェーダーへの入力
 struct SPSIn
 {
     float4 pos : SV_POSITION; // スクリーン空間でのピクセルの座標
+    float3 normal : NORMAL;
+    float2 uv : TEXCOORD0;
 };
 
 ///////////////////////////////////////////////////
 // グローバル変数
 ///////////////////////////////////////////////////
+
+Texture2D<float4> g_albedo : register(t0); //アルベドマップ
+Texture2D<float4> g_shadowMap : register(t10); //シャドウマップ
+sampler g_sampler : register(s0);
 
 /// <summary>
 /// 頂点シェーダー
@@ -35,6 +43,8 @@ SPSIn VSMain(SVSIn vsIn)
     psIn.pos = mul(mWorld, vsIn.pos);
     psIn.pos = mul(mView, psIn.pos);
     psIn.pos = mul(mProj, psIn.pos);
+    psIn.uv = vsIn.uv;
+    psIn.normal = mul(mWorld,vsIn.normal);
     return psIn;
 }
 
@@ -44,5 +54,5 @@ SPSIn VSMain(SVSIn vsIn)
 float4 PSMain(SPSIn psIn) : SV_Target0
 {
     // step-5 シャドウマップ描画用のピクセルシェーダーを作成する
-    return float4(0.5f, 0.5f, 0.5f, 1.0f);
+    return float4(psIn.pos.z, psIn.pos.z, psIn.pos.z, 1.0f);
 }
