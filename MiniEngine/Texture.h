@@ -51,6 +51,26 @@ public:
 	{
 		return m_texture;
 	}
+	/// @brief テクスチャの幅を取得
+	/// @return テクスチャの横幅
+	int GetWidth() const
+	{
+		return static_cast<int>(m_textureDesc.Width);
+	}
+	/// @brief テクスチャの高さを取得
+	/// @return テクスチャの縦の高さ
+	int GetHeight() const
+	{
+		return static_cast<int>(m_textureDesc.Height);
+	}
+
+	/// @brief テクスチャのフォーマットを取得
+	/// @return テクスチャに設定されているフォーマット
+	DXGI_FORMAT GetFormat() const
+	{
+		return m_textureDesc.Format;
+	}
+
 private:
 	/// <summary>
 	/// DDSファイルからテクスチャをロード。

@@ -31,7 +31,6 @@ namespace Render {
 	{
 		m_ligCameraPos = { 0.0f,100.0f,500.0f };
 		m_ligCameraTarget = m_ligCameraPos;
-		m_ligCameraTarget.x -= 100.0f;
 		m_ligCameraTarget.z -= 500.0f;
 		LightCameraUpdate();
 
@@ -75,6 +74,31 @@ namespace Render {
 	void Shadow::Render(RenderContext& rc)
 	{
 		//レンダリングターゲットとして使用できるようになるまで待つ
+		//rc.WaitUntilToPossibleSetRenderTarget(m_shadowMap);
+		//rc.SetRenderTargetAndViewport(m_shadowMap);
+		////レンダリングターゲットをクリア
+		//rc.ClearRenderTargetView(m_shadowMap);
+
+		////影を生成するモデルの数だけ影のモデルをドローする
+		//for (int count = 0; count < m_shadowModel.size(); count++) {
+		//
+		//	m_shadowModel[count]->Draw(rc, m_lightCamera);
+		//}
+
+		////レンダリングターゲットへ書き込み終了
+		//rc.WaitUntilFinishDrawingToRenderTarget(m_shadowMap);
+
+		// レンダリングターゲットをフレームバッファに戻す
+	/*	rc.SetRenderTarget(
+			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
+			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
+		);
+		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());*/
+	}
+
+	void Shadow::CreateShadowMap(RenderContext& rc)
+	{
+		//レンダリングターゲットとして使用できるようになるまで待つ
 		rc.WaitUntilToPossibleSetRenderTarget(m_shadowMap);
 		rc.SetRenderTargetAndViewport(m_shadowMap);
 		//レンダリングターゲットをクリア
@@ -82,33 +106,30 @@ namespace Render {
 
 		//影を生成するモデルの数だけ影のモデルをドローする
 		for (int count = 0; count < m_shadowModel.size(); count++) {
-			std::vector<Model*>::iterator it;
-			it = std::find(
-				m_shadowModel.begin(),
-				m_shadowModel.end(),
-				nullptr
-			);
-			if (it != m_shadowModel.end()) {
-				m_shadowModel.erase(it);
-				continue;
-			}
+
 			m_shadowModel[count]->Draw(rc, m_lightCamera);
 		}
 
 		//レンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_shadowMap);
-
-		// レンダリングターゲットをフレームバッファに戻す
-		rc.SetRenderTarget(
-			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
-			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
-		);
-		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
 	}
 
 	void Shadow::SetShadowModel(Model* shadowModel)
 	{ 
 		m_shadowModel.push_back(shadowModel);
+	}
+
+	void Shadow::DeleteShadowModel(Model* shadowModel)
+	{
+		std::vector<Model*>::iterator it;
+		it = std::find(
+			m_shadowModel.begin(),
+			m_shadowModel.end(),
+			shadowModel
+		);
+		if (it != m_shadowModel.end()) {
+			m_shadowModel.erase(it);
+		}
 	}
 
 	void Shadow::LightCameraUpdate()

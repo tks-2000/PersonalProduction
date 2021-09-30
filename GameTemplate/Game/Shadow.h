@@ -5,6 +5,7 @@
 namespace Render {
 	const int MAX_SHADOW_MODEL_NUM = 100;
 
+	/// @brief 影生成を行うクラス
 	class Shadow : public IGameObject
 	{
 	public:
@@ -36,7 +37,13 @@ namespace Render {
 		/// @param shadowModel 影を生成するモデル
 		void SetShadowModel(Model* shadowModel);
 
+		/// @brief 影を生成するモデルを削除
+		/// @param shadowModel 削除するモデルのアドレス
+		void DeleteShadowModel(Model* shadowModel);
+
 		void Render(RenderContext& rc);
+
+		void CreateShadowMap(RenderContext& rc);
 	private:
 		/// @brief シャドウマップ
 		RenderTarget m_shadowMap;
@@ -55,7 +62,7 @@ namespace Render {
 		/// @brief シャドウマップに書き込むモデルの合計数
 		int m_shadowModelSum = 0;
 		/// @brief シャドウマップ生成のためのモデル
-		std::vector<Model*> m_shadowModel = { nullptr };
+		std::vector<Model*> m_shadowModel;
 		/// @brief シャドウモデルの番号
 		int m_shadowModelNum[MAX_SHADOW_MODEL_NUM] = { MAX_SHADOW_MODEL_NUM };
 

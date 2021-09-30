@@ -5,7 +5,7 @@ namespace MainGame {
 
 	Game::Game()
 	{
-		m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
+		//m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
 	}
 
 	Game::~Game()
@@ -21,6 +21,7 @@ namespace MainGame {
 		m_unityChanModel->CreateShadow();
 		m_unityChanModel2 = NewGO<Render::SkinModelRender>(0);
 		m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
+		m_unityChanModel2->CreateShadow();
 		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/bg.tkm");
 		//m_backGroundModel->CreateShadow();
@@ -34,5 +35,9 @@ namespace MainGame {
 		m_pos.z -= g_pad[0]->GetLStickYF();
 
 		m_unityChanModel->SetPosition(m_pos);
+
+		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DeleteGO(m_unityChanModel2);
+		}
 	}
 }

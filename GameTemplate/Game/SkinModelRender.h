@@ -2,9 +2,11 @@
 #include "Lighting.h"
 class AnimationClip;
 class Lighting;
+
 class Shadow;
 
 namespace Render {
+	class RenderingEngine;
 	/// @brief 3Dモデルの表示を行うクラス
 	class SkinModelRender : public IGameObject
 	{
@@ -73,6 +75,8 @@ namespace Render {
 		Model m_shadowModel;
 		/// @brief 影描写用のモデル初期化情報
 		ModelInitData m_shadowModelInitData;
+		//レンダリングエンジン
+		RenderingEngine* m_renderingEngine = nullptr;
 		/// @brief ライティング
 		Lighting* m_lig = nullptr;
 		/// @brief シャドウ
