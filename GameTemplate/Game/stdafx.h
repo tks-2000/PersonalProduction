@@ -10,6 +10,7 @@
 #include "Shadow.h"
 #include "PostEffect.h"
 #include "GaussianBlur.h"
+#include "Bloom.h"
 #include "SkinModelRender.h"
 #include "Game.h"
 
@@ -21,6 +22,7 @@ namespace Render {
 	static const char* SHADOW_NAME = "Shadow";
 	static const char* POST_EFFECT_NAME = "PostEffect";
 	static const char* GAUSSIAN_BLUR_NAME = "GaussianBlur";
+	static const char* BLOOM_NAME = "Bloom";
 	
 	/// @brief ñ≥êF
 	static const Vector3 COLORLESS = { 0.0f,0.0f,0.0f };

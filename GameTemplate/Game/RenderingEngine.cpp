@@ -39,19 +39,27 @@ namespace Render {
 
 	bool RenderingEngine::Start()
 	{
-		m_lig->SetHemiSphereLifhtGroundColor({ 0.3f,0.0f,0.0f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.3f });
+		m_lig->SetDirectionLightColor({ 0.2f,0.2f,0.2f });
+		m_lig->SetHemiSphereLifhtGroundColor({ 0.1f,0.0f,0.0f });
+		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.1f });
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 300.0f);
-		m_lig->SetSpotLightColor(0, { 1.0f,1.0f,1.0f });
+		m_lig->SetSpotLightColor(0, { 0.1f,0.1f,0.1f });
 
 		//ƒuƒ‰[‚ð‚©‚¯‚é
-		m_postEffect->SetBlur(&m_mainRenderTarget);
+		//m_postEffect->SetBlur(&m_mainRenderTarget);
+
+		m_postEffect->SetBloom(&m_mainRenderTarget);
 		return true;
 	}
 
 	void RenderingEngine::Update()
 	{
+		m_ligColor.x += g_pad[0]->GetRStickYF() * 0.01f;
+		m_ligColor.y += g_pad[0]->GetRStickYF() * 0.01f;
+		m_ligColor.z += g_pad[0]->GetRStickYF() * 0.01f;
+
+		m_lig->SetDirectionLightColor(m_ligColor);
 		
 	}
 

@@ -5,7 +5,6 @@ namespace Render {
 	class Lighting;
 	class Shadow;
 	class PostEffect;
-	class GaussianBlur;
 
 	/// @brief レンダリングに必要な機能をまとめたクラス
 	class RenderingEngine : public IGameObject
@@ -36,7 +35,6 @@ namespace Render {
 		Shadow* m_shadow = nullptr;
 		/// @brief ポストエフェクト
 		PostEffect* m_postEffect = nullptr;
-		GaussianBlur* m_blur = nullptr;
 
 		/// @brief メインレンダリングターゲット
 		RenderTarget m_mainRenderTarget;
@@ -48,5 +46,7 @@ namespace Render {
 		SpriteInitData m_frameBufferSpriteInitData;
 		/// @brief フレームバッファのスプライト
 		Sprite m_frameBufferSprite;
+
+		Vector3 m_ligColor = g_vec3One;
 	};
 }

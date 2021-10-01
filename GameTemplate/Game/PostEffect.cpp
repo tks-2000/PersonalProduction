@@ -7,6 +7,8 @@ namespace Render {
 	{
 		m_gaussianBlur = NewGO<GaussianBlur>(0,GAUSSIAN_BLUR_NAME);
 		m_blurFlag = false;
+		m_bloom = NewGO<Bloom>(0, BLOOM_NAME);
+		m_bloomFlag = false;
 	}
 
 	PostEffect::~PostEffect()
@@ -45,6 +47,9 @@ namespace Render {
 			m_blurSprite.Draw(rc);
 			rc.WaitUntilFinishDrawingToRenderTarget(*m_mainRenderTargetAddress);
 		}
+		if (m_bloomFlag == true) {
+			m_bloom->Execute(rc);
+		}
 	}
 
 	void PostEffect::SetBlur(RenderTarget* rt, float blurWeight)
@@ -64,5 +69,11 @@ namespace Render {
 		m_blurSprite.Init(m_blurSpriteInitData);
 		//ブラーフラグを立てる
 		m_blurFlag = true;
+	}
+
+	void PostEffect::SetBloom(RenderTarget* rt)
+	{
+		m_bloom->Init(rt);
+		m_bloomFlag = true;
 	}
 }

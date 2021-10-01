@@ -16,10 +16,10 @@ namespace MainGame {
 
 	bool Game::Start()
 	{
-		m_unityChanModel = NewGO<Render::SkinModelRender>(0);
+		m_unityChanModel = NewGO<Render::SkinModelRender>(1);
 		m_unityChanModel->Init("Assets/modelData/unityChan.tkm");
 		m_unityChanModel->CreateShadow();
-		m_unityChanModel2 = NewGO<Render::SkinModelRender>(0);
+		m_unityChanModel2 = NewGO<Render::SkinModelRender>(1);
 		m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
 		m_unityChanModel2->CreateShadow();
 		m_backGroundModel = NewGO<Render::SkinModelRender>(0);

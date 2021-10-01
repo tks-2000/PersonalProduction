@@ -3,6 +3,7 @@
 
 namespace Render {
 	class GaussianBlur;
+	class Bloom;
 
 	class PostEffect : public IGameObject
 	{
@@ -17,13 +18,17 @@ namespace Render {
 		/// @param rc レンダリングコンテキスト
 		void Execute(RenderContext& rc);
 		/// @brief ブラーをかける
-		/// @param rt レンダリングコンテキスト
+		/// @param rt ブラーをかけるレンダリングターゲットのアドレス
 		/// @param blurWeight ブラーの重み
 		void SetBlur(RenderTarget* rt, float blurWeight = 20.0f);
 
 		/// @brief ブラーの重みを設定
 		/// @param blurWeight 設定するブラーの重み
 		void SetBlurWeight(const float blurWeight) { m_blurWeight = blurWeight; }
+
+		/// @brief ブルームをかける
+		/// @param rt ブルームをかけるレンダリングターゲットのアドレス
+		void SetBloom(RenderTarget* rt);
 
 	private:
 		/// @brief ブラー用のスプライト
@@ -36,6 +41,10 @@ namespace Render {
 		float m_blurWeight = 0.0f;
 		/// @brief ブラーを行うフラグ
 		bool m_blurFlag = false;
+		/// @brief ブルーム
+		Bloom* m_bloom = nullptr;
+		/// @brief ブルームを行うフラグ
+		bool m_bloomFlag = false;
 		/// @brief メインレンダリングターゲットのアドレス
 		RenderTarget* m_mainRenderTargetAddress = nullptr;
 	};
