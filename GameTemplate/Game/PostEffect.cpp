@@ -13,7 +13,8 @@ namespace Render {
 
 	PostEffect::~PostEffect()
 	{
-
+		DeleteGO(m_gaussianBlur);
+		DeleteGO(m_bloom);
 	}
 
 	bool PostEffect::Start()
@@ -47,7 +48,9 @@ namespace Render {
 			m_blurSprite.Draw(rc);
 			rc.WaitUntilFinishDrawingToRenderTarget(*m_mainRenderTargetAddress);
 		}
+		//ブルームフラグが立っていたら…
 		if (m_bloomFlag == true) {
+			//ブルームを実行する
 			m_bloom->Execute(rc);
 		}
 	}
