@@ -4,6 +4,10 @@
 namespace Render {
 	RenderingEngine::RenderingEngine()
 	{
+		m_lig = NewGO<Lighting>(0, LIGHTING_NAME);
+		m_shadow = NewGO<Shadow>(0, SHADOW_NAME);
+		m_postEffect = NewGO<PostEffect>(0, POST_EFFECT_NAME);
+
 		//メインレンダリングターゲットを作成
 		m_mainRenderTarget.Create(
 			1280,
@@ -22,8 +26,7 @@ namespace Render {
 
 		m_frameBufferSprite.Init(m_frameBufferSpriteInitData);
 
-		m_lig = NewGO<Lighting>(0, LIGHTING_NAME);
-		m_shadow = NewGO<Shadow>(0, SHADOW_NAME);
+		
 	
 	}
 
@@ -31,6 +34,7 @@ namespace Render {
 	{
 		DeleteGO(m_lig);
 		DeleteGO(m_shadow);
+		DeleteGO(m_postEffect);
 	}
 
 	bool RenderingEngine::Start()
@@ -40,8 +44,9 @@ namespace Render {
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 300.0f);
 		m_lig->SetSpotLightColor(0, { 1.0f,1.0f,1.0f });
-		
 
+		//ブラーをかける
+		m_postEffect->SetBlur(&m_mainRenderTarget);
 		return true;
 	}
 
@@ -68,7 +73,8 @@ namespace Render {
 		//メインレンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderTarget);
 
-		
+		//ポストエフェクトを実行
+		m_postEffect->Execute(rc);
 
 		// レンダリングターゲットをフレームバッファに戻す
 		rc.SetRenderTarget(

@@ -1,6 +1,9 @@
 #pragma once
 
+
 namespace Render {
+	class GaussianBlur;
+
 	class PostEffect : public IGameObject
 	{
 	public:
@@ -9,7 +12,31 @@ namespace Render {
 		bool Start();
 		void Update();
 		void Render(RenderContext& rc);
-	private:
 
+		/// @brief ポストエフェクトを実行する
+		/// @param rc レンダリングコンテキスト
+		void Execute(RenderContext& rc);
+		/// @brief ブラーをかける
+		/// @param rt レンダリングコンテキスト
+		/// @param blurWeight ブラーの重み
+		void SetBlur(RenderTarget* rt, float blurWeight = 20.0f);
+
+		/// @brief ブラーの重みを設定
+		/// @param blurWeight 設定するブラーの重み
+		void SetBlurWeight(const float blurWeight) { m_blurWeight = blurWeight; }
+
+	private:
+		/// @brief ブラー用のスプライト
+		Sprite m_blurSprite;
+		/// @brief ブラー用のスプライトの初期化情報
+		SpriteInitData m_blurSpriteInitData;
+		/// @brief ガウシアンブラー
+		GaussianBlur* m_gaussianBlur = nullptr;
+		/// @brief ガウシアンブラーの重み
+		float m_blurWeight = 0.0f;
+		/// @brief ブラーを行うフラグ
+		bool m_blurFlag = false;
+		/// @brief メインレンダリングターゲットのアドレス
+		RenderTarget* m_mainRenderTargetAddress = nullptr;
 	};
 }

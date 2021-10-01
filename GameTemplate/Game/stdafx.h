@@ -8,6 +8,8 @@
 #include "RenderingEngine.h"
 #include "Lighting.h"
 #include "Shadow.h"
+#include "PostEffect.h"
+#include "GaussianBlur.h"
 #include "SkinModelRender.h"
 #include "Game.h"
 
@@ -17,6 +19,8 @@ namespace Render {
 	static const char* RENDERING_ENGINE_NAME = "RenderingEngine";
 	static const char* LIGHTING_NAME = "Lighting";
 	static const char* SHADOW_NAME = "Shadow";
+	static const char* POST_EFFECT_NAME = "PostEffect";
+	static const char* GAUSSIAN_BLUR_NAME = "GaussianBlur";
 	
 	/// @brief ñ≥êF
 	static const Vector3 COLORLESS = { 0.0f,0.0f,0.0f };

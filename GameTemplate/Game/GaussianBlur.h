@@ -3,9 +3,13 @@
 namespace Render {
 
 	/// @brief ガウシアンブラーを行うクラス
-	class GaussianBlur
+	class GaussianBlur : public IGameObject
 	{
 	public:
+		GaussianBlur();
+		~GaussianBlur();
+		bool Start();
+		void Update();
 		/// @brief 初期化を行う
 		/// @param originalTexture ガウシアンブラーをかけるテクスチャのアドレス
 		void Init(Texture* originalTexture);

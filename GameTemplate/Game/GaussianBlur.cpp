@@ -3,6 +3,26 @@
 
 namespace Render {
 
+	GaussianBlur::GaussianBlur()
+	{
+
+	}
+
+	GaussianBlur::~GaussianBlur()
+	{
+
+	}
+
+	bool GaussianBlur::Start()
+	{
+		return true;
+	}
+
+	void GaussianBlur::Update()
+	{
+
+	}
+
 	void GaussianBlur::Init(Texture* originalTexture)
 	{
 		m_originalTexture = originalTexture;
@@ -65,6 +85,25 @@ namespace Render {
 
 		xBlurSpriteInitData.m_textures[0] = m_originalTexture;
 
+		xBlurSpriteInitData.m_expandConstantBuffer = &m_weights;
+		xBlurSpriteInitData.m_expandConstantBufferSize = sizeof(m_weights);
+
+		m_xBlurSprite.Init(xBlurSpriteInitData);
+
+		SpriteInitData yBlurSpriteInitData;
+		yBlurSpriteInitData.m_fxFilePath = "Assets/shader/gaussianBlur.fx";
+		yBlurSpriteInitData.m_vsEntryPointFunc = "VSXBlur";
+		yBlurSpriteInitData.m_psEntryPoinFunc = "PSBlur";
+
+		yBlurSpriteInitData.m_width = m_yBlurRenderTarget.GetWidth();
+		yBlurSpriteInitData.m_height = m_yBlurRenderTarget.GetHeight();
+
+		yBlurSpriteInitData.m_textures[0] = m_originalTexture;
+
+		yBlurSpriteInitData.m_expandConstantBuffer = &m_weights;
+		yBlurSpriteInitData.m_expandConstantBufferSize = sizeof(m_weights);
+
+		m_yBlurSprite.Init(yBlurSpriteInitData);
 	}
 
 	void GaussianBlur::UpdateWeightsTable(float blurPower)
