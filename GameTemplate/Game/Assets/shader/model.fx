@@ -31,6 +31,13 @@ struct SPSIn{
 	float4 posInLVP		: TEXCOORD3;	//ライトビュースクリーン空間でのピクセルの座標
 };
 
+struct LightNum
+{
+	int dLigNum;
+	int pLigNum;
+	int sLigNum;
+};
+
 //ディレクションライト
 struct DirectionLight
 {
@@ -77,6 +84,7 @@ cbuffer ModelCb : register(b0){
 
 cbuffer LightCb : register(b1)
 {
+	//LightNum ligNums;
 	DirectionLight directionLight;		//ディレクションライト
 	PointLight pointLight[NUM_POINT_LIGHT];				//ポイントライト
 	SpotLight spotLight[NUM_SPOT_LIGHT];				//スポットライト
@@ -148,7 +156,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.pos = mul(mView, psIn.pos);
 	psIn.pos = mul(mProj, psIn.pos);
 	
-	psIn.normal = mul(mWorld, vsIn.normal); // 法線を回転させる。
+	psIn.normal = mul(m, vsIn.normal); // 法線を回転させる。
 	psIn.uv = vsIn.uv;
 
 	psIn.normalInView = mul(mView,psIn.normal);	//カメラ空間の法線を求める

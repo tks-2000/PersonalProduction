@@ -9,7 +9,10 @@ namespace Render {
 		m_lig = FindGO<Lighting>(LIGHTING_NAME);
 		m_shadow = FindGO<Shadow>(SHADOW_NAME);
 		m_shadowFlag = false;
+		m_animFlag = false;
 		m_modelFilePath = nullptr;
+		m_skeletonFilePath = nullptr;
+		m_isInitd = false;
 	}
 
 	SkinModelRender::~SkinModelRender()
@@ -22,18 +25,54 @@ namespace Render {
 
 	bool SkinModelRender::Start()
 	{
-		//m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 		return true;
 	}
 
-	void SkinModelRender::Init(const char* modelFilePath)
+
+	void SkinModelRender::Init(const char* modelFilePath, const char* skeletonPath, AnimationClip* animationClip, int animationNum, EnModelUpAxis enAxsis)
 	{
+		//既に初期化されていたら実行しない
+		if (m_isInitd == true) {
+			return;
+		}
+
 		//モデルのファイルパスを設定
 		m_modelFilePath = modelFilePath;
 		m_modelInitData.m_tkmFilePath = modelFilePath;
 
 		//シェーダーファイルパスを設定
 		m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
+
+		//モデルの上方向を設定
+		m_modelInitData.m_modelUpAxis = enAxsis;
+
+		//スケルトンのファイルパスが指定されていたらスケルトンを作成
+		if (skeletonPath != nullptr) {
+
+			//スケルトンのファイルパスを記憶しておく
+			m_skeletonFilePath = skeletonPath;
+
+			m_skeleton.Init(skeletonPath);
+			//スケルトンをモデルに設定
+			m_modelInitData.m_skeleton = &m_skeleton;
+
+			//頂点シェーダーのエントリーポイントを指定
+			m_modelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+
+			//アニメーションクリップとアニメーションの数が設定されていたらアニメーションを作成
+			if (animationClip != nullptr && animationNum != 0) {
+
+				m_animationClip = animationClip;
+
+				m_animation.Init(m_skeleton, m_animationClip, animationNum);
+
+				m_animFlag = true;
+			}
+		}
+		else {
+			//アニメーション無しの頂点シェーダーのエントリーポイントを設定
+			m_modelInitData.m_vsEntryPointFunc = "VSMain";
+		}
 
 		//モデルにライトの情報を渡す
 		m_modelInitData.m_expandConstantBuffer[0] = m_lig->GetLightAddress();
@@ -51,7 +90,11 @@ namespace Render {
 
 		//初期化したモデルをレンダリングエンジンに渡す
 		m_renderingEngine->SetDrawModel(&m_model);
+
+		//初期化完了
+		m_isInitd = true;
 	}
+
 
 	void SkinModelRender::CreateShadow()
 	{
@@ -64,6 +107,16 @@ namespace Render {
 		//カラーバッファのフォーマットを設定
 		m_shadowModelInitData.m_colorBufferFormat[0] = DXGI_FORMAT_R32_FLOAT;
 
+		if (m_animFlag == true) {
+			m_shadowModelInitData.m_skeleton = &m_skeleton;
+
+			m_shadowModelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+		}
+		else {
+			//アニメーション無しの頂点シェーダーのエントリーポイントを設定
+			m_modelInitData.m_vsEntryPointFunc = "VSMain";
+		}
+
 		//初期化情報で影描写用のモデルを初期化
 		m_shadowModel.Init(m_shadowModelInitData);
 
@@ -74,57 +127,25 @@ namespace Render {
 		m_shadowFlag = true;
 	}
 
-	void SkinModelRender::InitA(const char* modelFilePath, const char* skeletonPath, EnModelUpAxis enAxsis, AnimationClip* animationClip, int animationNum, bool cullMode)
-	{
-		m_modelInitData.m_tkmFilePath = modelFilePath;
-		m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
-		m_modelInitData.m_vsEntryPointFunc = "VSMain";
-		m_modelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
-
-		if (skeletonPath != nullptr) {
-			m_skeleton.Init(skeletonPath);
-			m_modelInitData.m_skeleton = &m_skeleton;
-		}
-
-		m_modelInitData.m_modelUpAxis = enAxsis;
-
-		m_modelInitData.m_expandConstantBuffer[0] = m_lig->GetLightAddress();
-		m_modelInitData.m_expandConstantBufferSize[0] = sizeof(m_lig->GetLight());
-
-		m_animationClip = animationClip;
-
-		m_animation.Init(m_skeleton, m_animationClip, animationNum);
-
-		//m_modelInitData.m_cullMode = cullMode;
-
-		//初期化情報でモデルを初期化する
-		m_model.Init(m_modelInitData);
-	}
-
-	void SkinModelRender::PlayAnimation(int animNo, float interpolateTime)
+	void SkinModelRender::PlayAnimation(const int animNo,const float interpolateTime)
 	{
 		m_animation.Play(animNo, interpolateTime);
 	}
 
 	void SkinModelRender::Update()
 	{
+		//初期化されていなければ実行しない
+		if (m_isInitd == false) {
+			return;
+		}
 
+		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+		m_skeleton.Update(m_model.GetWorldMatrix());
 		m_animation.Progress(1.0f / 60.0f);
 
 		if (m_shadowFlag == true) {
 			m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 		}
 
-		m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
-
-		
-
-		m_skeleton.Update(m_model.GetWorldMatrix());
-
-	}
-
-	void SkinModelRender::Render(RenderContext& rd)
-	{
-		//m_model.Draw(rd);
 	}
 }

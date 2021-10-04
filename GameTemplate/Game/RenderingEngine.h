@@ -24,10 +24,7 @@ namespace Render {
 		/// @param model 削除するモデルのアドレス
 		void DeleteModel(Model* model);
 
-		
-
 	private:
-
 
 		/// @brief ライティング
 		Lighting* m_lig = nullptr;
@@ -47,6 +44,6 @@ namespace Render {
 		/// @brief フレームバッファのスプライト
 		Sprite m_frameBufferSprite;
 
-		Vector3 m_ligColor = g_vec3One;
+		Vector3 m_ligColor = g_vec3Zero;
 	};
 }

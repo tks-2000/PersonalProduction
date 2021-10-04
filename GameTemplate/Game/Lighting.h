@@ -3,11 +3,21 @@
 #include "stdafx.h"
 
 namespace Render {
+	/// @brief ディレクションライトの数
+	static const int DIRECTION_LIGHT_SUM = 4;
 	/// @brief ポイントライトの数
 	static const int POINT_LIGHT_SUM = 5;
 	/// @brief スポットライトの数
 	static const int SPOT_LIGHT_SUM = 4;
 
+
+	struct LightNums
+	{
+		int dLigNum = DIRECTION_LIGHT_SUM;
+		int pLigNum = POINT_LIGHT_SUM;
+		int sLigNum = SPOT_LIGHT_SUM;
+		float pad = 0.0f;
+	};
 
 	/// @brief ディレクションライト構造体
 	struct DirectionLight
@@ -55,14 +65,18 @@ namespace Render {
 	/// @brief ライト全ての構造体
 	struct Light
 	{
+		/*const int directionLightNum = DIRECTION_LIGHT_SUM;
+		const int pointLightNum = POINT_LIGHT_SUM;
+		const int spotLightNum = SPOT_LIGHT_SUM;
+		float pad0;*/
 		DirectionLight directionLight;			//ディレクションライト
 		PointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
 		SpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
 		HemiSphereLight hemiSphereLight;		//半球ライト
 		Vector3 eyePos = Vector3::Zero;			//視点の位置
-		float pad0 = 0.0f;						//パディング
+		float pad4 = 0.0f;						//パディング
 		Vector3 ambientlight = Vector3::Zero;	//環境光
-		float pad1 = 0.0f;
+		float pad5 = 0.0f;
 	};
 
 	/// @brief ライティングを行うクラス
@@ -80,6 +94,8 @@ namespace Render {
 		/// @brief ライトの構造体を入手
 		/// @return ライト構造体のアドレス
 		Light* GetLightAddress() { return &m_light; }
+
+		LightNums* GetLightNumAddress() { return &m_ligNum; }
 
 
 		/// @brief ディレクションライトの初期化
@@ -178,6 +194,8 @@ namespace Render {
 	private:
 		/// @brief ライティング全てのデータ
 		Light m_light;
+
+		LightNums m_ligNum;
 
 		/// @brief ディレクションライト回転フラグ
 		bool m_dirLigRotFlag = false;

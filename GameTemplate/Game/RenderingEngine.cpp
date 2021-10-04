@@ -40,16 +40,18 @@ namespace Render {
 	bool RenderingEngine::Start()
 	{
 		m_lig->SetDirectionLightDirection({ 0.0f, -0.5f, 1.0f });
-		m_lig->SetHemiSphereLifhtGroundColor({ 0.2f,0.0f,0.0f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.2f });
-		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
-		m_lig->SetPointLightRange(0, 300.0f);
+		m_lig->SetHemiSphereLifhtGroundColor({ 0.5f,0.0f,0.0f });
+		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.5f });
+		m_lig->SetPointLightColor(0, { 0.0f,0.5f,0.0f });
+		m_lig->SetPointLightRange(0, 1000.0f);
 		m_lig->SetSpotLightColor(0, { 0.1f,0.1f,0.1f });
 
 		//ブラーをかける
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
 
+		//ブルームをかける
 		m_postEffect->SetBloom(&m_mainRenderTarget);
+
 		return true;
 	}
 

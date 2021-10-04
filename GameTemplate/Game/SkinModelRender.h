@@ -16,7 +16,6 @@ namespace Render {
 
 		bool Start();
 		void Update();
-		void Render(RenderContext& rc);
 
 		/// @brief モデルの状態を入手
 		/// @return モデルのconst参照
@@ -36,16 +35,21 @@ namespace Render {
 		/// @param rot クォータニオン
 		void SetRotation(const Quaternion& rot) { m_qRot = rot; }
 
-
-		void SetNewModel() { m_model.Init(m_modelInitData); }
-
 		/// @brief モデルの座標を入手
 		/// @return 座標
 		Vector3 GetPosition() { return m_position; }
 
 		/// @brief モデルの初期化
 		/// @param modelFilePath モデルのファイルパス
-		void Init(const char* modelFilePath);
+		//void Init(const char* modelFilePath);
+ 
+		/// @brief モデルを初期化
+		/// @param modelFilePath モデルのファイルパス
+		/// @param skeletonPath スケルトンのファイルパス
+		/// @param animationClip アニメーションクリップ
+		/// @param animationNum アニメーションの数
+		/// @param enAxsis モデルの上方向
+		void Init(const char* modelFilePath, const char* skeletonPath = nullptr, AnimationClip* animationClip = nullptr, int animationNum = 0, EnModelUpAxis enAxsis = enModelUpAxisZ);
 
 		/// @brief モデルのシェーダーファイルパスを変更
 		/// @param fxFilePath シェーダーファイルパス
@@ -54,9 +58,10 @@ namespace Render {
 		/// @brief 影を生成する
 		void CreateShadow();
 
-		void InitA(const char* modelFilePath, const char* skeletonPath, EnModelUpAxis enAxis, AnimationClip* animation, int animationNum, bool cullMode);
-
-		void PlayAnimation(int animNo, float interpolateTime);
+		/// @brief アニメーションを再生する
+		/// @param animNo 再生するアニメーション番号
+		/// @param interpolateTime アニメーション補完率
+		void PlayAnimation(const int animNo, const float interpolateTime = 0.0f);
 
 		/// @brief スキンモデルレンダラーのワールド行列を取得
 		/// @return モデルのワールド行列
@@ -65,10 +70,21 @@ namespace Render {
 	private:
 		/// @brief モデルのファイルパス
 		const char* m_modelFilePath = nullptr;
+		/// @brief スケルトンのファイルパス
+		const char* m_skeletonFilePath = nullptr;
 		/// @brief モデル
 		Model m_model;
 		/// @brief モデルの初期化情報
 		ModelInitData m_modelInitData;
+
+
+		/// @brief モデルに設定するスケルトン
+		Skeleton m_skeleton;
+		/// @brief アニメーション
+		Animation m_animation;
+		/// @brief アニメーションクリップ
+		AnimationClip* m_animationClip;
+
 		/// @brief 影を生成するかどうかのフラグ
 		bool m_shadowFlag = false;
 		/// @brief 影描写用のモデル
@@ -86,9 +102,12 @@ namespace Render {
 		Vector3 m_scale = Vector3::One;				//拡大率
 		Quaternion m_qRot = Quaternion::Identity;	//回転
 
-		Skeleton m_skeleton;
-		Animation m_animation;
-		AnimationClip* m_animationClip;
+		
+		/// @brief アニメーションを再生するかどうかのフラグ
+		bool m_animFlag = false;
+
+		/// @brief 初期化完了フラグ
+		bool m_isInitd = false;
 	};
 
 }

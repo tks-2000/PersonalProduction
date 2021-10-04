@@ -18,6 +18,15 @@ namespace MainGame {
 		Render::SkinModelRender* m_backGroundModel = nullptr;
 		Render::Lighting* m_lig = nullptr;
 		Vector3 m_pos = g_vec3Zero;
+
+		
+		enum UnityChanAnimation {
+			enIdle,
+			enWark,
+			enAnimationNum
+		};
+
+		AnimationClip m_unityChanAnimationClip[enAnimationNum];
 	};
 
 }

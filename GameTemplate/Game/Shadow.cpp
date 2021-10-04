@@ -23,15 +23,20 @@ namespace Render {
 
 	bool Shadow::Start()
 	{
-
+		m_ligCameraPos = { 0.0f,100.0f,600.0f };
 		return true;
 	}
 
 	void Shadow::Update()
 	{
-		m_ligCameraPos = { 0.0f,100.0f,500.0f };
-		m_ligCameraTarget = m_ligCameraPos;
-		m_ligCameraTarget.z -= 500.0f;
+		//Quaternion qRot;
+
+		//qRot.SetRotationDegY(0.5f);
+
+
+		//qRot.Apply(m_ligCameraPos);
+		
+		m_ligCameraTarget = { 0.0f,100.0f,0.0f };
 		LightCameraUpdate();
 
 
