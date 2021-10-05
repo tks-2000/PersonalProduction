@@ -18,7 +18,7 @@ namespace Render {
 			DXGI_FORMAT_D32_FLOAT
 		);
 
-		//フレームバッファのコピーのスプライトを用意する
+		//フレームバッファのコピー用のスプライトを用意する
 		m_frameBufferSpriteInitData.m_textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();
 		m_frameBufferSpriteInitData.m_width = 1280;
 		m_frameBufferSpriteInitData.m_height = 720;
@@ -44,7 +44,7 @@ namespace Render {
 		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.5f });
 		m_lig->SetPointLightColor(0, { 0.0f,0.5f,0.0f });
 		m_lig->SetPointLightRange(0, 1000.0f);
-		m_lig->SetSpotLightColor(0, { 0.1f,0.1f,0.1f });
+		m_lig->SetSpotLightColor(0, { 0.7f,0.7f,0.7f });
 
 		//ブラーをかける
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
@@ -57,9 +57,27 @@ namespace Render {
 
 	void RenderingEngine::Update()
 	{
-		m_ligColor.x += g_pad[0]->GetRStickYF() * 0.01f;
-		m_ligColor.y += g_pad[0]->GetRStickYF() * 0.01f;
-		m_ligColor.z += g_pad[0]->GetRStickYF() * 0.01f;
+		/*m_ligColor.x += g_pad[0]->GetRStickXF() * 0.01f;
+		
+		if (g_pad[0]->IsPress(enButtonSelect)) {
+			m_ligColor.z += g_pad[0]->GetRStickYF() * 0.01f;
+		}
+		else {
+			m_ligColor.y += g_pad[0]->GetRStickYF() * 0.01f;
+		}*/
+
+		if (g_pad[0]->IsPress(enButtonUp)) {
+			m_ligColor.x += 0.01f;
+			m_ligColor.y += 0.01f;
+			m_ligColor.z += 0.01f;
+		}
+		
+		if (g_pad[0]->IsPress(enButtonDown)) {
+			m_ligColor.x -= 0.01f;
+			m_ligColor.y -= 0.01f;
+			m_ligColor.z -= 0.01f;
+		}
+		
 
 		m_lig->SetDirectionLightColor(m_ligColor);
 		

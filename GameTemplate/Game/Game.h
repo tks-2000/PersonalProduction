@@ -3,7 +3,10 @@
 class SkinModelRender;
 class Lighting;
 
+
 namespace MainGame {
+	class GameCamera;
+
 	class Game : public IGameObject
 	{
 	public:
@@ -27,6 +30,8 @@ namespace MainGame {
 		};
 
 		AnimationClip m_unityChanAnimationClip[enAnimationNum];
+
+		GameCamera* m_gameCamera = nullptr;
 	};
 
 }

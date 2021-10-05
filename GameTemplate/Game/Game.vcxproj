@@ -291,6 +291,7 @@
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="main.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="PostEffect.h" />

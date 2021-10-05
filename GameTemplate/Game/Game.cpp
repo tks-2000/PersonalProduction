@@ -6,6 +6,7 @@ namespace MainGame {
 	Game::Game()
 	{
 		//m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
+		m_gameCamera = NewGO<GameCamera>(0, GAME_CAMERA_NAME);
 	}
 
 	Game::~Game()
@@ -33,7 +34,7 @@ namespace MainGame {
 		//m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
 		//m_unityChanModel2->CreateShadow();
 		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
-		m_backGroundModel->Init("Assets/modelData/bg/bg.tkm");
+		m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
 		//m_backGroundModel->CreateShadow();
 		
 		return true;
@@ -55,5 +56,7 @@ namespace MainGame {
 		if (g_pad[0]->IsTrigger(enButtonX)) {
 			m_unityChanModel->PlayAnimation(enWark);
 		}
+
+		m_gameCamera->SetCameraTarget(m_pos);
 	}
 }
