@@ -14,6 +14,12 @@
 #include "SkinModelRender.h"
 #include "Game.h"
 #include "GameCamera.h"
+#include "Player.h"
+#include "PlayerAnimation.h"
+
+namespace {
+	const int PRIORITY_VERYLOW = 0;
+}
 
 /// @brief 他の場所でも必要になるレンダリングエンジンの定数
 namespace Render {
@@ -33,4 +39,7 @@ namespace Render {
 namespace MainGame {
 	static const char* GAME_NAME = "Game";
 	static const char* GAME_CAMERA_NAME = "GameCamera";
+	namespace Player {
+		static const char* PLAYER_NAME = "Player";
+	}
 }

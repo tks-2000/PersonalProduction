@@ -48,6 +48,15 @@
     <Filter Include="ExEngine\level2D">
       <UniqueIdentifier>{80abc458-e4b9-4836-89c7-3eb842072871}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyEngine">
+      <UniqueIdentifier>{f324c00d-92a7-4f48-a33c-7d0a3fcb6a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inGame">
+      <UniqueIdentifier>{3e88653d-2835-4da9-a1a2-a46b08377a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inGame\Player">
+      <UniqueIdentifier>{bba0f096-540d-475f-b3d5-078917721c53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -209,35 +218,47 @@
     <ClCompile Include="..\..\ExEngine\level2D\MapChip2D.cpp">
       <Filter>ExEngine\level2D</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SkinModelRender.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Lighting.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderingEngine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
-    <ClCompile Include="PostEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlur.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Lighting.cpp">
+      <Filter>MyEngine</Filter>
     </ClCompile>
     <ClCompile Include="Bloom.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingEngine.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>inGame</Filter>
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAnimation.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMove.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRotation.cpp">
+      <Filter>inGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,35 +445,47 @@
     <ClInclude Include="..\..\ExEngine\level2D\MapChip2D.h">
       <Filter>ExEngine\level2D</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinModelRender.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Lighting.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderingEngine.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\MiniEngine\RenderTarget.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Bloom.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
     <ClInclude Include="PostEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingEngine.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="GaussianBlur.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>MyEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Bloom.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Game.h">
+      <Filter>inGame</Filter>
     </ClInclude>
     <ClInclude Include="GameCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimation.h">
+      <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMove.h">
+      <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRotation.h">
+      <Filter>inGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

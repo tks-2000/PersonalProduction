@@ -345,7 +345,8 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
     //UV座標を使ってシャドウマップから影情報をサンプリング
     
     if(shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
-        && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f)
+        && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+		&& zInLVP < 1.0f && zInLVP > 0.1f)
     {
         float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
 		if(zInLVP >= zInShadowMap + 0.0001f)

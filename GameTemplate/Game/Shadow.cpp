@@ -141,7 +141,10 @@ namespace Render {
 	{
 		m_lightCamera.SetPosition(m_ligCameraPos);
 		m_lightCamera.SetTarget(m_ligCameraTarget);
-		m_lightCamera.SetUp(m_ligCameraUp);
+		Vector3 cameraDir = m_ligCameraTarget - m_ligCameraPos;
+		cameraDir.Normalize();
+		Vector3 cameraUp = Cross(cameraDir, m_lightCamera.GetRight());
+		m_lightCamera.SetUp(cameraUp);
 		m_lightCamera.SetViewAngle(Math::DegToRad(m_ligCameraViewAngle));
 		m_lightCamera.Update();
 	}

@@ -1,6 +1,7 @@
 #pragma once
 
 class Game;
+class Player;
 
 namespace MainGame {
 
@@ -14,8 +15,21 @@ namespace MainGame {
 		void Update();
 
 		
-
+		/// @brief ゲームカメラの追従目標を設定
+		/// @param target ゲームカメラに設定する追従目標の座標
 		void SetCameraTarget(const Vector3& target) { m_cameraTarget = target; }
+
+		/// @brief ゲームカメラの上方向を入手
+		/// @return ゲームカメラの上方向のconst参照
+		const Vector3& GetCameraUp() { return g_camera3D->GetUp(); }
+
+		/// @brief ゲームカメラの前方向を入手
+		/// @return ゲームカメラの前方向のconst参照
+		const Vector3& GetCameraForward() { return g_camera3D->GetForward(); }
+
+		/// @brief ゲームカメラの右方向を入手
+		/// @return ゲームカメラの右方向のconst参照
+		const Vector3& GetCameraRight() { return g_camera3D->GetRight(); }
 	private:
 		/// @brief カメラの回転
 		void CameraRotation();
@@ -45,7 +59,7 @@ namespace MainGame {
 
 		/// @brief カメラの注視点からの距離
 		Vector3 m_toCameraPos = g_vec3Zero;
-
+		/// @brief 保存するカメラの注視点からの距離
 		Vector3 m_oldToCameraPos = g_vec3Zero;
 		
 		/// @brief カメラのY軸回転
@@ -67,6 +81,8 @@ namespace MainGame {
 		/// @brief カメラの速度
 		float m_cameraVerocity = 0.0f;
 
+
+		Player::Player* m_player = nullptr;
 	};
 
 }

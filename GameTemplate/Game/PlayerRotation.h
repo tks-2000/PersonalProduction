@@ -1,0 +1,35 @@
+#pragma once
+
+namespace MainGame {
+	namespace Player {
+		/// @brief プレイヤーの回転を制御するクラス
+		class Rotation
+		{
+		public:
+			Rotation();
+			~Rotation();
+
+			/// @brief 回転クォータニオンを取得
+			/// @param moveSpeed 回転させるための移動速度
+			/// @return 速度によって決まった回転クォータニオン
+			const Quaternion& RotationUpdate(const Vector3& moveSpeed);
+
+			/// @brief 回転角度の変化量を取得
+			/// @return 角度の変化量
+			const float GetAngleAmount() { return m_angleAmount; }
+
+			/// @brief 角度の変化量を元に戻す
+			void AngleReset() { m_angleAmount = 0.0f; }
+		private:
+			/// @brief 回転クォータニオン
+			Quaternion m_qRot = g_quatIdentity;
+
+			/// @brief 角度
+			float m_angle = 0.0f;
+			/// @brief 変化する前の角度
+			float m_oldAngle = 0.0f;
+			/// @brief 角度の変化量
+			float m_angleAmount = 0.0f;
+		};
+	}
+}

@@ -4,8 +4,10 @@
 namespace {
 	/// @brief カメラの速度
 	const float CAMERA_VELOCITY = 0.04f;
+	/// @brief カメラの回転速度
+	const float CAMERA_ROTATION_VELOCITY = 0.02f;
 	/// @brief カメラの摩擦力
-	const float CAMERA_FRICTION = 30.0f;
+	const float CAMERA_FRICTION = 20.0f;
 	/// @brief カメラの移動が止まる距離
 	const float CAMERA_MOVE_STOP_DISTANCE = 0.01f;
 }
@@ -13,7 +15,7 @@ namespace {
 namespace MainGame {
 	GameCamera::GameCamera()
 	{
-		m_toCameraPos = { 0.0f,100.0f,-500.0f };
+		m_toCameraPos = { 0.0f,300.0f,-500.0f };
 	}
 
 	GameCamera::~GameCamera()
@@ -23,15 +25,19 @@ namespace MainGame {
 
 	bool GameCamera::Start()
 	{
-
+		m_player = FindGO<Player::Player>(Player::PLAYER_NAME);
 		return true;
 	}
 
 	void GameCamera::Update()
 	{
 
-		m_AxisX.Cross(g_camera3D->GetUp(), m_toCameraPos);
+		m_AxisX.Cross(g_camera3D->GetUp(), m_toCameraPos * -1.0f);
 		m_AxisX.Normalize();
+
+		Vector3 camera = Cross(g_camera3D->GetUp(), g_camera3D->GetRight());
+		camera.Normalize();
+		
 
 		if (g_pad[0]->IsTrigger(enButtonLB1)) {
 			CameraReset();
@@ -44,7 +50,7 @@ namespace MainGame {
 	{
 		//Y軸回転
 		//右スティック入力を受け取る
-		m_cameraVerocity = g_pad[0]->GetRStickXF() * CAMERA_VELOCITY;
+		m_cameraVerocity = g_pad[0]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
 
 		m_cameraYAngle = m_cameraVerocity;
 
@@ -61,7 +67,7 @@ namespace MainGame {
 		//回転適用前のベクトルを記憶する
 		m_oldToCameraPos = m_toCameraPos;
 		//右スティック入力を受け取る
-		m_cameraXAngle = g_pad[0]->GetRStickYF() * CAMERA_VELOCITY;
+		m_cameraXAngle = -g_pad[0]->GetRStickYF() * CAMERA_VELOCITY;
 		//受け取った値で回転
 		m_cameraXRot.SetRotation(m_AxisX, m_cameraXAngle);
 		//回転をベクトルに適用
@@ -146,11 +152,15 @@ namespace MainGame {
 		m_cameraXRot.Apply(m_toCameraPos);
 		//記憶していた移動量を0にする
 		m_cameraXAngeAmount = 0.0f;
+
+		
 		//Y軸の記憶していた移動量で回転させる
-		m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount);
+		m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount + m_player->GetAngleAmount());
 		//ベクトルに回転を適用する
 		m_cameraYRot.Apply(m_toCameraPos);
 		//記憶していた移動量を0にする
 		m_cameraYAngeAmount = 0.0f;
+
+		m_player->ResetAngle();
 	}
 }

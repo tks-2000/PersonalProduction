@@ -2,9 +2,14 @@
 
 class SkinModelRender;
 class Lighting;
+class Shadow;
 
 
 namespace MainGame {
+	namespace Player {
+		class Player;
+	}
+
 	class GameCamera;
 
 	class Game : public IGameObject
@@ -32,6 +37,10 @@ namespace MainGame {
 		AnimationClip m_unityChanAnimationClip[enAnimationNum];
 
 		GameCamera* m_gameCamera = nullptr;
+
+		Render::Shadow* m_shadow = nullptr;
+
+		Player::Player* m_player = nullptr;
 	};
 
 }
