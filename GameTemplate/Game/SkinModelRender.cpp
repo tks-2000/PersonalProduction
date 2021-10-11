@@ -134,6 +134,12 @@ namespace Render {
 
 	void SkinModelRender::Update()
 	{
+		
+
+	}
+
+	void SkinModelRender::Execution()
+	{
 		//‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¯‚ê‚ÎÀs‚µ‚È‚¢
 		if (m_isInitd == false) {
 			return;
@@ -146,6 +152,5 @@ namespace Render {
 		if (m_shadowFlag == true) {
 			m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
 		}
-
 	}
 }

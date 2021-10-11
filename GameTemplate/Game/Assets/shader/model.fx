@@ -349,8 +349,9 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
 		&& zInLVP < 1.0f && zInLVP > 0.1f)
     {
         float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
-		if(zInLVP >= zInShadowMap + 0.0001f)
+		if(zInLVP >= zInShadowMap + 0.00003f)
 		{
+			
 			albedoColor.xyz *= 0.5f;
 		}
     }

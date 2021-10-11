@@ -19,6 +19,7 @@ namespace MainGame {
 
 	bool Game::Start()
 	{
+		m_pause = false;
 		//m_unityChanAnimationClip[enIdle].Load("Assets/animData/idle.tka");
 		//m_unityChanAnimationClip[enIdle].SetLoopFlag(true);
 		//m_unityChanAnimationClip[enWark].Load("Assets/animData/walk.tka");
@@ -38,27 +39,41 @@ namespace MainGame {
 		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
 		//m_backGroundModel->CreateShadow();
+		m_backGroundModel2 = NewGO<Render::SkinModelRender>(0);
+		m_backGroundModel2->Init("Assets/modelData/bg/testStage.tkm");
+		m_backGroundModel2->CreateShadow();
+		m_backGroundModel2->SetPosition({ 0.0f,-1000.0f,0.0f });
 		
 		return true;
 	}
 
 	void Game::Update()
 	{
-		m_pos.x -= g_pad[0]->GetLStickXF();
-		m_pos.z -= g_pad[0]->GetLStickYF();
+		if (m_pause == true) {
+			Pause();
+			if (g_pad[0]->IsTrigger(enButtonStart)) {
+				m_pause = false;
+			}
+			return;
+		}
+		else {
+			if (g_pad[0]->IsTrigger(enButtonStart)) {
+				m_pause = true;
+			}
+		}
 
-		//m_unityChanModel->SetPosition(m_pos);
+		m_unityChanModel2->Execution();
+		m_backGroundModel->Execution();
+		m_backGroundModel2->Execution();
 
-		//if (g_pad[0]->IsTrigger(enButtonA)) {
-		//	//DeleteGO(m_unityChanModel2);
-		//}
-		//if (g_pad[0]->IsTrigger(enButtonB)) {
-		//	m_unityChanModel->PlayAnimation(enIdle);
-		//}
-		//if (g_pad[0]->IsTrigger(enButtonX)) {
-		//	m_unityChanModel->PlayAnimation(enWark);
-		//}
-		m_unityChanModel2->SetPosition(m_shadow->GetLightCameraPos());
+		m_player->Execution();
+		m_gameCamera->Execution();
+
 		m_gameCamera->SetCameraTarget(m_player->GetPlayerPosition());
+	}
+
+	void Game::Pause()
+	{
+
 	}
 }

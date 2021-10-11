@@ -2,9 +2,9 @@
 #include "Player.h"
 
 namespace {
-	const char* UNITYCHAN_TKM_FILEPATH = "Assets/modelData/unityChan.tkm";
+	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan.tkm";
 
-	const char* UNITYCHAN_TKS_FILEPATH = "Assets/modelData/unityChan.tks";
+	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan.tks";
 
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 }
@@ -22,29 +22,47 @@ namespace MainGame {
 
 		bool Player::Start()
 		{
+			//データメンバクラスを初期化
 			m_playerMove.Init();
 			m_playerAnimation.Init();
 
+			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<Render::SkinModelRender>(PRIORITY_VERYLOW);
 			m_playerModel->Init(
-				UNITYCHAN_TKM_FILEPATH,
-				UNITYCHAN_TKS_FILEPATH,
+				PLAYER_TKM_FILEPATH,
+				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
 				m_playerAnimation.GetAnimationNum(),
 				enModelUpAxisY
 			);
+
+			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();
 			return true;
 		}
 
 		void Player::Update()
 		{
+			
+		}
+
+		void Player::Execution()
+		{
+			//データメンバのクラスを更新する
 			m_position = m_playerMove.MoveExecute();
-			m_playerModel->SetPosition(m_position);
+
 			m_qRot = m_playerRot.RotationUpdate(m_playerMove.GetMoveSpssd());
-			m_playerModel->SetRotation(m_qRot);
+
 			m_playerAnimation.AnimationUpdate();
-			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(),ANIMATION_COMPLEMENTARY_RATE);
+
+			//プレイヤーモデルに更新した情報を適用
+			m_playerModel->SetPosition(m_position);
+
+			m_playerModel->SetRotation(m_qRot);
+
+			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_playerModel->Execution();
 		}
 	}
 }

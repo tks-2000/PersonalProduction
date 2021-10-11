@@ -37,6 +37,9 @@ namespace Render {
 		/// @param target ライトカメラに設定する注視点座標のconst参照
 		void SetLightCameraTarget(const Vector3& target) { m_ligCameraTarget = target; }
 
+
+		const Vector3& GetLightCameraTarget() { return m_ligCameraTarget; }
+
 		/// @brief 影を生成するモデルを作成
 		/// @param shadowModel 影を生成するモデル
 		void SetShadowModel(Model* shadowModel);
@@ -60,9 +63,9 @@ namespace Render {
 		/// @brief ライトカメラの注視点
 		Vector3 m_ligCameraTarget = g_vec3Zero;
 		/// @brief ライトカメラの上方向
-		Vector3 m_ligCameraUp = { 0.0f,1.0f,0.0f };
+		Vector3 m_ligCameraUp = { 1.0f,0.0f,0.0f };
 		/// @brief ライトカメラの画角
-		float m_ligCameraViewAngle = 30.0f;
+		float m_ligCameraViewAngle = 40.0f;
 		/// @brief シャドウマップに書き込むモデルの合計数
 		int m_shadowModelSum = 0;
 		/// @brief シャドウマップ生成のためのモデル

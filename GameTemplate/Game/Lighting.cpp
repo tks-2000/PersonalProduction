@@ -20,6 +20,8 @@ namespace Render {
 		//視点の位置
 		m_light.eyePos = g_camera3D->GetPosition();
 
+		
+
 		//環境光
 		m_light.ambientlight.x = 0.3f;
 		m_light.ambientlight.y = 0.3f;
@@ -57,6 +59,7 @@ namespace Render {
 		if (m_dirLigFlickering == true) {
 			DirectionLightFlickering();
 		}
+		RotationSpotLight(0);
 		m_light.eyePos = g_camera3D->GetPosition();
 	}
 
@@ -267,15 +270,17 @@ namespace Render {
 
 	void Lighting::RotationSpotLight(int num)
 	{
-		//右スティック入力でスポットライトの方向を操作
-		Quaternion qRotY;
-		qRotY.SetRotationY(g_pad[num]->GetRStickXF() * 0.01f);
-		qRotY.Apply(m_light.spotLight[num].direction);
-		Vector3 rotAxis;
-		rotAxis.Cross(g_vec3AxisY, m_light.spotLight[num].direction);
-		Quaternion qRotX;
-		qRotX.SetRotation(rotAxis, -g_pad[1]->GetRStickYF() * 0.01f);
-		qRotX.Apply(m_light.spotLight[num].direction);
+		if (g_pad[0]->IsPress(enButtonSelect)) {
+			//右スティック入力でスポットライトの方向を操作
+			Quaternion qRotY;
+			qRotY.SetRotationY(g_pad[num]->GetRStickXF() * 0.01f);
+			qRotY.Apply(m_light.spotLight[num].direction);
+			Vector3 rotAxis;
+			rotAxis.Cross(g_vec3AxisY, m_light.spotLight[num].direction);
+			Quaternion qRotX;
+			qRotX.SetRotation(rotAxis, -g_pad[1]->GetRStickYF() * 0.01f);
+			qRotX.Apply(m_light.spotLight[num].direction);
+		}
 	}
 
 	void Lighting::ResetSpotLight()

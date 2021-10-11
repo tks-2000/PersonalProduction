@@ -67,6 +67,9 @@ namespace Render {
 		/// @return モデルのワールド行列
 		Matrix GetModelWorldMatrix() { return m_model.GetWorldMatrix(); }
 
+		/// @brief 実行
+		void Execution();
+
 	private:
 		/// @brief モデルのファイルパス
 		const char* m_modelFilePath = nullptr;

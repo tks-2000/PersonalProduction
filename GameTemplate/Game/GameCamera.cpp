@@ -15,6 +15,7 @@ namespace {
 namespace MainGame {
 	GameCamera::GameCamera()
 	{
+		//カメラの座標が注視点からどれだけ離れているか決める
 		m_toCameraPos = { 0.0f,300.0f,-500.0f };
 	}
 
@@ -31,14 +32,17 @@ namespace MainGame {
 
 	void GameCamera::Update()
 	{
+		
+	}
 
+	void GameCamera::Execution()
+	{
+		//カメラの上方向とカメラの向きの外積でX方向の回転軸を決める
 		m_AxisX.Cross(g_camera3D->GetUp(), m_toCameraPos * -1.0f);
+		//正規化
 		m_AxisX.Normalize();
 
-		Vector3 camera = Cross(g_camera3D->GetUp(), g_camera3D->GetRight());
-		camera.Normalize();
-		
-
+		//LB1でカメラリセット
 		if (g_pad[0]->IsTrigger(enButtonLB1)) {
 			CameraReset();
 		}
@@ -50,9 +54,7 @@ namespace MainGame {
 	{
 		//Y軸回転
 		//右スティック入力を受け取る
-		m_cameraVerocity = g_pad[0]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
-
-		m_cameraYAngle = m_cameraVerocity;
+		m_cameraYAngle = g_pad[0]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
 
 		//角度からカメラの回転を作成
 		m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngle);
@@ -142,6 +144,9 @@ namespace MainGame {
 		//カメラの注視点と座標を渡す
 		g_camera3D->SetTarget(m_cameraGazePoint);
 		g_camera3D->SetPosition(m_cameraPos);
+
+		/*g_camera3D->SetTarget(m_cameraPos);
+		g_camera3D->SetPosition(m_cameraGazePoint);*/
 	}
 
 	void GameCamera::CameraReset()

@@ -30,6 +30,20 @@ namespace MainGame {
 		/// @brief ゲームカメラの右方向を入手
 		/// @return ゲームカメラの右方向のconst参照
 		const Vector3& GetCameraRight() { return g_camera3D->GetRight(); }
+
+		/// @brief ゲームカメラの座標を入手
+		/// @return ゲームカメラの座標のconst参照
+		const Vector3& GetCameraPos() { return m_cameraPos; }
+
+		const float GetCameraYAngleAmount() { return m_cameraYAngeAmount; }
+
+		const Vector3& GetCameraAxisX() { return m_AxisX; }
+
+		const float GetCameraXAngleAmount() { return m_cameraXAngeAmount; }
+
+		/// @brief 実行
+		void Execution();
+
 	private:
 		/// @brief カメラの回転
 		void CameraRotation();
@@ -71,17 +85,15 @@ namespace MainGame {
 
 		/// @brief カメラのX軸回転
 		Quaternion m_cameraXRot = g_quatIdentity;
-
+		/// @brief カメラのX回転の軸
 		Vector3 m_AxisX = g_vec3Zero;
 		/// @brief カメラのX軸回転の角度
 		float m_cameraXAngle = 0.0f;
 		/// @brief カメラのX軸回転角度の量
 		float m_cameraXAngeAmount = 0.0f;
 
-		/// @brief カメラの速度
-		float m_cameraVerocity = 0.0f;
 
-
+		/// @brief プレイヤー
 		Player::Player* m_player = nullptr;
 	};
 
