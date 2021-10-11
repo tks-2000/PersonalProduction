@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "Game.h"
 
-namespace MainGame {
+namespace mainGame {
 
 	Game::Game()
 	{
 		//m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
-		m_player = NewGO<Player::Player>(PRIORITY_VERYLOW, Player::PLAYER_NAME);
+		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(0, GAME_CAMERA_NAME);
-		m_shadow = FindGO<Render::Shadow>(Render::SHADOW_NAME);
+		
 	}
 
 	Game::~Game()
@@ -33,17 +33,21 @@ namespace MainGame {
 		//	enModelUpAxisY
 		//);
 		//m_unityChanModel->CreateShadow();
-		m_unityChanModel2 = NewGO<Render::SkinModelRender>(1);
+		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
 		//_unityChanModel2->CreateShadow();
-		m_backGroundModel = NewGO<Render::SkinModelRender>(0);
+		m_backGroundModel = NewGO<render::model::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
 		//m_backGroundModel->CreateShadow();
-		m_backGroundModel2 = NewGO<Render::SkinModelRender>(0);
+		m_backGroundModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_backGroundModel2->Init("Assets/modelData/bg/testStage.tkm");
 		m_backGroundModel2->CreateShadow();
 		m_backGroundModel2->SetPosition({ 0.0f,-1000.0f,0.0f });
 		
+		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
+		m_sampleSprite->Init("Assets/image/sample.dds",100,100);
+		m_sampleSprite->SetPosition({ 500.0f,300.0f,0.0f });
+
 		return true;
 	}
 
@@ -65,6 +69,13 @@ namespace MainGame {
 		m_unityChanModel2->Execution();
 		m_backGroundModel->Execution();
 		m_backGroundModel2->Execution();
+		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DeleteGO(m_sampleSprite);
+			m_isDead = true;
+		}
+		if (m_isDead == false) {
+			m_sampleSprite->Execute();
+		}
 
 		m_player->Execution();
 		m_gameCamera->Execution();

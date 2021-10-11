@@ -78,6 +78,10 @@ public:
 	/// </summary>
 	/// <param name="renderContext">レンダリングコンテキスト/param>
 	void Draw(RenderContext& renderContext);
+
+	/// @brief スプライトのカラーを設定
+	/// @param color スプライトに乗算するカラー
+	void ColorUpdate(const Vector4& color);
 	/// <summary>
 	/// 初期化されているか判定。
 	/// </summary>
@@ -126,6 +130,7 @@ private:
 	Vector2 m_size;						//サイズ。
 	Quaternion m_rotation ;			//回転。
 	Matrix m_world;					//ワールド行列。
+	Vector4 m_color = { 1.0f,1.0f,1.0f,1.0f };
 
 	struct LocalConstantBuffer {
 		Matrix mvp;

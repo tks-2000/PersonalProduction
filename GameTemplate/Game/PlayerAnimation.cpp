@@ -5,8 +5,8 @@ namespace {
 	
 }
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 
 		Animation::Animation()
 		{

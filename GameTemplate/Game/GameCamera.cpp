@@ -12,7 +12,7 @@ namespace {
 	const float CAMERA_MOVE_STOP_DISTANCE = 0.01f;
 }
 
-namespace MainGame {
+namespace mainGame {
 	GameCamera::GameCamera()
 	{
 		//ƒJƒƒ‰‚ÌÀ•W‚ª’‹“_‚©‚ç‚Ç‚ê‚¾‚¯—£‚ê‚Ä‚¢‚é‚©Œˆ‚ß‚é
@@ -26,7 +26,7 @@ namespace MainGame {
 
 	bool GameCamera::Start()
 	{
-		m_player = FindGO<Player::Player>(Player::PLAYER_NAME);
+		m_player = FindGO<player::Player>(player::PLAYER_NAME);
 		return true;
 	}
 

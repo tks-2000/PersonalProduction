@@ -8,8 +8,8 @@ namespace {
 
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 }
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		Player::Player()
 		{
 			
@@ -27,7 +27,7 @@ namespace MainGame {
 			m_playerAnimation.Init();
 
 			//プレイヤーのモデルを初期化
-			m_playerModel = NewGO<Render::SkinModelRender>(PRIORITY_VERYLOW);
+			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_playerModel->Init(
 				PLAYER_TKM_FILEPATH,
 				PLAYER_TKS_FILEPATH,

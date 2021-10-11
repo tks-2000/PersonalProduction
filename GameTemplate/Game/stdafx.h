@@ -5,6 +5,7 @@
 
 #include "MiniEngine.h"
 #include "ExEngine.h"
+#include "RenderResource.h"
 #include "RenderingEngine.h"
 #include "Lighting.h"
 #include "Shadow.h"
@@ -12,6 +13,7 @@
 #include "GaussianBlur.h"
 #include "Bloom.h"
 #include "SkinModelRender.h"
+#include "SpriteRender.h"
 #include "Game.h"
 #include "GameCamera.h"
 #include "Player.h"
@@ -21,25 +23,12 @@ namespace {
 	const int PRIORITY_VERYLOW = 0;
 }
 
-/// @brief 他の場所でも必要になるレンダリングエンジンの定数
-namespace Render {
 
-	static const char* RENDERING_ENGINE_NAME = "RenderingEngine";
-	static const char* LIGHTING_NAME = "Lighting";
-	static const char* SHADOW_NAME = "Shadow";
-	static const char* POST_EFFECT_NAME = "PostEffect";
-	static const char* GAUSSIAN_BLUR_NAME = "GaussianBlur";
-	static const char* BLOOM_NAME = "Bloom";
-	
-	/// @brief 無色
-	static const Vector3 COLORLESS = { 0.0f,0.0f,0.0f };
 
-}
-
-namespace MainGame {
+namespace mainGame {
 	static const char* GAME_NAME = "Game";
 	static const char* GAME_CAMERA_NAME = "GameCamera";
-	namespace Player {
+	namespace player {
 		static const char* PLAYER_NAME = "Player";
 	}
 }

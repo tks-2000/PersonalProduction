@@ -1,7 +1,7 @@
 #pragma once
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		/// @brief プレイヤーの回転を制御するクラス
 		class Rotation
 		{

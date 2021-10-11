@@ -21,8 +21,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
-	NewGO<Render::RenderingEngine>(0, Render::RENDERING_ENGINE_NAME);
-	NewGO<MainGame::Game>(0);
+	NewGO<render::RenderingEngine>(0, render::RENDERING_ENGINE_NAME);
+	NewGO<mainGame::Game>(0);
 
 	/*float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 	RenderTarget shadow;

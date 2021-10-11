@@ -6,12 +6,12 @@
 class SkinModelRender;
 
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		class Animation;
 
 		/// @brief プレイヤーの状態を決める列挙型
-		enum PlayerStates {
+		enum EnPlayerStates {
 			enPlayerIdle,
 			enPlayerWark,
 			enPlayerRun,
@@ -27,11 +27,11 @@ namespace MainGame {
 			bool Start();
 			void Update();
 
-			void SetPlayerState(const PlayerStates& plState) { m_playerState = plState; }
+			void SetPlayerState(const EnPlayerStates& plState) { m_playerState = plState; }
 
 			/// @brief プレイヤーの状態を入手
 			/// @return プレイヤーのステータス
-			const PlayerStates& GetPlayerStatus() { return m_playerState; }
+			const EnPlayerStates& GetPlayerStatus() { return m_playerState; }
 
 			/// @brief プレイヤーの座標を入手
 			/// @return プレイヤーの座標のconst参照
@@ -53,9 +53,9 @@ namespace MainGame {
 			/// @brief 回転
 			Quaternion m_qRot = g_quatIdentity;
 			/// @brief モデル
-			Render::SkinModelRender* m_playerModel = nullptr;
+			render::model::SkinModelRender* m_playerModel = nullptr;
 			/// @brief ステート
-			PlayerStates m_playerState = enPlayerIdle;
+			EnPlayerStates m_playerState = enPlayerIdle;
 			/// @brief アニメーション
 			Animation m_playerAnimation;
 			/// @brief 移動

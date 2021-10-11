@@ -12,8 +12,8 @@ namespace {
 	const float IDLE_MOVE_LENGTH = 0.6f;
 }
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		Move::Move()
 		{
 			//–¢‰Šú‰»‚ÅŠJn

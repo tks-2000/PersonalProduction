@@ -3,13 +3,13 @@
 
 class SkinModelRender;
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 
 		class Player;
 
 		/// @brief アニメーションの種類の列挙型
-		enum PlayerAnimations {
+		enum EnPlayerAnimations {
 			enPlayerAnimationIdle,	//待機
 			enPlayerAnimationWark,	//歩き
 			enPlayerAnimationNum	//合計数
@@ -30,7 +30,7 @@ namespace MainGame {
 
 			/// @brief 再生するアニメーションのステートを入手
 			/// @return アニメーションステート
-			const PlayerAnimations& GetAnimationState() { return m_playerAnimState; }
+			const EnPlayerAnimations& GetAnimationState() { return m_playerAnimState; }
 
 			/// @brief アニメーションクリップを入手
 			/// @return アニメーションクリップのポインタ
@@ -38,12 +38,12 @@ namespace MainGame {
 
 			/// @brief アニメーションの合計数を入手
 			/// @return アニメーションの合計数
-			PlayerAnimations GetAnimationNum() { return enPlayerAnimationNum; }
+			EnPlayerAnimations GetAnimationNum() { return enPlayerAnimationNum; }
 		private:
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief アニメーションステート
-			PlayerAnimations m_playerAnimState = enPlayerAnimationIdle;
+			EnPlayerAnimations m_playerAnimState = enPlayerAnimationIdle;
 			/// @brief アニメーションクリップ
 			AnimationClip m_playerAnimationClip[enPlayerAnimationNum];
 			/// @brief プレイヤー

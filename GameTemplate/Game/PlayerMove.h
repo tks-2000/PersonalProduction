@@ -2,9 +2,9 @@
 
 class Player;
 
-namespace MainGame {
+namespace mainGame {
 	class GameCamera;
-	namespace Player {
+	namespace player {
 		
 		class Move
 		{

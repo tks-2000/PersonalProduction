@@ -1,12 +1,10 @@
 #pragma once
 
 class SkinModelRender;
-class Lighting;
-class Shadow;
+class SpriteRender;
 
-
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		class Player;
 	}
 
@@ -24,11 +22,13 @@ namespace MainGame {
 
 		void Pause();
 
-		Render::SkinModelRender* m_unityChanModel = nullptr;
-		Render::SkinModelRender* m_unityChanModel2 = nullptr;
-		Render::SkinModelRender* m_backGroundModel = nullptr;
-		Render::SkinModelRender* m_backGroundModel2 = nullptr;
-		Render::Lighting* m_lig = nullptr;
+		render::model::SkinModelRender* m_unityChanModel = nullptr;
+		render::model::SkinModelRender* m_unityChanModel2 = nullptr;
+		render::model::SkinModelRender* m_backGroundModel = nullptr;
+		render::model::SkinModelRender* m_backGroundModel2 = nullptr;
+
+		render::sprite::SpriteRender* m_sampleSprite = nullptr;
+		
 		Vector3 m_pos = g_vec3Zero;
 
 		Quaternion m_qRot = g_quatIdentity;
@@ -45,9 +45,9 @@ namespace MainGame {
 
 		GameCamera* m_gameCamera = nullptr;
 
-		Render::Shadow* m_shadow = nullptr;
+		bool m_isDead = false;
 
-		Player::Player* m_player = nullptr;
+		player::Player* m_player = nullptr;
 
 		bool m_pause = false;
 	};

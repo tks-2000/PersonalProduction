@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "RenderingEngine.h"
 
-namespace Render {
+namespace render {
 	RenderingEngine::RenderingEngine()
 	{
-		m_lig = NewGO<Lighting>(0, LIGHTING_NAME);
-		m_shadow = NewGO<Shadow>(0, SHADOW_NAME);
-		m_postEffect = NewGO<PostEffect>(0, POST_EFFECT_NAME);
+		m_lig = NewGO<light::Lighting>(0, light::LIGHTING_NAME);
+		m_shadow = NewGO<shadow::Shadow>(0, shadow::SHADOW_NAME);
+		m_postEffect = NewGO<postEffect::PostEffect>(0, postEffect::POST_EFFECT_NAME);
 
 		//メインレンダリングターゲットを作成
 		m_mainRenderTarget.Create(
@@ -145,6 +145,10 @@ namespace Render {
 
 		//フレームバッファのコピーのスプライトを表示する
 		m_frameBufferSprite.Draw(rc);
+
+		for (int spriteNum = 0; spriteNum < m_drawSprites.size(); spriteNum++) {
+			m_drawSprites[spriteNum]->Draw(rc);
+		}
 	}
 
 	void RenderingEngine::SetDrawModel(Model* model)
@@ -162,6 +166,24 @@ namespace Render {
 		);
 		if (it != m_drawModels.end()) {
 			m_drawModels.erase(it);
+		}
+	}
+
+	void RenderingEngine::SetDrawSprite(Sprite* sprite)
+	{
+		m_drawSprites.push_back(sprite);
+	}
+
+	void RenderingEngine::DeleteSprite(Sprite* sprite)
+	{
+		std::vector<Sprite*>::iterator it;
+		it = std::find(
+			m_drawSprites.begin(),
+			m_drawSprites.end(),
+			sprite
+		);
+		if (it != m_drawSprites.end()) {
+			m_drawSprites.erase(it);
 		}
 	}
 }

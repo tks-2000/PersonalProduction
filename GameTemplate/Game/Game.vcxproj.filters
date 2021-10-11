@@ -260,6 +260,9 @@
     <ClCompile Include="PlayerRotation.cpp">
       <Filter>inGame\Player</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteRender.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -486,6 +489,12 @@
     </ClInclude>
     <ClInclude Include="PlayerRotation.h">
       <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderResource.h">
+      <Filter>MyEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

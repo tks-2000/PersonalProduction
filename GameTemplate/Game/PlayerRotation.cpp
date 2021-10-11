@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "PlayerRotation.h"
 
-namespace MainGame {
-	namespace Player {
+namespace mainGame {
+	namespace player {
 		Rotation::Rotation()
 		{
 

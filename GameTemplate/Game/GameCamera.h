@@ -3,7 +3,7 @@
 class Game;
 class Player;
 
-namespace MainGame {
+namespace mainGame {
 
 	/// @brief ゲーム中のカメラを制御するクラス
 	class GameCamera : public IGameObject
@@ -94,7 +94,7 @@ namespace MainGame {
 
 
 		/// @brief プレイヤー
-		Player::Player* m_player = nullptr;
+		player::Player* m_player = nullptr;
 	};
 
 }
