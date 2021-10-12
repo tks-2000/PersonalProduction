@@ -19,6 +19,7 @@
 #include "GameCamera.h"
 #include "Player.h"
 #include "PlayerAnimation.h"
+#include "DefensiveTarget.h"
 
 namespace {
 	const int PRIORITY_VERYLOW = 0;
@@ -31,5 +32,8 @@ namespace mainGame {
 	static const char* GAME_CAMERA_NAME = "GameCamera";
 	namespace player {
 		static const char* PLAYER_NAME = "Player";
+	}
+	namespace defensiveTarget {
+		static const char* DEFENSIVE_TARGET_NAME = "DefensiveTarget";
 	}
 }

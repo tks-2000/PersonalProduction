@@ -3,9 +3,13 @@
 class SkinModelRender;
 class SpriteRender;
 
+
 namespace mainGame {
 	namespace player {
 		class Player;
+	}
+	namespace defensiveTarget {
+		class DefensiveTarget;
 	}
 
 	class GameCamera;
@@ -50,6 +54,8 @@ namespace mainGame {
 		player::Player* m_player = nullptr;
 
 		bool m_pause = false;
+
+		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 	};
 
 }

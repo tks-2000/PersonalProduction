@@ -8,7 +8,8 @@ namespace mainGame {
 		//m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(0, GAME_CAMERA_NAME);
-		
+		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW,defensiveTarget::DEFENSIVE_TARGET_NAME);
+		m_defensiveTarget->Init();
 	}
 
 	Game::~Game()
@@ -34,7 +35,7 @@ namespace mainGame {
 		//);
 		//m_unityChanModel->CreateShadow();
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
-		m_unityChanModel2->Init("Assets/modelData/unityChan.tkm");
+		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
 		//_unityChanModel2->CreateShadow();
 		m_backGroundModel = NewGO<render::model::SkinModelRender>(0);
 		m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
@@ -86,9 +87,10 @@ namespace mainGame {
 		}
 
 		m_player->Execution();
-		m_gameCamera->Execution();
-
 		m_gameCamera->SetCameraTarget(m_player->GetPlayerPosition());
+		m_gameCamera->Execution();
+		m_defensiveTarget->Execution();
+		
 	}
 
 	void Game::Pause()

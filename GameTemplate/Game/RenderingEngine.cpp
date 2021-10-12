@@ -46,6 +46,7 @@ namespace render {
 		m_lig->SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 1000.0f);
+		m_lig->SetSpotLightPos(0, { 0.0f, 1000.0f, 0.0f });
 		m_lig->SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
 		m_lig->SetSpotLightColor(0, { 5.0f,5.0f,5.0f });
 		//m_shadow->SetLightCameraTarget({ 0.0f,0.0f,0.0f });

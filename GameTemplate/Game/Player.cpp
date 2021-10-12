@@ -2,9 +2,9 @@
 #include "Player.h"
 
 namespace {
-	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan.tkm";
+	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan/unityChan.tkm";
 
-	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan.tks";
+	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
 
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 }
