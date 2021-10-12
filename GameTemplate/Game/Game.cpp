@@ -43,10 +43,14 @@ namespace mainGame {
 		m_backGroundModel2->Init("Assets/modelData/bg/testStage.tkm");
 		m_backGroundModel2->CreateShadow();
 		m_backGroundModel2->SetPosition({ 0.0f,-1000.0f,0.0f });
-		
+
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
-		m_sampleSprite->Init("Assets/image/sample.dds",100,100);
+		m_sampleSprite->Init("Assets/image/sample.dds", 100, 100);
 		m_sampleSprite->SetPosition({ 500.0f,300.0f,0.0f });
+
+		m_sampleFont = NewGO<render::font::FontRender>(0);
+		m_sampleFont->Init(L"test");
+		m_sampleFont->SetPosition({ -500.0f, 300.0f });
 
 		return true;
 	}
@@ -69,12 +73,16 @@ namespace mainGame {
 		m_unityChanModel2->Execution();
 		m_backGroundModel->Execution();
 		m_backGroundModel2->Execution();
+		
+
 		if (g_pad[0]->IsTrigger(enButtonA)) {
 			DeleteGO(m_sampleSprite);
+			DeleteGO(m_sampleFont);
 			m_isDead = true;
 		}
 		if (m_isDead == false) {
 			m_sampleSprite->Execute();
+			m_sampleFont->Execution();
 		}
 
 		m_player->Execution();

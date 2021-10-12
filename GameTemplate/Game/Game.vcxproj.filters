@@ -263,6 +263,9 @@
     <ClCompile Include="SpriteRender.cpp">
       <Filter>MyEngine</Filter>
     </ClCompile>
+    <ClCompile Include="FontRender.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -494,6 +497,9 @@
       <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="RenderResource.h">
+      <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRender.h">
       <Filter>MyEngine</Filter>
     </ClInclude>
   </ItemGroup>

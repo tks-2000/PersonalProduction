@@ -28,7 +28,7 @@ namespace mainGame {
 		render::model::SkinModelRender* m_backGroundModel2 = nullptr;
 
 		render::sprite::SpriteRender* m_sampleSprite = nullptr;
-		
+		render::font::FontRender* m_sampleFont = nullptr;
 		Vector3 m_pos = g_vec3Zero;
 
 		Quaternion m_qRot = g_quatIdentity;

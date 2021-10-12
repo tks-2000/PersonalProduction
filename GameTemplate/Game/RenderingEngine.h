@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderResource.h"
+#include "FontRender.h"
 
 
 namespace render {
@@ -38,6 +39,14 @@ namespace render {
 		/// @param sprite 削除するスプライトのアドレス
 		void DeleteSprite(Sprite* sprite);
 
+		/// @brief 描画するフォントを追加
+		/// @param font 追加するフォントのアドレス
+		void SetDrawFont(font::FontData* fontdata);
+
+		/// @brief 描画しているフォントを削除
+		/// @param font 削除するフォントのアドレス
+		void DeleteFont(font::FontData* fontdata);
+
 	private:
 		
 		/// @brief ライティング
@@ -55,6 +64,9 @@ namespace render {
 
 		/// @brief 描画するスプライトの配列
 		std::vector<Sprite*> m_drawSprites;
+
+		/// @brief 描画するフォントの配列
+		std::vector<font::FontData*> m_drawFontsData;
 
 		/// @brief フレームバッファのスプライトの初期化情報
 		SpriteInitData m_frameBufferSpriteInitData;

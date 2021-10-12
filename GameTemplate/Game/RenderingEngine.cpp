@@ -146,8 +146,28 @@ namespace render {
 		//フレームバッファのコピーのスプライトを表示する
 		m_frameBufferSprite.Draw(rc);
 
+		//スプライトを描画
 		for (int spriteNum = 0; spriteNum < m_drawSprites.size(); spriteNum++) {
 			m_drawSprites[spriteNum]->Draw(rc);
+		}
+
+		//フォントを描画
+		for (int fontNum = 0; fontNum < m_drawFontsData.size(); fontNum++) {
+			m_drawFontsData[fontNum]->font.Begin(rc);
+			const wchar_t* text = nullptr;
+			if (m_drawFontsData[fontNum]->text.c_str() != nullptr) {
+				text = m_drawFontsData[fontNum]->text.c_str();
+			}
+			m_drawFontsData[fontNum]->font.Draw(
+				text,
+				m_drawFontsData[fontNum]->pos,
+				m_drawFontsData[fontNum]->color,
+				m_drawFontsData[fontNum]->rotation,
+				m_drawFontsData[fontNum]->scale,
+				m_drawFontsData[fontNum]->pivot
+			);
+			m_drawFontsData[fontNum]->font.End(rc);
+
 		}
 	}
 
@@ -184,6 +204,24 @@ namespace render {
 		);
 		if (it != m_drawSprites.end()) {
 			m_drawSprites.erase(it);
+		}
+	}
+
+	void RenderingEngine::SetDrawFont(font::FontData* fontData)
+	{
+		m_drawFontsData.push_back(fontData);
+	}
+
+	void RenderingEngine::DeleteFont(font::FontData* fontData)
+	{
+		std::vector<font::FontData*>::iterator it;
+		it = std::find(
+			m_drawFontsData.begin(),
+			m_drawFontsData.end(),
+			fontData
+		);
+		if (it != m_drawFontsData.end()) {
+			m_drawFontsData.erase(it);
 		}
 	}
 }
