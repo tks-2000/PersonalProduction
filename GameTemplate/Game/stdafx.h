@@ -20,6 +20,7 @@
 #include "Player.h"
 #include "PlayerAnimation.h"
 #include "DefensiveTarget.h"
+#include "Enemy.h"
 
 namespace {
 	const int PRIORITY_VERYLOW = 0;
@@ -35,5 +36,8 @@ namespace mainGame {
 	}
 	namespace defensiveTarget {
 		static const char* DEFENSIVE_TARGET_NAME = "DefensiveTarget";
+	}
+	namespace enemy {
+		static const char* ENEMY_NAME = "Enemy";
 	}
 }

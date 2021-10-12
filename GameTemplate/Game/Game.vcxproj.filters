@@ -57,6 +57,9 @@
     <Filter Include="inGame\Player">
       <UniqueIdentifier>{bba0f096-540d-475f-b3d5-078917721c53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="inGame\Enemy">
+      <UniqueIdentifier>{0a0f235f-e356-4b87-9fe9-b7a4cce08cef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -267,7 +270,16 @@
       <Filter>MyEngine</Filter>
     </ClCompile>
     <ClCompile Include="DefensiveTarget.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMove.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAttack.cpp">
+      <Filter>inGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,7 +518,16 @@
       <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="DefensiveTarget.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMove.h">
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAttack.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

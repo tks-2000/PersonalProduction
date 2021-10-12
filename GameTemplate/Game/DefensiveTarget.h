@@ -9,7 +9,11 @@ namespace mainGame {
 		public:
 			DefensiveTarget();
 			~DefensiveTarget();
+
+			/// @brief 初期化
 			void Init();
+
+			/// @brief 実行
 			void Execution();
 
 			/// @brief ダメージを受ける
@@ -24,17 +28,18 @@ namespace mainGame {
 			/// @return trueで破壊された falseで破壊されていない
 			bool IsBreak() { return m_isBreak; }
 		private:
-
+			/// @brief 初期化フラグ
 			bool m_isInitd = false;
-
+			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
-
+			/// @brief 拡大率
 			Vector3 m_scale = g_vec3One;
-
+			/// @brief 耐久力
 			int m_defensiveTargetHp = 0;
-
+			/// @brief 破壊フラグ
 			bool m_isBreak = false;
 
+			/// @brief モデル
 			render::model::SkinModelRender* m_defensiveTargetModel = nullptr;
 
 

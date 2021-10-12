@@ -11,6 +11,9 @@ namespace mainGame {
 	namespace defensiveTarget {
 		class DefensiveTarget;
 	}
+	namespace enemy {
+		class Enemy;
+	}
 
 	class GameCamera;
 
@@ -56,6 +59,8 @@ namespace mainGame {
 		bool m_pause = false;
 
 		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
+
+		enemy::Enemy* m_enemy = nullptr;
 	};
 
 }

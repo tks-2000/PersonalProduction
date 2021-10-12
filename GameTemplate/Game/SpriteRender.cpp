@@ -36,7 +36,8 @@ namespace render {
 
 			//レンダリングエンジンにスプライトを渡す
 			m_renderingEngine->SetDrawSprite(&m_sprite);
-
+			//初期化完了
+			m_isInitd = true;
 		}
 
 		bool SpriteRender::IsOpacity()
@@ -135,6 +136,11 @@ namespace render {
 
 		void SpriteRender::Execute()
 		{
+			//未初期化なら処理を行わない
+			if (m_isInitd == false) {
+				return;
+			}
+
 			//フェードを実行
 			Fade();
 

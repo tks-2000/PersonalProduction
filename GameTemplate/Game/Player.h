@@ -8,8 +8,7 @@ class SkinModelRender;
 
 namespace mainGame {
 	namespace player {
-		class Animation;
-
+		
 		/// @brief ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ğŒˆ‚ß‚é—ñ‹“Œ^
 		enum EnPlayerStates {
 			enPlayerIdle,

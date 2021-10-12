@@ -5,11 +5,12 @@ namespace mainGame {
 
 	Game::Game()
 	{
-		//m_lig = FindGO<Render::Lighting>(Render::LIGHTING_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
-		m_gameCamera = NewGO<GameCamera>(0, GAME_CAMERA_NAME);
+		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
 		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW,defensiveTarget::DEFENSIVE_TARGET_NAME);
-		m_defensiveTarget->Init();
+		m_enemy = NewGO<enemy::Enemy>(PRIORITY_VERYLOW,enemy::ENEMY_NAME);
+		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
+		m_sampleFont = NewGO<render::font::FontRender>(0);
 	}
 
 	Game::~Game()
@@ -21,19 +22,10 @@ namespace mainGame {
 	bool Game::Start()
 	{
 		m_pause = false;
-		//m_unityChanAnimationClip[enIdle].Load("Assets/animData/idle.tka");
-		//m_unityChanAnimationClip[enIdle].SetLoopFlag(true);
-		//m_unityChanAnimationClip[enWark].Load("Assets/animData/walk.tka");
-		//m_unityChanAnimationClip[enWark].SetLoopFlag(true);
-		//m_unityChanModel = NewGO<Render::SkinModelRender>(1);
-		//m_unityChanModel->Init(
-		//	"Assets/modelData/unityChan.tkm",
-		//	"Assets/modelData/unityChan.tks",
-		//	m_unityChanAnimationClip,
-		//	enAnimationNum,
-		//	enModelUpAxisY
-		//);
-		//m_unityChanModel->CreateShadow();
+
+		m_defensiveTarget->Init();
+		m_enemy->Init();
+		
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
 		//_unityChanModel2->CreateShadow();
@@ -45,11 +37,11 @@ namespace mainGame {
 		m_backGroundModel2->CreateShadow();
 		m_backGroundModel2->SetPosition({ 0.0f,-1000.0f,0.0f });
 
-		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
+		
 		m_sampleSprite->Init("Assets/image/sample.dds", 100, 100);
 		m_sampleSprite->SetPosition({ 500.0f,300.0f,0.0f });
 
-		m_sampleFont = NewGO<render::font::FontRender>(0);
+		
 		m_sampleFont->Init(L"test");
 		m_sampleFont->SetPosition({ -500.0f, 300.0f });
 
@@ -82,6 +74,10 @@ namespace mainGame {
 			m_isDead = true;
 		}
 		if (m_isDead == false) {
+			int hp = m_defensiveTarget->GetDefensiveTargetHp();
+			std::wstring conversion;
+			conversion = std::to_wstring(hp);
+			m_sampleFont->SetText(conversion.c_str());
 			m_sampleSprite->Execute();
 			m_sampleFont->Execution();
 		}
@@ -90,6 +86,7 @@ namespace mainGame {
 		m_gameCamera->SetCameraTarget(m_player->GetPlayerPosition());
 		m_gameCamera->Execution();
 		m_defensiveTarget->Execution();
+		m_enemy->Execution();
 		
 	}
 

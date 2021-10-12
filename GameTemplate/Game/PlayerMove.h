@@ -5,7 +5,7 @@ class Player;
 namespace mainGame {
 	class GameCamera;
 	namespace player {
-		
+		/// @brief プレイヤーの移動を制御するクラス
 		class Move
 		{
 		public:

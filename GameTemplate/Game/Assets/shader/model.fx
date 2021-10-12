@@ -133,7 +133,7 @@ float4x4 CalcSkinMatrix(SSkinVSIn skinVert)
         w += skinVert.Weights[i];
     }
     
-    skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
+    //skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
 	
     return skinning;
 }
