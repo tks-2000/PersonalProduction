@@ -42,7 +42,7 @@ namespace mainGame {
 			/// @brief ƒ‚ƒfƒ‹
 			render::model::SkinModelRender* m_defensiveTargetModel = nullptr;
 
-
+			PhysicsStaticObject m_staticDefensiveTargetObject;
 		};
 	}
 }

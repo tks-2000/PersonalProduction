@@ -2,12 +2,23 @@
 #include "EnemyMove.h"
 
 namespace {
-	const float MOVE_VEROCITY = 1.0f;
+	const float MOVE_VEROCITY = 5.0f;
 
 	const float MOVE_STOP_DISTANCE = 200.0f;
 
 	const float MOVE_START_TIME = 3.0f;
+
+	/// @brief ñÄéCóÕ
+	const float FRICTION = 0.03f;
+
+	const float ENEMY_GRAVITY = 30.0f;
+
+	/// @brief ìGÇÃè’ìÀîªíËÇÃîºåa
+	const float ENEMY_COLLISION_RADIUS = 50.0f;
+	/// @brief ìGÇÃè’ìÀîªíËÇÃçÇÇ≥
+	const float ENEMY_COLLISION_HEIGHT = 100.0f;
 }
+
 namespace mainGame {
 	namespace enemy {
 		Move::Move()
@@ -24,11 +35,12 @@ namespace mainGame {
 		{
 			m_enemy = FindGO<Enemy>(ENEMY_NAME);
 			m_position = pos;
+			m_charaCon.Init(ENEMY_COLLISION_RADIUS, ENEMY_COLLISION_HEIGHT, m_position);
 
 			m_isInitd = true;
 		}
 
-		Vector3 Move::MoveExecute(Vector3& pos)
+		const Vector3& Move::MoveExecute(Vector3& pos)
 		{
 			if (m_isInitd == false) {
 				return pos;
@@ -38,6 +50,8 @@ namespace mainGame {
 
 			m_targetDistance = m_toTarget.Length();
 
+			m_moveDirection.y = 0.0f;
+
 			m_moveDirection.Normalize();
 
 			if (m_moveDirection.Length() == 0.0f ||
@@ -46,18 +60,30 @@ namespace mainGame {
 				return pos;
 			}
 
-			m_moveSpeed = m_moveDirection * MOVE_VEROCITY;
+			m_moveSpeed += m_moveDirection * MOVE_VEROCITY;
 
-			pos += m_moveSpeed;
+			m_moveSpeed -= m_moveSpeed * FRICTION;
+
+			m_moveSpeed.y -= ENEMY_GRAVITY;
+
+			//pos += m_moveSpeed;
+
+			pos = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 
 			return pos;
 		}
 
-		void Move::IdleExecute()
+		const Vector3& Move::IdleExecute(Vector3& pos)
 		{
 			if (m_isInitd == false) {
-				return;
+				return pos;
 			}
+
+			m_moveSpeed -= m_moveSpeed * FRICTION;
+
+			m_moveSpeed.y -= ENEMY_GRAVITY;
+
+			pos = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 
 			m_moveStartTimer += g_gameTime->GetFrameDeltaTime();
 
@@ -67,6 +93,8 @@ namespace mainGame {
 
 				m_enemy->SetState(enEnemyMove);
 			}
+
+			return pos;
 		}
 
 		void Move::MoveStop()
@@ -74,11 +102,6 @@ namespace mainGame {
 			m_moveSpeed = g_vec3Zero;
 			m_moveDirection = g_vec3Zero;
 			m_moveTarget = m_position;
-		}
-
-		void Move::MoveExecute()
-		{
-			
 		}
 	}
 }

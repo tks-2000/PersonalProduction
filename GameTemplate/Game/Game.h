@@ -14,9 +14,13 @@ namespace mainGame {
 	namespace enemy {
 		class Enemy;
 	}
+	namespace stage {
+		class Stage;
+	}
 
 	class GameCamera;
 
+	//ƒQ[ƒ€’†‚Ì•¨‚ğ§Œä‚·‚éƒNƒ‰ƒX
 	class Game : public IGameObject
 	{
 	public:
@@ -61,6 +65,8 @@ namespace mainGame {
 		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 
 		enemy::Enemy* m_enemy = nullptr;
+
+		stage::Stage* m_stage = nullptr;
 	};
 
 }

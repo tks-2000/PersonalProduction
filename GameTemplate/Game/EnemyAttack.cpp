@@ -4,7 +4,7 @@
 
 namespace {
 
-	const int NORMAL_ATTACK_POWER = 10;
+	const int NORMAL_ATTACK_POWER = 1;
 
 	const float ATTACK_INTERVAL = 1.0f;
 }

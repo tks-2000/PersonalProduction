@@ -15,9 +15,13 @@ namespace mainGame {
 			/// @brief 初期化
 			void Init();
 
-			/// @brief 移動を実行する
+			/// @brief 待機中の処理を実行
+			const Vector3& IdleExecute(Vector3& pos);
+
+			/// @brief 移動処理を実行
+			/// @param pos 移動前の座標
 			/// @return 移動後の座標
-			const Vector3& MoveExecute();
+			const Vector3& MoveExecute(Vector3& pos);
 
 			/// @brief 移動方向を取得
 			/// @return 移動方向のconst参照
@@ -27,6 +31,9 @@ namespace mainGame {
 			/// @return 移動速度のconst参照
 			const Vector3& GetMoveSpssd() { return m_moveSpeed; }
 		private:
+
+			const Vector3& ApplyFriction(Vector3& speed);
+
 			/// @brief 初期化しているかどうかのフラグ
 			bool m_isInitd = false;
 
@@ -42,9 +49,10 @@ namespace mainGame {
 			Vector3 m_moveDirection = g_vec3Zero;
 			/// @brief 摩擦力
 			Vector3 m_friction = g_vec3Zero;
-
+			/// @brief 重力
+			float m_gravity = 0.0f;
+			/// @brief キャラクターコントローラー
 			CharacterController m_charaCon;
-
 			/// @brief ゲームカメラ
 			GameCamera* m_gameCamera = nullptr;
 			/// @brief プレイヤー

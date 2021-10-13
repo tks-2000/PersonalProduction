@@ -9,6 +9,8 @@ namespace mainGame {
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
 		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW,defensiveTarget::DEFENSIVE_TARGET_NAME);
 		m_enemy = NewGO<enemy::Enemy>(PRIORITY_VERYLOW,enemy::ENEMY_NAME);
+		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
+
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		m_sampleFont = NewGO<render::font::FontRender>(0);
 	}
@@ -25,12 +27,13 @@ namespace mainGame {
 
 		m_defensiveTarget->Init();
 		m_enemy->Init();
+		m_stage->Init();
 		
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
 		//_unityChanModel2->CreateShadow();
-		m_backGroundModel = NewGO<render::model::SkinModelRender>(0);
-		m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
+		//m_backGroundModel = NewGO<render::model::SkinModelRender>(0);
+		//m_backGroundModel->Init("Assets/modelData/bg/testStage.tkm");
 		//m_backGroundModel->CreateShadow();
 		m_backGroundModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_backGroundModel2->Init("Assets/modelData/bg/testStage.tkm");
@@ -64,13 +67,14 @@ namespace mainGame {
 		}
 
 		m_unityChanModel2->Execution();
-		m_backGroundModel->Execution();
+		//m_backGroundModel->Execution();
 		m_backGroundModel2->Execution();
 		
 
 		if (g_pad[0]->IsTrigger(enButtonA)) {
 			DeleteGO(m_sampleSprite);
 			DeleteGO(m_sampleFont);
+			
 			m_isDead = true;
 		}
 		if (m_isDead == false) {

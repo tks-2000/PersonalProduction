@@ -20,7 +20,7 @@ namespace render {
 
 			/// @brief ƒ‚ƒfƒ‹‚Ìó‘Ô‚ğ“üè
 			/// @return ƒ‚ƒfƒ‹‚ÌconstQÆ
-			const Model& GetModel() const { return m_model; }
+			Model& GetModel(){ return m_model; }
 
 
 

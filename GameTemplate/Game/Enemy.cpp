@@ -23,7 +23,7 @@ namespace mainGame {
 		{
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(ENEMY_MODEL_TKM_FILEPATH);
-			m_position = { 0.0f,0.0f,-700.0f };
+			m_position = { 0.0f,500.0f,1000.0f };
 
 			m_enemyMove.Init(m_position);
 			m_enemyAttack.Init();
@@ -41,13 +41,16 @@ namespace mainGame {
 			switch (m_state)
 			{
 			case enEnemyIdle: {
-				m_enemyMove.IdleExecute();
+				m_position = m_enemyMove.IdleExecute(m_position);
 			}break;
 			case enEnemyMove: {
 				m_position = m_enemyMove.MoveExecute(m_position);
 			}break;
 			case enEnemyAttack: {
 				m_enemyAttack.Execution();
+			}break;
+			case enEnemyStop: {
+
 			}break;
 			default:
 				break;

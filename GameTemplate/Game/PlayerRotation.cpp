@@ -13,11 +13,7 @@ namespace mainGame {
 		}
 		const Quaternion& Rotation::RotationUpdate(const Vector3& moveSpeed)
 		{
-			//移動速度の大きさが0のとき…
-			if (moveSpeed.Length() == 0.0f) {
-				//回転を実行しない
-				return m_qRot;
-			}
+			
 
 			//回転する前の角度を記憶しておく
 			m_oldAngle = m_angle;
@@ -26,6 +22,11 @@ namespace mainGame {
 			Vector3 direction = moveSpeed;
 			//Y方向の移動量を打ち消す
 			direction.y = 0.0f;
+			//移動速度の大きさが0のとき…
+			if (direction.Length() == 0.0f) {
+				//回転を実行しない
+				return m_qRot;
+			}
 			//正規化して方向ベクトルにする
 			direction.Normalize();
 

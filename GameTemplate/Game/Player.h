@@ -11,10 +11,15 @@ namespace mainGame {
 		
 		/// @brief プレイヤーの状態を決める列挙型
 		enum EnPlayerStates {
+			/// @brief 待機
 			enPlayerIdle,
+			/// @brief 歩く
 			enPlayerWark,
+			/// @brief 走る
 			enPlayerRun,
+			/// @brief ダメージ
 			enPlayerDamage,
+			/// @brief プレイヤーのステータスの合計数
 			enPlayerStateNum
 		};
 

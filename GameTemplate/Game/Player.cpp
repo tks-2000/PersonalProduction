@@ -7,6 +7,9 @@ namespace {
 	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
 
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
+
+	const Vector3 PLAYER_START_POS = { 0.0f,500.0f,0.0f };
+
 }
 namespace mainGame {
 	namespace player {
@@ -22,6 +25,7 @@ namespace mainGame {
 
 		bool Player::Start()
 		{
+			m_position = PLAYER_START_POS;
 			//データメンバクラスを初期化
 			m_playerMove.Init();
 			m_playerAnimation.Init();
@@ -48,9 +52,23 @@ namespace mainGame {
 
 		void Player::Execution()
 		{
-			//データメンバのクラスを更新する
-			m_position = m_playerMove.MoveExecute();
 
+			switch (m_playerState) {
+			case enPlayerIdle: {
+				m_position = m_playerMove.IdleExecute(m_position);
+			}break;
+			case enPlayerWark: {
+				m_position = m_playerMove.MoveExecute(m_position);
+			}break;
+			case enPlayerRun: {
+
+			}break;
+			case enPlayerDamage: {
+
+			}break;
+			}
+
+			//データメンバのクラスを更新する
 			m_qRot = m_playerRot.RotationUpdate(m_playerMove.GetMoveSpssd());
 
 			m_playerAnimation.AnimationUpdate();

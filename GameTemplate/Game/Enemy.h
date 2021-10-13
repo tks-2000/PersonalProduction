@@ -7,9 +7,15 @@ namespace mainGame {
 
 		/// @brief 敵の状態を表すステート
 		enum EnEnemyState {
+			/// @brief 待機
 			enEnemyIdle,
+			/// @brief 移動
 			enEnemyMove,
+			/// @brief 攻撃
 			enEnemyAttack,
+			/// @brief 停止
+			enEnemyStop,
+			/// @brief ステータスの合計数
 			enEnemyStateNum
 		};
 

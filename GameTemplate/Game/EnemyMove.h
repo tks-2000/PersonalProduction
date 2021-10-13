@@ -11,38 +11,53 @@ namespace mainGame{
 			Move();
 			~Move();
 
+			/// @brief 初期化
+			/// @param pos 初期座標
 			void Init(const Vector3& pos = g_vec3Zero);
 
-			Vector3 MoveExecute(Vector3& pos);
+			/// @brief 移動を実行
+			/// @param pos 移動する敵の座標
+			/// @return 移動した結果の座標
+			const Vector3& MoveExecute(Vector3& pos);
 
-			void IdleExecute();
+			/// @brief 待機中の処理を実行
+			const Vector3& IdleExecute(Vector3& pos);
 
+			/// @brief 移動目標を設定
+			/// @param target 移動する目標の座標
 			void SetMoveTarget(const Vector3& target) { m_moveTarget = target; }
 
+			/// @brief 座標を設定
+			/// @param pos 設定する座標
 			void SetPosition(const Vector3& pos) { m_position = pos; }
 
+			/// @brief 移動速度を取得
+			/// @return 移動速度のconst参照
+			const Vector3& GetMoveSpeed() { return m_moveSpeed; }
+
+			/// @brief 移動を停止
 			void MoveStop();
 
 		private:
-
-			void MoveExecute();
-
+			/// @brief 初期化フラグ
 			bool m_isInitd = false;
-
+			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
-
+			/// @brief 移動速度
 			Vector3 m_moveSpeed = g_vec3Zero;
-
+			/// @brief 移動目標
 			Vector3 m_moveTarget = g_vec3Zero;
-
+			/// @brief 移動目標へのベクトル
 			Vector3 m_toTarget = g_vec3Zero;
-
+			/// @brief 移動方向
 			Vector3 m_moveDirection = g_vec3Zero;
-
+			/// @brief 移動目標との距離
 			float m_targetDistance = 0.0f;
-
+			/// @brief 移動開始するまでの時間
 			float m_moveStartTimer = 0.0f;
 
+			CharacterController m_charaCon;
+			/// @brief 敵クラス
 			Enemy* m_enemy = nullptr;
 		};
 	}

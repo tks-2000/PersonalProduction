@@ -33,7 +33,10 @@ namespace mainGame {
 
 			//初期パラメーターを決定
 			m_defensiveTargetHp = MAX_HP;
-			m_scale = { 2.0f,2.0f,2.0f };
+			m_scale = { 1.0f,1.0f,1.0f };
+			m_defensiveTargetModel->Execution();
+
+			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
 			m_isInitd = true;
 		}
 
