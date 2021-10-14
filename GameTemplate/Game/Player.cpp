@@ -29,6 +29,7 @@ namespace mainGame {
 			//データメンバクラスを初期化
 			m_playerMove.Init();
 			m_playerAnimation.Init();
+			m_playerAttack.Init();
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -66,6 +67,10 @@ namespace mainGame {
 			case enPlayerDamage: {
 
 			}break;
+			}
+
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				m_playerAttack.Execute();
 			}
 
 			//データメンバのクラスを更新する

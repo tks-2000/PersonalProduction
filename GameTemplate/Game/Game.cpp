@@ -63,6 +63,7 @@ namespace mainGame {
 		else {
 			if (g_pad[0]->IsTrigger(enButtonStart)) {
 				m_pause = true;
+				return;
 			}
 		}
 
@@ -72,10 +73,10 @@ namespace mainGame {
 		
 
 		if (g_pad[0]->IsTrigger(enButtonA)) {
-			DeleteGO(m_sampleSprite);
-			DeleteGO(m_sampleFont);
+			/*DeleteGO(m_sampleSprite);
+			DeleteGO(m_sampleFont);*/
 			
-			m_isDead = true;
+			//m_isDead = true;
 		}
 		if (m_isDead == false) {
 			int hp = m_defensiveTarget->GetDefensiveTargetHp();

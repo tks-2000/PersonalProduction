@@ -2,6 +2,7 @@
 #include "PlayerMove.h"
 #include "PlayerAnimation.h"
 #include "PlayerRotation.h"
+#include "PlayerAttack.h"
 
 class SkinModelRender;
 
@@ -23,6 +24,7 @@ namespace mainGame {
 			enPlayerStateNum
 		};
 
+		/// @brief 操作するプレイヤーの機能をまとめたクラス
 		class Player : public IGameObject
 		{
 		public:
@@ -48,6 +50,10 @@ namespace mainGame {
 			/// @brief プレイヤーの回転角度変化量を元に戻す
 			void ResetAngle(){ m_playerRot.AngleReset(); }
 
+			/// @brief 敵の情報をセット
+			/// @param enemy セットする敵クラスのアドレス
+			void SetEnemyData(enemy::Enemy* enemy) { m_playerAttack.AddEnemyData(enemy); }
+
 			/// @brief 実行
 			void Execution();
 
@@ -66,6 +72,8 @@ namespace mainGame {
 			Move m_playerMove;
 			/// @brief 回転
 			Rotation m_playerRot;
+			/// @brief 攻撃
+			Attack m_playerAttack;
 		};
 	}
 }

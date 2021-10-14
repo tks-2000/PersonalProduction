@@ -292,8 +292,10 @@
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="DefensiveTarget.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyAnimation.cpp" />
     <ClCompile Include="EnemyAttack.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="EnemyRotation.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -302,6 +304,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAnimation.cpp" />
+    <ClCompile Include="PlayerAttack.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerRotation.cpp" />
     <ClCompile Include="PostEffect.cpp" />
@@ -384,8 +387,10 @@
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="DefensiveTarget.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyAnimation.h" />
     <ClInclude Include="EnemyAttack.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="EnemyRotation.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
@@ -393,6 +398,7 @@
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAnimation.h" />
+    <ClInclude Include="PlayerAttack.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerRotation.h" />
     <ClInclude Include="PostEffect.h" />

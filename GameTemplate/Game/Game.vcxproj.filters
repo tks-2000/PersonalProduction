@@ -282,7 +282,16 @@
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttack.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAnimation.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRotation.cpp">
+      <Filter>inGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,7 +542,16 @@
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Stage.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttack.h">
+      <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAnimation.h">
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRotation.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -42,6 +42,7 @@ namespace mainGame {
 			/// @brief モデル
 			render::model::SkinModelRender* m_defensiveTargetModel = nullptr;
 
+			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticDefensiveTargetObject;
 		};
 	}

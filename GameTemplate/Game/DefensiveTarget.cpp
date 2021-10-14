@@ -36,6 +36,7 @@ namespace mainGame {
 			m_scale = { 1.0f,1.0f,1.0f };
 			m_defensiveTargetModel->Execution();
 
+			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ðì¬
 			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
 			m_isInitd = true;
 		}

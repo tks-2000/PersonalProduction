@@ -18,11 +18,15 @@ namespace mainGame {
 
 		void Stage::Init()
 		{
+			//既に初期化されていたら実行しない
 			if (m_isInitd == true) {
 				return;
 			}
+			//モデルを表示
 			m_stageModel = NewGO <render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_stageModel->Init(STAGE_MODEL_TKM_FILEPATH);
+			m_stageModel->Execution();
+			//モデルの情報から当たり判定を作成
 			m_staticStageObject.CreateFromModel(m_stageModel->GetModel(), m_stageModel->GetModelWorldMatrix());
 			m_isInitd = true;
 		}

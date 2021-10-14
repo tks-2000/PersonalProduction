@@ -6,6 +6,7 @@
  ///////////////////////////////////////////////
 static const int NUM_SPOT_LIGHT = 4;
 static const int NUM_POINT_LIGHT = 5;
+static const float PI = 3.1415926f;
 ////////////////////////////////////////////////
 // 構造体
 ////////////////////////////////////////////////
@@ -133,7 +134,7 @@ float4x4 CalcSkinMatrix(SSkinVSIn skinVert)
         w += skinVert.Weights[i];
     }
     
-    //skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
+    skinning += g_boneMatrix[skinVert.Indices[3]] * (1.0f - w);
 	
     return skinning;
 }

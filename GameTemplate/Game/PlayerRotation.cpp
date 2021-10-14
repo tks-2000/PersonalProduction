@@ -5,7 +5,8 @@ namespace mainGame {
 	namespace player {
 		Rotation::Rotation()
 		{
-
+			//–¢‰Šú‰»‚ÅŠJn
+			m_isInitd = false;
 		}
 		Rotation::~Rotation()
 		{

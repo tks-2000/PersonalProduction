@@ -21,9 +21,10 @@ namespace mainGame {
 			/// @brief 角度の変化量を元に戻す
 			void AngleReset() { m_angleAmount = 0.0f; }
 		private:
+			/// @brief 初期化フラグ
+			bool m_isInitd = false;
 			/// @brief 回転クォータニオン
 			Quaternion m_qRot = g_quatIdentity;
-
 			/// @brief 角度
 			float m_angle = 0.0f;
 			/// @brief 変化する前の角度
