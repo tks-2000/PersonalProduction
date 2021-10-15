@@ -24,6 +24,8 @@ namespace mainGame {
 		/// @brief アニメーション補完率
 		const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 
+		const float DELETE_TIME = 5.0f;
+
 		Enemy::Enemy()
 		{
 			//未初期化で開始
@@ -32,14 +34,17 @@ namespace mainGame {
 
 		Enemy::~Enemy()
 		{
-
+			m_player->DeleteEnemyData(this);
+			DeleteGO(m_enemyModel);
 		}
 
-		void Enemy::Init(const EnEnemyType& type,const Vector3& pos)
+		void Enemy::Init(const int num, const EnEnemyType& type,const Vector3& pos)
 		{
 			if (m_isInitd == true || type == enEnemyTypeNum) {
 				return;
 			}
+
+			m_enemyNum = num;
 
 			m_enemyType = type;
 
@@ -48,10 +53,10 @@ namespace mainGame {
 			//体力
 			m_hp = MAX_HP;
 			//メンバクラスを初期化
-			m_enemyMove.Init(type,m_position);
-			m_enemyRotation.Init();
+			m_enemyMove.Init(num,type,m_position);
+			m_enemyRotation.Init(num);
 			m_enemyAttack.Init(type);
-			m_enemyAnimation.Init();
+			m_enemyAnimation.Init(num);
 
 			//モデルをアニメーション有りで初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -62,6 +67,8 @@ namespace mainGame {
 				m_enemyAnimation.GetAnimationNum(),
 				enModelUpAxisY
 			);
+
+			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
 
 			//プレイヤーの情報を入手
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
@@ -103,6 +110,7 @@ namespace mainGame {
 				//ダウン
 			case enEnemyDown: {
 				m_position = m_enemyMove.MoveStop(m_position);
+				DownExecution();
 			}break;
 			default:
 				break;
@@ -134,6 +142,16 @@ namespace mainGame {
 				//ダウン状態に移行
 				m_state = enEnemyDown;
 				m_hp = 0;
+			}
+		}
+
+		void Enemy::DownExecution()
+		{
+			m_deleteTimer += g_gameTime->GetFrameDeltaTime();
+
+			if (m_deleteTimer > DELETE_TIME) {
+				m_generator->DeleteEnemy(this,m_enemyNum);
+				DeleteGO(this);
 			}
 		}
 	}

@@ -13,9 +13,9 @@ namespace mainGame {
 
 		}
 
-		void Rotation::Init()
+		void Rotation::Init(const int num)
 		{
-			m_enemy = FindGO<Enemy>(ENEMY_NAME);
+			m_enemy = FindGO<Enemy>(ENEMY_NAMES[num]);
 
 			m_isInitd = true;
 		}

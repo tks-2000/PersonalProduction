@@ -12,6 +12,7 @@ namespace mainGame {
 		class DefensiveTarget;
 	}
 	namespace enemy {
+		class Generator;
 		class Enemy;
 	}
 	namespace stage {
@@ -63,6 +64,8 @@ namespace mainGame {
 		bool m_pause = false;
 
 		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
+
+		enemy::Generator* m_enemyGenerator = nullptr;
 
 		enemy::Enemy* m_enemy = nullptr;
 

@@ -54,6 +54,10 @@ namespace mainGame {
 			/// @param enemy セットする敵クラスのアドレス
 			void SetEnemyData(enemy::Enemy* enemy) { m_playerAttack.AddEnemyData(enemy); }
 
+			/// @brief 敵の情報を削除
+			/// @param enemy 削除する敵クラスのアドレス
+			void DeleteEnemyData(enemy::Enemy* enemy) { m_playerAttack.DeleteEnemyData(enemy); }
+
 			/// @brief 実行
 			void Execution();
 

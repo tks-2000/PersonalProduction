@@ -21,6 +21,7 @@
 #include "PlayerAnimation.h"
 #include "DefensiveTarget.h"
 #include "Enemy.h"
+#include "EnemyGenerator.h"
 #include "Stage.h"
 
 namespace {
@@ -40,7 +41,23 @@ namespace mainGame {
 		static const char* DEFENSIVE_TARGET_NAME = "DefensiveTarget";
 	}
 	namespace enemy {
+
+		static const char* ENEMY_GENERATOR_NAME = "EnemyGenerator";
+
 		static const char* ENEMY_NAME = "Enemy";
+
+		static const char* ENEMY_NAMES[MAX_ENEMY_NUM] = { 
+			"Enemy1",
+			"Enemy2",
+			"Enemy3",
+			"Enemy4",
+			"Enemy5",
+			"Enemy6",
+			"Enemy7",
+			"Enemy8",
+			"Enemy9",
+			"Enemy10"
+		};
 	}
 	namespace stage {
 		static const char* STAGE_NAME = "Stage";

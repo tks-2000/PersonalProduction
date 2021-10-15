@@ -5,7 +5,7 @@ namespace {
 	/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
 	const int NORMAL_ATTACK_DAMAGE = 1;
 	/// @brief “G‚É—^‚¦‚éÕŒ‚—Í
-	const float NORMAL_ATTACK_POWER = 500.0f;
+	const float NORMAL_ATTACK_POWER = 1000.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 
@@ -63,6 +63,19 @@ namespace mainGame {
 					m_enemys[enemyNum]->SetState(enemy::enEnemyDamage);
 					m_enemys[enemyNum]->ReceiveDamage(NORMAL_ATTACK_DAMAGE);
 				}
+			}
+		}
+
+		void Attack::DeleteEnemyData(enemy::Enemy* enemy)
+		{
+			std::vector<enemy::Enemy*>::iterator it;
+			it = std::find(
+				m_enemys.begin(),
+				m_enemys.end(),
+				enemy
+			);
+			if (it != m_enemys.end()) {
+				m_enemys.erase(it);
 			}
 		}
 	}

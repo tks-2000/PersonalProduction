@@ -14,7 +14,7 @@ namespace mainGame {
 
 	namespace enemy {
 
-		
+		class Generator;
 
 		/// @brief 敵の状態を表すステート
 		enum EnEnemyState {
@@ -40,7 +40,7 @@ namespace mainGame {
 			~Enemy();
 
 			/// @brief 初期化
-			void Init(const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
+			void Init(const int num, const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
 
 			/// @brief 実行
 			void Execution();
@@ -66,6 +66,9 @@ namespace mainGame {
 			const EnEnemyState& GetState() { return m_state; }
 
 		private:
+
+			void DownExecution();
+
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 座標
@@ -90,6 +93,12 @@ namespace mainGame {
 			int m_hp = 0;
 			/// @brief プレイヤークラス
 			player::Player* m_player = nullptr;
+			/// @brief 自分の番号
+			int m_enemyNum = 0;
+			/// @brief ダウンしてから自身が削除されるまでの時間
+			float m_deleteTimer = 0.0;
+
+			Generator* m_generator = nullptr;
 		};
 	}
 }

@@ -23,6 +23,10 @@ namespace mainGame {
 			/// @brief 敵の情報を入手
 			/// @param enemy 敵クラスのアドレス
 			void AddEnemyData(enemy::Enemy* enemy) { m_enemys.push_back(enemy); }
+
+			/// @brief 敵の情報を削除
+			/// @param enemy 敵クラスのアドレス
+			void DeleteEnemyData(enemy::Enemy* enemy);
 		private:
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;

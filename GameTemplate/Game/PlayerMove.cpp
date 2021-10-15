@@ -13,9 +13,9 @@ namespace {
 	/// @brief プレイヤーの重力
 	const float PLAYER_GRAVITY = 30.0f;
 	/// @brief プレイヤーの衝突判定の半径
-	const float PLAYER_COLLISION_RADIUS = 50.0f;
+	const float PLAYER_COLLISION_RADIUS = 30.0f;
 	/// @brief プレイヤーの衝突判定の高さ
-	const float PLAYER_COLLISION_HEIGHT = 100.0f;
+	const float PLAYER_COLLISION_HEIGHT = 50.0f;
 }
 
 namespace mainGame {

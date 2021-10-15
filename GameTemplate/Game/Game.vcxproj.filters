@@ -293,6 +293,9 @@
     <ClCompile Include="EnemyRotation.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyGenerator.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -554,7 +557,10 @@
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyResource.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGenerator.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

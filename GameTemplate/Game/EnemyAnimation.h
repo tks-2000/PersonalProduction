@@ -30,7 +30,7 @@ namespace mainGame {
 			~Animation();
 
 			/// @brief 初期化
-			void Init();
+			void Init(const int num);
 			/// @brief アニメーションの更新
 			void AnimationUpdate();
 

@@ -26,10 +26,10 @@ namespace mainGame {
 
 		}
 
-		void Animation::Init()
+		void Animation::Init(const int num)
 		{
 			//“G‚Ìî•ñ‚ğ“üè
-			m_enemy = FindGO<Enemy>(ENEMY_NAME);
+			m_enemy = FindGO<Enemy>(ENEMY_NAMES[num]);
 
 			m_isInitd = true;
 		}

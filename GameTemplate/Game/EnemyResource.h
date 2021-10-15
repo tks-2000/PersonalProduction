@@ -12,5 +12,6 @@ namespace mainGame{
 			/// @brief “G‚Ìí—Ş‚Ì‡Œv”
 			enEnemyTypeNum
 		};
+		static const int MAX_ENEMY_NUM = 10;
 	}
 }

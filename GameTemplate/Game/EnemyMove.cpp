@@ -17,9 +17,9 @@ namespace {
 	/// @brief 重力
 	const float ENEMY_GRAVITY = 30.0f;
 	/// @brief 敵の衝突判定の半径
-	const float ENEMY_COLLISION_RADIUS = 50.0f;
+	const float ENEMY_COLLISION_RADIUS = 30.0f;
 	/// @brief 敵の衝突判定の高さ
-	const float ENEMY_COLLISION_HEIGHT = 100.0f;
+	const float ENEMY_COLLISION_HEIGHT = 50.0f;
 }
 
 namespace mainGame {
@@ -35,7 +35,7 @@ namespace mainGame {
 
 		}
 
-		void Move::Init(const EnEnemyType& type, const Vector3& pos)
+		void Move::Init(const int num, const EnEnemyType& type, const Vector3& pos)
 		{
 			//初期化済みなら実行しない
 			if (m_isInitd == true) {
@@ -59,7 +59,7 @@ namespace mainGame {
 			}
 
 			//情報を取得
-			m_enemy = FindGO<Enemy>(ENEMY_NAME);
+			m_enemy = FindGO<Enemy>(ENEMY_NAMES[num]);
 			//キャラクターコントローラーを初期化
 			m_charaCon.Init(ENEMY_COLLISION_RADIUS, ENEMY_COLLISION_HEIGHT,pos);
 

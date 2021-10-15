@@ -294,6 +294,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAnimation.cpp" />
     <ClCompile Include="EnemyAttack.cpp" />
+    <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="EnemyRotation.cpp" />
     <ClCompile Include="FontRender.cpp" />
@@ -389,6 +390,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyAnimation.h" />
     <ClInclude Include="EnemyAttack.h" />
+    <ClInclude Include="EnemyGenerator.h" />
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="EnemyResource.h" />
     <ClInclude Include="EnemyRotation.h" />

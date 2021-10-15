@@ -12,7 +12,7 @@ namespace mainGame {
 			Rotation();
 			~Rotation();
 
-			void Init();
+			void Init(const int num);
 			const Quaternion& RotationExecute(const Vector3& speed);
 		private:
 

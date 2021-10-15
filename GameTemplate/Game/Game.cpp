@@ -9,6 +9,7 @@ namespace mainGame {
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
 		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW,defensiveTarget::DEFENSIVE_TARGET_NAME);
 		m_enemy = NewGO<enemy::Enemy>(PRIORITY_VERYLOW,enemy::ENEMY_NAME);
+		m_enemyGenerator = NewGO<enemy::Generator>(PRIORITY_VERYLOW, enemy::ENEMY_GENERATOR_NAME);
 		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
 
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
@@ -26,7 +27,8 @@ namespace mainGame {
 		m_pause = false;
 
 		m_defensiveTarget->Init();
-		m_enemy->Init(enemy::enEnemyTypeNormal, { 0.0f,500.0f,1000.0f });
+		//m_enemy->Init(enemy::enEnemyTypeNormal, { 0.0f,500.0f,1000.0f });
+		m_enemyGenerator->Init({ 0.0f,500.0f,1000.0f });
 		m_stage->Init();
 		
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
@@ -91,8 +93,8 @@ namespace mainGame {
 		m_gameCamera->SetCameraTarget(m_player->GetPlayerPosition());
 		m_gameCamera->Execution();
 		m_defensiveTarget->Execution();
-		m_enemy->Execution();
-		
+		//m_enemy->Execution();
+		m_enemyGenerator->Execute();
 	}
 
 	void Game::Pause()

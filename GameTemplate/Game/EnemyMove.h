@@ -19,7 +19,7 @@ namespace mainGame{
 
 			/// @brief ‰Šú‰»
 			/// @param pos ‰ŠúÀ•W
-			void Init(const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
+			void Init(const int num, const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
 
 			/// @brief ˆÚ“®‚ğÀs
 			/// @param pos ˆÚ“®‚·‚é“G‚ÌÀ•W
