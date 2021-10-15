@@ -3,6 +3,7 @@
 #include "EnemyAttack.h"
 #include "EnemyAnimation.h"
 #include "EnemyRotation.h"
+#include "EnemyResource.h"
 
 namespace mainGame {
 
@@ -12,6 +13,8 @@ namespace mainGame {
 	}
 
 	namespace enemy {
+
+		
 
 		/// @brief 敵の状態を表すステート
 		enum EnEnemyState {
@@ -37,7 +40,7 @@ namespace mainGame {
 			~Enemy();
 
 			/// @brief 初期化
-			void Init();
+			void Init(const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
 
 			/// @brief 実行
 			void Execution();
@@ -79,7 +82,9 @@ namespace mainGame {
 			Attack m_enemyAttack;
 			/// @brief 敵のアニメーション
 			Animation m_enemyAnimation;
-			/// @brief ステート
+			/// @brief 自分の種類を表す列挙型
+			EnEnemyType m_enemyType = enEnemyTypeNum;
+			/// @brief 状態を表すステート
 			EnEnemyState m_state = enEnemyIdle;
 			/// @brief 体力
 			int m_hp = 0;

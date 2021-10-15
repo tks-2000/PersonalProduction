@@ -3,8 +3,12 @@
 
 
 namespace {
-	/// @brief UŒ‚—Í
-	const int NORMAL_ATTACK_POWER = 1;
+	/// @brief ’Êí‚ÌUŒ‚—Í
+	const int NORMAL_ATTACK_POWER = 2;
+	/// @brief ‹­‚¢UŒ‚—Í
+	const int POWERFUL_ATTACK_POWER = 3;
+	/// @brief ã‚¢UŒ‚—Í
+	const int WEAK_ATTTACK_POWER = 1;
 	/// @brief UŒ‚ŠÔŠu
 	const float ATTACK_INTERVAL = 1.0f;
 }
@@ -22,15 +26,30 @@ namespace mainGame {
 
 		}
 
-		void Attack::Init()
+		void Attack::Init(const EnEnemyType& type)
 		{
 			//‰Šú‰»Ï‚İ‚È‚çÀs‚µ‚È‚¢
 			if (m_isInitd == true) {
 				return;
 			}
 
+			switch (type)
+			{
+			case enEnemyTypeNormal: {
+				m_attackPower = NORMAL_ATTACK_POWER;
+			}break;
+			case enEnemyTypePowerful: {
+				m_attackPower = POWERFUL_ATTACK_POWER;
+			}break;
+			case enEnemyTypeFast: {
+				m_attackPower = WEAK_ATTTACK_POWER;
+			}break;
+			default:
+				return;
+				break;
+			}
 			//‰Šúƒpƒ‰ƒ[ƒ^[‚Æî•ñ‚ğŒˆ’è
-			m_attackPower = NORMAL_ATTACK_POWER;
+			
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 
 			//‰Šú‰»Š®—¹

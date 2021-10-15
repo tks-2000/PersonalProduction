@@ -2,17 +2,20 @@
 #include "EnemyMove.h"
 
 namespace {
-	const float MOVE_VEROCITY = 5.0f;
-
+	/// @brief 通常の移動速度
+	const float NORMAL_MOVE_VEROCITY = 5.0f;
+	/// @brief 速い移動速度
+	const float FAST_MOVE_VEROCITY = 7.5f;
+	/// @brief 遅い移動速度
+	const float SLOW_MOVE_VEROCITY = 2.5f;
+	/// @brief 停止距離
 	const float MOVE_STOP_DISTANCE = 200.0f;
-
+	/// @brief 停止時間
 	const float MOVE_START_TIME = 3.0f;
-
 	/// @brief 摩擦力
 	const float FRICTION = 0.03f;
-
+	/// @brief 重力
 	const float ENEMY_GRAVITY = 30.0f;
-
 	/// @brief 敵の衝突判定の半径
 	const float ENEMY_COLLISION_RADIUS = 50.0f;
 	/// @brief 敵の衝突判定の高さ
@@ -32,8 +35,29 @@ namespace mainGame {
 
 		}
 
-		void Move::Init(const Vector3& pos)
+		void Move::Init(const EnEnemyType& type, const Vector3& pos)
 		{
+			//初期化済みなら実行しない
+			if (m_isInitd == true) {
+				return;
+			}
+
+			switch(type)
+			{
+			case enEnemyTypeNormal: {
+				m_moveVerocity = NORMAL_MOVE_VEROCITY;
+			}break;
+			case enEnemyTypePowerful: {
+				m_moveVerocity = SLOW_MOVE_VEROCITY;
+			}break;
+			case enEnemyTypeFast: {
+				m_moveVerocity = FAST_MOVE_VEROCITY;
+			}break;
+			default:
+				return;
+				break;
+			}
+
 			//情報を取得
 			m_enemy = FindGO<Enemy>(ENEMY_NAME);
 			//キャラクターコントローラーを初期化
@@ -72,7 +96,7 @@ namespace mainGame {
 			}
 
 			//移動方向から移動速度を決める
-			m_moveSpeed += m_moveDirection * MOVE_VEROCITY;
+			m_moveSpeed += m_moveDirection * m_moveVerocity;
 
 			//移動速度に応じた摩擦力を加える
 			m_moveSpeed -= m_moveSpeed * FRICTION;

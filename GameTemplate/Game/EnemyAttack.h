@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Enemy.h"
 
 
 namespace mainGame {
@@ -18,7 +18,7 @@ namespace mainGame {
 			Attack();
 			~Attack();
 			/// @brief ‰Šú‰»
-			void Init();
+			void Init(const EnEnemyType& type);
 			/// @brief Às
 			void Execution();
 		private:

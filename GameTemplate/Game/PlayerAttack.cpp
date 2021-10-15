@@ -5,7 +5,7 @@ namespace {
 	/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
 	const int NORMAL_ATTACK_DAMAGE = 1;
 	/// @brief “G‚É—^‚¦‚éÕŒ‚—Í
-	const float NORMAL_ATTACK_POWER = 300.0f;
+	const float NORMAL_ATTACK_POWER = 500.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 

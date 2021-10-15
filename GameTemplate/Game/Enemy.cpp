@@ -2,19 +2,28 @@
 #include "Enemy.h"
 
 namespace {
-	/// @brief 敵モデルのファイルパス
-	const char* ENEMY_MODEL_TKM_FILEPATH = "Assets/modelData/unityChan/utc_red.tkm";
-	/// @brief 敵モデルのスケルトンファイルパス
-	const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
-	/// @brief 敵の最大体力
-	const int MAX_HP = 3;
-	/// @brief アニメーション補完率
-	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
+	
 	
 }
 
 namespace mainGame {
 	namespace enemy {
+
+		/// @brief 敵モデルのファイルパス
+		const char* ENEMY_MODEL_TKM_FILEPATH[enEnemyTypeNum] = {
+			"Assets/modelData/unityChan/utc_green.tkm",
+			"Assets/modelData/unityChan/utc_red.tkm",
+			"Assets/modelData/unityChan/utc_blue.tkm"
+		};
+
+
+		/// @brief 敵モデルのスケルトンファイルパス
+		const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+		/// @brief 敵の最大体力
+		const int MAX_HP = 3;
+		/// @brief アニメーション補完率
+		const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
+
 		Enemy::Enemy()
 		{
 			//未初期化で開始
@@ -26,22 +35,28 @@ namespace mainGame {
 
 		}
 
-		void Enemy::Init()
+		void Enemy::Init(const EnEnemyType& type,const Vector3& pos)
 		{
+			if (m_isInitd == true || type == enEnemyTypeNum) {
+				return;
+			}
+
+			m_enemyType = type;
+
 			//初期座標を設定
-			m_position = { 0.0f,500.0f,1000.0f };
+			m_position = pos;
 			//体力
 			m_hp = MAX_HP;
 			//メンバクラスを初期化
-			m_enemyMove.Init(m_position);
+			m_enemyMove.Init(type,m_position);
 			m_enemyRotation.Init();
-			m_enemyAttack.Init();
+			m_enemyAttack.Init(type);
 			m_enemyAnimation.Init();
 
 			//モデルをアニメーション有りで初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
-				ENEMY_MODEL_TKM_FILEPATH,
+				ENEMY_MODEL_TKM_FILEPATH[type],
 				ENEMY_MODEL_TKS_FILEPATH,
 				m_enemyAnimation.GetAnimationClip(),
 				m_enemyAnimation.GetAnimationNum(),

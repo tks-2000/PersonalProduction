@@ -553,5 +553,8 @@
     <ClInclude Include="EnemyRotation.h">
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyResource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

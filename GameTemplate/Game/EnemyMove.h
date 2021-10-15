@@ -1,8 +1,14 @@
 #pragma once
+#include "Enemy.h"
+#include "EnemyResource.h"
+
 namespace mainGame{
 	namespace enemy {
 
 		class Enemy;
+
+		
+
 
 		/// @brief 敵の移動を制御するクラス
 		class Move
@@ -13,7 +19,7 @@ namespace mainGame{
 
 			/// @brief 初期化
 			/// @param pos 初期座標
-			void Init(const Vector3& pos = g_vec3Zero);
+			void Init(const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
 
 			/// @brief 移動を実行
 			/// @param pos 移動する敵の座標
@@ -46,6 +52,8 @@ namespace mainGame{
 			bool m_isInitd = false;
 			/// @brief 移動速度
 			Vector3 m_moveSpeed = g_vec3Zero;
+			/// @brief 速度
+			float m_moveVerocity = 0.0f;
 			/// @brief 移動目標
 			Vector3 m_moveTarget = g_vec3Zero;
 			/// @brief 移動目標へのベクトル

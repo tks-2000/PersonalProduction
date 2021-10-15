@@ -26,7 +26,7 @@ namespace mainGame {
 		m_pause = false;
 
 		m_defensiveTarget->Init();
-		m_enemy->Init();
+		m_enemy->Init(enemy::enEnemyTypeNormal, { 0.0f,500.0f,1000.0f });
 		m_stage->Init();
 		
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);

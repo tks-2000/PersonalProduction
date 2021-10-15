@@ -390,6 +390,7 @@
     <ClInclude Include="EnemyAnimation.h" />
     <ClInclude Include="EnemyAttack.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="EnemyResource.h" />
     <ClInclude Include="EnemyRotation.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />

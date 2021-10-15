@@ -1,4 +1,5 @@
 #pragma once
+#include "EnemyResource.h"
 
 namespace mainGame {
 	namespace enemy {
