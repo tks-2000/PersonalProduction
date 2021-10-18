@@ -17,7 +17,7 @@ namespace mainGame {
 		void Rotation::Init(Enemy* enemy)
 		{
 			//ó‚¯æ‚Á‚½”Ô†‚Ì“GƒNƒ‰ƒXî•ñ‚ğ“üè
-			m_enemy = enemy;//FindGO<Enemy>(ENEMY_NAMES[num]);
+			m_enemy = enemy;
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;

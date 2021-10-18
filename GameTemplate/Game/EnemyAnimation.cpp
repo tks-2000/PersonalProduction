@@ -29,7 +29,7 @@ namespace mainGame {
 		void Animation::Init(Enemy* enemy)
 		{
 			//“G‚Ìî•ñ‚ğ“üè
-			m_enemy = enemy;//FindGO<Enemy>(ENEMY_NAMES[num]);
+			m_enemy = enemy;
 
 			m_isInitd = true;
 		}

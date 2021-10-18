@@ -5,7 +5,7 @@ namespace {
 	/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
 	const int NORMAL_ATTACK_DAMAGE = 1;
 	/// @brief “G‚É—^‚¦‚éÕŒ‚—Í
-	const float NORMAL_ATTACK_POWER = 1000.0f;
+	const float NORMAL_ATTACK_POWER = 5000.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 
@@ -32,7 +32,7 @@ namespace mainGame {
 			}
 
 			//î•ñ‚ğ“üè
-			m_player = pl;//FindGO<Player>(PLAYER_NAME);
+			m_player = pl;
 			m_attackPower = NORMAL_ATTACK_POWER;
 			m_attackRange = ATTACK_RANGE;
 

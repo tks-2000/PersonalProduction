@@ -28,7 +28,7 @@ namespace mainGame {
 		void Animation::Init(Player* pl)
 		{
 			//ƒf[ƒ^‚ğæ“¾
-			m_player = pl;//FindGO<Player>(PLAYER_NAME);
+			m_player = pl;
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;
@@ -51,7 +51,7 @@ namespace mainGame {
 				m_playerAnimState = enPlayerAnimationWark;
 			}break;
 			case enPlayerRun: {
-				//m_playerAnimState = enPlayerAnimationNum;
+				
 			}break;
 			case enPlayerDamage: {
 				m_playerAnimState = enPlayerAnimationIdle;

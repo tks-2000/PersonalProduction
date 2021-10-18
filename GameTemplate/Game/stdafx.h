@@ -23,6 +23,7 @@
 #include "Enemy.h"
 #include "EnemyGenerator.h"
 #include "Stage.h"
+#include "Timer.h"
 
 namespace {
 	const int PRIORITY_VERYLOW = 0;
@@ -61,5 +62,9 @@ namespace mainGame {
 	}
 	namespace stage {
 		static const char* STAGE_NAME = "Stage";
+	}
+
+	namespace timer {
+		static const char* TIMER_NAME = "Timer";
 	}
 }

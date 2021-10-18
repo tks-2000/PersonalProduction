@@ -296,6 +296,9 @@
     <ClCompile Include="EnemyGenerator.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>inGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -561,6 +564,9 @@
     </ClInclude>
     <ClInclude Include="EnemyGenerator.h">
       <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>inGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

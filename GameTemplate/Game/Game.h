@@ -18,6 +18,9 @@ namespace mainGame {
 	namespace stage {
 		class Stage;
 	}
+	namespace timer {
+		class Timer;
+	}
 
 	class GameCamera;
 
@@ -70,6 +73,8 @@ namespace mainGame {
 		enemy::Enemy* m_enemy = nullptr;
 
 		stage::Stage* m_stage = nullptr;
+
+		timer::Timer* m_timer = nullptr;
 	};
 
 }

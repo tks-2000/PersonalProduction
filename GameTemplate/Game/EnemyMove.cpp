@@ -3,19 +3,19 @@
 
 namespace {
 	/// @brief 通常の移動速度
-	const float NORMAL_MOVE_VEROCITY = 5.0f;
+	const float NORMAL_MOVE_VEROCITY = 20.0f;
 	/// @brief 速い移動速度
-	const float FAST_MOVE_VEROCITY = 7.5f;
+	const float FAST_MOVE_VEROCITY = 30.0f;
 	/// @brief 遅い移動速度
-	const float SLOW_MOVE_VEROCITY = 2.5f;
+	const float SLOW_MOVE_VEROCITY = 10.0f;
 	/// @brief 停止距離
 	const float MOVE_STOP_DISTANCE = 200.0f;
 	/// @brief 停止時間
 	const float MOVE_START_TIME = 3.0f;
 	/// @brief 摩擦力
-	const float FRICTION = 0.03f;
+	const float FRICTION = 0.1f;
 	/// @brief 重力
-	const float ENEMY_GRAVITY = 30.0f;
+	const float ENEMY_GRAVITY = 200.0f;
 	/// @brief 敵の衝突判定の半径
 	const float ENEMY_COLLISION_RADIUS = 30.0f;
 	/// @brief 敵の衝突判定の高さ
@@ -28,6 +28,7 @@ namespace mainGame {
 		{
 			//未初期化で開始
 			m_isInitd = false;
+			m_moveTarget = g_vec3Zero;
 		}
 
 		Move::~Move()
@@ -77,20 +78,21 @@ namespace mainGame {
 			}
 
 			//座標と移動目標から目標へのベクトルを取得
-			m_moveDirection = m_toTarget = m_moveTarget - pos;
+			m_toTarget = m_moveTarget - pos;
+			m_moveDirection = m_toTarget;
+
+			//縦方向の移動成分を消す
+			m_moveDirection.y = 0.0f;
+			m_toTarget.y = 0.0f;
 
 			//目標との距離を測る 
 			m_targetDistance = m_toTarget.Length();
 
-			//縦方向の移動成分を消す
-			m_moveDirection.y = 0.0f;
-
 			//正規化
 			m_moveDirection.Normalize();
 
-			//目標への移動方向がない・目標との距離が停止距離まで達したら…
-			if (m_moveDirection.Length() == 0.0f ||
-				m_targetDistance <= MOVE_STOP_DISTANCE) {
+			//目標との距離が停止距離まで達したら…
+			if (m_targetDistance <= MOVE_STOP_DISTANCE) {
 				//攻撃を開始する
 				m_enemy->SetState(enEnemyAttack);
 				//座標をそのまま返す

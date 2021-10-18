@@ -6,10 +6,10 @@ namespace mainGame {
 	namespace enemy {
 		/// @brief 生成器から出現する座標までの距離
 		const Vector3 TO_GENERATOR_POS[SPAWN_POS_NUM]{
-			{100.0f,0.0f,100.0f},
-			{100.0f,0.0f,-100.0f},
-			{-100.0f,0.0f,100.0f},
-			{-100.0f,0.0f,-100.0f}
+			{900.0f,0.0f,900.0f},
+			{900.0f,0.0f,-900.0f},
+			{-900.0f,0.0f,900.0f},
+			{-900.0f,0.0f,-900.0f}
 		};
 
 		/// @brief 出現する敵の種類
@@ -18,6 +18,8 @@ namespace mainGame {
 			enEnemyTypePowerful,
 			enEnemyTypeFast
 		};
+
+		const float SPAWN_TIME = 10.0f;
 
 		Generator::Generator()
 		{
@@ -55,8 +57,11 @@ namespace mainGame {
 				return;
 			}
 
-			if (g_pad[0]->IsTrigger(enButtonB)) {
+			m_spawnTimer += g_gameTime->GetFrameDeltaTime();
+
+			if (m_spawnTimer > SPAWN_TIME) {
 				CreateEnemy();
+				m_spawnTimer = 0.0f;
 			}
 
 			//出現している敵の数だけ実行する

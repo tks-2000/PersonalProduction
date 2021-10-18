@@ -11,6 +11,7 @@ namespace mainGame {
 		m_enemy = NewGO<enemy::Enemy>(PRIORITY_VERYLOW,enemy::ENEMY_NAME);
 		m_enemyGenerator = NewGO<enemy::Generator>(PRIORITY_VERYLOW, enemy::ENEMY_GENERATOR_NAME);
 		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
+		m_timer = NewGO<timer::Timer>(PRIORITY_VERYLOW, timer::TIMER_NAME);
 
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		m_sampleFont = NewGO<render::font::FontRender>(0);
@@ -28,8 +29,9 @@ namespace mainGame {
 
 		m_defensiveTarget->Init();
 		//m_enemy->Init(enemy::enEnemyTypeNormal, { 0.0f,500.0f,1000.0f });
-		m_enemyGenerator->Init({ 0.0f,500.0f,1000.0f });
+		m_enemyGenerator->Init({ 0.0f,1000.0f,0.0f });
 		m_stage->Init();
+		m_timer->Init();
 		
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
@@ -69,6 +71,12 @@ namespace mainGame {
 			}
 		}
 
+		
+		if (m_timer->GetTimerState() == timer::enTimerEnd) {
+			m_timer->Execution();
+			return;
+		}
+
 		m_unityChanModel2->Execution();
 		//m_backGroundModel->Execution();
 		m_backGroundModel2->Execution();
@@ -95,6 +103,7 @@ namespace mainGame {
 		m_defensiveTarget->Execution();
 		//m_enemy->Execution();
 		m_enemyGenerator->Execute();
+		m_timer->Execution();
 	}
 
 	void Game::Pause()
