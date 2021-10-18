@@ -4,7 +4,7 @@
 namespace mainGame {
 	namespace enemy {
 
-		const int SPAWN_POS_NUM = 4;
+		
 
 		/// @brief 敵を呼び出すクラス
 		class Generator : public IGameObject
@@ -12,13 +12,20 @@ namespace mainGame {
 		public:
 			Generator();
 			~Generator();
+
+			/// @brief 初期化
+			/// @param pos 敵生成器の中心座標
 			void Init(const Vector3& pos);
+
+			/// @brief 実行
 			void Execute();
 
-			/// @brief 敵を削除
+			/// @brief 出現している敵を削除
 			/// @param enemy 削除する敵のアドレス
-			void DeleteEnemy(Enemy* enemy,const int num);
+			void DeleteEnemy(Enemy* enemy);
 		private:
+
+			/// @brief 敵を出現させる
 			void CreateEnemy();
 
 			/// @brief 初期化フラグ
@@ -32,10 +39,11 @@ namespace mainGame {
 			/// @brief 敵生成器の座標
 			Vector3 m_position = g_vec3Zero;
 
+			/// @brief 出現する敵の配列
 			std::vector<Enemy*> m_enemys;
 
-			/// @brief 生成器から出現する座標までの距離
-			Vector3 m_toGeneratorPos[SPAWN_POS_NUM] = {
+			/// @brief 生成器から出現する座標
+			Vector3 m_spawnPos[SPAWN_POS_NUM] = {
 				g_vec3Zero,
 				g_vec3Zero,
 				g_vec3Zero,

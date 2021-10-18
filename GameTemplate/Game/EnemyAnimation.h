@@ -30,7 +30,9 @@ namespace mainGame {
 			~Animation();
 
 			/// @brief 初期化
-			void Init(const int num);
+			/// @param enemy 処理を適用する敵のアドレス
+			void Init(Enemy* enemy);
+
 			/// @brief アニメーションの更新
 			void AnimationUpdate();
 

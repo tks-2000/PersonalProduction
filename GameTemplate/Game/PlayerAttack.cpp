@@ -24,7 +24,7 @@ namespace mainGame {
 
 		}
 
-		void Attack::Init()
+		void Attack::Init(Player* pl)
 		{
 			//‰Šú‰»Ï‚İ‚È‚çÀs‚µ‚È‚¢
 			if (m_isInitd == true) {
@@ -32,7 +32,7 @@ namespace mainGame {
 			}
 
 			//î•ñ‚ğ“üè
-			m_player = FindGO<Player>(PLAYER_NAME);
+			m_player = pl;//FindGO<Player>(PLAYER_NAME);
 			m_attackPower = NORMAL_ATTACK_POWER;
 			m_attackRange = ATTACK_RANGE;
 

@@ -2,12 +2,13 @@
 #include "Player.h"
 
 namespace {
+	/// @brief プレイヤーのモデルファイルパス
 	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan/unityChan.tkm";
-
+	/// @brief プレイヤーのスケルトンファイルパス
 	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
-
+	/// @brief アニメーション補完率
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
-
+	/// @brief プレイヤーの初期座標
 	const Vector3 PLAYER_START_POS = { 0.0f,500.0f,0.0f };
 
 }
@@ -25,11 +26,14 @@ namespace mainGame {
 
 		bool Player::Start()
 		{
+			//初期位置を設定
 			m_position = PLAYER_START_POS;
+
 			//データメンバクラスを初期化
-			m_playerMove.Init();
-			m_playerAnimation.Init();
-			m_playerAttack.Init();
+			m_playerMove.Init(this);
+			m_playerRot.Init(this);
+			m_playerAnimation.Init(this);
+			m_playerAttack.Init(this);
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -43,6 +47,7 @@ namespace mainGame {
 
 			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();
+
 			return true;
 		}
 
@@ -53,7 +58,7 @@ namespace mainGame {
 
 		void Player::Execution()
 		{
-
+			//プレイヤーの状態によって処理を分ける
 			switch (m_playerState) {
 			case enPlayerIdle: {
 				m_position = m_playerMove.IdleExecute(m_position);

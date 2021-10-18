@@ -15,8 +15,11 @@ namespace mainGame {
 		public:
 			Attack();
 			~Attack();
+
 			/// @brief 初期化
-			void Init();
+			/// @param pl 処理を適用するプレイヤーのアドレス
+			void Init(Player* pl);
+
 			/// @brief 実行
 			void Execute();
 

@@ -26,14 +26,16 @@ namespace mainGame {
 
 		}
 
-		void Attack::Init(const EnEnemyType& type)
+		void Attack::Init(Enemy* enemy)
 		{
 			//初期化済みなら実行しない
 			if (m_isInitd == true) {
 				return;
 			}
 
-			switch (type)
+			m_enemy = enemy;
+
+			switch (m_enemy->GetEnemyType())
 			{
 			case enEnemyTypeNormal: {
 				m_attackPower = NORMAL_ATTACK_POWER;
@@ -48,8 +50,8 @@ namespace mainGame {
 				return;
 				break;
 			}
-			//初期パラメーターと情報を決定
-			
+
+			//攻撃目標の情報を決定
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 
 			//初期化完了

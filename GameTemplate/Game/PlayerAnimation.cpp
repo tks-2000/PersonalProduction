@@ -25,10 +25,10 @@ namespace mainGame {
 
 		}
 
-		void Animation::Init()
+		void Animation::Init(Player* pl)
 		{
 			//ƒf[ƒ^‚ğæ“¾
-			m_player = FindGO<Player>(PLAYER_NAME);
+			m_player = pl;//FindGO<Player>(PLAYER_NAME);
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;

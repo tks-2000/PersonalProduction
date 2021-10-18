@@ -13,7 +13,8 @@ namespace mainGame {
 			~Move();
 
 			/// @brief 初期化
-			void Init();
+			/// @param pl 処理を適用するプレイヤーのアドレス
+			void Init(Player* pl);
 
 			/// @brief 待機中の処理を実行
 			const Vector3& IdleExecute(Vector3& pos);

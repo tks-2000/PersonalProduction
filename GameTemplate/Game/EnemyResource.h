@@ -12,6 +12,20 @@ namespace mainGame{
 			/// @brief “G‚Ìí—Ş‚Ì‡Œv”
 			enEnemyTypeNum
 		};
+
+		/// @brief ‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢ˆµ‚¢‚Ì”Ô†
+		static const int ENEMY_UNINITD_NUMBER = 100;
+
+		/// @brief “G‚Ì‰Šú‰»î•ñ‚ğ‚Ü‚Æ‚ß‚½\‘¢‘Ì
+		struct EnemyInitData {
+			/// @brief “G‚Ì”Ô†
+			int enemyNum = ENEMY_UNINITD_NUMBER;
+			/// @brief “G‚Ìí—Ş
+			EnEnemyType enemyType = enEnemyTypeNum;
+			/// @brief “G‚Ì‰ŠúÀ•W
+			Vector3 enemyStartPos = g_vec3Zero;
+		};
 		static const int MAX_ENEMY_NUM = 10;
+		static const int SPAWN_POS_NUM = 4;
 	}
 }

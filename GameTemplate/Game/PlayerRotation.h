@@ -2,12 +2,19 @@
 
 namespace mainGame {
 	namespace player {
+
+		class Player;
+
 		/// @brief プレイヤーの回転を制御するクラス
 		class Rotation
 		{
 		public:
 			Rotation();
 			~Rotation();
+
+			/// @brief 初期化
+			/// @param pl 処理を適用するプレイヤーのアドレス
+			void Init(Player* pl);
 
 			/// @brief 回転クォータニオンを取得
 			/// @param moveSpeed 回転させるための移動速度
@@ -31,6 +38,8 @@ namespace mainGame {
 			float m_oldAngle = 0.0f;
 			/// @brief 角度の変化量
 			float m_angleAmount = 0.0f;
+			/// @brief プレイヤークラス
+			Player* m_player = nullptr;
 		};
 	}
 }

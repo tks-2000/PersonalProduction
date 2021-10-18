@@ -12,9 +12,27 @@ namespace mainGame {
 		{
 
 		}
+
+		void Rotation::Init(Player* pl)
+		{
+			//初期化済みなら実行しない
+			if (m_isInitd == true) {
+				return;
+			}
+
+			//プレイヤーのアドレスを入手
+			m_player = pl;
+			//初期化完了
+			m_isInitd = true;
+		}
+
 		const Quaternion& Rotation::RotationUpdate(const Vector3& moveSpeed)
 		{
-			
+			//未初期化なら実行しない
+			if (m_isInitd == false) {
+				return m_qRot;
+			}
+
 
 			//回転する前の角度を記憶しておく
 			m_oldAngle = m_angle;

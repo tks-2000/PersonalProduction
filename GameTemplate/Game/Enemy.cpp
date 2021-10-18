@@ -23,7 +23,7 @@ namespace mainGame {
 		const int MAX_HP = 3;
 		/// @brief アニメーション補完率
 		const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
-
+		/// @brief 削除されるまでの時間
 		const float DELETE_TIME = 5.0f;
 
 		Enemy::Enemy()
@@ -38,38 +38,43 @@ namespace mainGame {
 			DeleteGO(m_enemyModel);
 		}
 
-		void Enemy::Init(const int num, const EnEnemyType& type,const Vector3& pos)
+		void Enemy::Init(const EnemyInitData& initData)
 		{
-			if (m_isInitd == true || type == enEnemyTypeNum) {
+			//初期化済み・初期化情報が正しくない場合実行しない
+			if (m_isInitd == true || initData.enemyNum == ENEMY_UNINITD_NUMBER || initData.enemyType == enEnemyTypeNum) {
 				return;
 			}
 
-			m_enemyNum = num;
-
-			m_enemyType = type;
+			//自身の番号を設定
+			m_enemyNum = initData.enemyNum;
+			
+			//自身のタイプを設定
+			m_enemyType = initData.enemyType;
 
 			//初期座標を設定
-			m_position = pos;
+			m_position = initData.enemyStartPos;
+
 			//体力
 			m_hp = MAX_HP;
+
 			//メンバクラスを初期化
-			m_enemyMove.Init(num,type,m_position);
-			m_enemyRotation.Init(num);
-			m_enemyAttack.Init(type);
-			m_enemyAnimation.Init(num);
+			m_enemyMove.Init(this);
+			m_enemyRotation.Init(this);
+			m_enemyAttack.Init(this);
+			m_enemyAnimation.Init(this);
 
 			//モデルをアニメーション有りで初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
-				ENEMY_MODEL_TKM_FILEPATH[type],
+				ENEMY_MODEL_TKM_FILEPATH[initData.enemyType],
 				ENEMY_MODEL_TKS_FILEPATH,
 				m_enemyAnimation.GetAnimationClip(),
 				m_enemyAnimation.GetAnimationNum(),
 				enModelUpAxisY
 			);
 
+			//敵生成器の情報を入手
 			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
-
 			//プレイヤーの情報を入手
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
 			//プレイヤーに自分の情報を追加
@@ -147,10 +152,14 @@ namespace mainGame {
 
 		void Enemy::DownExecution()
 		{
+			//削除までの時間を進める
 			m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
+			//削除時間に達したら…
 			if (m_deleteTimer > DELETE_TIME) {
-				m_generator->DeleteEnemy(this,m_enemyNum);
+				//生成器に削除を伝える
+				m_generator->DeleteEnemy(this);
+				//自身を削除
 				DeleteGO(this);
 			}
 		}

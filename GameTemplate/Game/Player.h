@@ -33,6 +33,8 @@ namespace mainGame {
 			bool Start();
 			void Update();
 
+			/// @brief プレイヤーの状態を設定
+			/// @param plState 設定するプレイヤーの状態
 			void SetPlayerState(const EnPlayerStates& plState) { m_playerState = plState; }
 
 			/// @brief プレイヤーの状態を入手

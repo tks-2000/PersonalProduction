@@ -11,14 +11,19 @@ namespace mainGame {
 
 	namespace enemy {
 
+		class Enemy;
+
 		/// @brief 敵の攻撃を制御するクラス
 		class Attack
 		{
 		public:
 			Attack();
 			~Attack();
+
 			/// @brief 初期化
-			void Init(const EnEnemyType& type);
+			/// @param enemy 処理を適用する敵のアドレス
+			void Init(Enemy* enemy);
+
 			/// @brief 実行
 			void Execution();
 		private:
@@ -32,6 +37,8 @@ namespace mainGame {
 			/// @brief 攻撃するまでのタイマー
 			float m_attackTimer = 0.0f;
 
+			/// @brief 敵クラス
+			Enemy* m_enemy = nullptr;
 			/// @brief 防衛対象のクラス
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 		};

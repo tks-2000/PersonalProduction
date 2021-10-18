@@ -31,11 +31,11 @@ namespace mainGame {
 
 		}
 
-		void Move::Init()
+		void Move::Init(Player* pl)
 		{
 			//ÉfÅ[É^ÇéÊìæ
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
-			m_player = FindGO<Player>(PLAYER_NAME);
+			m_player = pl;//FindGO<Player>(PLAYER_NAME);
 			m_charaCon.Init(PLAYER_COLLISION_RADIUS, PLAYER_COLLISION_HEIGHT, m_player->GetPlayerPosition());
 			m_gravity = PLAYER_GRAVITY;
 

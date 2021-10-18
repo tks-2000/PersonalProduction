@@ -18,8 +18,8 @@ namespace mainGame{
 			~Move();
 
 			/// @brief 初期化
-			/// @param pos 初期座標
-			void Init(const int num, const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
+			/// @param enemy 処理を適用する敵のアドレス
+			void Init(Enemy* enemy);
 
 			/// @brief 移動を実行
 			/// @param pos 移動する敵の座標

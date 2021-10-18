@@ -35,14 +35,18 @@ namespace mainGame {
 
 		}
 
-		void Move::Init(const int num, const EnEnemyType& type, const Vector3& pos)
+		void Move::Init(Enemy* enemy)
 		{
 			//初期化済みなら実行しない
 			if (m_isInitd == true) {
 				return;
 			}
 
-			switch(type)
+			//情報を取得
+			m_enemy = enemy;
+
+			//敵の種類によって速度を変える
+			switch(m_enemy->GetEnemyType())
 			{
 			case enEnemyTypeNormal: {
 				m_moveVerocity = NORMAL_MOVE_VEROCITY;
@@ -58,10 +62,8 @@ namespace mainGame {
 				break;
 			}
 
-			//情報を取得
-			m_enemy = FindGO<Enemy>(ENEMY_NAMES[num]);
 			//キャラクターコントローラーを初期化
-			m_charaCon.Init(ENEMY_COLLISION_RADIUS, ENEMY_COLLISION_HEIGHT,pos);
+			m_charaCon.Init(ENEMY_COLLISION_RADIUS, ENEMY_COLLISION_HEIGHT,m_enemy->GetPosition());
 
 			//初期化完了
 			m_isInitd = true;

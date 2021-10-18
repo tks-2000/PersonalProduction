@@ -40,7 +40,8 @@ namespace mainGame {
 			~Enemy();
 
 			/// @brief ‰Šú‰»
-			void Init(const int num, const EnEnemyType& type,const Vector3& pos = g_vec3Zero);
+			/// @param initData “G‚Ì‰Šú‰»î•ñ
+			void Init(const EnemyInitData& initData);
 
 			/// @brief Às
 			void Execution();
@@ -65,8 +66,17 @@ namespace mainGame {
 			/// @return “G‚ÌƒXƒe[ƒg‚ÌconstQÆ
 			const EnEnemyState& GetState() { return m_state; }
 
+			/// @brief “G‚Ì”Ô†‚ğ“üè
+			/// @return “G‚Éİ’è‚³‚ê‚Ä‚¢‚é”Ô†
+			const int GetNumber() { return m_enemyNum; }
+
+			/// @brief “G‚Ìí—Ş‚ğ“üè
+			/// @return “G‚Éİ’è‚³‚ê‚Ä‚¢‚éí—Ş
+			const EnEnemyType& GetEnemyType() { return m_enemyType; }
+
 		private:
 
+			/// @brief “|‚³‚ê‚½‚Ìˆ—
 			void DownExecution();
 
 			/// @brief ‰Šú‰»ƒtƒ‰ƒO
@@ -97,7 +107,7 @@ namespace mainGame {
 			int m_enemyNum = 0;
 			/// @brief ƒ_ƒEƒ“‚µ‚Ä‚©‚ç©g‚ªíœ‚³‚ê‚é‚Ü‚Å‚ÌŠÔ
 			float m_deleteTimer = 0.0;
-
+			/// @brief “G¶¬Ší‚Ìî•ñ
 			Generator* m_generator = nullptr;
 		};
 	}
