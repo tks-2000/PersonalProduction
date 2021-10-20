@@ -39,6 +39,7 @@ namespace render {
 
 	bool RenderingEngine::Start()
 	{
+		m_lig->Init();
 		m_lig->SetDirectionLightColor({ 0.3f, 0.3f, 0.3f });
 		m_lig->SetDirectionLightDirection({ 0.0f, -0.5f, 1.0f });
 		m_lig->SetHemiSphereLifhtGroundColor({ 0.5f,0.0f,0.0f });
@@ -49,6 +50,12 @@ namespace render {
 		m_lig->SetSpotLightPos(0, { 0.0f, 1000.0f, 0.0f });
 		m_lig->SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
 		m_lig->SetSpotLightColor(0, { 5.0f,5.0f,5.0f });
+		m_lig->SetDirectionLightFlickering(
+			{ 0.5f,0.3f,0.3f },
+			{ 0.3f,0.3f,0.5f },
+			0.1f
+		);
+		m_ligFlag = true;
 		//m_shadow->SetLightCameraTarget({ 0.0f,0.0f,0.0f });
 
 		//ƒuƒ‰[‚ð‚©‚¯‚é
@@ -63,61 +70,15 @@ namespace render {
 	void RenderingEngine::Update()
 	{
 		
-		if (g_pad[0]->IsPress(enButtonSelect)) {
-
-
-			if (g_pad[0]->IsPress(enButtonUp)) {
-				m_ligColor.x += 0.01f;
-				
-			}
-
-			if (g_pad[0]->IsPress(enButtonDown)) {
-				m_ligColor.x -= 0.01f;
-				
-			}
-			if (g_pad[0]->IsPress(enButtonRight)) {
-				
-				m_ligColor.y += 0.01f;
-			
-			}
-
-			if (g_pad[0]->IsPress(enButtonLeft)) {
-				
-				m_ligColor.y -= 0.01f;
-			
-			}
-
-		}
-		else {
-
-			if (g_pad[0]->IsPress(enButtonUp)) {
-
-				m_ligColor.z += 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonDown)) {
-
-				m_ligColor.z -= 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonRight)) {
-				m_ligColor.x += 0.01f;
-				m_ligColor.y += 0.01f;
-				m_ligColor.z += 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonLeft)) {
-				m_ligColor.x -= 0.01f;
-				m_ligColor.y -= 0.01f;
-				m_ligColor.z -= 0.01f;
-			}
-		}
-		m_lig->SetHemiSphereLifhtSkyColor(m_ligColor);
+	
 		
 	}
 
 	void RenderingEngine::Render(RenderContext& rc)
 	{
+		if (m_ligFlag == true) {
+			LightUpdate();
+		}
 
 		m_shadow->CreateShadowMap(rc);
 
@@ -170,6 +131,62 @@ namespace render {
 			m_drawFontsData[fontNum]->font.End(rc);
 
 		}
+	}
+
+	void RenderingEngine::LightUpdate()
+	{
+		if (g_pad[0]->IsPress(enButtonSelect)) {
+
+
+			if (g_pad[0]->IsPress(enButtonUp)) {
+				m_ligColor.x += 0.01f;
+
+			}
+
+			if (g_pad[0]->IsPress(enButtonDown)) {
+				m_ligColor.x -= 0.01f;
+
+			}
+			if (g_pad[0]->IsPress(enButtonRight)) {
+
+				m_ligColor.y += 0.01f;
+
+			}
+
+			if (g_pad[0]->IsPress(enButtonLeft)) {
+
+				m_ligColor.y -= 0.01f;
+
+			}
+
+		}
+		else {
+
+			if (g_pad[0]->IsPress(enButtonUp)) {
+
+				m_ligColor.z += 0.01f;
+			}
+
+			if (g_pad[0]->IsPress(enButtonDown)) {
+
+				m_ligColor.z -= 0.01f;
+			}
+
+			if (g_pad[0]->IsPress(enButtonRight)) {
+				m_ligColor.x += 0.01f;
+				m_ligColor.y += 0.01f;
+				m_ligColor.z += 0.01f;
+			}
+
+			if (g_pad[0]->IsPress(enButtonLeft)) {
+				m_ligColor.x -= 0.01f;
+				m_ligColor.y -= 0.01f;
+				m_ligColor.z -= 0.01f;
+			}
+		}
+		m_lig->SetHemiSphereLifhtSkyColor(m_ligColor);
+
+		m_lig->Execution();
 	}
 
 	void RenderingEngine::SetDrawModel(Model* model)

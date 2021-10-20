@@ -24,6 +24,20 @@ namespace mainGame {
 
 	class GameCamera;
 
+	/// @brief ゲームの状態を表す列挙型
+	enum EnGameState {
+		/// @brief ゲーム開始前
+		enGameStart,
+		/// @brief ゲーム進行中
+		enGameInProgress,
+		/// @brief ゲームクリア
+		enGameClear,
+		/// @brief ゲームオーバー
+		enGameOver,
+		/// @brief ゲームの状態を表すステートの数
+		enGameStateNum
+	};
+
 	//ゲーム中の物を制御するクラス
 	class Game : public IGameObject
 	{
@@ -75,6 +89,8 @@ namespace mainGame {
 		stage::Stage* m_stage = nullptr;
 
 		timer::Timer* m_timer = nullptr;
+
+		render::RenderingEngine* m_renderingEngine = nullptr;
 	};
 
 }

@@ -23,6 +23,8 @@ namespace render {
 		void Update();
 		void Render(RenderContext& rc);
 
+		
+
 		/// @brief 描画するモデルを追加
 		/// @param model 追加するモデルのアドレス
 		void SetDrawModel(Model* model);
@@ -47,7 +49,11 @@ namespace render {
 		/// @param font 削除するフォントのアドレス
 		void DeleteFont(font::FontData* fontdata);
 
+		void SetLightFlag(const bool Authenticity) { m_ligFlag = Authenticity; }
+
 	private:
+		/// @brief ライトの更新
+		void LightUpdate();
 		
 		/// @brief ライティング
 		light::Lighting* m_lig = nullptr;
@@ -74,5 +80,7 @@ namespace render {
 		Sprite m_frameBufferSprite;
 
 		Vector3 m_ligColor = g_vec3Zero;
+
+		bool m_ligFlag = false;
 	};
 }

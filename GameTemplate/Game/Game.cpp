@@ -15,6 +15,8 @@ namespace mainGame {
 
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		m_sampleFont = NewGO<render::font::FontRender>(0);
+
+		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 	}
 
 	Game::~Game()
@@ -61,18 +63,21 @@ namespace mainGame {
 			Pause();
 			if (g_pad[0]->IsTrigger(enButtonStart)) {
 				m_pause = false;
+				m_renderingEngine->SetLightFlag(true);
 			}
 			return;
 		}
 		else {
 			if (g_pad[0]->IsTrigger(enButtonStart)) {
 				m_pause = true;
+				m_renderingEngine->SetLightFlag(false);
 				return;
 			}
 		}
 
 		
 		if (m_timer->GetTimerState() == timer::enTimerEnd) {
+			m_renderingEngine->SetLightFlag(false);
 			m_timer->Execution();
 			return;
 		}

@@ -6,6 +6,20 @@ namespace render {
 	namespace light {
 		Lighting::Lighting()
 		{
+			
+		}
+
+		Lighting::~Lighting()
+		{
+
+		}
+
+		void Lighting::Init()
+		{
+			if (m_isInitd == true) {
+				return;
+			}
+
 			InitDirectionLight();
 
 			for (int spotLigNo = 0; spotLigNo < SPOT_LIGHT_SUM; spotLigNo++) {
@@ -26,11 +40,8 @@ namespace render {
 			m_light.ambientlight.x = 0.3f;
 			m_light.ambientlight.y = 0.3f;
 			m_light.ambientlight.z = 0.3f;
-		}
 
-		Lighting::~Lighting()
-		{
-
+			m_isInitd = true;
 		}
 
 		bool Lighting::Start()
@@ -39,8 +50,12 @@ namespace render {
 			return true;
 		}
 
-		void Lighting::Update()
+		void Lighting::Execution()
 		{
+			if (m_isInitd == false) {
+				return;
+			}
+
 			for (int spLigNum = 0; spLigNum < SPOT_LIGHT_SUM; spLigNum++) {
 				if (m_spLigBlink[spLigNum] == true) {
 					SpotLightBlinking(spLigNum);
@@ -59,8 +74,14 @@ namespace render {
 			if (m_dirLigFlickering == true) {
 				DirectionLightFlickering();
 			}
+
 			RotationSpotLight(0);
 			m_light.eyePos = g_camera3D->GetPosition();
+		}
+
+		void Lighting::Update()
+		{
+			
 		}
 
 		void Lighting::InitDirectionLight()

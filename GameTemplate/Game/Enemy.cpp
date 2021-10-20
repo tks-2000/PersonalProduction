@@ -105,7 +105,7 @@ namespace mainGame {
 			}break;
 				//çUåÇ
 			case enEnemyAttack: {
-				m_position = m_enemyMove.MoveStop(m_position);
+				//m_position = m_enemyMove.MoveStop(m_position);
 				m_enemyAttack.Execution();
 			}break;
 				//É_ÉÅÅ[ÉW

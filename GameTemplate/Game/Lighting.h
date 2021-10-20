@@ -89,6 +89,9 @@ namespace render {
 			bool Start();
 			void Update();
 
+			void Init();
+			void Execution();
+
 
 			Light& GetLight() { return m_light; }
 
@@ -193,6 +196,9 @@ namespace render {
 			void SetHemiSphereLifhtSkyColor(const Vector3& skyColor) { m_light.hemiSphereLight.skyColor = skyColor; }
 
 		private:
+			//初期化フラグ
+			bool m_isInitd = false;
+
 			/// @brief ライティング全てのデータ
 			Light m_light;
 
