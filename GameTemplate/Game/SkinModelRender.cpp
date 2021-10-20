@@ -111,6 +111,7 @@ namespace render {
 				m_shadowModelInitData.m_skeleton = &m_skeleton;
 
 				m_shadowModelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+				m_modelInitData.m_vsEntryPointFunc = "VSMain";
 			}
 			else {
 				//アニメーション無しの頂点シェーダーのエントリーポイントを設定

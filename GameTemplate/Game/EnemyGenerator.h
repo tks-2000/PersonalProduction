@@ -26,7 +26,7 @@ namespace mainGame {
 		private:
 
 			/// @brief “G‚ğoŒ»‚³‚¹‚é
-			void CreateEnemy();
+			void CreateEnemy(const EnEnemyType& type,const Vector3& pos);
 
 			/// @brief ‰Šú‰»ƒtƒ‰ƒO
 			bool m_isInitd = false;

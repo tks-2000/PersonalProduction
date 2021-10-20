@@ -13,8 +13,7 @@ namespace mainGame {
 		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
 		m_timer = NewGO<timer::Timer>(PRIORITY_VERYLOW, timer::TIMER_NAME);
 
-		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
-		m_sampleFont = NewGO<render::font::FontRender>(0);
+		
 
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 	}
@@ -45,7 +44,8 @@ namespace mainGame {
 		m_backGroundModel2->Init("Assets/modelData/bg/testStage.tkm");
 		m_backGroundModel2->CreateShadow();
 		m_backGroundModel2->SetPosition({ 0.0f,-1000.0f,0.0f });
-
+		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
+		m_sampleFont = NewGO<render::font::FontRender>(0);
 		
 		m_sampleSprite->Init("Assets/image/sample.dds", 100, 100);
 		m_sampleSprite->SetPosition({ 500.0f,300.0f,0.0f });
@@ -53,6 +53,7 @@ namespace mainGame {
 		
 		m_sampleFont->Init(L"test");
 		m_sampleFont->SetPosition({ -500.0f, 300.0f });
+
 
 		return true;
 	}

@@ -19,7 +19,7 @@ namespace mainGame {
 			enEnemyTypeFast
 		};
 
-		const float SPAWN_TIME = 10.0f;
+		const float SPAWN_TIME = 5.0f;
 
 		Generator::Generator()
 		{
@@ -46,6 +46,11 @@ namespace mainGame {
 				m_spawnPos[posNum] = m_position + TO_GENERATOR_POS[posNum];
 			}
 
+			CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
+			CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
+			CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
+			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
+
 			//初期化完了
 			m_isInitd = true;
 		}
@@ -60,7 +65,22 @@ namespace mainGame {
 			m_spawnTimer += g_gameTime->GetFrameDeltaTime();
 
 			if (m_spawnTimer > SPAWN_TIME) {
-				CreateEnemy();
+				std::random_device rnd;
+				int num = rnd();
+				int num2 = rnd();
+				if (num < 0) {
+					num *= -1;
+					
+				}
+				if (num2 < 0) {
+					num2 *= -1;
+				}
+				
+				num %= enEnemyTypeNum;
+				num2 %= SPAWN_POS_NUM;
+
+				CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
+
 				m_spawnTimer = 0.0f;
 			}
 
@@ -91,10 +111,13 @@ namespace mainGame {
 			}
 		}
 
-		void Generator::CreateEnemy()
+		void Generator::CreateEnemy(const EnEnemyType& type, const Vector3& pos)
 		{
-			//既に最大数まで出現している場合実行しない
-			if (m_enemySum == MAX_ENEMY_NUM) {
+			//既に最大数まで出現している場合・引数が不正な値の場合は実行しない
+			if (
+				m_enemySum == MAX_ENEMY_NUM,
+				type >= enEnemyTypeNum
+				) {
 				return;
 			}
 
@@ -121,8 +144,8 @@ namespace mainGame {
 					//敵の初期化情報を作成
 					EnemyInitData enemyInitData;
 					enemyInitData.enemyNum = enemyNum;
-					enemyInitData.enemyType = SPAWN_ENEMY_TYPE[num];
-					enemyInitData.enemyStartPos = m_spawnPos[num2];
+					enemyInitData.enemyType = type;
+					enemyInitData.enemyStartPos = pos;
 
 					//初期化情報で敵を初期化
 					m_enemys[m_enemySum]->Init(enemyInitData);

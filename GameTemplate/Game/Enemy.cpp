@@ -135,6 +135,13 @@ namespace mainGame {
 			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
 
 			m_enemyModel->Execution();
+
+			if (m_position.y < -1000.0f) {
+				//¶¬Ší‚Éíœ‚ğ“`‚¦‚é
+				m_generator->DeleteEnemy(this);
+				//©g‚ğíœ
+				DeleteGO(this);
+			}
 		}
 
 		void Enemy::ReceiveDamage(const int damage)
