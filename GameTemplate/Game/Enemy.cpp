@@ -34,7 +34,7 @@ namespace mainGame {
 
 		Enemy::~Enemy()
 		{
-			m_player->DeleteEnemyData(this);
+			
 			DeleteGO(m_enemyModel);
 		}
 
@@ -139,6 +139,7 @@ namespace mainGame {
 			if (m_position.y < -1000.0f) {
 				//¶¬Ší‚Éíœ‚ð“`‚¦‚é
 				m_generator->DeleteEnemy(this);
+				m_player->DeleteEnemyData(this);
 				//Ž©g‚ðíœ
 				DeleteGO(this);
 			}
@@ -155,6 +156,13 @@ namespace mainGame {
 				m_state = enEnemyDown;
 				m_hp = 0;
 			}
+		}
+
+		void Enemy::DeleteEnemy()
+		{
+			//¶¬Ší‚Éíœ‚ð“`‚¦‚é
+			//m_generator->DeleteEnemy(this);
+			DeleteGO(this);
 		}
 
 		void Enemy::DownExecution()

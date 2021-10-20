@@ -18,7 +18,7 @@ namespace mainGame {
 
 		Timer::~Timer()
 		{
-			
+			DeleteGO(m_timeFont);
 		}
 
 		void Timer::Init()
@@ -40,6 +40,8 @@ namespace mainGame {
 			m_timeFont->Init(conversion.c_str());
 			m_timeFontPos = { 0.0f,300.0f };
 			m_timeFont->SetPosition(m_timeFontPos);
+
+			m_game = FindGO<Game>(GAME_NAME);
 
 			//初期化完了
 			m_isInitd = true;
@@ -86,6 +88,8 @@ namespace mainGame {
 			if (m_stastTimer <= 0.0f) {
 				//ゲーム中のカウントを進め始める
 				m_state = enTimerExecute;
+				
+				m_game->SetGameState(enGameInProgress);
 				return;
 			}
 			
@@ -107,6 +111,7 @@ namespace mainGame {
 			if (m_inGameTimer <= 0.0f) {
 				//ゲーム終了後のカウントを進め始める
 				m_state = enTimerEnd;
+				m_game->SetGameState(enGameClear);
 				return;
 			}
 		}

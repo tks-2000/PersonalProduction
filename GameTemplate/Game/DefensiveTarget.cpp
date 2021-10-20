@@ -27,6 +27,7 @@ namespace mainGame {
 
 		void DefensiveTarget::Init()
 		{
+
 			//–h‰q‘ÎÛ‚Ìƒ‚ƒfƒ‹‚ğ‰Šú‰»
 			m_defensiveTargetModel = NewGO<render::model::SkinModelRender>(0);
 			m_defensiveTargetModel->Init(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
@@ -39,6 +40,7 @@ namespace mainGame {
 			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ğì¬
 			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
 			m_isInitd = true;
+			m_isBreak = false;
 		}
 
 

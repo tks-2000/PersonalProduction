@@ -13,7 +13,7 @@ namespace mainGame {
 
 		Stage::~Stage()
 		{
-
+			DeleteGO(m_stageModel);
 		}
 
 		void Stage::Init()

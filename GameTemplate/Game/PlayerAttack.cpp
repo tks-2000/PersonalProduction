@@ -21,7 +21,7 @@ namespace mainGame {
 
 		Attack::~Attack()
 		{
-
+			m_enemys.clear();
 		}
 
 		void Attack::Init(Player* pl)

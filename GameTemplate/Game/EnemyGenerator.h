@@ -23,6 +23,8 @@ namespace mainGame {
 			/// @brief 出現している敵を削除
 			/// @param enemy 削除する敵のアドレス
 			void DeleteEnemy(Enemy* enemy);
+
+			void DeleteAllEnemy();
 		private:
 
 			/// @brief 敵を出現させる

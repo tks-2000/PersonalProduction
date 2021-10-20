@@ -28,7 +28,12 @@ namespace mainGame {
 
 		Generator::~Generator()
 		{
+			for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
+				m_enemys[enemyNum]->DeleteEnemy();
+			}
 
+			m_enemys.clear();
+			
 		}
 
 		void Generator::Init(const Vector3& pos)
@@ -41,11 +46,14 @@ namespace mainGame {
 			//座標を設定
 			m_position = pos;
 
+			m_enemySum = 0;
+
 			//敵生成器の中心座標から敵の出現位置を決める
 			for (int posNum = 0; posNum < SPAWN_POS_NUM; posNum++) {
 				m_spawnPos[posNum] = m_position + TO_GENERATOR_POS[posNum];
 			}
 
+			//初期配置
 			CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
 			CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
 			CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
@@ -115,7 +123,7 @@ namespace mainGame {
 		{
 			//既に最大数まで出現している場合・引数が不正な値の場合は実行しない
 			if (
-				m_enemySum == MAX_ENEMY_NUM,
+				m_enemySum == MAX_ENEMY_NUM ||
 				type >= enEnemyTypeNum
 				) {
 				return;

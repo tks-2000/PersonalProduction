@@ -74,6 +74,9 @@ namespace mainGame {
 			/// @return “G‚Éİ’è‚³‚ê‚Ä‚¢‚éí—Ş
 			const EnEnemyType& GetEnemyType() { return m_enemyType; }
 
+			/// @brief íœ
+			void DeleteEnemy();
+
 		private:
 
 			/// @brief “|‚³‚ê‚½‚Ìˆ—

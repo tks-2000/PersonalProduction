@@ -44,11 +44,19 @@ namespace mainGame {
 	public:
 		Game();
 		~Game();
+		void Init();
 		bool Start();
 		void Update();
 
-	private:
+		void SetGameState(const EnGameState& state) { m_state = state; }
 
+
+	private:
+		void GameStartExecution();
+		void InGameExecution();
+		void GameOverExecution();
+		void AllNew();
+		void AllDelete();
 		void Pause();
 
 		render::model::SkinModelRender* m_unityChanModel = nullptr;
@@ -71,6 +79,8 @@ namespace mainGame {
 		};
 
 		AnimationClip m_unityChanAnimationClip[enAnimationNum];
+
+		EnGameState m_state = enGameStart;
 
 		GameCamera* m_gameCamera = nullptr;
 

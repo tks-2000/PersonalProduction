@@ -1,6 +1,9 @@
 #pragma once
 
 namespace mainGame {
+
+	class Game;
+
 	namespace timer {
 
 		/// @brief タイマーが何をしているか表す列挙型
@@ -48,6 +51,8 @@ namespace mainGame {
 			render::font::FontRender* m_timeFont = nullptr;
 			/// @brief タイマーの表示位置
 			Vector2 m_timeFontPos = g_vec2Zero;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

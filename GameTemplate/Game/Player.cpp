@@ -21,7 +21,7 @@ namespace mainGame {
 
 		Player::~Player()
 		{
-
+			DeleteGO(m_playerModel);
 		}
 
 		bool Player::Start()
