@@ -38,26 +38,45 @@ namespace mainGame {
 		enGameStateNum
 	};
 
-	//ゲーム中の物を制御するクラス
+	/// @brief ゲーム中の流れを制御するクラス
 	class Game : public IGameObject
 	{
 	public:
 		Game();
 		~Game();
+		/// @brief 初期化
 		void Init();
+
 		bool Start();
 		void Update();
 
+		/// @brief ゲームの状態を変更
+		/// @param state ゲームの状態を表すステート
 		void SetGameState(const EnGameState& state) { m_state = state; }
+
+		/// @brief ゲームの状態を取得
+		/// @return ゲームの状態を表すステート
+		const EnGameState& GetGameState() { return m_state; }
 
 
 	private:
+		/// @brief ゲーム開始時の処理
 		void GameStartExecution();
+		/// @brief ゲームプレイ時の処理
 		void InGameExecution();
+		/// @brief ゲームクリア時の処理
+		void GameClearExecution();
+		/// @brief ゲームオーバー時の処理
 		void GameOverExecution();
+		/// @brief ゲーム中のオブジェクトを全て作成
 		void AllNew();
+		/// @brief ゲーム中のオブジェクトを全て削除
 		void AllDelete();
+		/// @brief ポーズ中の処理
 		void Pause();
+
+		/// @brief 初期化フラグ
+		bool m_isInitd = false;
 
 		render::model::SkinModelRender* m_unityChanModel = nullptr;
 		render::model::SkinModelRender* m_unityChanModel2 = nullptr;
@@ -82,24 +101,24 @@ namespace mainGame {
 
 		EnGameState m_state = enGameStart;
 
-		GameCamera* m_gameCamera = nullptr;
 
 		bool m_isDead = false;
 
-		player::Player* m_player = nullptr;
-
 		bool m_pause = false;
 
+		/// @brief ゲームカメラ
+		GameCamera* m_gameCamera = nullptr;
+		/// @brief プレイヤー
+		player::Player* m_player = nullptr;
+		/// @brief 防衛対象
 		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
-
+		/// @brief 敵生成器
 		enemy::Generator* m_enemyGenerator = nullptr;
-
-		enemy::Enemy* m_enemy = nullptr;
-
+		/// @brief ステージ
 		stage::Stage* m_stage = nullptr;
-
+		/// @brief タイマー
 		timer::Timer* m_timer = nullptr;
-
+		/// @brief レンダリングエンジン
 		render::RenderingEngine* m_renderingEngine = nullptr;
 	};
 

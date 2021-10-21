@@ -8,6 +8,9 @@ class SkinModelRender;
 
 
 namespace mainGame {
+
+	class Game;
+
 	namespace player {
 		
 		/// @brief ƒvƒŒƒCƒ„[‚Ìó‘Ô‚ğŒˆ‚ß‚é—ñ‹“Œ^
@@ -30,6 +33,8 @@ namespace mainGame {
 		public:
 			Player();
 			~Player();
+
+			void Init();
 			bool Start();
 			void Update();
 
@@ -64,6 +69,12 @@ namespace mainGame {
 			void Execution();
 
 		private:
+			void GameStartExecution();
+			void GameInProgressExecution();
+			void GameClearExecution();
+			void GameOverExecution();
+
+			bool m_isInitd = false;
 			/// @brief À•W
 			Vector3 m_position = g_vec3Zero;
 			/// @brief ‰ñ“]
@@ -80,6 +91,8 @@ namespace mainGame {
 			Rotation m_playerRot;
 			/// @brief UŒ‚
 			Attack m_playerAttack;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

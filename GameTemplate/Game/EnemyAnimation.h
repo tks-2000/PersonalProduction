@@ -57,6 +57,8 @@ namespace mainGame {
 			AnimationClip m_animClip[enEnemyAnimationNum];
 			/// @brief “GƒNƒ‰ƒX
 			Enemy* m_enemy = nullptr;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

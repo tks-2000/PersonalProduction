@@ -73,6 +73,8 @@ namespace mainGame {
 				enModelUpAxisY
 			);
 
+
+			m_game = FindGO<Game>(GAME_NAME);
 			//敵生成器の情報を入手
 			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
 			//プレイヤーの情報を入手
@@ -92,6 +94,77 @@ namespace mainGame {
 				return;
 			}
 
+			switch (m_game->GetGameState())
+			{
+			case enGameStart: {
+				GameStartExecution();
+			}break;
+			case enGameInProgress: {
+				GameInProgressExecution();
+			}break;
+			case enGameClear: {
+				GameClearExecution();
+			}break;
+			case enGameOver: {
+				GameOverExecution();
+			}break;
+			default:
+				break;
+			}
+		}
+
+		void Enemy::ReceiveDamage(const int damage)
+		{
+			//ダメージを受ける
+			m_hp -= damage;
+
+			//体力が0以下になったら
+			if (m_hp <= 0) {
+				//ダウン状態に移行
+				m_state = enEnemyDown;
+				m_hp = 0;
+			}
+		}
+
+		void Enemy::DeleteEnemy()
+		{
+			//生成器に削除を伝える
+			//m_generator->DeleteEnemy(this);
+			DeleteGO(this);
+		}
+
+		void Enemy::DownExecution()
+		{
+			//削除までの時間を進める
+			m_deleteTimer += g_gameTime->GetFrameDeltaTime();
+
+			//削除時間に達したら…
+			if (m_deleteTimer > DELETE_TIME) {
+				//生成器に削除を伝える
+				m_generator->DeleteEnemy(this);
+				m_player->DeleteEnemyData(this);
+				//自身を削除
+				DeleteGO(this);
+			}
+		}
+
+		void Enemy::GameStartExecution()
+		{
+			//アニメーションを進める
+			m_enemyAnimation.AnimationUpdate();
+
+			//モデルに更新された情報を伝える
+			m_enemyModel->SetPosition(m_position);
+
+			m_enemyModel->SetRotation(m_qRot);
+
+			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_enemyModel->Execution();
+		}
+
+		void Enemy::GameInProgressExecution()
+		{
 			//自分のステートによって処理を分ける
 			switch (m_state)
 			{
@@ -126,7 +199,7 @@ namespace mainGame {
 
 			//アニメーションを進める
 			m_enemyAnimation.AnimationUpdate();
-			
+
 			//モデルに更新された情報を伝える
 			m_enemyModel->SetPosition(m_position);
 
@@ -145,38 +218,34 @@ namespace mainGame {
 			}
 		}
 
-		void Enemy::ReceiveDamage(const int damage)
+		void Enemy::GameClearExecution()
 		{
-			//ダメージを受ける
-			m_hp -= damage;
+			//アニメーションを進める
+			m_enemyAnimation.AnimationUpdate();
 
-			//体力が0以下になったら
-			if (m_hp <= 0) {
-				//ダウン状態に移行
-				m_state = enEnemyDown;
-				m_hp = 0;
-			}
+			//モデルに更新された情報を伝える
+			m_enemyModel->SetPosition(m_position);
+
+			m_enemyModel->SetRotation(m_qRot);
+
+			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_enemyModel->Execution();
 		}
 
-		void Enemy::DeleteEnemy()
+		void Enemy::GameOverExecution()
 		{
-			//生成器に削除を伝える
-			//m_generator->DeleteEnemy(this);
-			DeleteGO(this);
-		}
+			//アニメーションを進める
+			m_enemyAnimation.AnimationUpdate();
 
-		void Enemy::DownExecution()
-		{
-			//削除までの時間を進める
-			m_deleteTimer += g_gameTime->GetFrameDeltaTime();
+			//モデルに更新された情報を伝える
+			m_enemyModel->SetPosition(m_position);
 
-			//削除時間に達したら…
-			if (m_deleteTimer > DELETE_TIME) {
-				//生成器に削除を伝える
-				m_generator->DeleteEnemy(this);
-				//自身を削除
-				DeleteGO(this);
-			}
+			m_enemyModel->SetRotation(m_qRot);
+
+			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_enemyModel->Execution();
 		}
 	}
 }

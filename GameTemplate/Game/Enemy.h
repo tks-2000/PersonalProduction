@@ -82,6 +82,11 @@ namespace mainGame {
 			/// @brief “|‚³‚ê‚½‚Ìˆ—
 			void DownExecution();
 
+			void GameStartExecution();
+			void GameInProgressExecution();
+			void GameClearExecution();
+			void GameOverExecution();
+
 			/// @brief ‰Šú‰»ƒtƒ‰ƒO
 			bool m_isInitd = false;
 			/// @brief À•W
@@ -112,6 +117,8 @@ namespace mainGame {
 			float m_deleteTimer = 0.0;
 			/// @brief “G¶¬Ší‚Ìî•ñ
 			Generator* m_generator = nullptr;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

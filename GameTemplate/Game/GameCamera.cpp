@@ -16,7 +16,7 @@ namespace mainGame {
 	GameCamera::GameCamera()
 	{
 		//ƒJƒƒ‰‚ÌÀ•W‚ª’‹“_‚©‚ç‚Ç‚ê‚¾‚¯—£‚ê‚Ä‚¢‚é‚©Œˆ‚ß‚é
-		m_toCameraPos = { 0.0f,300.0f,-500.0f };
+		m_toCameraPos = { 0.0f,300.0f,-600.0f };
 	}
 
 	GameCamera::~GameCamera()

@@ -31,6 +31,8 @@ namespace mainGame {
 			//敵の情報を入手
 			m_enemy = enemy;
 
+			m_game = FindGO<Game>(GAME_NAME);
+
 			m_isInitd = true;
 		}
 
@@ -41,24 +43,39 @@ namespace mainGame {
 				return;
 			}
 
-			//敵のステータスの状態によって再生するアニメーションを変える
-			switch (m_enemy->GetState()) {
-			case enEnemyIdle: {
+			switch (m_game->GetGameState()) {
+			case enGameStart: {
 				m_state = enEnemyAnimationIdle;
 			}break;
-			case enEnemyMove: {
-				m_state = enEnemyAnimationWark;
+			case enGameInProgress: {
+				//敵のステータスの状態によって再生するアニメーションを変える
+				switch (m_enemy->GetState()) {
+				case enEnemyIdle: {
+					m_state = enEnemyAnimationIdle;
+				}break;
+				case enEnemyMove: {
+					m_state = enEnemyAnimationWark;
+				}break;
+				case enEnemyAttack: {
+					m_state = enEnemyAnimationClear;
+				}break;
+				case enEnemyDamage: {
+					m_state = enEnemyAnimationDamage;
+				}break;
+				case enEnemyDown: {
+					m_state = enEnemyAnimationKneelDown;
+				}break;
+				}
 			}break;
-			case enEnemyAttack: {
-				m_state = enEnemyAnimationClear;
-			}break;
-			case enEnemyDamage: {
-				m_state = enEnemyAnimationDamage;
-			}break;
-			case enEnemyDown: {
+			case enGameClear: {
 				m_state = enEnemyAnimationKneelDown;
 			}break;
+			case enGameOver: {
+				m_state = enEnemyAnimationIdle;
+			}break;
 			}
+
+			
 		}
 	}
 }

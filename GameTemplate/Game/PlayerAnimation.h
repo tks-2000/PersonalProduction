@@ -12,6 +12,8 @@ namespace mainGame {
 		enum EnPlayerAnimations {
 			enPlayerAnimationIdle,	//待機
 			enPlayerAnimationWark,	//歩き
+			enPlayerAnimationClear,
+			enPlayerAnimationKneelDown,
 			enPlayerAnimationNum	//合計数
 		};
 
@@ -49,6 +51,8 @@ namespace mainGame {
 			AnimationClip m_playerAnimationClip[enPlayerAnimationNum];
 			/// @brief プレイヤー
 			Player* m_player = nullptr;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

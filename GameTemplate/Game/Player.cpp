@@ -16,7 +16,7 @@ namespace mainGame {
 	namespace player {
 		Player::Player()
 		{
-			
+			m_isInitd = false;
 		}
 
 		Player::~Player()
@@ -24,8 +24,12 @@ namespace mainGame {
 			DeleteGO(m_playerModel);
 		}
 
-		bool Player::Start()
+		void Player::Init()
 		{
+			if (m_isInitd == true) {
+				return;
+			}
+
 			//初期位置を設定
 			m_position = PLAYER_START_POS;
 
@@ -48,6 +52,15 @@ namespace mainGame {
 			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();
 
+			m_game = FindGO<Game>(GAME_NAME);
+
+			m_isInitd = true;
+		}
+
+		bool Player::Start()
+		{
+			
+
 			return true;
 		}
 
@@ -57,6 +70,44 @@ namespace mainGame {
 		}
 
 		void Player::Execution()
+		{
+			if (m_isInitd == false) {
+				return;
+			}
+
+			switch (m_game->GetGameState())
+			{
+			case enGameStart: {
+				GameStartExecution();
+			}break;
+			case enGameInProgress: {
+				GameInProgressExecution();
+			}break;
+			case enGameClear: {
+				GameClearExecution();
+			}break;
+			case enGameOver: {
+				GameOverExecution();
+			}break;
+			default:
+				break;
+			}
+		}
+
+		void Player::GameStartExecution()
+		{
+			m_playerAnimation.AnimationUpdate();
+
+			m_playerModel->SetPosition(m_position);
+
+			m_playerModel->SetRotation(m_qRot);
+
+			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_playerModel->Execution();
+		}
+
+		void Player::GameInProgressExecution()
 		{
 			//プレイヤーの状態によって処理を分ける
 			switch (m_playerState) {
@@ -84,6 +135,32 @@ namespace mainGame {
 			m_playerAnimation.AnimationUpdate();
 
 			//プレイヤーモデルに更新した情報を適用
+			m_playerModel->SetPosition(m_position);
+
+			m_playerModel->SetRotation(m_qRot);
+
+			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_playerModel->Execution();
+		}
+
+		void Player::GameClearExecution()
+		{
+			m_playerAnimation.AnimationUpdate();
+
+			m_playerModel->SetPosition(m_position);
+
+			m_playerModel->SetRotation(m_qRot);
+
+			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_playerModel->Execution();
+		}
+
+		void Player::GameOverExecution()
+		{
+			m_playerAnimation.AnimationUpdate();
+
 			m_playerModel->SetPosition(m_position);
 
 			m_playerModel->SetRotation(m_qRot);

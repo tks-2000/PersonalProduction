@@ -14,10 +14,14 @@ namespace mainGame {
 			m_isInitd = false;
 
 			//アニメーションクリップをロード
-			m_playerAnimationClip[enPlayerIdle].Load("Assets/animData/idle.tka");
-			m_playerAnimationClip[enPlayerIdle].SetLoopFlag(true);
-			m_playerAnimationClip[enPlayerWark].Load("Assets/animData/walk.tka");
-			m_playerAnimationClip[enPlayerWark].SetLoopFlag(true);
+			m_playerAnimationClip[enPlayerAnimationIdle].Load("Assets/animData/idle.tka");
+			m_playerAnimationClip[enPlayerAnimationIdle].SetLoopFlag(true);
+			m_playerAnimationClip[enPlayerAnimationWark].Load("Assets/animData/walk.tka");
+			m_playerAnimationClip[enPlayerAnimationWark].SetLoopFlag(true);
+			m_playerAnimationClip[enPlayerAnimationClear].Load("Assets/animData/unityChan/clear.tka");
+			m_playerAnimationClip[enPlayerAnimationClear].SetLoopFlag(false);
+			m_playerAnimationClip[enPlayerAnimationKneelDown].Load("Assets/animData/unityChan/KneelDown.tka");
+			m_playerAnimationClip[enPlayerAnimationKneelDown].SetLoopFlag(false);
 		}
 
 		Animation::~Animation()
@@ -30,6 +34,8 @@ namespace mainGame {
 			//データを取得
 			m_player = pl;
 
+			m_game = FindGO<Game>(GAME_NAME);
+
 			//初期化完了
 			m_isInitd = true;
 		}
@@ -41,24 +47,42 @@ namespace mainGame {
 				return;
 			}
 
-			//状態によって再生するアニメーションを変える
-			switch (m_player->GetPlayerStatus())
+			switch (m_game->GetGameState())
 			{
-			case enPlayerIdle: {
+			case enGameStart: {
 				m_playerAnimState = enPlayerAnimationIdle;
 			}break;
-			case enPlayerWark: {
-				m_playerAnimState = enPlayerAnimationWark;
+			case enGameInProgress: {
+				//状態によって再生するアニメーションを変える
+				switch (m_player->GetPlayerStatus())
+				{
+				case enPlayerIdle: {
+					m_playerAnimState = enPlayerAnimationIdle;
+				}break;
+				case enPlayerWark: {
+					m_playerAnimState = enPlayerAnimationWark;
+				}break;
+				case enPlayerRun: {
+
+				}break;
+				case enPlayerDamage: {
+					m_playerAnimState = enPlayerAnimationIdle;
+				}break;
+				default:
+					break;
+				}
 			}break;
-			case enPlayerRun: {
-				
+			case enGameClear: {
+				m_playerAnimState = enPlayerAnimationClear;
 			}break;
-			case enPlayerDamage: {
-				m_playerAnimState = enPlayerAnimationIdle;
-			}break;
+			case enGameOver: {
+				m_playerAnimState = enPlayerAnimationKneelDown;
+			}
 			default:
 				break;
 			}
+
+			
 		}
 		
 	}
