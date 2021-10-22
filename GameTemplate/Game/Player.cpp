@@ -125,11 +125,13 @@ namespace mainGame {
 			}break;
 			}
 
-			if (g_pad[0]->IsTrigger(enButtonA)) {
-				m_playerAttack.Execute();
-			}
+		
+				
+			
 
 			//データメンバのクラスを更新する
+			m_playerAttack.Execute();
+
 			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
 
 			m_playerAnimation.AnimationUpdate();

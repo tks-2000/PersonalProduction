@@ -299,6 +299,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>inGame</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -567,6 +570,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>inGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,9 @@
 #pragma once
+#include "PlayerBullet.h"
 
 namespace mainGame {
+
+	class GameCamera;
 
 	namespace enemy {
 		class Enemy;
@@ -30,7 +33,19 @@ namespace mainGame {
 			/// @brief 敵の情報を削除
 			/// @param enemy 敵クラスのアドレス
 			void DeleteEnemyData(enemy::Enemy* enemy);
+
+			void DeleteBullet(Bullet* bullet);
+			
 		private:
+
+			void MeleeAttack();
+
+			void BulletFiring();
+
+			void BulletExecution();
+
+			
+
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 攻撃の衝撃力
@@ -41,6 +56,12 @@ namespace mainGame {
 			Player* m_player = nullptr;
 			/// @brief 敵クラスの情報をまとめた配列
 			std::vector<enemy::Enemy*> m_enemys;
+
+			int m_bulletNum = 0;
+
+			std::vector<Bullet*> m_bullets;
+
+			GameCamera* m_gameCamera = nullptr;
 		};
 	}
 }

@@ -35,6 +35,7 @@ namespace mainGame {
 				return m_qRot;
 			}
 
+			//ゲームカメラの状態によって処理を分ける
 			switch (m_gameCamera->GetCameraMode())
 			{
 			case enCameraModeTps: {
@@ -83,7 +84,7 @@ namespace mainGame {
 			//回転する前の角度を記憶しておく
 			m_oldAngle = m_angle;
 
-			
+			//ゲームカメラの向いている方向で回転方向を決める
 			Vector3 direction = m_gameCamera->GetCameraToTargetPos();
 			//Y方向の移動量を打ち消す
 			direction.y = 0.0f;

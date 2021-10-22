@@ -18,6 +18,7 @@ namespace mainGame {
 		GameCamera();
 		~GameCamera();
 
+		/// @brief 初期化
 		void Init();
 		bool Start();
 		void Update();
@@ -51,7 +52,13 @@ namespace mainGame {
 
 		const float GetCameraXAngleAmount() { return m_cameraXAngeAmount; }
 
+		/// @brief Fpsカメラの座標から注視点への座標を取得
+		/// @return Fpsカメラの座標から注視点への座標のconst参照
 		const Vector3& GetCameraToTargetPos() { return m_cameraToTargetPos; }
+
+		/// @brief カメラの注視点の座標を取得
+		/// @return カメラの注視点の座標のconst参照
+		const Vector3& GetCameraGazePointPos() { return m_cameraGazePoint; }
 
 		/// @brief 実行
 		void Execution();
@@ -59,26 +66,32 @@ namespace mainGame {
 	private:
 		
 
-		void FpsCameraRotation();
-		/// @brief カメラの更新
+		/// @brief Tpsカメラの更新
 		void TpsCameraUpdate();
 
+		/// @brief Fpsカメラの更新
 		void FpsCameraUpdate();
 
+		/// @brief Tpsカメラの移動
 		void TpsCameraMove();
 
+		/// @brief Fpsカメラの移動
 		void FpsCameraMove();
 
-		/// @brief カメラの回転
+		/// @brief Tpsカメラの回転
 		void TpsCameraRotation();
 
-		/// @brief カメラリセット
+		/// @brief Fpsカメラの回転
+		void FpsCameraRotation();
+
+		/// @brief Tpsカメラリセット
 		void TpsCameraReset();
 
+		/// @brief Fpsカメラリセット
 		void FpsCameraReset();
 
+		/// @brief 初期化フラグ
 		bool m_isInitd = false;
-
 		/// @brief カメラの座標
 		Vector3 m_cameraPos = g_vec3Zero;
 		/// @brief カメラの移動座標

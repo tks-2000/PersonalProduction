@@ -24,9 +24,8 @@ namespace mainGame {
 			/// @return 速度によって決まった回転クォータニオン
 			const Quaternion& RotationExecution(const Vector3& moveSpeed);
 
-			const Quaternion& TpsRotationExecution(const Vector3& moveSpeed);
 
-			const Quaternion& FpsRotationExecution();
+			
 
 			const float GetAngle() { return m_angle; }
 
@@ -37,6 +36,15 @@ namespace mainGame {
 			/// @brief 角度の変化量を元に戻す
 			void AngleReset() { m_angleAmount = 0.0f; }
 		private:
+			/// @brief Tpsカメラの時の回転を取得
+			/// @param moveSpeed 移動速度
+			/// @return 移動速度に応じた回転クォータニオン
+			const Quaternion& TpsRotationExecution(const Vector3& moveSpeed);
+
+			/// @brief Fpsカメラの時の回転を取得
+			/// @return カメラの向きに応じた回転クォータニオン
+			const Quaternion& FpsRotationExecution();
+
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 回転クォータニオン

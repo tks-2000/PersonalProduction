@@ -22,6 +22,12 @@ namespace mainGame {
 		Attack::~Attack()
 		{
 			m_enemys.clear();
+
+			for (int bulletNum = 0; bulletNum < m_bullets.size(); bulletNum++) {
+				DeleteGO(m_bullets[bulletNum]);
+			}
+
+			m_bullets.clear();
 		}
 
 		void Attack::Init(Player* pl)
@@ -33,6 +39,7 @@ namespace mainGame {
 
 			//èÓïÒÇì¸éË
 			m_player = pl;
+			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
 			m_attackPower = NORMAL_ATTACK_POWER;
 			m_attackRange = ATTACK_RANGE;
 
@@ -47,6 +54,46 @@ namespace mainGame {
 				return;
 			}
 
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				MeleeAttack();
+			}
+			else if (g_pad[0]->IsTrigger(enButtonRB1))
+			{
+				BulletFiring();
+			}
+
+			BulletExecution();
+		}
+
+		void Attack::DeleteEnemyData(enemy::Enemy* enemy)
+		{
+			std::vector<enemy::Enemy*>::iterator it;
+			it = std::find(
+				m_enemys.begin(),
+				m_enemys.end(),
+				enemy
+			);
+			if (it != m_enemys.end()) {
+				m_enemys.erase(it);
+			}
+		}
+
+		void Attack::DeleteBullet(Bullet* bullet)
+		{
+			std::vector<Bullet*>::iterator it;
+			it = std::find(
+				m_bullets.begin(),
+				m_bullets.end(),
+				bullet
+			);
+			if (it != m_bullets.end()) {
+				m_bullets.erase(it);
+				m_bulletNum--;
+			}
+		}
+
+		void Attack::MeleeAttack()
+		{
 			//ìGÇÃêîÇæÇØé¿çsÇ∑ÇÈ
 			for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
 				//ìGÇ∆ÇÃãóó£Çë™ÇÈ
@@ -66,17 +113,20 @@ namespace mainGame {
 			}
 		}
 
-		void Attack::DeleteEnemyData(enemy::Enemy* enemy)
+		void Attack::BulletFiring()
 		{
-			std::vector<enemy::Enemy*>::iterator it;
-			it = std::find(
-				m_enemys.begin(),
-				m_enemys.end(),
-				enemy
-			);
-			if (it != m_enemys.end()) {
-				m_enemys.erase(it);
+			m_bullets.push_back(NewGO<Bullet>(PRIORITY_VERYLOW));
+			m_bullets[m_bulletNum]->Init(this, &m_enemys,m_player->GetPlayerPosition(), m_gameCamera->GetCameraGazePointPos());
+			m_bulletNum++;
+
+		}
+
+		void Attack::BulletExecution()
+		{
+			for (int bulletNum = 0; bulletNum < m_bullets.size(); bulletNum++) {
+				m_bullets[bulletNum]->Execution();
 			}
+
 		}
 	}
 }
