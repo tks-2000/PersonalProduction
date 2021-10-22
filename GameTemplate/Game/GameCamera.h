@@ -5,12 +5,20 @@ class Player;
 
 namespace mainGame {
 
+	enum EnCameraMode {
+		enCameraModeTps,
+		enCameraModeFps,
+		enCameraModeNum
+	};
+
 	/// @brief ゲーム中のカメラを制御するクラス
 	class GameCamera : public IGameObject
 	{
 	public:
 		GameCamera();
 		~GameCamera();
+
+		void Init();
 		bool Start();
 		void Update();
 
@@ -35,22 +43,41 @@ namespace mainGame {
 		/// @return ゲームカメラの座標のconst参照
 		const Vector3& GetCameraPos() { return m_cameraPos; }
 
+		const EnCameraMode& GetCameraMode() { return m_mode; }
+
 		const float GetCameraYAngleAmount() { return m_cameraYAngeAmount; }
 
 		const Vector3& GetCameraAxisX() { return m_AxisX; }
 
 		const float GetCameraXAngleAmount() { return m_cameraXAngeAmount; }
 
+		const Vector3& GetCameraToTargetPos() { return m_cameraToTargetPos; }
+
 		/// @brief 実行
 		void Execution();
 
 	private:
-		/// @brief カメラの回転
-		void CameraRotation();
+		
+
+		void FpsCameraRotation();
 		/// @brief カメラの更新
-		void CameraUpdate();
+		void TpsCameraUpdate();
+
+		void FpsCameraUpdate();
+
+		void TpsCameraMove();
+
+		void FpsCameraMove();
+
+		/// @brief カメラの回転
+		void TpsCameraRotation();
+
 		/// @brief カメラリセット
-		void CameraReset();
+		void TpsCameraReset();
+
+		void FpsCameraReset();
+
+		bool m_isInitd = false;
 
 		/// @brief カメラの座標
 		Vector3 m_cameraPos = g_vec3Zero;
@@ -71,10 +98,12 @@ namespace mainGame {
 		/// @brief カメラの注視点の移動方向
 		Vector3 m_cameraGazePointMoveDirection;
 
-		/// @brief カメラの注視点からの距離
-		Vector3 m_toCameraPos = g_vec3Zero;
-		/// @brief 保存するカメラの注視点からの距離
-		Vector3 m_oldToCameraPos = g_vec3Zero;
+		/// @brief カメラの注視点からカメラの座標への距離
+		Vector3 m_targetToCameraPos = g_vec3Zero;
+		/// @brief カメラから注視点への距離
+		Vector3 m_cameraToTargetPos = g_vec3Zero;
+		/// @brief プレイヤーからカメラの座標への距離
+		Vector3 m_playerToCameraPos = g_vec3Zero;
 		
 		/// @brief カメラのY軸回転
 		Quaternion m_cameraYRot = g_quatIdentity;
@@ -82,6 +111,8 @@ namespace mainGame {
 		float m_cameraYAngle = 0.0f;
 		/// @brief カメラのY軸回転角度の量
 		float m_cameraYAngeAmount = 0.0f;
+		/// @brief 記憶するカメラのY軸回転角度の量
+		float m_oldCameraYAngleAmount = 0.0f;
 
 		/// @brief カメラのX軸回転
 		Quaternion m_cameraXRot = g_quatIdentity;
@@ -92,9 +123,13 @@ namespace mainGame {
 		/// @brief カメラのX軸回転角度の量
 		float m_cameraXAngeAmount = 0.0f;
 
+		float m_oldPlayerAngle = 0.0f;
+
+		EnCameraMode m_mode = enCameraModeTps;
 
 		/// @brief プレイヤー
 		player::Player* m_player = nullptr;
+
 	};
 
 }

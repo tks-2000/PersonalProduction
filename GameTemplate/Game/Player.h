@@ -50,6 +50,8 @@ namespace mainGame {
 			/// @return プレイヤーの座標のconst参照
 			const Vector3& GetPlayerPosition() { return m_position; }
 
+			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
+
 			/// @brief プレイヤーの回転角度の変化量を入手
 			/// @return プレイヤーの回転角度の変化量
 			float GetAngleAmount() { return m_playerRot.GetAngleAmount(); }

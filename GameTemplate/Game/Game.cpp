@@ -26,6 +26,8 @@ namespace mainGame {
 
 		m_player->Init();
 
+		m_gameCamera->Init();
+
 		m_enemyGenerator->Init({ 0.0f,1000.0f,0.0f });
 
 		m_stage->Init();
@@ -123,7 +125,6 @@ namespace mainGame {
 		if (m_isDead == false) {
 			m_player->Execution();
 			m_enemyGenerator->Execute();
-			m_gameCamera->SetCameraTarget(m_player->GetPlayerPosition());
 			m_gameCamera->Execution();
 		}
 		

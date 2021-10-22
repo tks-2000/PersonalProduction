@@ -130,7 +130,7 @@ namespace mainGame {
 			}
 
 			//データメンバのクラスを更新する
-			m_qRot = m_playerRot.RotationUpdate(m_playerMove.GetMoveSpssd());
+			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
 
 			m_playerAnimation.AnimationUpdate();
 

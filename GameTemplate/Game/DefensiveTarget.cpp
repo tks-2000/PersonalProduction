@@ -5,7 +5,7 @@ namespace {
 	/// @brief 防衛対象のモデルファイルパス
 	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/box2.tkm";
 	/// @brief 防衛対象の最大耐久力
-	const float MAX_HP = 100.0f;
+	const int MAX_HP = 10000;
 }
 
 namespace mainGame {

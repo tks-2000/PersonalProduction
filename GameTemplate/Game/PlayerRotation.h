@@ -1,6 +1,9 @@
 #pragma once
 
 namespace mainGame {
+
+	class GameCamera;
+
 	namespace player {
 
 		class Player;
@@ -19,7 +22,13 @@ namespace mainGame {
 			/// @brief 回転クォータニオンを取得
 			/// @param moveSpeed 回転させるための移動速度
 			/// @return 速度によって決まった回転クォータニオン
-			const Quaternion& RotationUpdate(const Vector3& moveSpeed);
+			const Quaternion& RotationExecution(const Vector3& moveSpeed);
+
+			const Quaternion& TpsRotationExecution(const Vector3& moveSpeed);
+
+			const Quaternion& FpsRotationExecution();
+
+			const float GetAngle() { return m_angle; }
 
 			/// @brief 回転角度の変化量を取得
 			/// @return 角度の変化量
@@ -40,6 +49,8 @@ namespace mainGame {
 			float m_angleAmount = 0.0f;
 			/// @brief プレイヤークラス
 			Player* m_player = nullptr;
+
+			GameCamera* m_gameCamera = nullptr;
 		};
 	}
 }
