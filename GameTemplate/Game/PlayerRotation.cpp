@@ -69,6 +69,7 @@ namespace mainGame {
 
 			//方向ベクトルから角度を計算する
 			m_angle = atan2(direction.x, direction.z);
+			m_direction = direction;
 
 			//回転した角度と回転する前の角度の差で変化量を求める
 			m_angleAmount += m_angle - m_oldAngle;

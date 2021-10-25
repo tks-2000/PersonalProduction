@@ -25,7 +25,7 @@ namespace mainGame {
 			const Quaternion& RotationExecution(const Vector3& moveSpeed);
 
 
-			
+			const Vector3& GetDirection() { return m_direction; }
 
 			const float GetAngle() { return m_angle; }
 
@@ -47,6 +47,8 @@ namespace mainGame {
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
+
+			Vector3 m_direction = g_vec3Zero;
 			/// @brief 回転クォータニオン
 			Quaternion m_qRot = g_quatIdentity;
 			/// @brief 角度

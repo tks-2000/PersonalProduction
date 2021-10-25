@@ -3,9 +3,9 @@
 
 namespace {
 	/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
-	const int NORMAL_ATTACK_DAMAGE = 1;
+	const int NORMAL_ATTACK_DAMAGE = 3;
 	/// @brief “G‚É—^‚¦‚éÕŒ‚—Í
-	const float NORMAL_ATTACK_POWER = 3000.0f;
+	const float NORMAL_IMPACT_FORCE = 3000.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 
@@ -40,7 +40,7 @@ namespace mainGame {
 			//î•ñ‚ğ“üè
 			m_player = pl;
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
-			m_attackPower = NORMAL_ATTACK_POWER;
+			m_attackPower = NORMAL_IMPACT_FORCE;
 			m_attackRange = ATTACK_RANGE;
 
 			//‰Šú‰»Š®—¹
@@ -54,10 +54,10 @@ namespace mainGame {
 				return;
 			}
 
-			if (g_pad[0]->IsTrigger(enButtonA)) {
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
 				MeleeAttack();
 			}
-			else if (g_pad[0]->IsTrigger(enButtonRB1))
+			else if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB1))
 			{
 				BulletFiring();
 			}
@@ -116,7 +116,17 @@ namespace mainGame {
 		void Attack::BulletFiring()
 		{
 			m_bullets.push_back(NewGO<Bullet>(PRIORITY_VERYLOW));
-			m_bullets[m_bulletNum]->Init(this, &m_enemys,m_player->GetPlayerPosition(), m_gameCamera->GetCameraGazePointPos());
+			Vector3 startPos = m_player->GetPlayerPosition();
+			startPos.y += 50.0f;
+			Vector3 targetPos;
+			if (m_gameCamera->GetCameraMode() == enCameraModeFps) {
+				targetPos = m_gameCamera->GetCameraGazePointPos();
+			}
+			else {
+				targetPos = m_player->GetPlayerPosition() + m_player->GetPlayerDirection();
+				targetPos.y = startPos.y;
+			}
+			m_bullets[m_bulletNum]->Init(this, &m_enemys, startPos,targetPos);
 			m_bulletNum++;
 
 		}

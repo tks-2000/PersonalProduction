@@ -113,7 +113,7 @@ namespace mainGame {
 
 		/// @brief カメラの注視点からカメラの座標への距離
 		Vector3 m_targetToCameraPos = g_vec3Zero;
-		/// @brief カメラから注視点への距離
+		/// @brief カメラの座標からカメラの注視点への距離
 		Vector3 m_cameraToTargetPos = g_vec3Zero;
 		/// @brief プレイヤーからカメラの座標への距離
 		Vector3 m_playerToCameraPos = g_vec3Zero;
@@ -124,8 +124,6 @@ namespace mainGame {
 		float m_cameraYAngle = 0.0f;
 		/// @brief カメラのY軸回転角度の量
 		float m_cameraYAngeAmount = 0.0f;
-		/// @brief 記憶するカメラのY軸回転角度の量
-		float m_oldCameraYAngleAmount = 0.0f;
 
 		/// @brief カメラのX軸回転
 		Quaternion m_cameraXRot = g_quatIdentity;
@@ -136,8 +134,10 @@ namespace mainGame {
 		/// @brief カメラのX軸回転角度の量
 		float m_cameraXAngeAmount = 0.0f;
 
+		/// @brief 記憶するのプレイヤーの角度
 		float m_oldPlayerAngle = 0.0f;
 
+		/// @brief カメラのステート
 		EnCameraMode m_mode = enCameraModeTps;
 
 		/// @brief プレイヤー

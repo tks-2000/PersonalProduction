@@ -4,11 +4,15 @@
 namespace mainGame {
 	namespace player {
 
-		const float BULLET_VEROCITY = 3.0f;
+		const float BULLET_VEROCITY = 1000.0f;
 
-		const float ENEMY_COLLISION_DISTANCE = 100.0f;
+		const float ENEMY_COLLISION_DISTANCE = 200.0f;
 
 		const float DELETE_MOVE_DISTANCE = 3000.0f;
+
+		const float BULLET_IMPACT_FORCE = 2000.0f;
+
+		const int BULLET_DAMAGE = 1;
 
 		Bullet::Bullet()
 		{
@@ -32,16 +36,17 @@ namespace mainGame {
 
 			m_bulletModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_bulletModel->Init("Assets/modelData/sphere/sphere.tkm");
+			m_bulletModel->SetScale({ 0.7f,0.7f,0.7f });
 
 			m_startPos = pos;
-
-			m_startPos.y += 50.0f;
 
 			m_position = m_startPos;
 
 			m_target = target;
 
 			m_moveDirection = m_target - m_startPos;
+
+			m_moveDirection.Normalize();
 
 			m_isInitd = true;
 		}
@@ -78,12 +83,15 @@ namespace mainGame {
 			for (int enemyNum = 0; enemyNum < m_enemys->size(); enemyNum++) {
 				enemy::Enemy* enemyData = *(m_enemys->begin() + enemyNum);
 
-				Vector3 toEnemyVec = m_position - enemyData->GetPosition();
+				Vector3 toEnemyVec = enemyData->GetPosition() - m_position;
 
 				if (toEnemyVec.Length() < ENEMY_COLLISION_DISTANCE) {
 
+					toEnemyVec.Normalize();
+					enemyData->SetMoveSpeed(toEnemyVec * BULLET_IMPACT_FORCE);
+
 					enemyData->SetState(enemy::enEnemyDamage);
-					enemyData->ReceiveDamage(1);
+					enemyData->ReceiveDamage(BULLET_DAMAGE);
 					DeleteThis();
 				}
 			}

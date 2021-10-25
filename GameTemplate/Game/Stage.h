@@ -27,6 +27,8 @@ namespace mainGame {
 			render::model::SkinModelRender* m_stageModel = nullptr;
 			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticStageObject;
+
+			render::model::SkinModelRender* m_bgModel = nullptr;
 		};
 	}
 }

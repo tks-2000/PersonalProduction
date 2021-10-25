@@ -32,6 +32,9 @@ namespace {
 
 
 namespace mainGame {
+
+	static const int PLAYER1_CONTROLLER_NUM = 0;
+
 	static const char* GAME_NAME = "Game";
 	static const char* GAME_CAMERA_NAME = "GameCamera";
 

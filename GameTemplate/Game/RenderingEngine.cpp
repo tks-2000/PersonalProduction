@@ -42,8 +42,10 @@ namespace render {
 		m_lig->Init();
 		m_lig->SetDirectionLightColor({ 0.3f, 0.3f, 0.3f });
 		m_lig->SetDirectionLightDirection({ 0.0f, -0.5f, 1.0f });
-		m_lig->SetHemiSphereLifhtGroundColor({ 0.5f,0.0f,0.0f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.5f });
+		m_lig->SetAmbientLight({ 0.1f,0.1f,0.1f });
+		
+		m_lig->SetHemiSphereLifhtGroundColor({ 0.0f,0.0f,0.5f });
+		m_lig->SetHemiSphereLifhtSkyColor({ 0.1f,0.2f,0.1f });
 		m_lig->SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 1000.0f);
@@ -51,10 +53,11 @@ namespace render {
 		m_lig->SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
 		m_lig->SetSpotLightColor(0, { 5.0f,5.0f,5.0f });
 		m_lig->SetDirectionLightFlickering(
-			{ 0.5f,0.3f,0.3f },
-			{ 0.3f,0.3f,0.5f },
+			{ 0.3f,0.3f,0.3f },
+			{ 0.7f,0.7f,0.7f },
 			0.1f
 		);
+
 		m_ligFlag = true;
 		//m_shadow->SetLightCameraTarget({ 0.0f,0.0f,0.0f });
 
@@ -184,7 +187,6 @@ namespace render {
 				m_ligColor.z -= 0.01f;
 			}
 		}
-		m_lig->SetHemiSphereLifhtSkyColor(m_ligColor);
 
 		m_lig->Execution();
 	}

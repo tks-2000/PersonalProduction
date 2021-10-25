@@ -35,7 +35,7 @@ namespace mainGame {
 		{
 			//データを取得
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
-			m_player = pl;//FindGO<Player>(PLAYER_NAME);
+			m_player = pl;
 			m_charaCon.Init(PLAYER_COLLISION_RADIUS, PLAYER_COLLISION_HEIGHT, m_player->GetPlayerPosition());
 			m_gravity = PLAYER_GRAVITY;
 
@@ -51,8 +51,8 @@ namespace mainGame {
 			}
 
 			//左スティック入力を受け取る
-			m_LStickX = g_pad[0]->GetLStickXF();
-			m_LStickY = g_pad[0]->GetLStickYF();
+			m_LStickX = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickXF();
+			m_LStickY = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickYF();
 
 			//左スティック入力があれば…
 			if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
@@ -95,8 +95,8 @@ namespace mainGame {
 			}
 
 			//左スティック入力を受け取る
-			m_LStickX = g_pad[0]->GetLStickXF();
-			m_LStickY = g_pad[0]->GetLStickYF();
+			m_LStickX = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickXF();
+			m_LStickY = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickYF();
 
 			//スティック入力とカメラの方向で移動方向を決める
 			m_moveDirection =  m_gameCamera->GetCameraRight() * m_LStickX;

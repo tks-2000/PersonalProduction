@@ -101,6 +101,7 @@ namespace render {
 
 			LightNums* GetLightNumAddress() { return &m_ligNum; }
 
+			void SetAmbientLight(const Vector3& color) { m_light.ambientlight = color; }
 
 			/// @brief ディレクションライトの初期化
 			void InitDirectionLight();

@@ -4,7 +4,7 @@
 
 namespace {
 	/// @brief ’Êí‚ÌUŒ‚—Í
-	const int NORMAL_ATTACK_POWER = 2;
+	const int NORMAL_IMPACT_FORCE = 2;
 	/// @brief ‹­‚¢UŒ‚—Í
 	const int POWERFUL_ATTACK_POWER = 3;
 	/// @brief Žã‚¢UŒ‚—Í
@@ -38,7 +38,7 @@ namespace mainGame {
 			switch (m_enemy->GetEnemyType())
 			{
 			case enEnemyTypeNormal: {
-				m_attackPower = NORMAL_ATTACK_POWER;
+				m_attackPower = NORMAL_IMPACT_FORCE;
 			}break;
 			case enEnemyTypePowerful: {
 				m_attackPower = POWERFUL_ATTACK_POWER;

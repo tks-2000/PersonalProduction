@@ -14,6 +14,7 @@ namespace mainGame {
 		Stage::~Stage()
 		{
 			DeleteGO(m_stageModel);
+			DeleteGO(m_bgModel);
 		}
 
 		void Stage::Init()
@@ -26,6 +27,9 @@ namespace mainGame {
 			m_stageModel = NewGO <render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_stageModel->Init(STAGE_MODEL_TKM_FILEPATH);
 			m_stageModel->Execution();
+			m_bgModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_bgModel->Init("Assets/modelData/bg/sky_a.tkm");
+			m_bgModel->Execution();
 			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ðì¬
 			m_staticStageObject.CreateFromModel(m_stageModel->GetModel(), m_stageModel->GetModelWorldMatrix());
 			m_isInitd = true;

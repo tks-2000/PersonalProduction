@@ -39,9 +39,9 @@ namespace mainGame {
 		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
 
 
-		m_sampleSprite->Init("Assets/image/sample.dds", 100, 100);
-		m_sampleSprite->SetPosition({ 500.0f,300.0f,0.0f });
-
+		m_sampleSprite->Init("Assets/image/sight.dds", 100, 100);
+		m_sampleSprite->SetPosition({ 0.0f,0.0f,0.0f });
+		m_sampleSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
 
 		m_sampleFont->Init(L"test");
 		m_sampleFont->SetPosition({ -500.0f, 300.0f });
@@ -115,7 +115,7 @@ namespace mainGame {
 			std::wstring conversion;
 			conversion = std::to_wstring(hp);
 			m_sampleFont->SetText(conversion.c_str());
-			m_sampleSprite->Execute();
+			
 			m_sampleFont->Execution();
 			m_unityChanModel2->Execution();
 
@@ -126,6 +126,14 @@ namespace mainGame {
 			m_player->Execution();
 			m_enemyGenerator->Execute();
 			m_gameCamera->Execution();
+
+			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
+				m_sampleSprite->FadeOut(2.0f);
+			}
+			else {
+				m_sampleSprite->FadeIn(2.0f);
+			}
+			m_sampleSprite->Execute();
 		}
 		
 	}

@@ -2,13 +2,17 @@
 #include "GameCamera.h"
 
 namespace {
+	/// @brief カメラの遠平面
+	const float CAMERA_FAR_PLANE = 10000.0f;
+	/// @brief カメラの近平面
+	const float CAMERA_NEAR_PLANE = 1.0f;
 	/// @brief カメラの速度
 	const float CAMERA_VELOCITY = 0.08f;
 	/// @brief カメラの回転速度
 	const float CAMERA_ROTATION_VELOCITY = 0.02f;
-	/// @brief カメラの摩擦力
+	/// @brief TPSカメラの摩擦力
 	const float TPS_CAMERA_FRICTION = 20.0f;
-
+	/// @brief FPSカメラの摩擦力
 	const float FPS_CAMERA_FRICTION = 5.0f;
 	/// @brief カメラの移動が止まる距離
 	const float CAMERA_MOVE_STOP_DISTANCE = 0.01f;
@@ -34,13 +38,22 @@ namespace mainGame {
 
 	void GameCamera::Init()
 	{
+		//未初期化なら実行しない
 		if (m_isInitd == true) {
 			return;
 		}
+		//情報を入手
 		m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 
+		//カメラの初期設定
+		g_camera3D->SetNear(CAMERA_NEAR_PLANE);
+		g_camera3D->SetFar(CAMERA_FAR_PLANE);
+
+		g_camera3D->Update();
+
+		//初期化完了
 		m_isInitd = true;
 	}
 
@@ -57,10 +70,12 @@ namespace mainGame {
 
 	void GameCamera::Execution()
 	{
+		//未初期化
 		if (m_isInitd == false) {
 			return;
 		}
 		
+		//ステータスに応じて処理を分ける
 		switch (m_mode)
 		{
 		case enCameraModeTps: {
@@ -81,19 +96,18 @@ namespace mainGame {
 		g_camera3D->SetPosition(m_cameraPos);
 	}
 
-	
-
 	void GameCamera::TpsCameraUpdate()
 	{
 		//LB1でカメラリセット
-		if (g_pad[0]->IsTrigger(enButtonLB1)) {
+		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonLB1)) {
 			TpsCameraReset();
 		}
 
 		TpsCameraMove();
 		TpsCameraRotation();
 
-		if (g_pad[0]->IsTrigger(enButtonRB3)) {
+		//RB3でかめらチェンジ
+		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB3)) {
 
 
 			//X軸の記憶していた移動量で回転させる
@@ -103,11 +117,12 @@ namespace mainGame {
 			//記憶していた移動量を0にする
 			m_cameraXAngeAmount = 0.0f;
 
-			//Y軸の記憶していた移動量で回転させる
+			//カメラの移動量の反対で回転させて初期位置に戻す
 			m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount);
 			//ベクトルに回転を適用する
 			m_cameraYRot.Apply(m_targetToCameraPos);
 
+			//記憶していた回転でカメラを回す
 			m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngeAmount);
 
 			////カメラの回転を適用する
@@ -122,7 +137,7 @@ namespace mainGame {
 	void GameCamera::FpsCameraUpdate()
 	{
 		//LB1でカメラリセット
-		if (g_pad[0]->IsTrigger(enButtonLB1)) {
+		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonLB1)) {
 			
 			FpsCameraReset();
 		}
@@ -130,13 +145,16 @@ namespace mainGame {
 		FpsCameraMove();
 		FpsCameraRotation();
 
-		if (g_pad[0]->IsTrigger(enButtonRB3)) {
+		//RB3でカメラモードチェンジ
+		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB3)) {
 
+			//カメラリセットする
 			FpsCameraReset();
 
+			//カメラの移動量の反対で回転させて初期位置に戻す
 			m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount);
 
-			////カメラの回転を適用する
+			//カメラの回転を適用する
 			m_cameraYRot.Apply(m_cameraToTargetPos);
 			m_cameraYRot.Apply(m_playerToCameraPos);
 
@@ -251,7 +269,7 @@ namespace mainGame {
 
 		//Y軸回転
 		//右スティック入力を受け取る
-		m_cameraYAngle = g_pad[0]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
+		m_cameraYAngle = g_pad[PLAYER1_CONTROLLER_NUM]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
 
 		//角度からカメラの回転を作成
 		m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngle);
@@ -266,7 +284,7 @@ namespace mainGame {
 		//回転適用前のベクトルを記憶する
 		Vector3 oldPos = m_targetToCameraPos;
 		//右スティック入力を受け取る
-		m_cameraXAngle = -g_pad[0]->GetRStickYF() * CAMERA_ROTATION_VELOCITY;
+		m_cameraXAngle = -g_pad[PLAYER1_CONTROLLER_NUM]->GetRStickYF() * CAMERA_ROTATION_VELOCITY;
 		//受け取った値で回転
 		m_cameraXRot.SetRotation(m_AxisX, m_cameraXAngle);
 		//回転をベクトルに適用
@@ -278,7 +296,7 @@ namespace mainGame {
 		//正規化して大きさ1のベクトルにする
 		toCameraPos.Normalize();
 
-		//Y軸に大きく振れすぎていたら…
+		//Y方向に大きく振れすぎていたら…
 		if (toCameraPos.y > 0.9f || toCameraPos.y < 0.0f) {
 			//回転適用前のベクトルに戻す
 			m_targetToCameraPos = oldPos;
@@ -286,7 +304,7 @@ namespace mainGame {
 			m_cameraXAngle = 0.0f;
 		}
 
-		//回転を記憶しておく
+		//角度変化量を記憶しておく
 		m_cameraXAngeAmount += m_cameraXAngle;
 
 	}
@@ -301,7 +319,7 @@ namespace mainGame {
 
 		//Y軸回転
 		//右スティック入力を受け取る
-		m_cameraYAngle = g_pad[0]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
+		m_cameraYAngle = g_pad[PLAYER1_CONTROLLER_NUM]->GetRStickXF() * CAMERA_ROTATION_VELOCITY;
 
 		//角度からカメラの回転を作成
 		m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngle);
@@ -318,7 +336,7 @@ namespace mainGame {
 		//回転適用前のベクトルを記憶する
 		Vector3 oldPos = m_cameraToTargetPos;
 		//右スティック入力を受け取る
-		m_cameraXAngle = -g_pad[0]->GetRStickYF() * CAMERA_ROTATION_VELOCITY;
+		m_cameraXAngle = -g_pad[PLAYER1_CONTROLLER_NUM]->GetRStickYF() * CAMERA_ROTATION_VELOCITY;
 		//受け取った値で回転
 		m_cameraXRot.SetRotation(m_AxisX, m_cameraXAngle);
 		//回転をベクトルに適用
@@ -330,7 +348,7 @@ namespace mainGame {
 		//正規化して大きさ1のベクトルにする
 		toCameraPos.Normalize();
 
-		//Y軸に大きく振れすぎていたら…
+		//Y方向に大きく振れすぎていたら…
 		if (toCameraPos.y > 0.5f || toCameraPos.y < -0.5f) {
 			//回転適用前のベクトルに戻す
 			m_cameraToTargetPos = oldPos;
@@ -338,7 +356,7 @@ namespace mainGame {
 			m_cameraXAngle = 0.0f;
 		}
 
-		//回転を記憶しておく
+		//角度変化量を記憶しておく
 		m_cameraXAngeAmount += m_cameraXAngle;
 	}
 
@@ -348,10 +366,11 @@ namespace mainGame {
 		m_cameraXRot.SetRotation(m_AxisX, -m_cameraXAngeAmount);
 		//ベクトルに回転を適用する
 		m_cameraXRot.Apply(m_targetToCameraPos);
-		//記憶していた移動量を0にする
+		//記憶していた変化量を0にする
 		m_cameraXAngeAmount = 0.0f;
 
-		//プレイヤーの角度変化量と現在の角度変化量を使って必要な角度変化量を求める
+		//プレイヤーの角度変化量と現在の角度変化量を使って、
+		//プレイヤーの後ろに回るために必要な角度変化量を求める
 		float angleAmount = m_player->GetAngleAmount() - m_cameraYAngeAmount;
 
 		//計算した角度変化量で回転させる
