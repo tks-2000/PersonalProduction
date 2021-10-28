@@ -20,6 +20,8 @@ namespace mainGame {
 			/// @param damage ó‚¯‚éƒ_ƒ[ƒW—Ê
 			void ReceiveDamage(const int damage) { m_defensiveTargetHp -= damage; }
 
+			const Vector3& GetPosition() { return m_position; }
+
 			/// @brief –h‰q‘ÎÛ‚Ì‘Ï‹v—Í‚ğæ“¾
 			/// @return –h‰q‘ÎÛ‚Ìc‚è‘Ï‹v—Í
 			int GetDefensiveTargetHp() { return m_defensiveTargetHp; }

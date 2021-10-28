@@ -44,6 +44,8 @@ namespace mainGame {
 		/// @return ゲームカメラの座標のconst参照
 		const Vector3& GetCameraPos() { return m_cameraPos; }
 
+		/// @brief カメラのモードを取得
+		/// @return カメラモードのステート
 		const EnCameraMode& GetCameraMode() { return m_mode; }
 
 		const float GetCameraYAngleAmount() { return m_cameraYAngeAmount; }
@@ -59,6 +61,10 @@ namespace mainGame {
 		/// @brief カメラの注視点の座標を取得
 		/// @return カメラの注視点の座標のconst参照
 		const Vector3& GetCameraGazePointPos() { return m_cameraGazePoint; }
+
+		const float GetCameraFriction() { return m_cameraFriction; }
+
+		const float GetCameraMoveStopDistance() { return m_cameraMoveStopDistance; }
 
 		/// @brief 実行
 		void Execution();
@@ -100,7 +106,10 @@ namespace mainGame {
 		Vector3 m_cameraMoveDistance = g_vec3Zero;
 		/// @brief カメラの移動方向
 		Vector3 m_cameraMoveDirection = g_vec3Zero;
-
+		/// @brief カメラの摩擦力
+		float m_cameraFriction = 0.0f;
+		/// @brief カメラの移動停止距離
+		float m_cameraMoveStopDistance = 0.0f;
 
 		/// @brief カメラの注視点
 		Vector3 m_cameraGazePoint = g_vec3Zero;

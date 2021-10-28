@@ -5,8 +5,17 @@ class RenderingEngine;
 class Lighting;
 class Shadow;
 
+namespace mainGame {
+	namespace map {
+		class MiniMap;
+	}
+}
 namespace render {
 	namespace model {
+		enum EnModelDrawTarget {
+			enMainRenderTarget,
+			enMiniMapRenderTarget,
+		};
 		
 		/// @brief 3Dモデルの表示を行うクラス
 		class SkinModelRender : public IGameObject
@@ -50,7 +59,14 @@ namespace render {
 			/// @param animationClip アニメーションクリップ
 			/// @param animationNum アニメーションの数
 			/// @param enAxsis モデルの上方向
-			void Init(const char* modelFilePath, const char* skeletonPath = nullptr, AnimationClip* animationClip = nullptr, int animationNum = 0, EnModelUpAxis enAxsis = enModelUpAxisZ);
+			void Init(
+				const char* modelFilePath,
+				const EnModelDrawTarget& drawTarget = enMainRenderTarget,
+				const char* skeletonPath = nullptr,
+				AnimationClip* animationClip = nullptr,
+				int animationNum = 0,
+				EnModelUpAxis enAxsis = enModelUpAxisZ
+			);
 
 			/// @brief モデルのシェーダーファイルパスを変更
 			/// @param fxFilePath シェーダーファイルパス
@@ -112,6 +128,10 @@ namespace render {
 
 			/// @brief 初期化完了フラグ
 			bool m_isInitd = false;
+
+			mainGame::map::MiniMap* m_miniMap = nullptr;
+
+			EnModelDrawTarget m_target = enMainRenderTarget;
 		};
 	}
 }

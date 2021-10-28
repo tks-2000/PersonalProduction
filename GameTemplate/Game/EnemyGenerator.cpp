@@ -19,7 +19,7 @@ namespace mainGame {
 			enEnemyTypeFast
 		};
 
-		const float SPAWN_TIME = 5.0f;
+		const float SPAWN_TIME = 1.0f;
 
 		Generator::Generator()
 		{

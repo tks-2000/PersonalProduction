@@ -85,6 +85,8 @@ namespace mainGame {
 			Quaternion m_qRot = g_quatIdentity;
 			/// @brief モデル
 			render::model::SkinModelRender* m_playerModel = nullptr;
+
+			render::model::SkinModelRender* m_plMapModel = nullptr;
 			/// @brief ステート
 			EnPlayerStates m_playerState = enPlayerIdle;
 			/// @brief アニメーション

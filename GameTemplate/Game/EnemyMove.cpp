@@ -3,11 +3,11 @@
 
 namespace {
 	/// @brief ’Êí‚ÌˆÚ“®‘¬“x
-	const float NORMAL_MOVE_VEROCITY = 20.0f;
+	const float NORMAL_MOVE_VEROCITY = 30.0f;
 	/// @brief ‘¬‚¢ˆÚ“®‘¬“x
-	const float FAST_MOVE_VEROCITY = 30.0f;
+	const float FAST_MOVE_VEROCITY = 40.0f;
 	/// @brief ’x‚¢ˆÚ“®‘¬“x
-	const float SLOW_MOVE_VEROCITY = 10.0f;
+	const float SLOW_MOVE_VEROCITY = 20.0f;
 	/// @brief ’â~‹——£
 	const float MOVE_STOP_DISTANCE = 200.0f;
 	/// @brief ’â~ŠÔ
@@ -45,6 +45,9 @@ namespace mainGame {
 
 			//î•ñ‚ğæ“¾
 			m_enemy = enemy;
+			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
+
+			m_moveTarget = m_defensiveTarget->GetPosition();
 
 			//“G‚Ìí—Ş‚É‚æ‚Á‚Ä‘¬“x‚ğ•Ï‚¦‚é
 			switch(m_enemy->GetEnemyType())

@@ -24,7 +24,11 @@ namespace mainGame {
 		}
 		m_pause = false;
 
+		m_miniMap->Init();
+
 		m_player->Init();
+
+		m_defensiveTarget->Init();
 
 		m_gameCamera->Init();
 
@@ -34,7 +38,7 @@ namespace mainGame {
 
 		m_timer->Init();
 
-		m_defensiveTarget->Init();
+		
 
 		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
 
@@ -126,6 +130,7 @@ namespace mainGame {
 			m_player->Execution();
 			m_enemyGenerator->Execute();
 			m_gameCamera->Execution();
+			m_miniMap->Execution();
 
 			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
 				m_sampleSprite->FadeOut(2.0f);
@@ -211,6 +216,7 @@ namespace mainGame {
 
 	void Game::AllNew()
 	{
+		m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
 		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW, defensiveTarget::DEFENSIVE_TARGET_NAME);
@@ -221,12 +227,14 @@ namespace mainGame {
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		m_sampleFont = NewGO<render::font::FontRender>(0);
+		
 
 		m_isInitd = false;
 	}
 
 	void Game::AllDelete()
 	{
+		DeleteGO(m_miniMap);
 		DeleteGO(m_gameCamera);
 		DeleteGO(m_enemyGenerator);
 		DeleteGO(m_player);

@@ -16,6 +16,8 @@ namespace mainGame {
 			"Assets/modelData/unityChan/utc_blue.tkm"
 		};
 
+		const char* ENEMY_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
+
 
 		/// @brief 敵モデルのスケルトンファイルパス
 		const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
@@ -36,6 +38,8 @@ namespace mainGame {
 		{
 			
 			DeleteGO(m_enemyModel);
+
+			DeleteGO(m_enemyMapModel);
 		}
 
 		void Enemy::Init(const EnemyInitData& initData)
@@ -67,11 +71,16 @@ namespace mainGame {
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
 				ENEMY_MODEL_TKM_FILEPATH[initData.enemyType],
+				render::model::enMainRenderTarget,
 				ENEMY_MODEL_TKS_FILEPATH,
 				m_enemyAnimation.GetAnimationClip(),
 				m_enemyAnimation.GetAnimationNum(),
 				enModelUpAxisY
 			);
+			m_enemyModel->CreateShadow();
+
+			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enMiniMapRenderTarget);
 
 
 			m_game = FindGO<Game>(GAME_NAME);
@@ -111,6 +120,24 @@ namespace mainGame {
 			default:
 				break;
 			}
+
+			//アニメーションを進める
+			m_enemyAnimation.AnimationUpdate();
+
+			//モデルに更新された情報を伝える
+			m_enemyModel->SetPosition(m_position);
+
+			m_enemyMapModel->SetPosition(m_position);
+
+			m_enemyModel->SetRotation(m_qRot);
+
+			m_enemyMapModel->SetRotation(m_qRot);
+
+			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+
+			m_enemyModel->Execution();
+
+			m_enemyMapModel->Execution();
 		}
 
 		void Enemy::ReceiveDamage(const int damage)
@@ -150,17 +177,7 @@ namespace mainGame {
 
 		void Enemy::GameStartExecution()
 		{
-			//アニメーションを進める
-			m_enemyAnimation.AnimationUpdate();
-
-			//モデルに更新された情報を伝える
-			m_enemyModel->SetPosition(m_position);
-
-			m_enemyModel->SetRotation(m_qRot);
-
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_enemyModel->Execution();
+			
 		}
 
 		void Enemy::GameInProgressExecution()
@@ -197,17 +214,9 @@ namespace mainGame {
 			//回転を適用
 			m_qRot = m_enemyRotation.RotationExecute(m_enemyMove.GetMoveSpeed());
 
-			//アニメーションを進める
-			m_enemyAnimation.AnimationUpdate();
+			
 
-			//モデルに更新された情報を伝える
-			m_enemyModel->SetPosition(m_position);
-
-			m_enemyModel->SetRotation(m_qRot);
-
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_enemyModel->Execution();
+			
 
 			if (m_position.y < -1000.0f) {
 				//生成器に削除を伝える
@@ -220,32 +229,12 @@ namespace mainGame {
 
 		void Enemy::GameClearExecution()
 		{
-			//アニメーションを進める
-			m_enemyAnimation.AnimationUpdate();
-
-			//モデルに更新された情報を伝える
-			m_enemyModel->SetPosition(m_position);
-
-			m_enemyModel->SetRotation(m_qRot);
-
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_enemyModel->Execution();
+			
 		}
 
 		void Enemy::GameOverExecution()
 		{
-			//アニメーションを進める
-			m_enemyAnimation.AnimationUpdate();
-
-			//モデルに更新された情報を伝える
-			m_enemyModel->SetPosition(m_position);
-
-			m_enemyModel->SetRotation(m_qRot);
-
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_enemyModel->Execution();
+			
 		}
 	}
 }

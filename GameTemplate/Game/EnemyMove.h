@@ -3,6 +3,10 @@
 #include "EnemyResource.h"
 
 namespace mainGame{
+
+	namespace defensiveTarget {
+		class DefensiveTarget;
+	}
 	namespace enemy {
 
 		class Enemy;
@@ -68,6 +72,8 @@ namespace mainGame{
 			CharacterController m_charaCon;
 			/// @brief “GƒNƒ‰ƒX
 			Enemy* m_enemy = nullptr;
+
+			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 		};
 	}
 }

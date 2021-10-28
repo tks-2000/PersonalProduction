@@ -47,7 +47,7 @@ namespace mainGame {
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
-
+			/// @brief プレイヤーの向いている方向
 			Vector3 m_direction = g_vec3Zero;
 			/// @brief 回転クォータニオン
 			Quaternion m_qRot = g_quatIdentity;
@@ -59,7 +59,7 @@ namespace mainGame {
 			float m_angleAmount = 0.0f;
 			/// @brief プレイヤークラス
 			Player* m_player = nullptr;
-
+			/// @brief ゲームカメラ
 			GameCamera* m_gameCamera = nullptr;
 		};
 	}

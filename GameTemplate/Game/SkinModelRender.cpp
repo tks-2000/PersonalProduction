@@ -8,6 +8,7 @@ namespace render {
 			m_renderingEngine = FindGO<RenderingEngine>(RENDERING_ENGINE_NAME);
 			m_lig = FindGO<light::Lighting>(light::LIGHTING_NAME);
 			m_shadow = FindGO<shadow::Shadow>(shadow::SHADOW_NAME);
+			m_miniMap = FindGO<mainGame::map::MiniMap>(mainGame::map::MINI_MAP_NAME);
 			m_shadowFlag = false;
 			m_animFlag = false;
 			m_modelFilePath = nullptr;
@@ -20,16 +21,37 @@ namespace render {
 			if (m_shadowFlag == true) {
 				m_shadow->DeleteShadowModel(&m_shadowModel);
 			}
-			m_renderingEngine->DeleteModel(&m_model);
+			switch (m_target)
+			{
+			case enMainRenderTarget: {
+				
+				m_renderingEngine->DeleteModel(&m_model);
+			}break;
+			case enMiniMapRenderTarget: {
+				m_miniMap->DeleteDrawModel(&m_model);
+			}break;
+			default:
+				break;
+			}
+			
 		}
 
 		bool SkinModelRender::Start()
 		{
+			
 			return true;
 		}
 
 
-		void SkinModelRender::Init(const char* modelFilePath, const char* skeletonPath, AnimationClip* animationClip, int animationNum, EnModelUpAxis enAxsis)
+		void SkinModelRender::Init(
+			const char* modelFilePath, 
+			const EnModelDrawTarget& drawTarget,
+			const char* skeletonPath, 
+			AnimationClip* animationClip, 
+			int animationNum, 
+			EnModelUpAxis enAxsis
+			
+		)
 		{
 			//既に初期化されていたら実行しない
 			if (m_isInitd == true) {
@@ -40,8 +62,7 @@ namespace render {
 			m_modelFilePath = modelFilePath;
 			m_modelInitData.m_tkmFilePath = modelFilePath;
 
-			//シェーダーファイルパスを設定
-			m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
+			
 
 			//モデルの上方向を設定
 			m_modelInitData.m_modelUpAxis = enAxsis;
@@ -85,11 +106,32 @@ namespace render {
 			m_modelInitData.m_expandConstantBuffer[1] = (void*)&m_shadow->GetLightCameraMatrix();
 			m_modelInitData.m_expandConstantBufferSize[1] = sizeof(m_shadow->GetLightCameraMatrix());
 
-			//初期化情報でモデルを初期化する
-			m_model.Init(m_modelInitData);
+			
 
-			//初期化したモデルをレンダリングエンジンに渡す
-			m_renderingEngine->SetDrawModel(&m_model);
+			m_target = drawTarget;
+
+			switch (m_target)
+			{
+			case enMainRenderTarget: {
+				//シェーダーファイルパスを設定
+				m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
+				//初期化情報でモデルを初期化する
+				m_model.Init(m_modelInitData);
+				//初期化したモデルをレンダリングエンジンに渡す
+				m_renderingEngine->SetDrawModel(&m_model);
+			}break;
+			case enMiniMapRenderTarget: {
+				//シェーダーファイルパスを設定
+				m_modelInitData.m_fxFilePath = "Assets/shader/mapModel.fx";
+				//初期化情報でモデルを初期化する
+				m_model.Init(m_modelInitData);
+				m_miniMap->SetDrawModel(&m_model);
+			}break;
+			default:
+				break;
+			}
+
+			
 
 			//初期化完了
 			m_isInitd = true;

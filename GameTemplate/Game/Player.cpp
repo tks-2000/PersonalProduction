@@ -6,6 +6,8 @@ namespace {
 	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan/unityChan.tkm";
 	/// @brief プレイヤーのスケルトンファイルパス
 	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+
+	const char* PLAYER_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/plMapModel.tkm";
 	/// @brief アニメーション補完率
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 	/// @brief プレイヤーの初期座標
@@ -22,6 +24,7 @@ namespace mainGame {
 		Player::~Player()
 		{
 			DeleteGO(m_playerModel);
+			DeleteGO(m_plMapModel);
 		}
 
 		void Player::Init()
@@ -43,11 +46,15 @@ namespace mainGame {
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_playerModel->Init(
 				PLAYER_TKM_FILEPATH,
+				render::model::enMainRenderTarget,
 				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
 				m_playerAnimation.GetAnimationNum(),
 				enModelUpAxisY
 			);
+
+			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_plMapModel->Init(PLAYER_MAP_MODEL_FILEPATH,render::model::enMiniMapRenderTarget);
 
 			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();
@@ -92,19 +99,27 @@ namespace mainGame {
 			default:
 				break;
 			}
-		}
 
-		void Player::GameStartExecution()
-		{
 			m_playerAnimation.AnimationUpdate();
 
 			m_playerModel->SetPosition(m_position);
 
+			m_plMapModel->SetPosition(m_position);
+
 			m_playerModel->SetRotation(m_qRot);
+
+			m_plMapModel->SetRotation(m_qRot);
 
 			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
 
 			m_playerModel->Execution();
+
+			m_plMapModel->Execution();
+		}
+
+		void Player::GameStartExecution()
+		{
+
 		}
 
 		void Player::GameInProgressExecution()
@@ -134,42 +149,16 @@ namespace mainGame {
 
 			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
 
-			m_playerAnimation.AnimationUpdate();
-
-			//プレイヤーモデルに更新した情報を適用
-			m_playerModel->SetPosition(m_position);
-
-			m_playerModel->SetRotation(m_qRot);
-
-			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_playerModel->Execution();
 		}
 
 		void Player::GameClearExecution()
 		{
-			m_playerAnimation.AnimationUpdate();
-
-			m_playerModel->SetPosition(m_position);
-
-			m_playerModel->SetRotation(m_qRot);
-
-			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_playerModel->Execution();
+			
 		}
 
 		void Player::GameOverExecution()
 		{
-			m_playerAnimation.AnimationUpdate();
-
-			m_playerModel->SetPosition(m_position);
-
-			m_playerModel->SetRotation(m_qRot);
-
-			m_playerModel->PlayAnimation(m_playerAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
-
-			m_playerModel->Execution();
+			
 		}
 	}
 }

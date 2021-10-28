@@ -15,6 +15,8 @@ namespace render {
 			/// @param width 画像の横幅
 			/// @param height 画像の縦幅
 			void Init(const char* spriteFilePath, int width, int height);
+
+			void InitTexture(Texture* texture, int width, int height);
 			/// @brief スプライトの座標を設定
 			/// @param pos スプライトに設定する座標
 			void SetPosition(const Vector3& pos) { m_position = pos; }

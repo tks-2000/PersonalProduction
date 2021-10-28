@@ -40,6 +40,25 @@ namespace render {
 			m_isInitd = true;
 		}
 
+		void SpriteRender::InitTexture(Texture* texture, int width, int height)
+		{
+			//既に初期化されていたら実行しない
+			if (m_isInitd == true) {
+				return;
+			}
+			m_spriteInitData.m_textures[0] = texture;
+			m_spriteInitData.m_width = width;
+			m_spriteInitData.m_height = height;
+			m_spriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+
+			m_sprite.Init(m_spriteInitData);
+
+			//レンダリングエンジンにスプライトを渡す
+			m_renderingEngine->SetDrawSprite(&m_sprite);
+			//初期化完了
+			m_isInitd = true;
+		}
+
 		bool SpriteRender::IsOpacity()
 		{
 			if (m_color.w >= 1.0f) {

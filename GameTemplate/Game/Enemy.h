@@ -95,6 +95,8 @@ namespace mainGame {
 			Quaternion m_qRot = g_quatIdentity;
 			/// @brief “GƒLƒƒƒ‰ƒNƒ^[ƒ‚ƒfƒ‹
 			render::model::SkinModelRender* m_enemyModel = nullptr;
+
+			render::model::SkinModelRender* m_enemyMapModel = nullptr;
 			/// @brief “G‚ÌˆÚ“®
 			Move m_enemyMove;
 			/// @brief “G‚Ì‰ñ“]

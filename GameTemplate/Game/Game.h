@@ -21,6 +21,9 @@ namespace mainGame {
 	namespace timer {
 		class Timer;
 	}
+	namespace map {
+		class MiniMap;
+	}
 
 	class GameCamera;
 
@@ -120,6 +123,8 @@ namespace mainGame {
 		timer::Timer* m_timer = nullptr;
 		/// @brief レンダリングエンジン
 		render::RenderingEngine* m_renderingEngine = nullptr;
+
+		map::MiniMap* m_miniMap = nullptr;
 	};
 
 }

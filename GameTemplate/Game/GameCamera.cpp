@@ -47,6 +47,10 @@ namespace mainGame {
 
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 
+		m_cameraFriction = TPS_CAMERA_FRICTION;
+
+		m_cameraMoveStopDistance = CAMERA_MOVE_STOP_DISTANCE;
+
 		//カメラの初期設定
 		g_camera3D->SetNear(CAMERA_NEAR_PLANE);
 		g_camera3D->SetFar(CAMERA_FAR_PLANE);
@@ -129,6 +133,8 @@ namespace mainGame {
 			m_cameraYRot.Apply(m_cameraToTargetPos);
 			m_cameraYRot.Apply(m_playerToCameraPos);
 
+			m_cameraFriction = FPS_CAMERA_FRICTION;
+
 			//モードを切り替える
 			m_mode = enCameraModeFps;
 		}
@@ -163,6 +169,9 @@ namespace mainGame {
 			m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngeAmount);
 			//ベクトルに回転を適用する
 			m_cameraYRot.Apply(m_targetToCameraPos);
+
+			m_cameraFriction = TPS_CAMERA_FRICTION;
+
 			//モードを切り替える
 			m_mode = enCameraModeTps;
 		}
@@ -177,7 +186,7 @@ namespace mainGame {
 		m_cameraTargetDistance = m_cameraTarget - m_cameraGazePoint;
 
 		//距離が停止距離以下なら…
-		if (m_cameraTargetDistance.Length() < CAMERA_MOVE_STOP_DISTANCE) {
+		if (m_cameraTargetDistance.Length() < m_cameraMoveStopDistance) {
 			//注視点を目標の座標に設定
 			m_cameraGazePoint = m_cameraTarget;
 		}
@@ -188,7 +197,7 @@ namespace mainGame {
 			//正規化して方向ベクトルにする
 			m_cameraGazePointMoveDirection.Normalize();
 			//注視点に計算した移動量を加算する
-			m_cameraGazePoint += m_cameraGazePointMoveDirection * m_cameraTargetDistance.Length() / TPS_CAMERA_FRICTION;
+			m_cameraGazePoint += m_cameraGazePointMoveDirection * m_cameraTargetDistance.Length() / m_cameraFriction;
 		}
 
 		//カメラ座標に目標の座標を渡す
@@ -202,7 +211,7 @@ namespace mainGame {
 		m_cameraMoveDistance = m_cameraMovePos - m_cameraPos;
 
 		//距離が停止距離以下なら…
-		if (m_cameraMoveDistance.Length() < CAMERA_MOVE_STOP_DISTANCE) {
+		if (m_cameraMoveDistance.Length() < m_cameraMoveStopDistance) {
 			//カメラの座標にカメラの移動地点の座標を渡す
 			m_cameraPos = m_cameraMovePos;
 		}
@@ -212,7 +221,7 @@ namespace mainGame {
 			//正規化して方向ベクトルにする
 			m_cameraMoveDirection.Normalize();
 			//カメラの座標に計算した移動量を加算する
-			m_cameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / TPS_CAMERA_FRICTION;
+			m_cameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
 		}
 	}
 
@@ -239,7 +248,7 @@ namespace mainGame {
 			//正規化して方向ベクトルにする
 			m_cameraGazePointMoveDirection.Normalize();
 			//注視点に計算した移動量を加算する
-			m_cameraGazePoint += m_cameraGazePointMoveDirection * m_cameraTargetDistance.Length() / FPS_CAMERA_FRICTION;
+			m_cameraGazePoint += m_cameraGazePointMoveDirection * m_cameraTargetDistance.Length() / m_cameraFriction;
 		}
 
 		//カメラの座標とカメラの移動地点の距離を計算する
@@ -256,7 +265,7 @@ namespace mainGame {
 			//正規化して方向ベクトルにする
 			m_cameraMoveDirection.Normalize();
 			//カメラの座標に計算した移動量を加算する
-			m_cameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / FPS_CAMERA_FRICTION;
+			m_cameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
 		}
 	}
 

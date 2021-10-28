@@ -4,8 +4,10 @@
 namespace {
 	/// @brief 防衛対象のモデルファイルパス
 	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/box2.tkm";
+	/// @brief 防衛対象の座標
+	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 	/// @brief 防衛対象の最大耐久力
-	const int MAX_HP = 10000;
+	const int MAX_HP = 100;
 }
 
 namespace mainGame {
@@ -34,7 +36,9 @@ namespace mainGame {
 
 			//初期パラメーターを決定
 			m_defensiveTargetHp = MAX_HP;
+			m_position = DEFENSIVE_TARGET_POS;
 			m_scale = { 1.0f,1.0f,1.0f };
+			m_defensiveTargetModel->SetPosition(m_position);
 			m_defensiveTargetModel->Execution();
 
 			//モデルの情報から当たり判定を作成

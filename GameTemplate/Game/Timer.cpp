@@ -4,7 +4,7 @@
 namespace mainGame {
 	namespace timer {
 		/// @brief 開始時のカウント数
-		const int START_TIME = 3;
+		const int START_TIME = 4;
 		/// @brief ゲーム中のカウント数
 		const int INGAME_TIME = 120;
 

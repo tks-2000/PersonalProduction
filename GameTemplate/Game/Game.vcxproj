@@ -303,6 +303,7 @@
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAnimation.cpp" />
     <ClCompile Include="PlayerAttack.cpp" />
@@ -401,6 +402,7 @@
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Lighting.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAnimation.h" />
     <ClInclude Include="PlayerAttack.h" />

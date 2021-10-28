@@ -2,6 +2,11 @@
 #include "RenderResource.h"
 #include "FontRender.h"
 
+namespace mainGame {
+	namespace map {
+		class MiniMap;
+	}
+}
 
 namespace render {
 	namespace light {
@@ -23,7 +28,7 @@ namespace render {
 		void Update();
 		void Render(RenderContext& rc);
 
-		
+		Texture* GetTexture() { return &m_mainRenderTarget.GetRenderTargetTexture(); }
 
 		/// @brief 描画するモデルを追加
 		/// @param model 追加するモデルのアドレス
@@ -50,6 +55,10 @@ namespace render {
 		void DeleteFont(font::FontData* fontdata);
 
 		void SetLightFlag(const bool Authenticity) { m_ligFlag = Authenticity; }
+
+		void SetMiniMapData(mainGame::map::MiniMap* miniMap) { m_miniMap = miniMap; m_mapRenderFlag = true; }
+
+		void DeleteMiniMapData() { m_miniMap = nullptr; m_mapRenderFlag = false; }
 
 	private:
 		/// @brief ライトの更新
@@ -82,5 +91,9 @@ namespace render {
 		Vector3 m_ligColor = g_vec3Zero;
 
 		bool m_ligFlag = false;
+
+		mainGame::map::MiniMap* m_miniMap = nullptr;
+
+		bool m_mapRenderFlag = false;
 	};
 }

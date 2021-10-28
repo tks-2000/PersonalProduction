@@ -24,6 +24,7 @@
 #include "EnemyGenerator.h"
 #include "Stage.h"
 #include "Timer.h"
+#include "MiniMap.h"
 
 namespace {
 	const int PRIORITY_VERYLOW = 0;
@@ -69,5 +70,9 @@ namespace mainGame {
 
 	namespace timer {
 		static const char* TIMER_NAME = "Timer";
+	}
+
+	namespace map {
+		static const char* MINI_MAP_NAME = "MIniMap";
 	}
 }

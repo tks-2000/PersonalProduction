@@ -37,9 +37,9 @@ namespace mainGame {
 			void DeleteBullet(Bullet* bullet);
 			
 		private:
-
+			/// @brief 近接攻撃を実行
 			void MeleeAttack();
-
+			/// @brief 
 			void BulletFiring();
 
 			void BulletExecution();
@@ -56,11 +56,11 @@ namespace mainGame {
 			Player* m_player = nullptr;
 			/// @brief 敵クラスの情報をまとめた配列
 			std::vector<enemy::Enemy*> m_enemys;
-
+			/// @brief 出現している弾丸の数
 			int m_bulletNum = 0;
-
+			/// @brief 弾丸をまとめた配列
 			std::vector<Bullet*> m_bullets;
-
+			/// @brief ゲームカメラ
 			GameCamera* m_gameCamera = nullptr;
 		};
 	}

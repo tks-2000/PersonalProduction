@@ -25,7 +25,8 @@ namespace mainGame{
 			/// @brief “G‚Ì‰ŠúÀ•W
 			Vector3 enemyStartPos = g_vec3Zero;
 		};
-		static const int MAX_ENEMY_NUM = 10;
+
+		static const int MAX_ENEMY_NUM = 20;
 		static const int SPAWN_POS_NUM = 4;
 	}
 }

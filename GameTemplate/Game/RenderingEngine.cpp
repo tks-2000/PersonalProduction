@@ -54,7 +54,7 @@ namespace render {
 		m_lig->SetSpotLightColor(0, { 5.0f,5.0f,5.0f });
 		m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
-			{ 0.7f,0.7f,0.7f },
+			{ 0.5f,0.5f,0.5f },
 			0.1f
 		);
 
@@ -110,6 +110,10 @@ namespace render {
 
 		//フレームバッファのコピーのスプライトを表示する
 		m_frameBufferSprite.Draw(rc);
+
+		if (m_mapRenderFlag == true) {
+			m_miniMap->MapRender(rc);
+		}
 
 		//スプライトを描画
 		for (int spriteNum = 0; spriteNum < m_drawSprites.size(); spriteNum++) {
