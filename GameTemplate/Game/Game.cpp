@@ -50,6 +50,10 @@ namespace mainGame {
 		m_sampleFont->Init(L"test");
 		m_sampleFont->SetPosition({ -500.0f, 300.0f });
 
+		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
+		m_sound->SetVolume(1.0f);
+		m_sound->Play(true);
+
 		m_state = enGameStart;
 
 		m_isInitd = true;
@@ -227,7 +231,7 @@ namespace mainGame {
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		m_sampleFont = NewGO<render::font::FontRender>(0);
-		
+		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
 
 		m_isInitd = false;
 	}
@@ -241,6 +245,7 @@ namespace mainGame {
 		DeleteGO(m_defensiveTarget);
 		DeleteGO(m_stage);
 		DeleteGO(m_timer);
+		DeleteGO(m_sound);
 	}
 
 	void Game::Pause()

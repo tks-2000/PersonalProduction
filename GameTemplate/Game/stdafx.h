@@ -15,6 +15,7 @@
 #include "SkinModelRender.h"
 #include "SpriteRender.h"
 #include "FontRender.h"
+#include "SoundSource.h"
 #include "Game.h"
 #include "GameCamera.h"
 #include "Player.h"

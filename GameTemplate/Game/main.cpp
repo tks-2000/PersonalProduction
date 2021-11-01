@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "SoundEngine.h"
 #include "system/system.h"
 #include "../../MiniEngine/RenderTarget.h"
 
@@ -21,6 +22,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームオブジェクトマネージャーのインスタンスを作成する。
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
+
+	CSoundEngine::CreateInstance();
+	CSoundEngine::GetInstance()->Init();
+
 	NewGO<render::RenderingEngine>(0, render::RENDERING_ENGINE_NAME);
 	NewGO<mainGame::Game>(0,mainGame::GAME_NAME);
 
@@ -63,6 +68,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	}
 	//ゲームオブジェクトマネージャーを削除。
 	GameObjectManager::DeleteInstance();
+	CSoundEngine::DeleteInstance();
 	return 0;
 }
 

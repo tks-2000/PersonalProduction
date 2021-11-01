@@ -4,6 +4,8 @@
 namespace {
 	/// @brief 防衛対象のモデルファイルパス
 	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/box2.tkm";
+
+	const char* MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/boxMapModel.tkm";
 	/// @brief 防衛対象の座標
 	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 	/// @brief 防衛対象の最大耐久力
@@ -24,6 +26,7 @@ namespace mainGame {
 			if (m_isBreak == false) {
 				//モデルを削除
 				DeleteGO(m_defensiveTargetModel);
+				DeleteGO(m_miniMapdefensiveTargetModel);
 			}
 		}
 
@@ -33,6 +36,9 @@ namespace mainGame {
 			//防衛対象のモデルを初期化
 			m_defensiveTargetModel = NewGO<render::model::SkinModelRender>(0);
 			m_defensiveTargetModel->Init(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
+
+			m_miniMapdefensiveTargetModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_miniMapdefensiveTargetModel->Init(MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH, render::model::enMiniMapRenderTarget);
 
 			//初期パラメーターを決定
 			m_defensiveTargetHp = MAX_HP;
@@ -71,6 +77,7 @@ namespace mainGame {
 
 					//モデルを削除
 					DeleteGO(m_defensiveTargetModel);
+					DeleteGO(m_miniMapdefensiveTargetModel);
 				}
 			}
 		}

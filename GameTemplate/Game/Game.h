@@ -2,6 +2,8 @@
 
 class SkinModelRender;
 class SpriteRender;
+class CSoundSource;
+;
 
 
 namespace mainGame {
@@ -125,6 +127,8 @@ namespace mainGame {
 		render::RenderingEngine* m_renderingEngine = nullptr;
 
 		map::MiniMap* m_miniMap = nullptr;
+
+		CSoundSource* m_sound = nullptr;
 	};
 
 }

@@ -4,6 +4,10 @@ class RenderingEngine;
 
 namespace mainGame {
 
+	namespace player {
+		class Player;
+	}
+
 	class GameCamera;
 
 	namespace map {
@@ -55,6 +59,8 @@ namespace mainGame {
 			GameCamera* m_gameCamera = nullptr;
 			/// @brief レンダリングエンジン
 			render::RenderingEngine* m_renderingEngine = nullptr;
+
+			player::Player* m_player = nullptr;
 		};
 	}
 }
