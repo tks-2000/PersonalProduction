@@ -2,10 +2,14 @@
 #include "PlayerAttack.h"
 
 namespace {
+
+	const float CHARGE_MELEE_ATTACK_TIME = 1.0f;
 	/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
 	const int NORMAL_ATTACK_DAMAGE = 3;
 	/// @brief “G‚É—^‚¦‚éÕŒ‚—Í
 	const float NORMAL_IMPACT_FORCE = 3000.0f;
+	/// @brief “G‚É—^‚¦‚é‹­—Í‚ÈÕŒ‚—Í
+	const float STRONG_IMPACT_FORCE = 6000.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 	/// @brief UŒ‚‰Â”\‚È•ûŒüˆê’v—¦
@@ -47,6 +51,7 @@ namespace mainGame {
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
 			m_attackPower = NORMAL_IMPACT_FORCE;
 			m_attackRange = ATTACK_RANGE;
+			m_chargeMeleeAttackTime = CHARGE_MELEE_ATTACK_TIME;
 
 			m_bulletReloadTimer = 0.0f;
 			m_bulletReloadTime = NORMAL_BULLET_RELOAD_TIME;
@@ -66,9 +71,31 @@ namespace mainGame {
 			}
 
 			//Aƒ{ƒ^ƒ“‚Å‹ßÚUŒ‚
-			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
-				MeleeAttack();
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA)) {
+				m_isMeleeAttackButtonHold = true;
 			}
+
+			if (m_isMeleeAttackButtonHold == true) {
+				m_chargeMeleeAttackTimer += g_gameTime->GetFrameDeltaTime();
+
+				if (m_chargeMeleeAttackTimer >= m_chargeMeleeAttackTime) {
+					m_isFollCharge = true;
+				}
+
+				if (!g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA)) {
+					if (m_isFollCharge == true) {
+						ChargeMeleeAttack();
+					}
+					else {
+						MeleeAttack();
+						
+					}
+					m_isMeleeAttackButtonHold = false;
+					m_chargeMeleeAttackTimer = 0.0f;
+					m_isFollCharge = false;
+				}
+			}
+			
 			//RB1ƒ{ƒ^ƒ“‚Å’eŠÛ‚ğ”­Ë
 			else if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB1))
 			{
@@ -138,6 +165,30 @@ namespace mainGame {
 					}
 
 					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * m_attackPower);
+
+					//“G‚Éƒ_ƒ[ƒW‚ğ—^‚¦‚é
+					m_enemys[enemyNum]->SetState(enemy::enEnemyDamage);
+					m_enemys[enemyNum]->ReceiveDamage(NORMAL_ATTACK_DAMAGE);
+				}
+			}
+		}
+
+		void Attack::ChargeMeleeAttack()
+		{
+			//“G‚Ì”‚¾‚¯Às‚·‚é
+			for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
+				//“G‚Æ‚Ì‹——£‚ğ‘ª‚é
+				Vector3 toEnemyPos = m_enemys[enemyNum]->GetPosition() - m_player->GetPlayerPosition();
+
+				//UŒ‚‰Â”\‚È‹——£‚¾‚Á‚½ê‡c
+				if (toEnemyPos.Length() < m_attackRange) {
+
+					//“G‚Ö‚ÌƒxƒNƒgƒ‹‚ÅÕŒ‚‚ğ—^‚¦‚é
+					toEnemyPos.Normalize();
+
+					
+
+					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * STRONG_IMPACT_FORCE);
 
 					//“G‚Éƒ_ƒ[ƒW‚ğ—^‚¦‚é
 					m_enemys[enemyNum]->SetState(enemy::enEnemyDamage);

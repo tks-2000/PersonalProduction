@@ -39,6 +39,8 @@ namespace mainGame {
 		private:
 			/// @brief 近接攻撃を実行
 			void MeleeAttack();
+			/// @brief チャージ近接攻撃を実行
+			void ChargeMeleeAttack();
 			/// @brief 
 			void BulletFiring();
 
@@ -48,6 +50,14 @@ namespace mainGame {
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
+			/// @brief 近接攻撃ボタンが押されているか？
+			bool m_isMeleeAttackButtonHold = false;
+			/// @brief 近接攻撃のチャージ時間
+			float m_chargeMeleeAttackTimer = 0.0f;
+			/// @brief 近接攻撃のチャージが完了する時間
+			float m_chargeMeleeAttackTime = 0.0f;
+			/// @brief チャージ完了フラグ
+			bool m_isFollCharge = false;
 			/// @brief 攻撃の衝撃力
 			float m_attackPower = 0.0f;
 			/// @brief 攻撃可能な範囲
