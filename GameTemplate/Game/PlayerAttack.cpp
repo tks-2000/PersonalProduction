@@ -8,9 +8,12 @@ namespace {
 	const float NORMAL_IMPACT_FORCE = 3000.0f;
 	/// @brief 攻撃範囲
 	const float ATTACK_RANGE = 200.0f;
-
+	/// @brief 攻撃可能な方向一致率
 	const float ATTACK_POSSIBLE_MATCH_RATE = 0.0f;
-
+	/// @brief 通常の弾丸の最大所持数
+	const int NORMAL_MAX_BULLET_NUM = 10;
+	/// @brief 通常の弾丸の再装填時間
+	const float NORMAL_BULLET_RELOAD_TIME = 3.0f;
 }
 
 namespace mainGame {
@@ -45,6 +48,12 @@ namespace mainGame {
 			m_attackPower = NORMAL_IMPACT_FORCE;
 			m_attackRange = ATTACK_RANGE;
 
+			m_bulletReloadTimer = 0.0f;
+			m_bulletReloadTime = NORMAL_BULLET_RELOAD_TIME;
+			m_maxBulletNum = NORMAL_MAX_BULLET_NUM;
+			m_remainingBullets = m_maxBulletNum;
+
+
 			//初期化完了
 			m_isInitd = true;
 		}
@@ -56,12 +65,28 @@ namespace mainGame {
 				return;
 			}
 
+			//Aボタンで近接攻撃
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
 				MeleeAttack();
 			}
+			//RB1ボタンで弾丸を発射
 			else if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB1))
 			{
-				BulletFiring();
+				//残弾があれば発射
+				if (m_remainingBullets > 0) {
+					BulletFiring();
+				}
+			}
+			//残弾がない場合…
+			if (m_remainingBullets <= 0) {
+				//リロード時間を進める
+				m_bulletReloadTimer += g_gameTime->GetFrameDeltaTime();
+				//リロード完了時間に達したら…
+				if (m_bulletReloadTimer >= m_bulletReloadTime) {
+					//残弾を最大値まで回復
+					m_remainingBullets = m_maxBulletNum;
+					m_bulletReloadTimer = 0.0f;
+				}
 			}
 
 			BulletExecution();
@@ -90,7 +115,6 @@ namespace mainGame {
 			);
 			if (it != m_bullets.end()) {
 				m_bullets.erase(it);
-				m_bulletNum--;
 			}
 		}
 
@@ -135,9 +159,8 @@ namespace mainGame {
 				targetPos = m_player->GetPlayerPosition() + m_player->GetPlayerDirection();
 				targetPos.y = startPos.y;
 			}
-			m_bullets[m_bulletNum]->Init(this, &m_enemys, startPos,targetPos);
-			m_bulletNum++;
-
+			m_bullets[m_bullets.size() - 1]->Init(this, &m_enemys, startPos, targetPos);
+			m_remainingBullets--;
 		}
 
 		void Attack::BulletExecution()

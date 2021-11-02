@@ -82,7 +82,7 @@ namespace render {
 
 			/// @brief スキンモデルレンダラーのワールド行列を取得
 			/// @return モデルのワールド行列
-			Matrix GetModelWorldMatrix() { return m_model.GetWorldMatrix(); }
+			const Matrix& GetModelWorldMatrix() { return m_model.GetWorldMatrix(); }
 
 			/// @brief 実行
 			void Execution();

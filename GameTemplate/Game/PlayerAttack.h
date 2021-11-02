@@ -56,8 +56,14 @@ namespace mainGame {
 			Player* m_player = nullptr;
 			/// @brief 敵クラスの情報をまとめた配列
 			std::vector<enemy::Enemy*> m_enemys;
-			/// @brief 出現している弾丸の数
-			int m_bulletNum = 0;
+			/// @brief 残弾数
+			int m_remainingBullets = 0;
+			/// @brief 弾丸の最大所持数
+			int m_maxBulletNum = 0;
+			/// @brief 弾丸の再装填までの時間を計るタイマー
+			float m_bulletReloadTimer = 0.0f;
+			/// @brief 弾丸の再装填が完了する時間
+			float m_bulletReloadTime = 0.0f;
 			/// @brief 弾丸をまとめた配列
 			std::vector<Bullet*> m_bullets;
 			/// @brief ゲームカメラ
