@@ -9,6 +9,8 @@ namespace {
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 200.0f;
 
+	const float ATTACK_POSSIBLE_MATCH_RATE = 0.0f;
+
 }
 
 namespace mainGame {
@@ -104,6 +106,13 @@ namespace mainGame {
 
 					//“G‚Ö‚ÌƒxƒNƒgƒ‹‚ÅÕŒ‚‚ğ—^‚¦‚é
 					toEnemyPos.Normalize();
+
+					float matchRate = Dot(toEnemyPos, m_player->GetPlayerDirection());
+
+					if (matchRate < ATTACK_POSSIBLE_MATCH_RATE) {
+						return;
+					}
+
 					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * m_attackPower);
 
 					//“G‚Éƒ_ƒ[ƒW‚ğ—^‚¦‚é

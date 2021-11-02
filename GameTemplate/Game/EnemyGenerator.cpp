@@ -129,45 +129,34 @@ namespace mainGame {
 				return;
 			}
 
-			//出現可能最大数だけ実行する
-			for (int enemyNum = 0; enemyNum < MAX_ENEMY_NUM; enemyNum++) {
-				//出現フラグが立っていない場合…
-				if (m_isSpawn[enemyNum] == false) {
-					//敵を生成
-					m_enemys.push_back(NewGO<Enemy>(PRIORITY_VERYLOW, ENEMY_NAMES[enemyNum]));
 
-					//ランダムな数値から敵のパラメーターを決定
-					std::random_device rnd;
-					int num = rnd();
-					int num2 = rnd();
-					if (num < 0) {
-						num *= -1;
-					}
-					if (num2 < 0) {
-						num2 *= -1;
-					}
-					num %= enEnemyTypeNum;
-					num2 %= SPAWN_POS_NUM;
+			//敵を生成
+			m_enemys.push_back(NewGO<Enemy>(PRIORITY_VERYLOW));
 
-					//敵の初期化情報を作成
-					EnemyInitData enemyInitData;
-					enemyInitData.enemyNum = enemyNum;
-					enemyInitData.enemyType = type;
-					enemyInitData.enemyStartPos = pos;
-
-					//初期化情報で敵を初期化
-					m_enemys[m_enemySum]->Init(enemyInitData);
-					
-					//敵の最大数に加算
-					m_enemySum++;
-
-					//出現フラグを立てる
-					m_isSpawn[enemyNum] = true;
-
-					//繰り返しから抜ける
-					break;
-				}
+			//ランダムな数値から敵のパラメーターを決定
+			std::random_device rnd;
+			int num = rnd();
+			int num2 = rnd();
+			if (num < 0) {
+				num *= -1;
 			}
+			if (num2 < 0) {
+				num2 *= -1;
+			}
+			num %= enEnemyTypeNum;
+			num2 %= SPAWN_POS_NUM;
+
+			//敵の初期化情報を作成
+			EnemyInitData enemyInitData;
+			enemyInitData.enemyType = type;
+			enemyInitData.enemyStartPos = pos;
+
+			//初期化情報で敵を初期化
+			m_enemys[m_enemySum]->Init(enemyInitData);
+
+			//敵の最大数に加算
+			m_enemySum++;
+
 		}
 	}
 }

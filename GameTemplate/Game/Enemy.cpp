@@ -45,7 +45,7 @@ namespace mainGame {
 		void Enemy::Init(const EnemyInitData& initData)
 		{
 			//‰Šú‰»Ï‚İE‰Šú‰»î•ñ‚ª³‚µ‚­‚È‚¢ê‡Às‚µ‚È‚¢
-			if (m_isInitd == true || initData.enemyNum == ENEMY_UNINITD_NUMBER || initData.enemyType == enEnemyTypeNum) {
+			if (m_isInitd == true || initData.enemyType == enEnemyTypeNum) {
 				return;
 			}
 

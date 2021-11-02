@@ -13,6 +13,8 @@ namespace mainGame {
 		const float BULLET_IMPACT_FORCE = 2000.0f;
 		/// @brief “G‚É—^‚¦‚éƒ_ƒ[ƒW
 		const int BULLET_DAMAGE = 1;
+		/// @brief ’eŠÛ‚ÌÚG‚·‚é•ûŒüˆê’v—¦
+		const float BULLET_COLLISION_MATCH_RATE = 0.0f;
 
 		Bullet::Bullet()
 		{
@@ -94,8 +96,10 @@ namespace mainGame {
 				//“G‚Æ‚Ì‹——£‚ğ‘ª‚é
 				Vector3 toEnemyVec = enemyData->GetPosition() - m_position;
 
+				float matchRate = Dot(toEnemyVec, m_moveDirection);
+
 				//“G‚Æ‚Ì‹——£‚ªˆê’èˆÈ‰º‚È‚çc
-				if (toEnemyVec.Length() < ENEMY_COLLISION_DISTANCE) {
+				if (toEnemyVec.Length() < ENEMY_COLLISION_DISTANCE && matchRate > BULLET_COLLISION_MATCH_RATE) {
 
 					//“G‚ÉÕŒ‚‚ğ‰Á‚¦‚é
 					toEnemyVec.Normalize();

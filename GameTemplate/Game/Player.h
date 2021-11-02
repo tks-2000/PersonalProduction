@@ -52,6 +52,8 @@ namespace mainGame {
 
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
 
+			/// @brief プレイヤーの方向を入手
+			/// @return プレイヤーの向いている方向のconst参照
 			const Vector3& GetPlayerDirection() { return m_playerRot.GetDirection(); }
 
 			/// @brief プレイヤーの回転角度の変化量を入手

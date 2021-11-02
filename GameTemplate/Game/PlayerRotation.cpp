@@ -23,6 +23,8 @@ namespace mainGame {
 			//プレイヤーのアドレスを入手
 			m_player = pl;
 
+			m_direction = { 0.0f,0.0f,1.0f };
+
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
 			//初期化完了
 			m_isInitd = true;
