@@ -52,7 +52,7 @@ namespace mainGame {
 
 		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
 		m_sound->SetVolume(1.0f);
-		m_sound->Play(true);
+		//m_sound->Play(true);
 
 		m_state = enGameStart;
 

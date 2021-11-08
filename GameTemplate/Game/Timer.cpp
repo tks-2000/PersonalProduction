@@ -103,9 +103,10 @@ namespace mainGame {
 
 			//フォントにタイマーの数値を伝える
 			int time = m_inGameTimer + 1.0f;
-			std::wstring conversion;
-			conversion = std::to_wstring(time);
+			std::wstring conversion = std::to_wstring(time);
 			m_timeFont->SetText(conversion.c_str());
+
+			m_timeFont->SetColor({ 0.5f,0.5f,0.5f,0.5f });
 
 			//タイマーが0以下になったら…
 			if (m_inGameTimer <= 0.0f) {

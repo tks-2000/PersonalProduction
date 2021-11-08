@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 namespace {
-	const char* STAGE_MODEL_TKM_FILEPATH = "Assets/modelData/bg/testStage.tkm";
+	const char* STAGE_MODEL_TKM_FILEPATH = "Assets/modelData/bg/testStage3.tkm";
 }
 
 namespace mainGame {
