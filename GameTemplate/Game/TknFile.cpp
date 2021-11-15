@@ -16,7 +16,7 @@ bool TknFile::Load(const char* filePath)
 	m_cellArray.resize(m_header.numCell);
 
 	//セルの情報をロード
-	fread(&m_cellArray.front(), sizeof(StCell) * m_header.numCell, 1, fp);
+	fread(&m_cellArray.front(), sizeof(SCell) * m_header.numCell, 1, fp);
 
 	//ファイルを閉じる
 	fclose(fp);

@@ -9,7 +9,7 @@ namespace {
 	/// @brief –h‰q‘ÎÛ‚ÌÀ•W
 	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 	/// @brief –h‰q‘ÎÛ‚ÌÅ‘å‘Ï‹v—Í
-	const int MAX_HP = 100;
+	const int MAX_HP = 1000;
 }
 
 namespace mainGame {

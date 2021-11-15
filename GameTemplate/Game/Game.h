@@ -4,7 +4,11 @@ class SkinModelRender;
 class SpriteRender;
 class CSoundSource;
 ;
-
+namespace nsAI {
+	class NaviMesh;
+	class Path;
+	class PathFinding;
+}
 
 namespace mainGame {
 	namespace player {
@@ -129,6 +133,10 @@ namespace mainGame {
 		map::MiniMap* m_miniMap = nullptr;
 
 		CSoundSource* m_sound = nullptr;
+
+		nsAI::NaviMesh m_nvmMesh;
+		nsAI::Path m_path;
+		nsAI::PathFinding m_pathFinding;
 	};
 
 }

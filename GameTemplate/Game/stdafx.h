@@ -16,6 +16,9 @@
 #include "SpriteRender.h"
 #include "FontRender.h"
 #include "SoundSource.h"
+#include "NaviMesh.h"
+#include "Path.h"
+#include "PathFinding.h"
 #include "Game.h"
 #include "GameCamera.h"
 #include "Player.h"
@@ -26,6 +29,7 @@
 #include "Stage.h"
 #include "Timer.h"
 #include "MiniMap.h"
+
 
 namespace {
 	const int PRIORITY_VERYLOW = 0;

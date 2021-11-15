@@ -12,8 +12,7 @@ namespace mainGame {
 
 	Game::~Game()
 	{
-		DeleteGO(m_unityChanModel);
-		DeleteGO(m_backGroundModel);
+		
 	}
 
 	void Game::Init()
@@ -52,9 +51,11 @@ namespace mainGame {
 
 		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
 		m_sound->SetVolume(1.0f);
-		//m_sound->Play(true);
+		m_sound->Play(true);
 
 		m_state = enGameStart;
+
+		m_nvmMesh.Init("Assets/nvmData/stage3.tkn");
 
 		m_isInitd = true;
 		m_isDead = false;
@@ -124,7 +125,28 @@ namespace mainGame {
 			conversion = std::to_wstring(hp);
 			m_sampleFont->SetText(conversion.c_str());
 			
+			bool isEnd;
 			m_sampleFont->Execution();
+			if (g_pad[0]->IsTrigger(enButtonB)) {
+				m_pathFinding.Execute(
+					m_path,
+					m_nvmMesh,
+					m_pos,
+					m_player->GetPlayerPosition(),
+					50.0f,
+					200.0f
+				);
+			}
+			m_pos = m_path.Move(
+				m_pos,
+				10.0f,
+				isEnd
+			);
+
+
+
+
+			m_unityChanModel2->SetPosition(m_pos);
 			m_unityChanModel2->Execution();
 
 			

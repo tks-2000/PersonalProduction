@@ -291,6 +291,7 @@
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="BSP.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="DefensiveTarget.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAnimation.cpp" />
@@ -306,6 +307,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="NameKey.cpp" />
+    <ClCompile Include="NaviMesh.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAnimation.cpp" />
     <ClCompile Include="PlayerAttack.cpp" />
@@ -399,6 +403,7 @@
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="BSP.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="DefensiveTarget.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyAnimation.h" />
@@ -414,6 +419,9 @@
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="NameKey.h" />
+    <ClInclude Include="NaviMesh.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="PathFinding.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAnimation.h" />
     <ClInclude Include="PlayerAttack.h" />

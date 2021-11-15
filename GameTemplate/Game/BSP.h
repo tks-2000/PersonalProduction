@@ -39,11 +39,18 @@ public:
 		void* extraData;
 	};
 
+	/// @brief リーフのリスト
+	struct StLeafList : public StEntity {
+		std::vector<StEntityPtr> leafList;
+	};
+
 private:
 	StEntityPtr m_rootNode = nullptr;
 	std::vector<StEntityPtr> m_leafArray;
 public:
-
+	/// @brief リーフを追加
+	/// @param position 
+	/// @param extraData 
 	void AddLeaf(const Vector3& position, void* extraData)
 	{
 		auto newEntity = std::make_shared<StLeaf>();
@@ -72,6 +79,13 @@ private:
 		const std::vector<StEntityPtr>& leafArray
 	);
 
+	void CalcSplitPlaneFromCovarianceMatrix(
+		StPlane& plane,
+		float covarianceMatrix[3][3],
+		const Vector3& centerPos,
+		const std::vector<StEntityPtr>& leafArray
+	);
+
 	/// @brief リーフノードの配列から共分散行列を計算する
 	/// @param covarianceMatrix 共分散行列の計算先
 	/// @param leafArray リーフノードの配列
@@ -89,7 +103,15 @@ private:
 		const std::vector<StEntityPtr>& leafArray
 	);
 
+	/// @brief 新しいBSPツリーの要素を作成する
+	/// @param leafArray 
+	/// @return 
 	StEntityPtr CreateBSPTreeEntity(const std::vector<StEntityPtr>& leafArray);
+
+	/// @brief BSPツリーのLeafList要素を作成する
+	/// @param leafArray 
+	/// @return 
+	StEntityPtr CreateBSPTreeEntity_LeafList(const std::vector<StEntityPtr>& leafArray);
 
 	void WalkTree(StEntityPtr entity, const Vector3& pos, std::function<void(StLeaf* leaf)> onEndWalk) const;
 };

@@ -10,11 +10,11 @@ public:
 	};
 
 
-	struct StCell {
+	struct SCell {
 		/// @brief セルの頂点
-		Vector3 vertexPosition[3] = { g_vec3Zero,g_vec3Zero,g_vec3Zero };
+		Vector3 vertexPosition[3];
 		/// @brief セルの法線
-		Vector3 normal = g_vec3Zero;
+		Vector3 normal;
 		/// @brief 隣接セルの番号
 		std::int32_t linkCellNo[3];
 	};
@@ -29,13 +29,13 @@ public:
 		return m_header.numCell;
 	}
 
-	const StCell& GetCell(int cellNo) const
+	const SCell& GetCell(int cellNo) const
 	{
 		return m_cellArray.at(cellNo);
 	}
 
 private:
 	StHeader m_header;
-	std::vector<StCell> m_cellArray;
+	std::vector<SCell> m_cellArray;
 };
 
