@@ -62,7 +62,8 @@ namespace mainGame {
 			m_hp = MAX_HP;
 
 			//メンバクラスを初期化
-			m_enemyMove.Init(this);
+			//m_enemyMove.Init(this);
+			m_enemyRouteMove.Init(this);
 			m_enemyRotation.Init(this);
 			m_enemyAttack.Init(this);
 			m_enemyAnimation.Init(this);
@@ -88,6 +89,8 @@ namespace mainGame {
 			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
 			//プレイヤーの情報を入手
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
+
+			m_defensiveTarget = FindGO < defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 			//プレイヤーに自分の情報を追加
 			m_player->SetEnemyData(this);
 			//待機中で開始
@@ -187,24 +190,27 @@ namespace mainGame {
 			{
 				//待機
 			case enEnemyIdle: {
-				m_position = m_enemyMove.IdleExecute(m_position);
+				//m_position = m_enemyMove.IdleExecute(m_position);
+				m_position = m_enemyRouteMove.IdleExecution(m_position);
 			}break;
 				//移動
 			case enEnemyMove: {
-				m_position = m_enemyMove.MoveExecute(m_position);
+				//m_position = m_enemyMove.MoveExecute(m_position);
+
+				m_position = m_enemyRouteMove.MoveExecution(m_position);
 			}break;
 				//攻撃
 			case enEnemyAttack: {
-				//m_position = m_enemyMove.MoveStop(m_position);
+				m_position = m_enemyRouteMove.StopExecution(m_position);
 				m_enemyAttack.Execution();
 			}break;
 				//ダメージ
 			case enEnemyDamage: {
-				m_position = m_enemyMove.IdleExecute(m_position);
+				m_position = m_enemyRouteMove.IdleExecution(m_position);
 			}break;
 				//ダウン
 			case enEnemyDown: {
-				m_position = m_enemyMove.MoveStop(m_position);
+				m_position = m_enemyRouteMove.StopExecution(m_position);
 				DownExecution();
 			}break;
 			default:
@@ -212,7 +218,7 @@ namespace mainGame {
 			}
 
 			//回転を適用
-			m_qRot = m_enemyRotation.RotationExecute(m_enemyMove.GetMoveSpeed());
+			m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
 
 			
 

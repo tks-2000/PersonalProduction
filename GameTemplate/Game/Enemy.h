@@ -4,12 +4,17 @@
 #include "EnemyAnimation.h"
 #include "EnemyRotation.h"
 #include "EnemyResource.h"
+#include "EnemyRouteMove.h";
 
 namespace mainGame {
 
 	namespace player {
 
 		class Player;
+	}
+
+	namespace defensiveTarget {
+		class DefensiveTarget;
 	}
 
 	namespace enemy {
@@ -52,7 +57,7 @@ namespace mainGame {
 
 			/// @brief ˆÚ“®‘¬“x‚ğİ’è
 			/// @param speed İ’è‚·‚éˆÚ“®‘¬“x
-			void SetMoveSpeed(const Vector3& speed) { m_enemyMove.SetMoveSpeed(speed); }
+			void SetMoveSpeed(const Vector3& speed) { m_enemyRouteMove.SetMoveSpeed(speed); }
 
 			/// @brief ƒ_ƒ[ƒW‚ğó‚¯‚é
 			/// @param damage ó‚¯‚éƒ_ƒ[ƒW—Ê
@@ -98,7 +103,9 @@ namespace mainGame {
 
 			render::model::SkinModelRender* m_enemyMapModel = nullptr;
 			/// @brief “G‚ÌˆÚ“®
-			Move m_enemyMove;
+			//Move m_enemyMove;
+
+			RouteMove m_enemyRouteMove;
 			/// @brief “G‚Ì‰ñ“]
 			Rotation m_enemyRotation;
 			/// @brief “G‚ÌUŒ‚
@@ -121,6 +128,8 @@ namespace mainGame {
 			Generator* m_generator = nullptr;
 
 			Game* m_game = nullptr;
+
+			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 		};
 	}
 }

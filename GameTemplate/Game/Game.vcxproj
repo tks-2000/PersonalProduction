@@ -299,6 +299,7 @@
     <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="EnemyRotation.cpp" />
+    <ClCompile Include="EnemyRouteMove.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -412,6 +413,7 @@
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="EnemyResource.h" />
     <ClInclude Include="EnemyRotation.h" />
+    <ClInclude Include="EnemyRouteMove.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />

@@ -31,7 +31,7 @@ namespace mainGame {
 
 		m_gameCamera->Init();
 
-		m_enemyGenerator->Init({ 0.0f,1000.0f,0.0f });
+		m_enemyGenerator->Init({ 0.0f,0.0f,0.0f });
 
 		m_stage->Init();
 
@@ -51,7 +51,7 @@ namespace mainGame {
 
 		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
 		m_sound->SetVolume(1.0f);
-		m_sound->Play(true);
+		//m_sound->Play(true);
 
 		m_state = enGameStart;
 

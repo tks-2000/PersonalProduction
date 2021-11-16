@@ -7,6 +7,7 @@ namespace nsAI {
 
 	class Cell;
 
+	/// @brief ナビゲーションメッシュを読み込むクラス
 	class NaviMesh
 	{
 	public:

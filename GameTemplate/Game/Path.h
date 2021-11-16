@@ -3,6 +3,7 @@
 namespace nsAI {
 	class NaviMesh;
 
+	/// @brief Œo˜H‚ğˆÚ“®‚·‚éƒNƒ‰ƒX
 	class Path
 	{
 	public:

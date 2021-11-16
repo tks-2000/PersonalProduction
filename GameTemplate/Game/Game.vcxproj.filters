@@ -347,6 +347,9 @@
     <ClCompile Include="Path.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyRouteMove.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -660,6 +663,9 @@
     </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRouteMove.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

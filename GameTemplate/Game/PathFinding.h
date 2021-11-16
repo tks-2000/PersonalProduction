@@ -5,7 +5,7 @@ namespace nsAI{
 	class Cell;
 	class NaviMesh;
 
-	/// @brief パス検索処理
+	/// @brief パス検索処理を行うクラス
 	class PathFinding
 	{
 	public:
