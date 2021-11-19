@@ -49,8 +49,14 @@ namespace mainGame {
 				g_vec3Zero,
 				g_vec3Zero,
 				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
 				g_vec3Zero
 			};
+
+			Game* m_game = nullptr;
 
 			float m_spawnTimer = 0.0f;
 		};

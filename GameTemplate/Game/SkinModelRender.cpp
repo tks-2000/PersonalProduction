@@ -12,6 +12,7 @@ namespace render {
 			m_shadowFlag = false;
 			m_animFlag = false;
 			m_modelFilePath = nullptr;
+			m_fxFilePath = "Assets/shader/model.fx";
 			m_skeletonFilePath = nullptr;
 			m_isInitd = false;
 		}
@@ -27,10 +28,9 @@ namespace render {
 				
 				m_renderingEngine->DeleteModel(&m_model);
 			}break;
-			case enMiniMapRenderTarget: {
-				m_miniMap->DeleteDrawModel(&m_model);
-			}break;
-			default:
+			default: {
+				m_renderingEngine->DeleteExpansionDrawModel(m_target, &m_model);
+			}
 				break;
 			}
 			
@@ -62,7 +62,7 @@ namespace render {
 			m_modelFilePath = modelFilePath;
 			m_modelInitData.m_tkmFilePath = modelFilePath;
 
-			
+			m_modelInitData.m_fxFilePath = m_fxFilePath;
 
 			//モデルの上方向を設定
 			m_modelInitData.m_modelUpAxis = enAxsis;
@@ -110,23 +110,25 @@ namespace render {
 
 			m_target = drawTarget;
 
+			//初期化情報でモデルを初期化する
+			m_model.Init(m_modelInitData);
+
 			switch (m_target)
 			{
+			case enExpandModelGroup1: {
+				m_renderingEngine->SetExpansionDrawModel(m_target, &m_model);
+			}break;
+			case enExpandModelGroup2: {
+				m_renderingEngine->SetExpansionDrawModel(m_target, &m_model);	
+			}break;
+			case enExpandModelGroup3: {
+				m_renderingEngine->SetExpansionDrawModel(m_target, &m_model);
+			}break;
 			case enMainRenderTarget: {
-				//シェーダーファイルパスを設定
-				m_modelInitData.m_fxFilePath = "Assets/shader/model.fx";
-				//初期化情報でモデルを初期化する
-				m_model.Init(m_modelInitData);
 				//初期化したモデルをレンダリングエンジンに渡す
 				m_renderingEngine->SetDrawModel(&m_model);
 			}break;
-			case enMiniMapRenderTarget: {
-				//シェーダーファイルパスを設定
-				m_modelInitData.m_fxFilePath = "Assets/shader/mapModel.fx";
-				//初期化情報でモデルを初期化する
-				m_model.Init(m_modelInitData);
-				m_miniMap->SetDrawModel(&m_model);
-			}break;
+			
 			default:
 				break;
 			}
@@ -135,6 +137,11 @@ namespace render {
 
 			//初期化完了
 			m_isInitd = true;
+		}
+
+		void SkinModelRender::SetRenderTarget(int groupNum, RenderTarget* rt)
+		{
+			m_renderingEngine->SetExpansionModlsRenderTarget(groupNum, rt);
 		}
 
 

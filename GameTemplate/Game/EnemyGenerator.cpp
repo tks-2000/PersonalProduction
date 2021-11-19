@@ -9,7 +9,11 @@ namespace mainGame {
 			{1200.0f,0.0f,1200.0f},
 			{1200.0f,0.0f,-1200.0f},
 			{-1200.0f,0.0f,1200.0f},
-			{-1200.0f,0.0f,-1200.0f}
+			{-1200.0f,0.0f,-1200.0f},
+			{0.0f,0.0f,1200.0f},
+			{0.0f,0.0f,-1200.0f},
+			{1200.0f,0.0f,0.0f},
+			{-1200.0f,0.0f,0.0f}
 		};
 
 		/// @brief èoåªÇ∑ÇÈìGÇÃéÌóﬁ
@@ -59,6 +63,8 @@ namespace mainGame {
 			CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
 			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
 
+			m_game = FindGO<Game>(GAME_NAME);
+
 			//èâä˙âªäÆóπ
 			m_isInitd = true;
 		}
@@ -67,6 +73,13 @@ namespace mainGame {
 		{
 			//ñ¢èâä˙âªÇ»ÇÁé¿çsÇµÇ»Ç¢
 			if (m_isInitd == false) {
+				return;
+			}
+
+			if (m_game->GetGameState() != enGameInProgress) {
+				for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
+					m_enemys[enemyNum]->Execution();
+				}
 				return;
 			}
 

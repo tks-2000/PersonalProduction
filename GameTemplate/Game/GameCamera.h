@@ -44,6 +44,8 @@ namespace mainGame {
 		/// @return ゲームカメラの座標のconst参照
 		const Vector3& GetCameraPos() { return m_cameraPos; }
 
+		const Quaternion& GetCameraYRot() { return m_cameraYRot; }
+
 		/// @brief カメラのモードを取得
 		/// @return カメラモードのステート
 		const EnCameraMode& GetCameraMode() { return m_mode; }

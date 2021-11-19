@@ -9,7 +9,7 @@ namespace {
 	/// @brief –h‰q‘ÎÛ‚ÌÀ•W
 	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 	/// @brief –h‰q‘ÎÛ‚ÌÅ‘å‘Ï‹v—Í
-	const int MAX_HP = 1000;
+	const int MAX_HP = 100;
 }
 
 namespace mainGame {
@@ -38,7 +38,8 @@ namespace mainGame {
 			m_defensiveTargetModel->Init(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
 
 			m_miniMapdefensiveTargetModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_miniMapdefensiveTargetModel->Init(MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH, render::model::enMiniMapRenderTarget);
+			m_miniMapdefensiveTargetModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_miniMapdefensiveTargetModel->Init(MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH, render::model::enExpandModelGroup1);
 
 			//‰Šúƒpƒ‰ƒ[ƒ^[‚ğŒˆ’è
 			m_defensiveTargetHp = MAX_HP;

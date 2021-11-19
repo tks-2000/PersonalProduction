@@ -78,6 +78,7 @@ namespace mainGame {
 	}
 
 	namespace map {
+		static const int MINI_MAP_RENDER_GROUP = render::model::enExpandModelGroup1;
 		static const char* MINI_MAP_NAME = "MIniMap";
 	}
 }

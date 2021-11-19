@@ -11,6 +11,8 @@ namespace {
 	const int WEAK_ATTTACK_POWER = 1;
 	/// @brief UŒ‚ŠÔŠu
 	const float ATTACK_INTERVAL = 1.0f;
+	/// @brief UŒ‚”ÍˆÍ
+	const float ATTACK_RANGE = 200.0f;
 }
 
 namespace mainGame {
@@ -65,6 +67,13 @@ namespace mainGame {
 				return;
 			}
 
+			Vector3 toDefensiveTargetPos = m_defensiveTarget->GetPosition() - m_enemy->GetPosition();
+
+			if (toDefensiveTargetPos.Length() > ATTACK_RANGE) {
+				m_enemy->SetState(enEnemyMove);
+				return;
+			}
+
 			//UŒ‚‚·‚é‚Ü‚Å‚Ìƒ^ƒCƒ}[‚ð‰ÁŽZ
 			m_attackTimer += g_gameTime->GetFrameDeltaTime();
 
@@ -80,6 +89,8 @@ namespace mainGame {
 
 		void Attack::ExecuteAttack()
 		{
+			
+
 			//–h‰q‘ÎÛ‚ÉUŒ‚‚ð‰Á‚¦‚é
 			m_defensiveTarget->ReceiveDamage(m_attackPower);
 		}

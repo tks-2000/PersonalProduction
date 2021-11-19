@@ -42,6 +42,8 @@ namespace mainGame {
 			Vector3 m_miniMapPos = g_vec3Zero;
 			/// @brief マップカメラの座標
 			Vector3 m_mapCameraPos = g_vec3Zero;
+			/// @brief マップカメラの上方向
+			Vector3 m_mapCameraUp = { 0.0f,0.0f,1.0f };
 			/// @brief マップ画像の回転
 			float m_spriteAngle = 0.0f;
 

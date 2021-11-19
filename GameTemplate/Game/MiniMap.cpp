@@ -9,6 +9,8 @@ namespace mainGame {
 
 		const float FRICTION = 20.0f;
 
+		
+
 		MiniMap::MiniMap()
 		{
 			//未初期化で開始
@@ -18,8 +20,9 @@ namespace mainGame {
 
 		MiniMap::~MiniMap()
 		{
-			//レンダリングエンジンに自身の削除を伝える
-			m_renderingEngine->DeleteMiniMapData();
+		
+			m_renderingEngine->DeleteExpansionModelDrawCamera(MINI_MAP_RENDER_GROUP);
+			m_renderingEngine->DeleteExpansionModelsRenderTarget(MINI_MAP_RENDER_GROUP);
 			//マップ画像を削除
 			DeleteGO(m_miniMapSprite);
 		}
@@ -42,7 +45,7 @@ namespace mainGame {
 			m_miniMapCamera.SetWidth(1500.0f);
 			m_miniMapCamera.SetHeight(1500.0f);
 			m_miniMapCamera.SetTarget({ 0.0f, 0.0f, 0.0f });
-			m_miniMapCamera.SetUp({ 0.0f,0.0f,1.0f });
+			m_miniMapCamera.SetUp(m_mapCameraUp);
 			m_miniMapCamera.SetPosition(m_mapCameraPos);
 
 			//マップに表示するモデルを描画するレンダリングターゲットを作成
@@ -55,6 +58,8 @@ namespace mainGame {
 				DXGI_FORMAT_D32_FLOAT
 			);
 
+			m_renderingEngine->SetExpansionModlsRenderTarget(MINI_MAP_RENDER_GROUP, &m_miniMapRenderTarget);
+
 			//マップ画像を作成
 			m_miniMapSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 			m_miniMapSprite->InitTexture(&m_miniMapRenderTarget.GetRenderTargetTexture(), 128, 128);
@@ -62,7 +67,7 @@ namespace mainGame {
 			m_miniMapSprite->SetPosition(MINI_MAP_POS);
 
 			//レンダリングエンジンに自身の情報を渡す
-			m_renderingEngine->SetMiniMapData(this);
+			m_renderingEngine->SetExpansionModelDrawCamera(MINI_MAP_RENDER_GROUP, &m_miniMapCamera);
 
 			m_isInitd = true;
 		}
@@ -76,6 +81,8 @@ namespace mainGame {
 
 			//カメラの角度からマップ画像の回転角度を求める
 			float angle = m_gameCamera->GetCameraYAngleAmount() - m_spriteAngle;
+
+			m_gameCamera->GetCameraYRot().Apply(m_mapCameraUp);
 
 			//カメラの角度との差がカメラの移動停止距離以下だったら…
 			if (angle < m_gameCamera->GetCameraMoveStopDistance()) {
@@ -92,7 +99,7 @@ namespace mainGame {
 			m_spriteQrot.SetRotationZ(m_spriteAngle);
 
 			//画像を更新
-			m_miniMapSprite->SetRotation(m_spriteQrot);
+			//m_miniMapSprite->SetRotation(m_spriteQrot);
 			m_miniMapSprite->Execute();
 
 			m_miniMapPos = m_player->GetPlayerPosition();
@@ -100,7 +107,8 @@ namespace mainGame {
 			m_miniMapPos.y += 1000.0f;
 
 			m_miniMapCamera.SetPosition(m_miniMapPos);
-			//マップを移すカメラを更新
+			m_miniMapCamera.SetUp(m_mapCameraUp);
+			//マップを映すカメラを更新
 			m_miniMapCamera.Update();
 		}
 
@@ -130,24 +138,6 @@ namespace mainGame {
 				g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 			);
 			rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
-		}
-
-		void MiniMap::SetDrawModel(Model* model)
-		{
-			m_drawModels.push_back(model);
-		}
-
-		void MiniMap::DeleteDrawModel(Model* model)
-		{
-			std::vector<Model*>::iterator it;
-			it = std::find(
-				m_drawModels.begin(),
-				m_drawModels.end(),
-				model
-			);
-			if (it != m_drawModels.end()) {
-				m_drawModels.erase(it);
-			}
 		}
 	}
 }

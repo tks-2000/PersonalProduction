@@ -2,12 +2,6 @@
 #include "RenderResource.h"
 #include "FontRender.h"
 
-namespace mainGame {
-	namespace map {
-		class MiniMap;
-	}
-}
-
 namespace render {
 	namespace light {
 		class Lighting;
@@ -37,6 +31,30 @@ namespace render {
 		/// @brief 描画しているモデルを削除
 		/// @param model 削除するモデルのアドレス
 		void DeleteModel(Model* model);
+ 
+
+		void SetExpansionModlsRenderTarget(int modelGroupNum, RenderTarget* rt);
+
+		void DeleteExpansionModelsRenderTarget(int modelGroupNum);
+
+		/// @brief 
+		/// @param modelGroupNum 
+		/// @param model 
+		void SetExpansionDrawModel(int modelGroupNum,Model* model);
+
+		/// @brief 
+		/// @param modelGroupNum 
+		/// @param model 
+		void DeleteExpansionDrawModel(int modelGroupNum, Model* model);
+
+		/// @brief 
+		/// @param modelGroupNum 
+		/// @param model 
+		void SetExpansionModelDrawCamera(int modelGroupNum, Camera* camera);
+	
+		/// @brief 
+		/// @param modelGroupNum 
+		void DeleteExpansionModelDrawCamera(int modelGroupNum);
 
 		/// @brief 描画するスプライトを追加
 		/// @param sprite 追加するスプライトのアドレス
@@ -56,13 +74,11 @@ namespace render {
 
 		void SetLightFlag(const bool Authenticity) { m_ligFlag = Authenticity; }
 
-		void SetMiniMapData(mainGame::map::MiniMap* miniMap) { m_miniMap = miniMap; m_mapRenderFlag = true; }
-
-		void DeleteMiniMapData() { m_miniMap = nullptr; m_mapRenderFlag = false; }
-
 	private:
 		/// @brief ライトの更新
 		void LightUpdate();
+
+		void DrawExpansionModel(int modelGroupNum,RenderContext& rc);
 		
 		/// @brief ライティング
 		light::Lighting* m_lig = nullptr;
@@ -76,6 +92,24 @@ namespace render {
 
 		/// @brief 描画するモデルの配列
 		std::vector<Model*> m_drawModels;
+
+		/// @brief 追加で描画する描画モデルグループの数
+		enum{EXPANSION_MODEL_GROUP_NUM = 3};
+
+		/// @brief 追加で描画するモデルグループの描画フラグ
+		bool m_isExpansionModelDraw[EXPANSION_MODEL_GROUP_NUM] = { false };
+
+		/// @brief 追加で描画するモデルグループ
+		std::vector<Model*> m_expansionDrawModels[EXPANSION_MODEL_GROUP_NUM];
+
+		/// @brief 追加で描画するレンダリングターゲットが作られたか？
+		bool m_isCreateExpansionModelRenderTarget[EXPANSION_MODEL_GROUP_NUM] = { false };
+
+		/// @brief 追加で描画するモデルグループの描画先のポインタ
+		RenderTarget* m_expansionModelsRenderTarget[EXPANSION_MODEL_GROUP_NUM] = { nullptr };
+
+		/// @brief 追加で描画するモデルグループを映すカメラ
+		Camera* m_expansionModelsDrawCamera[EXPANSION_MODEL_GROUP_NUM] = { nullptr };
 
 		/// @brief 描画するスプライトの配列
 		std::vector<Sprite*> m_drawSprites;
@@ -92,8 +126,5 @@ namespace render {
 
 		bool m_ligFlag = false;
 
-		mainGame::map::MiniMap* m_miniMap = nullptr;
-
-		bool m_mapRenderFlag = false;
 	};
 }

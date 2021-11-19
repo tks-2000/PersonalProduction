@@ -12,9 +12,12 @@ namespace mainGame {
 }
 namespace render {
 	namespace model {
+		/// @brief モデルの描画先
 		enum EnModelDrawTarget {
-			enMainRenderTarget,
-			enMiniMapRenderTarget,
+			enExpandModelGroup1,
+			enExpandModelGroup2,
+			enExpandModelGroup3,
+			enMainRenderTarget
 		};
 		
 		/// @brief 3Dモデルの表示を行うクラス
@@ -68,9 +71,13 @@ namespace render {
 				EnModelUpAxis enAxsis = enModelUpAxisZ
 			);
 
-			/// @brief モデルのシェーダーファイルパスを変更
-			/// @param fxFilePath シェーダーファイルパス
-			void ChangeFxFilePath(const char* fxFilePath) { m_modelInitData.m_fxFilePath = fxFilePath; m_model.Init(m_modelInitData); }
+			/// @brief シェーダーファイルパスを個別に設定
+			/// @param fxFilePath 設定するシェーダーファイルパス
+			void SetFxFilePath(const char* fxFilePath) { m_fxFilePath = fxFilePath; }
+
+			/// @brief レンダリングターゲットを個別に設定
+			/// @param rt 設定するレンダリングターゲットのアドレス
+			void SetRenderTarget(int groupNum, RenderTarget* rt);
 
 			/// @brief 影を生成する
 			void CreateShadow();
@@ -90,6 +97,8 @@ namespace render {
 		private:
 			/// @brief モデルのファイルパス
 			const char* m_modelFilePath = nullptr;
+			/// @brief シェーダーファイルパス
+			const char* m_fxFilePath = nullptr;
 			/// @brief スケルトンのファイルパス
 			const char* m_skeletonFilePath = nullptr;
 			/// @brief モデル
@@ -131,7 +140,11 @@ namespace render {
 
 			mainGame::map::MiniMap* m_miniMap = nullptr;
 
+			/// @brief 自身の描画先
 			EnModelDrawTarget m_target = enMainRenderTarget;
+
+			/// @brief モデルの描画先
+			RenderTarget* m_rt = nullptr;
 		};
 	}
 }

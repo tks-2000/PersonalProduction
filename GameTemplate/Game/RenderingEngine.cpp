@@ -108,12 +108,18 @@ namespace render {
 		);
 		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
 
+		for (int groupNum = 0; groupNum < EXPANSION_MODEL_GROUP_NUM; groupNum++) {
+			if (m_expansionDrawModels[groupNum].size() > 0 &&
+				m_expansionModelsRenderTarget[groupNum] != nullptr &&
+				m_expansionModelsDrawCamera[groupNum] != nullptr
+				) {
+
+				DrawExpansionModel(groupNum,rc);
+			}
+		}
+
 		//フレームバッファのコピーのスプライトを表示する
 		m_frameBufferSprite.Draw(rc);
-
-		if (m_mapRenderFlag == true) {
-			m_miniMap->MapRender(rc);
-		}
 
 		//スプライトを描画
 		for (int spriteNum = 0; spriteNum < m_drawSprites.size(); spriteNum++) {
@@ -195,6 +201,25 @@ namespace render {
 		m_lig->Execution();
 	}
 
+	void RenderingEngine::DrawExpansionModel(int modelGroupNum,RenderContext& rc)
+	{
+		rc.WaitUntilToPossibleSetRenderTarget(*m_expansionModelsRenderTarget[modelGroupNum]);
+		rc.SetRenderTargetAndViewport(*m_expansionModelsRenderTarget[modelGroupNum]);
+		rc.ClearRenderTargetView(*m_expansionModelsRenderTarget[modelGroupNum]);
+
+		for (int modelNum = 0; modelNum < m_expansionDrawModels[modelGroupNum].size(); modelNum++) {
+			m_expansionDrawModels[modelGroupNum][modelNum]->Draw(rc,*m_expansionModelsDrawCamera[modelGroupNum]);
+		}
+
+		rc.WaitUntilFinishDrawingToRenderTarget(*m_expansionModelsRenderTarget[modelGroupNum]);
+
+		rc.SetRenderTarget(
+			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
+			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
+		);
+		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+	}
+
 	void RenderingEngine::SetDrawModel(Model* model)
 	{
 		m_drawModels.push_back(model);
@@ -212,6 +237,53 @@ namespace render {
 			m_drawModels.erase(it);
 		}
 	}
+
+	void RenderingEngine::SetExpansionModlsRenderTarget(int modelGroupNum, RenderTarget* rt)
+	{
+		m_expansionModelsRenderTarget[modelGroupNum] = rt;
+		m_isCreateExpansionModelRenderTarget[modelGroupNum] = true;
+	}
+
+	void RenderingEngine::DeleteExpansionModelsRenderTarget(int modelGroupNum)
+	{
+		m_expansionModelsRenderTarget[modelGroupNum] = nullptr;
+		m_isCreateExpansionModelRenderTarget[modelGroupNum] = false;
+	}
+
+	void RenderingEngine::SetExpansionDrawModel(int modelGroupNum, Model* model)
+	{
+		m_expansionDrawModels[modelGroupNum].push_back(model);
+		m_isExpansionModelDraw[modelGroupNum] = true;
+	}
+
+	void RenderingEngine::DeleteExpansionDrawModel(int modelGroupNum, Model* model)
+	{
+		std::vector<Model*>::iterator it;
+		it = std::find(
+			m_expansionDrawModels[modelGroupNum].begin(),
+			m_expansionDrawModels[modelGroupNum].end(),
+			model
+		);
+
+		if (it != m_expansionDrawModels[modelGroupNum].end()) {
+			m_expansionDrawModels[modelGroupNum].erase(it);
+		}
+
+		if (m_expansionDrawModels[modelGroupNum].size() == 0) {
+			m_isExpansionModelDraw[modelGroupNum] = false;
+		}
+	}
+
+	void RenderingEngine::SetExpansionModelDrawCamera(int groupNum, Camera* camera)
+	{
+		m_expansionModelsDrawCamera[groupNum] = camera;
+	}
+
+	void RenderingEngine::DeleteExpansionModelDrawCamera(int groupNum)
+	{
+		m_expansionModelsDrawCamera[groupNum] = nullptr;
+	}
+	
 
 	void RenderingEngine::SetDrawSprite(Sprite* sprite)
 	{

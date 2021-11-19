@@ -260,7 +260,6 @@ namespace mainGame {
 
 	void Game::AllDelete()
 	{
-		DeleteGO(m_miniMap);
 		DeleteGO(m_gameCamera);
 		DeleteGO(m_enemyGenerator);
 		DeleteGO(m_player);
@@ -268,6 +267,7 @@ namespace mainGame {
 		DeleteGO(m_stage);
 		DeleteGO(m_timer);
 		DeleteGO(m_sound);
+		DeleteGO(m_miniMap);
 	}
 
 	void Game::Pause()

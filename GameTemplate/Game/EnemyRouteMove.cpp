@@ -36,6 +36,8 @@ namespace mainGame {
 
 			m_moveTarget = m_defensiveTarget->GetPosition();
 
+			m_moveVerocity = 200.0f;
+
 			m_isInitd = true;
 		}
 
@@ -94,21 +96,38 @@ namespace mainGame {
 
 			//RouteSearch(m_moveTarget);
 
-			bool isEnd;
+			bool isEnd = false;
 
-			Vector3 movePos = m_moveSpeed = m_path.Move(
+			Vector3 movePos = m_path.Move(
 				pos,
-				300.0f * g_gameTime->GetFrameDeltaTime(),
+				m_moveVerocity * g_gameTime->GetFrameDeltaTime(),
 				isEnd
 			);
 			
-			m_moveSpeed = movePos - pos;
+			
+			Vector3 oldPos = pos;
 
-			m_moveSpeed.Normalize();
+			Vector3 moveSpeed = movePos - pos;
 
-			m_moveSpeed *= 300.0f;
+			moveSpeed.Normalize();
+
+			m_moveSpeed += moveSpeed * m_moveVerocity;
+
+			
+			m_moveSpeed -= m_moveSpeed * 0.5f;
+			
+			
 			
 			pos = m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime());
+
+			Vector3 toMovePos = pos - oldPos;
+
+			if (toMovePos.Length() < 1.0f) {
+				RouteSearch();
+				return pos;
+			}
+
+			
 
 			return pos;
 		}

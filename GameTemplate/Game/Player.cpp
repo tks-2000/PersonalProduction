@@ -54,7 +54,8 @@ namespace mainGame {
 			);
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_plMapModel->Init(PLAYER_MAP_MODEL_FILEPATH,render::model::enMiniMapRenderTarget);
+			m_plMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_plMapModel->Init(PLAYER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
 
 			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();

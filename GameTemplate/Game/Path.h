@@ -7,6 +7,7 @@ namespace nsAI {
 	class Path
 	{
 	public:
+
 		Vector3 Move(
 			Vector3 pos,
 			float moveSpeed,

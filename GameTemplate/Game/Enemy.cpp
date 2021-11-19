@@ -81,7 +81,8 @@ namespace mainGame {
 			m_enemyModel->CreateShadow();
 
 			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enMiniMapRenderTarget);
+			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
 
 
 			m_game = FindGO<Game>(GAME_NAME);
