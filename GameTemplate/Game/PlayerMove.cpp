@@ -2,8 +2,10 @@
 #include "PlayerMove.h"
 
 namespace {
-	/// @brief 速度
-	const float MOVE_VEROCITY = 10.0f;
+	/// @brief 歩く速度
+	const float WARK_VEROCITY = 10.0f;
+	/// @brief 走る速度
+	const float RUN_VEROCITY = 20.0f;
 	/// @brief 摩擦力
 	const float FRICTION = 0.03f;
 	/// @brief 停止する移動速度の大きさ
@@ -16,6 +18,8 @@ namespace {
 	const float PLAYER_COLLISION_RADIUS = 30.0f;
 	/// @brief プレイヤーの衝突判定の高さ
 	const float PLAYER_COLLISION_HEIGHT = 50.0f;
+	/// @brief 走るボタン
+	const EnButton RUN_BUTTON = enButtonRB2;
 }
 
 namespace mainGame {
@@ -43,11 +47,11 @@ namespace mainGame {
 			m_isInitd = true;
 		}
 
-		const Vector3& Move::IdleExecute(Vector3& pos)
+		void Move::Execution()
 		{
 			//未初期化なら実行しない
 			if (m_isInitd == false) {
-				return pos;
+				return;
 			}
 
 			//左スティック入力を受け取る
@@ -56,13 +60,41 @@ namespace mainGame {
 
 			//左スティック入力があれば…
 			if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
-				//移動を実行
-				pos = MoveExecute(pos);
-				//プレイヤーを歩き状態に変更 
-				m_player->SetPlayerState(enPlayerWark);
-				//移動した座標を返す
-				return pos;
+				if (g_pad[0]->IsPress(RUN_BUTTON)) {
+					m_player->SetPlayerState(enPlayerRun);
+				}
+				else {
+					//プレイヤーを歩き状態に変更 
+					m_player->SetPlayerState(enPlayerWark);
+				}
 			}
+			else {
+				m_player->SetPlayerState(enPlayerIdle);
+			}
+
+
+
+			switch (m_player->GetPlayerStatus())
+			{
+			case enPlayerIdle: {
+				IdleExecute();
+			}break;
+			case enPlayerWark: {
+				MoveExecute(WARK_VEROCITY);
+			}break;
+			case enPlayerRun: {
+				MoveExecute(RUN_VEROCITY);
+			}break;
+			case enPlayerDamage: {
+
+			}break;
+			default:
+				break;
+			}
+		}
+
+		void Move::IdleExecute()
+		{
 
 			//停止中でも摩擦は加える
 			m_moveSpeed = ApplyFriction(m_moveSpeed);
@@ -81,23 +113,15 @@ namespace mainGame {
 			m_moveSpeed.y -= m_gravity;
 
 			//移動速度を加える
-			pos = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+			m_player->SetPlayerPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 
 			//座標を渡す
-			return pos;
+			return;
 		}
 
-		const Vector3& Move::MoveExecute(Vector3& pos)
+		void Move::MoveExecute(const float moveVerocity)
 		{
-			//未初期化なら実行しない
-			if (m_isInitd == false) {
-				return pos;
-			}
-
-			//左スティック入力を受け取る
-			m_LStickX = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickXF();
-			m_LStickY = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickYF();
-
+			
 			//スティック入力とカメラの方向で移動方向を決める
 			m_moveDirection =  m_gameCamera->GetCameraRight() * m_LStickX;
 			m_moveDirection += m_gameCamera->GetCameraForward() * m_LStickY;
@@ -109,29 +133,18 @@ namespace mainGame {
 			m_moveDirection.Normalize();
 			
 			//移動方向に速度を乗算して移動速度を求める
-			m_moveSpeed += m_moveDirection * MOVE_VEROCITY;
+			m_moveSpeed += m_moveDirection * moveVerocity;
 			
 			//移動速度に摩擦力を加える
 			m_moveSpeed = ApplyFriction(m_moveSpeed);
 
-			//Y方向の移動速度を抜いた速度を取得
-			Vector3 moveSpeedXZ = m_moveSpeed;
-			moveSpeedXZ.y = 0.0f;
-
-			//Y方向抜きの移動速度が待機速度に達したら…
-			if (moveSpeedXZ.Length() < IDLE_MOVE_LENGTH) {
-				//待機状態に移行
-				m_player->SetPlayerState(enPlayerIdle);
-			}
-
 			//重力を加える
 			m_moveSpeed.y -= m_gravity;
 
-			//座標に移動速度を渡す
-			pos = m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime());
+			//移動速度からプレイヤーの座標を設定
+			m_player->SetPlayerPosition(m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime()));
 
-			//移動後の座標を返す
-			return pos;
+			return;
 		}
 
 		const Vector3& Move::ApplyFriction(Vector3& speed)

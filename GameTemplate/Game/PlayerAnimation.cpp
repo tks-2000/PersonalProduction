@@ -14,10 +14,12 @@ namespace mainGame {
 			m_isInitd = false;
 
 			//アニメーションクリップをロード
-			m_playerAnimationClip[enPlayerAnimationIdle].Load("Assets/animData/idle.tka");
+			m_playerAnimationClip[enPlayerAnimationIdle].Load("Assets/animData/unityChan/idle.tka");
 			m_playerAnimationClip[enPlayerAnimationIdle].SetLoopFlag(true);
-			m_playerAnimationClip[enPlayerAnimationWark].Load("Assets/animData/walk.tka");
+			m_playerAnimationClip[enPlayerAnimationWark].Load("Assets/animData/unityChan/walk.tka");
 			m_playerAnimationClip[enPlayerAnimationWark].SetLoopFlag(true);
+			m_playerAnimationClip[enPlayerAnimationRun].Load("Assets/animData/unityChan/run.tka");
+			m_playerAnimationClip[enPlayerAnimationRun].SetLoopFlag(true);
 			m_playerAnimationClip[enPlayerAnimationClear].Load("Assets/animData/unityChan/clear.tka");
 			m_playerAnimationClip[enPlayerAnimationClear].SetLoopFlag(false);
 			m_playerAnimationClip[enPlayerAnimationKneelDown].Load("Assets/animData/unityChan/KneelDown.tka");
@@ -63,7 +65,7 @@ namespace mainGame {
 					m_playerAnimState = enPlayerAnimationWark;
 				}break;
 				case enPlayerRun: {
-
+					m_playerAnimState = enPlayerAnimationRun;
 				}break;
 				case enPlayerDamage: {
 					m_playerAnimState = enPlayerAnimationIdle;

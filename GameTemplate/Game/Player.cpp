@@ -125,27 +125,15 @@ namespace mainGame {
 
 		void Player::GameInProgressExecution()
 		{
-			//プレイヤーの状態によって処理を分ける
-			switch (m_playerState) {
-			case enPlayerIdle: {
-				m_position = m_playerMove.IdleExecute(m_position);
-			}break;
-			case enPlayerWark: {
-				m_position = m_playerMove.MoveExecute(m_position);
-			}break;
-			case enPlayerRun: {
-
-			}break;
-			case enPlayerDamage: {
-
-			}break;
-			}
+			
 
 		
 				
 			
 
 			//データメンバのクラスを更新する
+			m_playerMove.Execution();
+
 			m_playerAttack.Execute();
 
 			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());

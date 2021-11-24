@@ -12,6 +12,7 @@ namespace mainGame {
 		enum EnPlayerAnimations {
 			enPlayerAnimationIdle,	//ë“ã@
 			enPlayerAnimationWark,	//ï‡Ç´
+			enPlayerAnimationRun,
 			enPlayerAnimationClear,
 			enPlayerAnimationKneelDown,
 			enPlayerAnimationNum	//çáåvêî

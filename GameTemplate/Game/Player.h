@@ -50,6 +50,10 @@ namespace mainGame {
 			/// @return プレイヤーの座標のconst参照
 			const Vector3& GetPlayerPosition() { return m_position; }
 
+			/// @brief プレイヤーの座標を設定
+			/// @param pos 設定するプレイヤーの座標 
+			void SetPlayerPosition(const Vector3& pos) { m_position = pos; }
+
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
 
 			/// @brief プレイヤーの方向を入手

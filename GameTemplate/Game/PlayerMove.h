@@ -16,13 +16,15 @@ namespace mainGame {
 			/// @param pl 処理を適用するプレイヤーのアドレス
 			void Init(Player* pl);
 
-			/// @brief 待機中の処理を実行
-			const Vector3& IdleExecute(Vector3& pos);
+			/// @brief 実行
+			void Execution();
 
-			/// @brief 移動処理を実行
-			/// @param pos 移動前の座標
-			/// @return 移動後の座標
-			const Vector3& MoveExecute(Vector3& pos);
+			/// @brief 待機中の処理を実行
+			void IdleExecute();
+
+			/// @brief 移動を実行
+			/// @param velocity 移動する速度
+			void MoveExecute(const float velocity);
 
 			/// @brief 移動方向を取得
 			/// @return 移動方向のconst参照
@@ -33,11 +35,13 @@ namespace mainGame {
 			const Vector3& GetMoveSpssd() { return m_moveSpeed; }
 		private:
 
+			/// @brief 摩擦力を適用
+			/// @param speed 移動速度
+			/// @return 摩擦力を加えた速度
 			const Vector3& ApplyFriction(Vector3& speed);
 
 			/// @brief 初期化しているかどうかのフラグ
 			bool m_isInitd = false;
-
 			/// @brief 左スティックの横入力
 			float m_LStickX = 0.0f;
 			/// @brief 左スティックの縦入力
