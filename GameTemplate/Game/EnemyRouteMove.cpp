@@ -9,6 +9,10 @@ namespace mainGame {
 		const float ENEMY_COLLISION_RADIUS = 30.0f;
 		/// @brief “G‚ÌÕ“Ë”»’è‚Ì‚‚³
 		const float ENEMY_COLLISION_HEIGHT = 50.0f;
+		/// @brief –€ŽC—Í
+		const float NORMAL_FRICTION = 0.1f;
+		/// @brief ‘¬“x
+		const float NORMAL_VEROCITY = 25.0f;
 
 
 		RouteMove::RouteMove()
@@ -36,7 +40,9 @@ namespace mainGame {
 
 			m_moveTarget = m_defensiveTarget->GetPosition();
 
-			m_moveVerocity = 200.0f;
+			m_moveVerocity = NORMAL_VEROCITY;
+
+			m_friction = NORMAL_FRICTION;
 
 			m_isInitd = true;
 		}
@@ -58,32 +64,56 @@ namespace mainGame {
 			m_enemy->SetState(enEnemyMove);
 		}
 
-		const Vector3& RouteMove::IdleExecution(Vector3& pos)
+		void RouteMove::Execution()
 		{
 			if (m_isInitd == false) {
-				return pos;
+				return;
 			}
+
+			switch (m_enemy->GetState())
+			{
+			case enEnemyIdle: {
+				IdleExecution();
+			}break;
+			case enEnemyMove: {
+				MoveExecution(m_moveVerocity);
+			}break;
+			case enEnemyAttack: {
+				StopExecution();
+			}break;
+			case enEnemyDamage: {
+				IdleExecution();
+			}break;
+			case enEnemyDown: {
+				StopExecution();
+			}break;
+			default:
+				break;
+			}
+
+			m_moveVerocity += 0.01f;
+		}
+
+		void RouteMove::IdleExecution()
+		{
+			
 
 			m_moveStartTimer += g_gameTime->GetFrameDeltaTime();
 
 			if (m_moveStartTimer > ENEMY_MOVE_START_TIME) {
 				RouteSearch();
 				m_moveStartTimer = 0.0f;
-				return pos;
+				return;
 			}
 
-			m_moveSpeed -= m_moveSpeed * 0.1f;
+			m_moveSpeed -= m_moveSpeed * m_friction;
 
-			pos = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-
-			return pos;
+			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 		}
 
-		const Vector3& RouteMove::MoveExecution(Vector3& pos)
+		void RouteMove::MoveExecution(const float moveVerocity)
 		{
-			if (m_isInitd == false) {
-				return pos;
-			}
+			Vector3 pos = m_enemy->GetPosition();
 
 			m_toTarget = m_moveTarget - pos;
 
@@ -91,16 +121,14 @@ namespace mainGame {
 
 			if (m_targetDistance < 200.0f) {
 				m_enemy->SetState(enEnemyAttack);
-				return pos;
+				return;
 			}
-
-			//RouteSearch(m_moveTarget);
 
 			bool isEnd = false;
 
 			Vector3 movePos = m_path.Move(
 				pos,
-				m_moveVerocity * g_gameTime->GetFrameDeltaTime(),
+				moveVerocity * g_gameTime->GetFrameDeltaTime(),
 				isEnd
 			);
 			
@@ -111,38 +139,27 @@ namespace mainGame {
 
 			moveSpeed.Normalize();
 
-			m_moveSpeed += moveSpeed * m_moveVerocity;
+			m_moveSpeed += moveSpeed * moveVerocity;
 
 			
-			m_moveSpeed -= m_moveSpeed * 0.5f;
+			m_moveSpeed -= m_moveSpeed * m_friction;
 			
 			
 			
-			pos = m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime());
+			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime()));
 
 			Vector3 toMovePos = pos - oldPos;
 
 			if (toMovePos.Length() < 1.0f) {
-				RouteSearch();
-				return pos;
+				//RouteSearch();
 			}
-
-			
-
-			return pos;
 		}
 
-		const Vector3& RouteMove::StopExecution(Vector3& pos)
+		void RouteMove::StopExecution()
 		{
-			if (m_isInitd == false) {
-				return pos;
-			}
+			m_moveSpeed -= m_moveSpeed * m_friction;
 
-			m_moveSpeed -= m_moveSpeed * 0.1f;
-
-			pos = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-
-			return pos;
+			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 		}
 	}
 }

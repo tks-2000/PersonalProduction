@@ -110,16 +110,22 @@ namespace mainGame {
 			switch (m_game->GetGameState())
 			{
 			case enGameStart: {
-				GameStartExecution();
+				
 			}break;
 			case enGameInProgress: {
-				GameInProgressExecution();
+				m_enemyRouteMove.Execution();
+				m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
+				m_enemyAttack.Execution();
+				if (m_state == enEnemyDown) {
+					DownExecution();
+				}
+
 			}break;
 			case enGameClear: {
-				GameClearExecution();
+				
 			}break;
 			case enGameOver: {
-				GameOverExecution();
+				
 			}break;
 			default:
 				break;
@@ -192,26 +198,26 @@ namespace mainGame {
 				//待機
 			case enEnemyIdle: {
 				//m_position = m_enemyMove.IdleExecute(m_position);
-				m_position = m_enemyRouteMove.IdleExecution(m_position);
+				m_enemyRouteMove.IdleExecution();
 			}break;
 				//移動
 			case enEnemyMove: {
 				//m_position = m_enemyMove.MoveExecute(m_position);
 
-				m_position = m_enemyRouteMove.MoveExecution(m_position);
+				m_enemyRouteMove.MoveExecution(1.0f);
 			}break;
 				//攻撃
 			case enEnemyAttack: {
-				m_position = m_enemyRouteMove.StopExecution(m_position);
+				m_enemyRouteMove.StopExecution();
 				m_enemyAttack.Execution();
 			}break;
 				//ダメージ
 			case enEnemyDamage: {
-				m_position = m_enemyRouteMove.IdleExecution(m_position);
+				m_enemyRouteMove.IdleExecution();
 			}break;
 				//ダウン
 			case enEnemyDown: {
-				m_position = m_enemyRouteMove.StopExecution(m_position);
+				m_enemyRouteMove.StopExecution();
 				DownExecution();
 			}break;
 			default:

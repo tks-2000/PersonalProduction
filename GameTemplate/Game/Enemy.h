@@ -55,6 +55,10 @@ namespace mainGame {
 			/// @return 敵の座標のconst参照
 			const Vector3& GetPosition() { return m_position; }
 
+			/// @brief 座標を設定
+			/// @param pos 設定する座標
+			void SetPosition(const Vector3& pos) { m_position = pos; }
+
 			/// @brief 移動速度を設定
 			/// @param speed 設定する移動速度
 			void SetMoveSpeed(const Vector3& speed) { m_enemyRouteMove.SetMoveSpeed(speed); }

@@ -37,7 +37,9 @@ namespace nsAI {
 		Vector3 toEnd2 = currentSection.endPos - pos;
 		toEnd2.Normalize();
 
-		if (toEnd.Dot(toEnd2) <= 0.0f) {
+		Vector3 toEnd3 = currentSection.endPos - pos;
+
+		if (toEnd3.Length() < 50.0f) {
 			pos = currentSection.endPos;
 			if (m_sectionNo == m_sectionArray.size() - 1) {
 				isEnd = true;

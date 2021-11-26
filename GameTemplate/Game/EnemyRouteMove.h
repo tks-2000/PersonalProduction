@@ -28,11 +28,13 @@ namespace mainGame {
 
 			void RouteSearch();
 
-			const Vector3& IdleExecution(Vector3& pos);
+			void Execution();
 
-			const Vector3& MoveExecution(Vector3& pos);
+			void IdleExecution();
 
-			const Vector3& StopExecution(Vector3& pos);
+			void MoveExecution(const float moveVerocity);
+
+			void StopExecution();
 
 			const Vector3& GetMoveSpeed() const { return m_moveSpeed; }
 
@@ -44,6 +46,8 @@ namespace mainGame {
 			Vector3 m_moveSpeed = g_vec3Zero;
 			/// @brief 速度
 			float m_moveVerocity = 0.0f;
+			/// @brief 摩擦力
+			float m_friction = 0.0f;
 			/// @brief 移動目標
 			Vector3 m_moveTarget = g_vec3Zero;
 			/// @brief 移動目標へのベクトル

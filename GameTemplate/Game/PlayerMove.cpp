@@ -40,6 +40,8 @@ namespace mainGame {
 			//データを取得
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
 			m_player = pl;
+
+			//キャラクターコントローラーを初期化
 			m_charaCon.Init(PLAYER_COLLISION_RADIUS, PLAYER_COLLISION_HEIGHT, m_player->GetPlayerPosition());
 			m_gravity = PLAYER_GRAVITY;
 
@@ -60,31 +62,40 @@ namespace mainGame {
 
 			//左スティック入力があれば…
 			if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
+				//走っていれば…
 				if (g_pad[0]->IsPress(RUN_BUTTON)) {
+					//プレイヤーを走り状態に変更
 					m_player->SetPlayerState(enPlayerRun);
 				}
+				//走っていないなら…
 				else {
 					//プレイヤーを歩き状態に変更 
 					m_player->SetPlayerState(enPlayerWark);
 				}
 			}
+			//左スティック入力が無ければ…
 			else {
+				//プレイヤーを待機状態に変更
 				m_player->SetPlayerState(enPlayerIdle);
 			}
 
 
-
+			//プレイヤーの状態で処理を分ける
 			switch (m_player->GetPlayerStatus())
 			{
+				//待機
 			case enPlayerIdle: {
 				IdleExecute();
 			}break;
+				//歩き
 			case enPlayerWark: {
 				MoveExecute(WARK_VEROCITY);
 			}break;
+				//走り
 			case enPlayerRun: {
 				MoveExecute(RUN_VEROCITY);
 			}break;
+				//
 			case enPlayerDamage: {
 
 			}break;
@@ -110,12 +121,12 @@ namespace mainGame {
 				m_moveSpeed.z = 0.0f;
 			}
 
+			//重力を加える
 			m_moveSpeed.y -= m_gravity;
 
-			//移動速度を加える
+			//移動速度から座標を決める
 			m_player->SetPlayerPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 
-			//座標を渡す
 			return;
 		}
 
@@ -141,7 +152,7 @@ namespace mainGame {
 			//重力を加える
 			m_moveSpeed.y -= m_gravity;
 
-			//移動速度からプレイヤーの座標を設定
+			//移動速度から座標を設定
 			m_player->SetPlayerPosition(m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime()));
 
 			return;
