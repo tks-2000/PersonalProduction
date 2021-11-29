@@ -30,6 +30,9 @@ namespace mainGame {
 	namespace map {
 		class MiniMap;
 	}
+	namespace item {
+		class Item;
+	}
 
 	class GameCamera;
 
@@ -131,6 +134,8 @@ namespace mainGame {
 		render::RenderingEngine* m_renderingEngine = nullptr;
 
 		map::MiniMap* m_miniMap = nullptr;
+
+		item::Item* m_item[2] = { nullptr };
 
 		CSoundSource* m_sound = nullptr;
 

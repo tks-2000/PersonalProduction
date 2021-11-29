@@ -25,13 +25,14 @@ namespace mainGame {
 
 			void Init(Enemy* enemy);
 			
-
+			/// @brief ルート検索
 			void RouteSearch();
-
+			/// @brief 実行
 			void Execution();
-
+			/// @brief 待機
 			void IdleExecution();
-
+			/// @brief 移動
+			/// @param moveVerocity 
 			void MoveExecution(const float moveVerocity);
 
 			void StopExecution();
@@ -63,11 +64,14 @@ namespace mainGame {
 			/// @brief 敵クラス
 			Enemy* m_enemy = nullptr;
 
+			/// @brief 防衛目標
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 			
-
+			/// @brief ナビメッシュ
 			nsAI::NaviMesh m_naviMesh;
+			/// @brief パス
 			nsAI::Path m_path;
+			/// @brief パス検索
 			nsAI::PathFinding m_pathFinding;
 		};
 	}

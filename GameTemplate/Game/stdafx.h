@@ -29,6 +29,8 @@
 #include "Stage.h"
 #include "Timer.h"
 #include "MiniMap.h"
+#include "Item.h"
+#include "Bomb.h"
 
 
 namespace {

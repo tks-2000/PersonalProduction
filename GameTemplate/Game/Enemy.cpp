@@ -148,6 +148,15 @@ namespace mainGame {
 			m_enemyModel->Execution();
 
 			m_enemyMapModel->Execution();
+
+
+			if (m_position.y < -1000.0f) {
+				//¶¬Ší‚Éíœ‚ğ“`‚¦‚é
+				m_generator->DeleteEnemy(this);
+				m_player->DeleteEnemyData(this);
+				//©g‚ğíœ
+				DeleteGO(this);
+			}
 		}
 
 		void Enemy::ReceiveDamage(const int damage)
@@ -231,13 +240,6 @@ namespace mainGame {
 
 			
 
-			if (m_position.y < -1000.0f) {
-				//¶¬Ší‚Éíœ‚ğ“`‚¦‚é
-				m_generator->DeleteEnemy(this);
-				m_player->DeleteEnemyData(this);
-				//©g‚ğíœ
-				DeleteGO(this);
-			}
 		}
 
 		void Enemy::GameClearExecution()

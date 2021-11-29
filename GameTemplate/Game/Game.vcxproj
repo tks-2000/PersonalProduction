@@ -290,6 +290,7 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
     <ClCompile Include="Bloom.cpp" />
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BSP.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="DefensiveTarget.cpp" />
@@ -304,6 +305,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
@@ -403,6 +405,7 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
     <ClInclude Include="Bloom.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="BSP.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="DefensiveTarget.h" />
@@ -418,6 +421,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="NameKey.h" />
