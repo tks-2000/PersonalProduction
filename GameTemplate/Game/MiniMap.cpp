@@ -42,8 +42,8 @@ namespace mainGame {
 			//マップを映すカメラの初期化
 			m_mapCameraPos = MINI_MAP_CAMERA_POS;
 			m_miniMapCamera.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
-			m_miniMapCamera.SetWidth(1500.0f);
-			m_miniMapCamera.SetHeight(1500.0f);
+			m_miniMapCamera.SetWidth(3000.0f);
+			m_miniMapCamera.SetHeight(3000.0f);
 			m_miniMapCamera.SetTarget({ 0.0f, 0.0f, 0.0f });
 			m_miniMapCamera.SetUp(m_mapCameraUp);
 			m_miniMapCamera.SetPosition(m_mapCameraPos);

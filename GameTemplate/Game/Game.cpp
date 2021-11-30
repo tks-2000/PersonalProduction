@@ -57,8 +57,7 @@ namespace mainGame {
 
 		m_nvmMesh.Init("Assets/nvmData/stage3.tkn");
 
-		m_item[0]->Init();
-		m_item[1]->Init();
+		m_itemGenerator->Init();
 
 		m_isInitd = true;
 		m_isDead = false;
@@ -160,8 +159,7 @@ namespace mainGame {
 			m_enemyGenerator->Execute();
 			m_gameCamera->Execution();
 			m_miniMap->Execution();
-			m_item[0]->Execution();
-			m_item[1]->Execution();
+			m_itemGenerator->Execution();
 
 			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
 				m_sampleSprite->FadeOut(2.0f);
@@ -254,8 +252,7 @@ namespace mainGame {
 		m_enemyGenerator = NewGO<enemy::Generator>(PRIORITY_VERYLOW, enemy::ENEMY_GENERATOR_NAME);
 		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
 		m_timer = NewGO<timer::Timer>(PRIORITY_VERYLOW, timer::TIMER_NAME);
-		m_item[0] = NewGO<item::Item>(PRIORITY_VERYLOW);
-		m_item[1] = NewGO<item::Bomb>(PRIORITY_VERYLOW);
+		m_itemGenerator = NewGO<item::ItemGenerator>(PRIORITY_VERYLOW, item::ITEM_GENERATOR_NAME);
 
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
@@ -275,8 +272,7 @@ namespace mainGame {
 		DeleteGO(m_timer);
 		DeleteGO(m_sound);
 		DeleteGO(m_miniMap);
-		DeleteGO(m_item[0]);
-		DeleteGO(m_item[1]);
+		DeleteGO(m_itemGenerator);
 	}
 
 	void Game::Pause()

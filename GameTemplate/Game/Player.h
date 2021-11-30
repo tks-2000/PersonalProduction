@@ -3,6 +3,7 @@
 #include "PlayerAnimation.h"
 #include "PlayerRotation.h"
 #include "PlayerAttack.h"
+#include "ItemSlot.h"
 
 class SkinModelRender;
 
@@ -54,6 +55,8 @@ namespace mainGame {
 			/// @param pos 設定するプレイヤーの座標 
 			void SetPlayerPosition(const Vector3& pos) { m_position = pos; }
 
+			void SetMoveSpeed(const Vector3& speed) { m_playerMove.SetMoveSpeed(speed); }
+
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
 
 			/// @brief プレイヤーの方向を入手
@@ -74,6 +77,11 @@ namespace mainGame {
 			/// @brief 敵の情報を削除
 			/// @param enemy 削除する敵クラスのアドレス
 			void DeleteEnemyData(enemy::Enemy* enemy) { m_playerAttack.DeleteEnemyData(enemy); }
+
+			/// @brief アイテムスロットにアイテムを追加
+			/// @param item 追加するアイテム
+			/// @return trueで追加できた falseで追加出来なかった
+			bool SetItemSlot(item::Item* item) { return m_itemSlot.SetItem(item); }
 
 			/// @brief 実行
 			void Execution();
@@ -103,6 +111,8 @@ namespace mainGame {
 			Rotation m_playerRot;
 			/// @brief 攻撃
 			Attack m_playerAttack;
+
+			ItemSlot m_itemSlot;
 
 			Game* m_game = nullptr;
 		};

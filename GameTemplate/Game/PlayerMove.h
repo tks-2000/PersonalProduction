@@ -33,6 +33,8 @@ namespace mainGame {
 			/// @brief 移動速度を取得
 			/// @return 移動速度のconst参照
 			const Vector3& GetMoveSpssd() { return m_moveSpeed; }
+
+			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 		private:
 
 			/// @brief 摩擦力を適用

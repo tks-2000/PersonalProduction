@@ -6,7 +6,12 @@ namespace mainGame {
 	namespace item {
 		class Bomb : public Item
 		{
-			void Init();
+		public:
+
+		private:
+			void InitData();
+
+			void Efficacy();
 		};
 
 	}

@@ -84,7 +84,7 @@ namespace mainGame {
 			//攻撃間隔までタイマーが進んだら…
 			if (m_attackTimer >= ATTACK_INTERVAL) {
 				//攻撃を実行
-				//ExecuteAttack();
+				ExecuteAttack();
 				//タイマーを0に戻す
 				m_attackTimer = 0.0f;
 			}

@@ -58,7 +58,13 @@ namespace mainGame {
 
 			Game* m_game = nullptr;
 
+			/// @brief 出現間隔
+			float m_spawnInterval = 0.0f;
+
+			/// @brief 出現間隔を測るタイマー
 			float m_spawnTimer = 0.0f;
+
+
 		};
 	}
 }

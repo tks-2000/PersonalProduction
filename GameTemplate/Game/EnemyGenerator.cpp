@@ -23,7 +23,9 @@ namespace mainGame {
 			enEnemyTypeFast
 		};
 
-		const float SPAWN_TIME = 1.0f;
+		const float MAX_SPAWN_INTERVAL = 5.0f;
+
+		const float MIN_SPAWN_INTERVAL = 1.0f;
 
 		Generator::Generator()
 		{
@@ -58,10 +60,12 @@ namespace mainGame {
 			}
 
 			//初期配置
-			CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
+			/*CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
 			CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
 			CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
-			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
+			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);*/
+
+			m_spawnInterval = MAX_SPAWN_INTERVAL;
 
 			m_game = FindGO<Game>(GAME_NAME);
 
@@ -85,7 +89,7 @@ namespace mainGame {
 
 			m_spawnTimer += g_gameTime->GetFrameDeltaTime();
 
-			if (m_spawnTimer > SPAWN_TIME) {
+			if (m_spawnTimer > m_spawnInterval) {
 				std::random_device rnd;
 				int num = rnd();
 				int num2 = rnd();
@@ -103,6 +107,15 @@ namespace mainGame {
 				CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
 
 				m_spawnTimer = 0.0f;
+			}
+
+
+			if (m_spawnInterval < MIN_SPAWN_INTERVAL) {
+
+				m_spawnInterval = MIN_SPAWN_INTERVAL;
+			}
+			else {
+				m_spawnInterval -= g_gameTime->GetFrameDeltaTime() / 20.0f;
 			}
 
 			//出現している敵の数だけ実行する

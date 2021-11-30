@@ -41,6 +41,7 @@ namespace mainGame {
 			m_playerRot.Init(this);
 			m_playerAnimation.Init(this);
 			m_playerAttack.Init(this);
+			m_itemSlot.Init();
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -125,18 +126,14 @@ namespace mainGame {
 
 		void Player::GameInProgressExecution()
 		{
-			
-
-		
-				
-			
-
 			//データメンバのクラスを更新する
 			m_playerMove.Execution();
 
 			m_playerAttack.Execute();
 
 			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
+
+			m_itemSlot.Execution();
 
 		}
 

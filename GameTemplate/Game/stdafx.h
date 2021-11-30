@@ -29,6 +29,8 @@
 #include "Stage.h"
 #include "Timer.h"
 #include "MiniMap.h"
+#include "ItemGenerator.h"
+#include "ItemSlot.h"
 #include "Item.h"
 #include "Bomb.h"
 
@@ -82,5 +84,9 @@ namespace mainGame {
 	namespace map {
 		static const int MINI_MAP_RENDER_GROUP = render::model::enExpandModelGroup1;
 		static const char* MINI_MAP_NAME = "MIniMap";
+	}
+
+	namespace item {
+		static const char* ITEM_GENERATOR_NAME = "ItemGenerator";
 	}
 }

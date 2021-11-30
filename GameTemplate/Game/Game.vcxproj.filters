@@ -63,6 +63,12 @@
     <Filter Include="MyEngine\Sound">
       <UniqueIdentifier>{6ea56f11-0184-4e77-acff-1a0aab7e0eeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyEngine\NaviAI">
+      <UniqueIdentifier>{bd432a51-8fc0-42ee-bc08-ef69b742c4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inGame\Item">
+      <UniqueIdentifier>{ae501b7e-86b0-4204-a7b4-aba9785c5bb8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -332,29 +338,35 @@
     <ClCompile Include="TknFile.cpp">
       <Filter>MiniEngine\tkFile</Filter>
     </ClCompile>
-    <ClCompile Include="BSP.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Cell.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NaviMesh.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PathFinding.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Path.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyRouteMove.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="BSP.cpp">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviMesh.cpp">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinding.cpp">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>inGame\Item</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>inGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemSlot.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGenerator.cpp">
+      <Filter>inGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -655,29 +667,35 @@
     <ClInclude Include="TknFile.h">
       <Filter>MiniEngine\tkFile</Filter>
     </ClInclude>
-    <ClInclude Include="BSP.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Cell.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NaviMesh.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PathFinding.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Path.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyRouteMove.h">
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="BSP.h">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviMesh.h">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>MyEngine\NaviAI</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
+      <Filter>MyEngine\NaviAI</Filter>
     </ClInclude>
     <ClInclude Include="Bomb.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSlot.h">
+      <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGenerator.h">
+      <Filter>inGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
