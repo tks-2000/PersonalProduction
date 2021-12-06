@@ -6,14 +6,18 @@ namespace mainGame {
 	}
 
 	namespace player {
+
+		/// @brief プレイヤーの持つアイテムを管理するクラス
 		class ItemSlot
 		{
 		public:
 			ItemSlot();
 			~ItemSlot();
 
+			/// @brief 初期化
 			void Init();
 
+			/// @brief 実行
 			void Execution();
 
 			/// @brief スロットにアイテムを設定
@@ -24,9 +28,19 @@ namespace mainGame {
 			/// @brief 持っているアイテムを使う
 			/// @param slotNo 使用するアイテムスロット番号
 			void UseItem(const int slotNo);
+
+			/// @brief 現在選択しているスロット番号を取得
+			/// @return 選択しているアイテムスロット番号
+			const int GetSelectSlotNum()const { return m_selectNo; }
+
+			/// @brief アイテムを持っているか？
+			/// @param slotNum 持っているか調べるスロット番号
+			/// @return trueなら持っている falseならもっていない
+			bool IsOwnedItem(const int slotNum)const;
 			
 		private:
 
+			/// @brief 使用するアイテムスロット選択を行う関数
 			void ItemSelect();
 
 			bool m_isInitd = false;
@@ -39,7 +53,7 @@ namespace mainGame {
 			/// @brief 選択しているアイテム番号
 			int m_selectNo = 0;
 
-			std::vector<item::Item*> m_items;
+			item::Item* m_items[MAX_ITEM_NUM] = { nullptr };
 		};
 
 	}

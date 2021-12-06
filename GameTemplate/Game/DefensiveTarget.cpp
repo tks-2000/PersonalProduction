@@ -43,6 +43,7 @@ namespace mainGame {
 
 			//初期パラメーターを決定
 			m_defensiveTargetHp = MAX_HP;
+			m_defensiveTargetMaxHp = MAX_HP;
 			m_position = DEFENSIVE_TARGET_POS;
 			m_scale = { 1.0f,1.0f,1.0f };
 			m_defensiveTargetModel->SetPosition(m_position);
@@ -50,6 +51,8 @@ namespace mainGame {
 
 			//モデルの情報から当たり判定を作成
 			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
+
+			m_gameUI = FindGO<ui::GameUI>(ui::GAME_UI_NAME);
 			m_isInitd = true;
 			m_isBreak = false;
 		}
@@ -70,9 +73,12 @@ namespace mainGame {
 				//モデルの処理を実行
 				m_defensiveTargetModel->Execution();
 
+				if (m_isDamage == true) {
+					ApplyDamage();
+				}
+
 				//耐久力が0以下になったら…
-				if (m_defensiveTargetHp <= 0) {
-					m_defensiveTargetHp = 0;
+				if (m_defensiveTargetHp <= 0.0f) {
 					//破壊されたことにする
 					m_isBreak = true;
 
@@ -81,6 +87,32 @@ namespace mainGame {
 					DeleteGO(m_miniMapdefensiveTargetModel);
 				}
 			}
+		}
+
+		void DefensiveTarget::ReceiveDamage(const float damage)
+		{
+			m_damageAmount += damage;
+
+			m_hpDecreaseAmount = m_damageAmount / 10.0f;
+
+			m_isDamage = true;
+		}
+
+		void DefensiveTarget::ApplyDamage()
+		{
+			m_defensiveTargetHp -= m_hpDecreaseAmount;
+
+			m_damageAmount -= m_hpDecreaseAmount;
+
+			if (m_defensiveTargetHp <= 0.0f) {
+				m_defensiveTargetHp = 0.0f;
+			}
+
+			if (m_damageAmount <= 0.0f) {
+				m_isDamage = false;
+			}
+
+			m_gameUI->ApplyBaseDamage();
 		}
 	}
 }

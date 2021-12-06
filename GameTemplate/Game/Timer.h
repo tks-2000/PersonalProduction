@@ -31,6 +31,8 @@ namespace mainGame {
 			/// @brief タイマーの状態を取得
 			/// @return タイマーが何を行っているかのステート
 			const EnTimerState& GetTimerState() { return m_state; }
+
+			const int GetTimer() const { return m_timeNum; }
 		private:
 			/// @brief 開始時のタイマーを進める
 			void ExecuteStartTimer();
@@ -47,8 +49,7 @@ namespace mainGame {
 			int m_timeNum = 0;
 			/// @brief フォントの状態を表すステート
 			EnTimerState m_state = enTimerStart;
-			/// @brief タイマーの数値を表示するフォント
-			render::font::FontRender* m_timeFont = nullptr;
+			
 			/// @brief タイマーの表示位置
 			Vector2 m_timeFontPos = g_vec2Zero;
 

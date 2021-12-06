@@ -59,6 +59,8 @@ namespace mainGame {
 
 		m_itemGenerator->Init();
 
+		m_gameUI->Init();
+
 		m_isInitd = true;
 		m_isDead = false;
 	}
@@ -160,6 +162,8 @@ namespace mainGame {
 			m_gameCamera->Execution();
 			m_miniMap->Execution();
 			m_itemGenerator->Execution();
+			m_gameUI->Execution();
+			m_defensiveTarget->Execution();
 
 			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
 				m_sampleSprite->FadeOut(2.0f);
@@ -174,14 +178,13 @@ namespace mainGame {
 
 	void Game::GameStartExecution()
 	{
-		m_defensiveTarget->Execution();
 		m_timer->Execution();
 	}
 
 	void Game::InGameExecution()
 	{
 		
-		m_defensiveTarget->Execution();
+		
 		m_timer->Execution();
 
 		if (m_timer->GetTimerState() == timer::enTimerEnd) {
@@ -253,6 +256,7 @@ namespace mainGame {
 		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
 		m_timer = NewGO<timer::Timer>(PRIORITY_VERYLOW, timer::TIMER_NAME);
 		m_itemGenerator = NewGO<item::ItemGenerator>(PRIORITY_VERYLOW, item::ITEM_GENERATOR_NAME);
+		m_gameUI = NewGO<ui::GameUI>(PRIORITY_VERYLOW, ui::GAME_UI_NAME);
 
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
@@ -273,6 +277,7 @@ namespace mainGame {
 		DeleteGO(m_sound);
 		DeleteGO(m_miniMap);
 		DeleteGO(m_itemGenerator);
+		DeleteGO(m_gameUI);
 	}
 
 	void Game::Pause()

@@ -33,6 +33,7 @@
 #include "ItemSlot.h"
 #include "Item.h"
 #include "Bomb.h"
+#include "GameUI.h"
 
 
 namespace {
@@ -88,5 +89,9 @@ namespace mainGame {
 
 	namespace item {
 		static const char* ITEM_GENERATOR_NAME = "ItemGenerator";
+	}
+
+	namespace ui {
+		static const char* GAME_UI_NAME = "GameUI";
 	}
 }

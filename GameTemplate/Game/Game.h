@@ -33,6 +33,9 @@ namespace mainGame {
 	namespace item {
 		class ItemGenerator;
 	}
+	namespace ui {
+		class GameUI;
+	}
 
 	class GameCamera;
 
@@ -136,6 +139,8 @@ namespace mainGame {
 		map::MiniMap* m_miniMap = nullptr;
 
 		item::ItemGenerator* m_itemGenerator = nullptr;
+
+		ui::GameUI* m_gameUI = nullptr;
 
 		CSoundSource* m_sound = nullptr;
 

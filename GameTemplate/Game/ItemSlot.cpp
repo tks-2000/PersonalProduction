@@ -25,6 +25,8 @@ namespace mainGame {
 				return;
 			}
 
+			ItemSelect();
+
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonY)) {
 				UseItem(m_selectNo);
 			}
@@ -32,34 +34,44 @@ namespace mainGame {
 
 		bool ItemSlot::SetItem(item::Item* item)
 		{
-			if (m_items.size() >= MAX_ITEM_NUM) {
-				return false;
+			
+			for (int slotNum = 0; slotNum < MAX_ITEM_NUM; slotNum++) {
+				if (m_items[slotNum] == nullptr) {
+					m_items[slotNum] = item;
+					return true;
+				}
 			}
 
-			m_items.push_back(item);
-			return true;
+			return false;
 		}
 
 		void ItemSlot::UseItem(const int slotNo)
 		{
-			if (slotNo < MIN_ITEM_NUM || slotNo > MAX_ITEM_NUM || m_items.size() <= slotNo) {
+			if (slotNo < MIN_ITEM_NUM || slotNo >= MAX_ITEM_NUM) {
+				return;
+			}
+
+			if (m_items[slotNo] == nullptr) {
 				return;
 			}
 
 			m_items[slotNo]->Activation();
 
-			std::vector<item::Item*>::iterator it;
-
-			it = std::find(
-				m_items.begin(),
-				m_items.end(),
-				m_items[slotNo]
-			);
-
-			if (it != m_items.end()) {
-				m_items.erase(it);
-			}
+			m_items[slotNo] = nullptr;
 			
+		}
+
+		bool ItemSlot::IsOwnedItem(const int slotNum)const
+		{
+			if (slotNum >= MAX_ITEM_NUM || slotNum < MIN_ITEM_NUM) {
+				return false;
+			}
+
+			if (m_items[slotNum] == nullptr) {
+				return false;
+			}
+
+			return true;
 		}
 
 		void ItemSlot::ItemSelect()

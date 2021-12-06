@@ -96,7 +96,7 @@ namespace mainGame {
 
 		void Item::Efficacy()
 		{
-
+			m_player->SetMoveSpeed({ 100.0f,0.0f,0.0f });
 		}
 		
 	}

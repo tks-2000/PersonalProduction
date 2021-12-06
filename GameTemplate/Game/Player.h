@@ -83,6 +83,10 @@ namespace mainGame {
 			/// @return trueÇ≈í«â¡Ç≈Ç´ÇΩ falseÇ≈í«â¡èoóàÇ»Ç©Ç¡ÇΩ
 			bool SetItemSlot(item::Item* item) { return m_itemSlot.SetItem(item); }
 
+			const int GetSelectSlotNum()const { return m_itemSlot.GetSelectSlotNum(); }
+
+			const bool IsOwnedItem(const int slotNum) const { return m_itemSlot.IsOwnedItem(slotNum); }
+
 			/// @brief é¿çs
 			void Execution();
 

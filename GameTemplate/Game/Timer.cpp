@@ -18,7 +18,7 @@ namespace mainGame {
 
 		Timer::~Timer()
 		{
-			DeleteGO(m_timeFont);
+			
 		}
 
 		void Timer::Init()
@@ -33,13 +33,11 @@ namespace mainGame {
 			m_inGameTimer = 120.0f;
 
 			//タイマー表示のフォントを作成
-			m_timeFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
-			int time = m_stastTimer + 1.0f;
-			std::wstring conversion;
-			conversion = std::to_wstring(time);
-			m_timeFont->Init(conversion.c_str());
+			
+			m_timeNum = m_stastTimer + 1.0f;
+			
 			m_timeFontPos = { 0.0f,300.0f };
-			m_timeFont->SetPosition(m_timeFontPos);
+			
 
 			m_game = FindGO<Game>(GAME_NAME);
 
@@ -70,7 +68,7 @@ namespace mainGame {
 				break;
 			}
 
-			m_timeFont->Execution();
+			
 		}
 
 		void Timer::ExecuteStartTimer()
@@ -79,10 +77,8 @@ namespace mainGame {
 			m_stastTimer -= g_gameTime->GetFrameDeltaTime();
 
 			//フォントにタイマーの数値を伝える
-			int time = m_stastTimer + 1.0f;
-			std::wstring conversion;
-			conversion = std::to_wstring(time);
-			m_timeFont->SetText(conversion.c_str());
+			m_timeNum = m_stastTimer + 1.0f;
+			
 
 			//タイマーが0以下になったら…
 			if (m_stastTimer <= 0.0f) {
@@ -102,11 +98,8 @@ namespace mainGame {
 			m_inGameTimer -= g_gameTime->GetFrameDeltaTime();
 
 			//フォントにタイマーの数値を伝える
-			int time = m_inGameTimer + 1.0f;
-			std::wstring conversion = std::to_wstring(time);
-			m_timeFont->SetText(conversion.c_str());
-
-			m_timeFont->SetColor({ 0.5f,0.5f,0.5f,0.5f });
+			m_timeNum = m_inGameTimer + 1.0f;
+			
 
 			//タイマーが0以下になったら…
 			if (m_inGameTimer <= 0.0f) {

@@ -69,6 +69,9 @@
     <Filter Include="inGame\Item">
       <UniqueIdentifier>{ae501b7e-86b0-4204-a7b4-aba9785c5bb8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="inGame\UI">
+      <UniqueIdentifier>{bb85dc4b-cc07-4095-b8d1-298fa0d79afe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -367,6 +370,18 @@
     </ClCompile>
     <ClCompile Include="ItemGenerator.cpp">
       <Filter>inGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="OwnedItem.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeLimit.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEndurance.cpp">
+      <Filter>inGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -696,6 +711,18 @@
     </ClInclude>
     <ClInclude Include="ItemGenerator.h">
       <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>inGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="OwnedItem.h">
+      <Filter>inGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeLimit.h">
+      <Filter>inGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEndurance.h">
+      <Filter>inGame\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

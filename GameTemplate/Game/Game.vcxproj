@@ -289,6 +289,7 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TkmFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
+    <ClCompile Include="BaseEndurance.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BSP.cpp" />
@@ -304,10 +305,12 @@
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemGenerator.cpp" />
     <ClCompile Include="ItemSlot.cpp" />
+    <ClCompile Include="OwnedItem.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiniMap.cpp" />
@@ -339,6 +342,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="TimeLimit.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TknFile.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -406,6 +410,7 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
+    <ClInclude Include="BaseEndurance.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BSP.h" />
@@ -422,10 +427,12 @@
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemGenerator.h" />
     <ClInclude Include="ItemSlot.h" />
+    <ClInclude Include="OwnedItem.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="NameKey.h" />
@@ -450,6 +457,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="TimeLimit.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TknFile.h" />
     <ClInclude Include="Util.h" />
