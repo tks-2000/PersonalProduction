@@ -30,6 +30,10 @@ namespace mainGame {
 			m_bgModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_bgModel->Init("Assets/modelData/bg/sky_a.tkm");
 			m_bgModel->Execution();
+			m_miniMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_miniMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_miniMapModel->Init(STAGE_MODEL_TKM_FILEPATH, render::model::enExpandModelGroup1);
+			m_miniMapModel->Execution();
 			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ðì¬
 			m_staticStageObject.CreateFromModel(m_stageModel->GetModel(), m_stageModel->GetModelWorldMatrix());
 			m_isInitd = true;

@@ -60,10 +60,10 @@ namespace mainGame {
 			}
 
 			//èâä˙îzíu
-			/*CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
+			CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
 			CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
-			CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
-			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);*/
+			//CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
+			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
 
 			m_spawnInterval = MAX_SPAWN_INTERVAL;
 

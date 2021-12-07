@@ -383,6 +383,9 @@
     <ClCompile Include="BaseEndurance.cpp">
       <Filter>inGame\UI</Filter>
     </ClCompile>
+    <ClCompile Include="RemainingBullets.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -722,6 +725,9 @@
       <Filter>inGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="BaseEndurance.h">
+      <Filter>inGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="RemainingBullets.h">
       <Filter>inGame\UI</Filter>
     </ClInclude>
   </ItemGroup>

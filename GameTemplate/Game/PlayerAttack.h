@@ -35,6 +35,9 @@ namespace mainGame {
 			void DeleteEnemyData(enemy::Enemy* enemy);
 
 			void DeleteBullet(Bullet* bullet);
+
+
+			const int GetRemainingBullets()const { return m_remainingBullets; }
 			
 		private:
 			/// @brief ‹ßÚUŒ‚‚ğÀs

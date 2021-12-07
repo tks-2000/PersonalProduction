@@ -29,6 +29,8 @@ namespace mainGame {
 			PhysicsStaticObject m_staticStageObject;
 
 			render::model::SkinModelRender* m_bgModel = nullptr;
+
+			render::model::SkinModelRender* m_miniMapModel = nullptr;
 		};
 	}
 }

@@ -46,8 +46,7 @@ namespace mainGame {
 		m_sampleSprite->SetPosition({ 0.0f,0.0f,0.0f });
 		m_sampleSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
 
-		m_sampleFont->Init(L"test");
-		m_sampleFont->SetPosition({ -500.0f, 300.0f });
+		
 
 		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
 		m_sound->SetVolume(1.0f);
@@ -127,10 +126,10 @@ namespace mainGame {
 			int hp = m_defensiveTarget->GetDefensiveTargetHp();
 			std::wstring conversion;
 			conversion = std::to_wstring(hp);
-			m_sampleFont->SetText(conversion.c_str());
+			
 			
 			bool isEnd;
-			m_sampleFont->Execution();
+			
 			if (g_pad[0]->IsTrigger(enButtonB)) {
 				m_pathFinding.Execute(
 					m_path,
@@ -176,6 +175,13 @@ namespace mainGame {
 		
 	}
 
+	void Game::SetGameOver()
+	{
+		m_renderingEngine->SetLightFlag(false);
+
+		m_state = enGameOver;
+	}
+
 	void Game::GameStartExecution()
 	{
 		m_timer->Execution();
@@ -207,11 +213,10 @@ namespace mainGame {
 			}
 		}
 		else {
-			m_sampleFont->SetText(L"GAME CLEAR");
-			m_sampleFont->Execution();
+			
 			if (g_pad[0]->IsTrigger(enButtonX)) {
 				DeleteGO(m_sampleSprite);
-				DeleteGO(m_sampleFont);
+				
 				DeleteGO(m_unityChanModel2);
 				AllDelete();
 				m_state = enGameClear;
@@ -233,11 +238,10 @@ namespace mainGame {
 			}
 		}
 		else {
-			m_sampleFont->SetText(L"GAME OVER");
-			m_sampleFont->Execution();
+			
 			if (g_pad[0]->IsTrigger(enButtonX)) {
 				DeleteGO(m_sampleSprite);
-				DeleteGO(m_sampleFont);
+			
 				DeleteGO(m_unityChanModel2);
 				AllDelete();
 				m_state = enGameOver;
@@ -260,7 +264,7 @@ namespace mainGame {
 
 		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
-		m_sampleFont = NewGO<render::font::FontRender>(0);
+		
 		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
 
 		m_isInitd = false;

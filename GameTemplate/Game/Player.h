@@ -87,6 +87,8 @@ namespace mainGame {
 
 			const bool IsOwnedItem(const int slotNum) const { return m_itemSlot.IsOwnedItem(slotNum); }
 
+			const int GetRemainingBullet() { return m_playerAttack.GetRemainingBullets(); }
+
 			/// @brief é¿çs
 			void Execution();
 
