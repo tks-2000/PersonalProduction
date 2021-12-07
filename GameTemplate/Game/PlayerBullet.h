@@ -23,6 +23,10 @@ namespace mainGame {
 
 			/// @brief 実行
 			void Execution();
+
+			/// @brief 座標を入手
+			/// @return 座標のconst参照
+			const Vector3& GetPosition()const { return m_position; }
 		private:
 			/// @brief 移動する
 			void MoveExecution();

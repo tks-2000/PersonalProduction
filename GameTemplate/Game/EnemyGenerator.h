@@ -25,6 +25,11 @@ namespace mainGame {
 			void DeleteEnemy(Enemy* enemy);
 
 			void DeleteAllEnemy();
+
+			/// @brief 全ての敵の情報を入手
+			/// @return 敵の配列のアドレス
+			std::vector<Enemy*>* GetEnemys(){ return &m_enemys; }
+
 		private:
 
 			/// @brief 敵を出現させる

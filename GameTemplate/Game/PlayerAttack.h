@@ -36,6 +36,10 @@ namespace mainGame {
 
 			void DeleteBullet(Bullet* bullet);
 
+			/// @brief 弾丸の情報を入手
+			/// @return 弾丸の配列のアドレス
+			std::vector<Bullet*>* GetBullets() { return &m_bullets; }
+
 
 			const int GetRemainingBullets()const { return m_remainingBullets; }
 			

@@ -89,6 +89,8 @@ namespace mainGame {
 
 			const int GetRemainingBullet() { return m_playerAttack.GetRemainingBullets(); }
 
+			std::vector <Bullet*>* GetBulletData() { return m_playerAttack.GetBullets(); }
+
 			/// @brief é¿çs
 			void Execution();
 

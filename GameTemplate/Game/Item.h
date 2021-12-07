@@ -30,7 +30,7 @@ namespace mainGame {
 			virtual void Execution();
 
 			/// @brief 発動
-			void Activation();
+			virtual void Activation();
 
 			void SetPosition(const Vector3& pos) { m_position = pos; }
 
@@ -60,10 +60,12 @@ namespace mainGame {
 			/// @brief アイテム効果の発動時間
 			float m_activateTimer = 0.0f;
 
+			/// @brief アイテムの効果が終了する時間
 			float m_endTime = 0.0f;
 
 			render::model::SkinModelRender* m_itemModel = nullptr;
 
+			/// @brief プレイヤー
 			player::Player* m_player = nullptr;
 
 			ItemGenerator* m_itemGenerator = nullptr;
