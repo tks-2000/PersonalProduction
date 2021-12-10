@@ -9,7 +9,7 @@ namespace mainGame {
 
 		const float FRICTION = 20.0f;
 
-		
+		const Vector3 MINI_MAP_TPS_CAMERA_UP = { 0.0f,0.0f,1.0f };
 
 		MiniMap::MiniMap()
 		{
@@ -82,7 +82,16 @@ namespace mainGame {
 			//カメラの角度からマップ画像の回転角度を求める
 			float angle = m_gameCamera->GetCameraYAngleAmount() - m_spriteAngle;
 
-			m_gameCamera->GetCameraYRot().Apply(m_mapCameraUp);
+			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
+				//m_mapCameraUp = MINI_MAP_TPS_CAMERA_UP;
+				m_gameCamera->GetCameraYRot().Apply(m_mapCameraUp);
+			}
+			else {
+				Vector3 up = m_gameCamera->GetCameraTarget() - m_gameCamera->GetCameraPos();
+				up.y = 0.0f;
+				up.Normalize();
+				m_mapCameraUp = up;
+			}
 
 			//カメラの角度との差がカメラの移動停止距離以下だったら…
 			if (angle < m_gameCamera->GetCameraMoveStopDistance()) {

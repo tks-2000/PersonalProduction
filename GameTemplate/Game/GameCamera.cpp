@@ -45,6 +45,8 @@ namespace mainGame {
 		//情報を入手
 		m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
+		m_miniMap = FindGO<map::MiniMap>(map::MINI_MAP_NAME);
+
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 
 		m_cameraFriction = TPS_CAMERA_FRICTION;
@@ -110,7 +112,7 @@ namespace mainGame {
 		TpsCameraMove();
 		TpsCameraRotation();
 
-		//RB3でかめらチェンジ
+		//RB3でカメラチェンジ
 		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB3)) {
 
 
@@ -171,6 +173,12 @@ namespace mainGame {
 			m_cameraYRot.Apply(m_targetToCameraPos);
 
 			m_cameraFriction = TPS_CAMERA_FRICTION;
+
+			Vector3 up = { 0.0f,0.0f,1.0f };
+
+			//m_cameraYRot.Apply(up);
+
+			m_miniMap->SetMapCameraUp(up);
 
 			//モードを切り替える
 			m_mode = enCameraModeTps;

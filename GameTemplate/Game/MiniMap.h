@@ -33,6 +33,8 @@ namespace mainGame {
 			/// @brief マップにモデルを書き込む
 			/// @param rc レンダリングコンテキスト
 			void MapRender(RenderContext& rc);
+
+			void SetMapCameraUp(const Vector3& up) { m_mapCameraUp = up; }
 		
 		private:
 

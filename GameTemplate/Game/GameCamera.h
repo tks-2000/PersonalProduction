@@ -2,6 +2,7 @@
 
 class Game;
 class Player;
+class MiniMap;
 
 namespace mainGame {
 
@@ -23,6 +24,9 @@ namespace mainGame {
 		bool Start();
 		void Update();
 
+		/// @brief カメラの追従目標を取得
+		/// @return カメラの追従目標のconst参照
+		const Vector3& GetCameraTarget() const { return m_cameraTarget; }
 		
 		/// @brief ゲームカメラの追従目標を設定
 		/// @param target ゲームカメラに設定する追従目標の座標
@@ -154,6 +158,7 @@ namespace mainGame {
 		/// @brief プレイヤー
 		player::Player* m_player = nullptr;
 
+		map::MiniMap* m_miniMap = nullptr;
 	};
 
 }
