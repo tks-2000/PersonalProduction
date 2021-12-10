@@ -386,6 +386,9 @@
     <ClCompile Include="RemainingBullets.cpp">
       <Filter>inGame\UI</Filter>
     </ClCompile>
+    <ClCompile Include="RepairTools.cpp">
+      <Filter>inGame\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -729,6 +732,9 @@
     </ClInclude>
     <ClInclude Include="RemainingBullets.h">
       <Filter>inGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="RepairTools.h">
+      <Filter>inGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

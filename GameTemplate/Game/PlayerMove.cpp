@@ -60,25 +60,27 @@ namespace mainGame {
 			m_LStickX = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickXF();
 			m_LStickY = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickYF();
 
-			//左スティック入力があれば…
-			if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
-				//走っていれば…
-				if (g_pad[0]->IsPress(RUN_BUTTON)) {
-					//プレイヤーを走り状態に変更
-					m_player->SetPlayerState(enPlayerRun);
-				}
-				//走っていないなら…
-				else {
-					//プレイヤーを歩き状態に変更 
-					m_player->SetPlayerState(enPlayerWark);
-				}
-			}
-			//左スティック入力が無ければ…
-			else {
-				//プレイヤーを待機状態に変更
-				m_player->SetPlayerState(enPlayerIdle);
-			}
+			if (m_player->GetPlayerStatus() != enPlayerAttack) {
 
+				//左スティック入力があれば…
+				if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
+					//走っていれば…
+					if (g_pad[0]->IsPress(RUN_BUTTON)) {
+						//プレイヤーを走り状態に変更
+						m_player->SetPlayerState(enPlayerRun);
+					}
+					//走っていないなら…
+					else {
+						//プレイヤーを歩き状態に変更 
+						m_player->SetPlayerState(enPlayerWark);
+					}
+				}
+				//左スティック入力が無ければ…
+				else {
+					//プレイヤーを待機状態に変更
+					m_player->SetPlayerState(enPlayerIdle);
+				}
+			}
 
 			//プレイヤーの状態で処理を分ける
 			switch (m_player->GetPlayerStatus())
@@ -94,6 +96,9 @@ namespace mainGame {
 				//走り
 			case enPlayerRun: {
 				MoveExecute(RUN_VEROCITY);
+			}break;
+			case enPlayerAttack: {
+				IdleExecute();
 			}break;
 				//
 			case enPlayerDamage: {

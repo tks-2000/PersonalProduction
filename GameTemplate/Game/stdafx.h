@@ -33,6 +33,7 @@
 #include "ItemSlot.h"
 #include "Item.h"
 #include "Bomb.h"
+#include "RepairTools.h"
 #include "GameUI.h"
 
 

@@ -67,6 +67,9 @@ namespace mainGame {
 				case enPlayerRun: {
 					m_playerAnimState = enPlayerAnimationRun;
 				}break;
+				case enPlayerAttack: {
+					m_playerAnimState = enPlayerAnimationClear;
+				}break;
 				case enPlayerDamage: {
 					m_playerAnimState = enPlayerAnimationIdle;
 				}break;

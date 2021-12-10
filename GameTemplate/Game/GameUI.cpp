@@ -15,7 +15,7 @@ namespace mainGame {
 
 		GameUI::~GameUI()
 		{
-			//DeleteGO(m_test);
+			
 
 			DeleteGO(m_gameEndSprite);
 
@@ -24,8 +24,7 @@ namespace mainGame {
 
 		void GameUI::Init()
 		{
-			//m_test = NewGO <render::font::FontRender>(PRIORITY_VERYLOW);
-			//m_test->Init(L"test");
+			
 
 			m_oenedItem.Init();
 
@@ -52,7 +51,6 @@ namespace mainGame {
 				return;
 			}
 
-			//m_test->Execution();
 
 			m_oenedItem.Execution();
 

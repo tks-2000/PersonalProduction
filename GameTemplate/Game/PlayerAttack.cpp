@@ -18,6 +18,10 @@ namespace {
 	const int NORMAL_MAX_BULLET_NUM = 10;
 	/// @brief 通常の弾丸の再装填時間
 	const float NORMAL_BULLET_RELOAD_TIME = 3.0f;
+	/// @brief 攻撃判定が始まるまでの時間
+	const float ATTACK_JUDGEMENT_START_TIME = 0.2f;
+	/// @brief 攻撃判定が終わるまでの時間
+	const float ATTACK_JUDGEMENT_END_TIME = 0.5f;
 }
 
 namespace mainGame {
@@ -57,7 +61,7 @@ namespace mainGame {
 			m_bulletReloadTime = NORMAL_BULLET_RELOAD_TIME;
 			m_maxBulletNum = NORMAL_MAX_BULLET_NUM;
 			m_remainingBullets = m_maxBulletNum;
-
+			m_attackPossibleMatchRate = ATTACK_POSSIBLE_MATCH_RATE;
 
 			//初期化完了
 			m_isInitd = true;
@@ -70,34 +74,88 @@ namespace mainGame {
 				return;
 			}
 
-			//Aボタンで近接攻撃
-			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA)) {
-				m_isMeleeAttackButtonHold = true;
-			}
+			//プレイヤーが攻撃状態の場合…
+			if (m_player->GetPlayerStatus() == enPlayerAttack) {
 
-			if (m_isMeleeAttackButtonHold == true) {
-				m_chargeMeleeAttackTimer += g_gameTime->GetFrameDeltaTime();
+				//当たり判定の時間を計るタイマーを進める
+				m_attackJudgementTimer += g_gameTime->GetFrameDeltaTime();
 
-				if (m_chargeMeleeAttackTimer >= m_chargeMeleeAttackTime) {
-					m_isFollCharge = true;
-				}
-
-				if (!g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA)) {
+				//当たり判定のタイマーが当たり判定の出始めの時間まで進んだら…
+				if (m_attackJudgementTimer >= ATTACK_JUDGEMENT_START_TIME) {
+					//フルチャージ状態なら…
 					if (m_isFollCharge == true) {
+						//フルチャージ近接攻撃を行う
 						ChargeMeleeAttack();
 					}
+					//フルチャージ状態でないなら…
 					else {
+						//近接攻撃を行う
 						MeleeAttack();
-						
+
 					}
-					m_isMeleeAttackButtonHold = false;
-					m_chargeMeleeAttackTimer = 0.0f;
+					//当たり判定が出ていることにする
+					m_isAttackJudgement = true;
+				}
+				//当たり判定のタイマーが当たり判定の出始めの時間まで進んでいないなら…
+				else {
+					//当たり判定が出ていないことにする
+					m_isAttackJudgement = false;
+				}
+
+				//当たり判定のタイマーが当たり判定の終了時間まで進んだら…
+				if (m_attackJudgementTimer >= ATTACK_JUDGEMENT_END_TIME) {
+					//プレイヤーを待機状態に戻す
+					m_player->SetPlayerState(enPlayerIdle);
+					//当たり判定のタイマーを元に戻す
+					m_attackJudgementTimer = 0.0f;
+					//当たり判定が出ていないことにする
+					m_isAttackJudgement = false;
+
 					m_isFollCharge = false;
 				}
 			}
-			
+
+			//Aボタンが押されていたら…
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA)) {
+				
+
+				//攻撃状態でなく攻撃ボタンが押されてなかったら…
+				if (m_player->GetPlayerStatus() != enPlayerAttack && m_isMeleeAttackButtonHold == false) {
+					//攻撃を実行
+					m_player->SetPlayerState(enPlayerAttack);
+				}
+
+				//近接攻撃ボタンが押されていることにする
+				m_isMeleeAttackButtonHold = true;
+			}
+
+			//近接攻撃ボタンが押されていたら…
+			if (m_isMeleeAttackButtonHold == true) {
+				//チャージ時間を進める
+				m_chargeMeleeAttackTimer += g_gameTime->GetFrameDeltaTime();
+
+				//チャージ時間がチャージ完了時間まで進んで攻撃中で無かったら…
+				if (m_chargeMeleeAttackTimer >= m_chargeMeleeAttackTime && m_player->GetPlayerStatus() != enPlayerAttack) {
+					//フルチャージ状態にする
+					m_isFollCharge = true;
+				}
+				//近接攻撃ボタンが離されたら…
+				if (g_pad[PLAYER1_CONTROLLER_NUM]->IsPress(enButtonA) == false) {
+					//フルチャージ状態の場合…
+					if (m_isFollCharge == true) {
+						//プレイヤーを攻撃中に変更
+						m_player->SetPlayerState(enPlayerAttack);
+					}
+					//近接攻撃ボタンが離されたことにする
+					m_isMeleeAttackButtonHold = false;
+
+					m_chargeMeleeAttackTimer = 0.0f;
+				}
+			}
+
+
 			//RB1ボタンで弾丸を発射
-			else if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB1))
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB1))
 			{
 				//残弾があれば発射
 				if (m_remainingBullets > 0) {

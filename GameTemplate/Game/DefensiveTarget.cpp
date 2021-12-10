@@ -10,6 +10,10 @@ namespace {
 	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 	/// @brief 防衛対象の最大耐久力
 	const int MAX_HP = 100;
+
+	const float HP_DECREACE_VEROCITY = 10.0f;
+
+	const float DAMAGE_STOP_AMOUNT = 0.01f;
 }
 
 namespace mainGame {
@@ -52,7 +56,6 @@ namespace mainGame {
 			//モデルの情報から当たり判定を作成
 			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
 
-			m_gameUI = FindGO<ui::GameUI>(ui::GAME_UI_NAME);
 			m_isInitd = true;
 			m_isBreak = false;
 		}
@@ -91,28 +94,47 @@ namespace mainGame {
 
 		void DefensiveTarget::ReceiveDamage(const float damage)
 		{
-			m_damageAmount += damage;
+			//現在耐久力と受けたダメージ量からダメージ後の耐久力を計算する
+			m_afterDamageHp = m_defensiveTargetHp;
+			m_afterDamageHp -= damage;
 
-			m_hpDecreaseAmount = m_damageAmount / 10.0f;
+			//ダメージ後の耐久力が0未満になったら…
+			if (m_afterDamageHp < 0.0f) {
+				//ダメージ後の耐久力を0にする
+				m_afterDamageHp = 0.0f;
+			}
+			//ダメージ後の耐久力が最大耐久力を超えたら…
+			if (m_afterDamageHp > m_defensiveTargetMaxHp) {
+				//ダメージ後の耐久力を最大耐久力にする
+				m_afterDamageHp = m_defensiveTargetMaxHp;
+			}
 
+			//ダメージを受けている状態に変更
 			m_isDamage = true;
 		}
 
 		void DefensiveTarget::ApplyDamage()
 		{
-			m_defensiveTargetHp -= m_hpDecreaseAmount;
+			//現在の耐久力とダメージ後の耐久力の差から耐久力の低下量を求める
+			float difference = m_defensiveTargetHp - m_afterDamageHp;
+			//耐久力を減らす
+			m_defensiveTargetHp -= difference * g_gameTime->GetFrameDeltaTime() * HP_DECREACE_VEROCITY;
 
-			m_damageAmount -= m_hpDecreaseAmount;
-
-			if (m_defensiveTargetHp <= 0.0f) {
-				m_defensiveTargetHp = 0.0f;
-			}
-
-			if (m_damageAmount <= 0.0f) {
+			//耐久力の低下量がダメージ停止量以下になったら…
+			if ((difference * difference) <= DAMAGE_STOP_AMOUNT) {
+				//現在の耐久力をダメージ後の耐久力に変更
+				m_defensiveTargetHp = m_afterDamageHp;
+				//ダメージ状態を終了する
 				m_isDamage = false;
 			}
 
-			m_gameUI->ApplyBaseDamage();
+			/*if (m_defensiveTargetHp <= 0.0f) {
+				m_defensiveTargetHp = 0.0f;
+			}
+			if (m_defensiveTargetHp > m_defensiveTargetMaxHp) {
+				m_defensiveTargetHp = m_defensiveTargetMaxHp;
+			}*/
+
 		}
 	}
 }

@@ -43,6 +43,12 @@ namespace mainGame {
 
 			const int GetRemainingBullets()const { return m_remainingBullets; }
 			
+			const bool IsAttackJudgement() const { return m_isAttackJudgement; }
+
+			const bool IsFollCharge() const{ return m_isFollCharge; }
+
+			const float GetAttackPossibleMatchRate() const{ return m_attackPossibleMatchRate; }
+
 		private:
 			/// @brief 近接攻撃を実行
 			void MeleeAttack();
@@ -69,6 +75,13 @@ namespace mainGame {
 			float m_attackPower = 0.0f;
 			/// @brief 攻撃可能な範囲
 			float m_attackRange = 0.0f;
+			/// @brief 攻撃可能な方向一致率
+			float m_attackPossibleMatchRate = 0.0f;
+			/// @brief 攻撃判定が出てる？
+			bool m_isAttackJudgement = false;
+			/// @brief 攻撃判定の時間を計るタイマー
+			float m_attackJudgementTimer = 0.0f;
+
 			/// @brief プレイヤークラス
 			Player* m_player = nullptr;
 			/// @brief 敵クラスの情報をまとめた配列

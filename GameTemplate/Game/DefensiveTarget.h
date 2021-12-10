@@ -3,10 +3,6 @@ class SkinModelRender;
 
 namespace mainGame {
 
-	namespace ui {
-		class GameUI;
-	}
-
 	namespace defensiveTarget {
 		/// @brief 防衛対象の機能をまとめたクラス
 		class DefensiveTarget : public IGameObject
@@ -31,13 +27,20 @@ namespace mainGame {
 			/// @return 防衛対象の残り耐久力
 			const float GetDefensiveTargetHp() const { return m_defensiveTargetHp; }
 
+			/// @brief 防衛対象の最大耐久力を取得
+			/// @return 防衛対象の最大耐久力
 			const float GetDefensiveTargetMaxHp() const { return m_defensiveTargetMaxHp; }
 
 			/// @brief 防衛対象が破壊されたか？
 			/// @return trueで破壊された falseで破壊されていない
 			bool IsBreak() { return m_isBreak; }
+
+			/// @brief 防衛対象がダメージを受けたか？
+			/// @return trueで受けている falseで受けていない
+			bool IsDamage() { return m_isDamage; }
 		private:
 
+			/// @brief ダメージを受ける
 			void ApplyDamage();
 
 			/// @brief 初期化フラグ
@@ -52,8 +55,8 @@ namespace mainGame {
 			float m_defensiveTargetMaxHp = 0.0f;
 			/// @brief 耐久力低下量
 			float m_hpDecreaseAmount = 0.0f;
-			/// @brief 実際に受けたダメージ量
-			float m_damageAmount = 0.0f;
+			/// @brief ダメージ後の体力
+			float m_afterDamageHp = 0.0f;
 
 			/// @brief ダメージフラグ
 			bool m_isDamage = false;
@@ -67,8 +70,6 @@ namespace mainGame {
 
 			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticDefensiveTargetObject;
-
-			ui::GameUI* m_gameUI = nullptr;
 		};
 	}
 }

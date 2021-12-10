@@ -22,6 +22,8 @@ namespace mainGame {
 			enPlayerWark,
 			/// @brief 走る
 			enPlayerRun,
+			/// @brief 攻撃している
+			enPlayerAttack,
 			/// @brief ダメージ
 			enPlayerDamage,
 			/// @brief プレイヤーのステータスの合計数
@@ -83,13 +85,34 @@ namespace mainGame {
 			/// @return trueで追加できた falseで追加出来なかった
 			bool SetItemSlot(item::Item* item) { return m_itemSlot.SetItem(item); }
 
+			/// @brief 現在選択しているアイテムスロット番号を入手
+			/// @return 現在選択しているアイテムスロット番号
 			const int GetSelectSlotNum()const { return m_itemSlot.GetSelectSlotNum(); }
 
+			/// @brief スロットにアイテムを持っているか調べる
+			/// @param slotNum 調べるアイテムスロット番号
+			/// @return 持っていればtrue 持っていなければfalse
 			const bool IsOwnedItem(const int slotNum) const { return m_itemSlot.IsOwnedItem(slotNum); }
 
+			/// @brief 残弾数を取得
+			/// @return プレイヤーの残弾数
 			const int GetRemainingBullet() { return m_playerAttack.GetRemainingBullets(); }
 
+			/// @brief 弾丸のデータを入手
+			/// @return 弾丸の配列のアドレス
 			std::vector <Bullet*>* GetBulletData() { return m_playerAttack.GetBullets(); }
+
+			/// @brief プレイヤーに攻撃判定が出ているか調べる
+			/// @return trueで出ている falseで出ていない
+			const bool IsAttackJudgement() const { return m_playerAttack.IsAttackJudgement(); }
+
+			/// @brief プレイヤーがフルチャージ状態か調べる
+			/// @return trueでフルチャージ状態 falseでフルチャージ状態ではない
+			const bool IsFollCharge() const { return m_playerAttack.IsFollCharge(); }
+
+			/// @brief 攻撃可能な方向一致率を取得
+			/// @return 攻撃可能な方向一致率
+			const float GetAttackPossibleMatchRate() const { return m_playerAttack.GetAttackPossibleMatchRate(); }
 
 			/// @brief 実行
 			void Execution();

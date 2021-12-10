@@ -2,36 +2,37 @@
 
 namespace mainGame {
 	namespace ui {
+
+		/// @brief –h‰q‘ÎÛ‚Ì‘Ï‹v—Í‚ğ•\¦‚·‚éƒNƒ‰ƒX
 		class BaseEndurance
 		{
 		public:
 			BaseEndurance();
 			~BaseEndurance();
+			/// @brief ‰Šú‰»
 			void Init();
+
+			/// @brief Às
 			void Execution();
 
-			void SetDamage();
+			/// @brief ƒ_ƒ[ƒW‚ğ“K—p
 			void ApplyDamage();
 		private:
-
-			
-
+			/// @brief ‰Šú‰»ƒtƒ‰ƒO
 			bool m_isInitd = false;
 
-			bool m_hpDown = false;
-
+			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œˆÊ’u
 			Vector3 m_enduranceSpritePos = g_vec3Zero;
-
+			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ‚ÌŠg‘å—¦
 			Vector3 m_enduranceSpriteScale = g_vec3One;
-
-			float m_enduranceDeclineAmount = 0.0f;
-
+			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ‚ÌƒJƒ‰[
 			Vector4 m_enduranceSpriteColor = g_vec4White;
-
+			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceSprite = nullptr;
-
+			/// @brief ‘Ï‹v—Í‚Ì‰º’n‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceBaseSprite = nullptr;
 
+			/// @brief –h‰q‘ÎÛ
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 
 		};
