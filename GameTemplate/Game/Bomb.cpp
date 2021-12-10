@@ -133,7 +133,7 @@ namespace mainGame {
 
 		void Bomb::PlayerMeleeAttackCollision()
 		{
-			//プレイヤーが当たり判定を出していなかったら…
+			//プレイヤーが攻撃判定を出していなかったら…
 			if (m_player->IsAttackJudgement() == false) {
 				//処理を終わる
 				return;

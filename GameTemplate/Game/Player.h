@@ -57,7 +57,11 @@ namespace mainGame {
 			/// @param pos 設定するプレイヤーの座標 
 			void SetPlayerPosition(const Vector3& pos) { m_position = pos; }
 
+			const Vector3& GetMoveSpeed() { return m_playerMove.GetMoveSpssd(); }
+
 			void SetMoveSpeed(const Vector3& speed) { m_playerMove.SetMoveSpeed(speed); }
+
+			void SetAddVerocity(const float addVerocity) { m_playerMove.SetAddVerocity(addVerocity); }
 
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
 

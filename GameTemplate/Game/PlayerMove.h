@@ -35,6 +35,8 @@ namespace mainGame {
 			const Vector3& GetMoveSpssd() { return m_moveSpeed; }
 
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
+
+			void SetAddVerocity(const float addVerocity) { m_addVerocity = addVerocity; }
 		private:
 
 			/// @brief 摩擦力を適用
@@ -50,6 +52,8 @@ namespace mainGame {
 			float m_LStickY = 0.0f;
 			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
+			/// @brief 加算速度
+			float m_addVerocity = 0.0f;
 			/// @brief 移動速度
 			Vector3 m_moveSpeed = g_vec3Zero;
 			/// @brief 移動方向

@@ -91,11 +91,11 @@ namespace mainGame {
 			}break;
 				//•à‚«
 			case enPlayerWark: {
-				MoveExecute(WARK_VEROCITY);
+				MoveExecute(WARK_VEROCITY + m_addVerocity);
 			}break;
 				//‘–‚è
 			case enPlayerRun: {
-				MoveExecute(RUN_VEROCITY);
+				MoveExecute(RUN_VEROCITY + m_addVerocity);
 			}break;
 			case enPlayerAttack: {
 				IdleExecute();

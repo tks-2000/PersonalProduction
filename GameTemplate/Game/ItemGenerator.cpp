@@ -40,7 +40,7 @@ namespace mainGame {
 
 		void ItemGenerator::SpawnItem(const Vector3& pos)
 		{
-			m_items.push_back(NewGO<Bomb>(PRIORITY_VERYLOW));
+			m_items.push_back(NewGO<NutritionDrink>(PRIORITY_VERYLOW));
 
 			m_items[m_items.size() - 1]->Init(this);
 

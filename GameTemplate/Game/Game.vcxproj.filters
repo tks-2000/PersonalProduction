@@ -389,6 +389,9 @@
     <ClCompile Include="RepairTools.cpp">
       <Filter>inGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="NutritionDrink.cpp">
+      <Filter>inGame\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -734,6 +737,9 @@
       <Filter>inGame\UI</Filter>
     </ClInclude>
     <ClInclude Include="RepairTools.h">
+      <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="NutritionDrink.h">
       <Filter>inGame\Item</Filter>
     </ClInclude>
   </ItemGroup>

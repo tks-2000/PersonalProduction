@@ -34,6 +34,7 @@
 #include "Item.h"
 #include "Bomb.h"
 #include "RepairTools.h"
+#include "NutritionDrink.h"
 #include "GameUI.h"
 
 

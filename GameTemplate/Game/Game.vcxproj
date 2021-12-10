@@ -310,6 +310,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemGenerator.cpp" />
     <ClCompile Include="ItemSlot.cpp" />
+    <ClCompile Include="NutritionDrink.cpp" />
     <ClCompile Include="OwnedItem.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="main.cpp" />
@@ -434,6 +435,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemGenerator.h" />
     <ClInclude Include="ItemSlot.h" />
+    <ClInclude Include="NutritionDrink.h" />
     <ClInclude Include="OwnedItem.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="MiniMap.h" />
