@@ -8,12 +8,6 @@ namespace mainGame {
 
 		class ItemGenerator;
 
-		enum EnItemType {
-			enItemBomb,
-
-			enItemNum
-		};
-
 		/// @brief アイテムの基底クラス
 		class Item : public IGameObject
 		{

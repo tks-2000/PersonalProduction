@@ -41,7 +41,7 @@ namespace mainGame {
 		void Bomb::InitData()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/sphere/sphere.tkm");
+			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 

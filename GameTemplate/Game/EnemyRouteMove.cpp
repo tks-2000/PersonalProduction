@@ -14,6 +14,7 @@ namespace mainGame {
 		/// @brief ‘¬“x
 		const float NORMAL_VEROCITY = 25.0f;
 
+		const float GRAVITY = 100.0f;
 
 		RouteMove::RouteMove()
 		{
@@ -108,6 +109,8 @@ namespace mainGame {
 
 			m_moveSpeed -= m_moveSpeed * m_friction;
 
+			ApplyGravity();
+
 			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 		}
 
@@ -144,7 +147,7 @@ namespace mainGame {
 			
 			m_moveSpeed -= m_moveSpeed * m_friction;
 			
-			
+			ApplyGravity();
 			
 			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime()));
 
@@ -159,7 +162,14 @@ namespace mainGame {
 		{
 			m_moveSpeed -= m_moveSpeed * m_friction;
 
+			ApplyGravity();
+
 			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
+		}
+
+		void RouteMove::ApplyGravity()
+		{
+			m_moveSpeed.y -= GRAVITY;
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace mainGame {
 		Generator::~Generator()
 		{
 			for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
-				m_enemys[enemyNum]->DeleteEnemy();
+				DeleteGO(m_enemys[enemyNum]);
 			}
 
 			m_enemys.clear();

@@ -28,7 +28,7 @@ namespace mainGame {
 		void NutritionDrink::InitData()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/sphere/sphere.tkm");
+			m_itemModel->Init("Assets/modelData/item/item_speedup.tkm");
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 

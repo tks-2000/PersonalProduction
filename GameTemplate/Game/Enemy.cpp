@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "Enemy.h"
 
-namespace {
-	
-	
-}
-
 namespace mainGame {
 	namespace enemy {
 
@@ -58,32 +53,8 @@ namespace mainGame {
 			//初期座標を設定
 			m_position = initData.enemyStartPos;
 
-			//体力
-			m_hp = MAX_HP;
 
-			//メンバクラスを初期化
-			//m_enemyMove.Init(this);
-			m_enemyRouteMove.Init(this);
-			m_enemyRotation.Init(this);
-			m_enemyAttack.Init(this);
-			m_enemyAnimation.Init(this);
-
-			//モデルをアニメーション有りで初期化
-			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyModel->Init(
-				ENEMY_MODEL_TKM_FILEPATH[initData.enemyType],
-				render::model::enMainRenderTarget,
-				ENEMY_MODEL_TKS_FILEPATH,
-				m_enemyAnimation.GetAnimationClip(),
-				m_enemyAnimation.GetAnimationNum(),
-				enModelUpAxisY
-			);
-			m_enemyModel->CreateShadow();
-
-			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
-			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
-
+			InitData(initData);
 
 			m_game = FindGO<Game>(GAME_NAME);
 			//敵生成器の情報を入手
@@ -100,6 +71,8 @@ namespace mainGame {
 			m_isInitd = true;
 		}
 
+		
+
 		void Enemy::Execution()
 		{
 			//未初期化なら実行しない
@@ -107,30 +80,13 @@ namespace mainGame {
 				return;
 			}
 
-			switch (m_game->GetGameState())
-			{
-			case enGameStart: {
-				
-			}break;
-			case enGameInProgress: {
-				m_enemyRouteMove.Execution();
-				m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
-				m_enemyAttack.Execution();
-				if (m_state == enEnemyDown) {
-					DownExecution();
-				}
-
-			}break;
-			case enGameClear: {
-				
-			}break;
-			case enGameOver: {
-				
-			}break;
-			default:
-				break;
+			if (m_defeatFlag == true) {
+				DeleteEnemy();
+				return;
 			}
 
+			ExecuteBehavior();
+		
 			//アニメーションを進める
 			m_enemyAnimation.AnimationUpdate();
 
@@ -159,6 +115,8 @@ namespace mainGame {
 			}
 		}
 
+		
+
 		void Enemy::ReceiveDamage(const int damage)
 		{
 			//ダメージを受ける
@@ -175,8 +133,70 @@ namespace mainGame {
 		void Enemy::DeleteEnemy()
 		{
 			//生成器に削除を伝える
-			//m_generator->DeleteEnemy(this);
+			m_generator->DeleteEnemy(this);
+			m_player->DeleteEnemyData(this);
+			//自身を削除
 			DeleteGO(this);
+		}
+
+		void Enemy::InitData(const EnemyInitData& initData)
+		{
+			//体力
+			m_hp = MAX_HP;
+
+			//削除時間
+			m_deleteTime = DELETE_TIME;
+
+			//メンバクラスを初期化
+			//m_enemyMove.Init(this);
+			m_enemyRouteMove.Init(this);
+			m_enemyRotation.Init(this);
+			m_enemyAttack.Init(this);
+			m_enemyAnimation.Init(this);
+
+			//モデルをアニメーション有りで初期化
+			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_enemyModel->Init(
+				ENEMY_MODEL_TKM_FILEPATH[initData.enemyType],
+				render::model::enMainRenderTarget,
+				ENEMY_MODEL_TKS_FILEPATH,
+				m_enemyAnimation.GetAnimationClip(),
+				m_enemyAnimation.GetAnimationNum(),
+				enModelUpAxisY
+			);
+			m_enemyModel->CreateShadow();
+
+			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
+		}
+
+		void Enemy::ExecuteBehavior()
+		{
+			switch (m_game->GetGameState())
+			{
+			case enGameStart: {
+
+			}break;
+			case enGameInProgress: {
+				m_enemyRouteMove.Execution();
+				m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
+				m_enemyAttack.Execution();
+				if (m_state == enEnemyDown) {
+					DownExecution();
+				}
+
+			}break;
+			case enGameClear: {
+
+			}break;
+			case enGameOver: {
+
+			}break;
+			default:
+				break;
+			}
+
 		}
 
 		void Enemy::DownExecution()
@@ -185,12 +205,8 @@ namespace mainGame {
 			m_deleteTimer += g_gameTime->GetFrameDeltaTime();
 
 			//削除時間に達したら…
-			if (m_deleteTimer > DELETE_TIME) {
-				//生成器に削除を伝える
-				m_generator->DeleteEnemy(this);
-				m_player->DeleteEnemyData(this);
-				//自身を削除
-				DeleteGO(this);
+			if (m_deleteTimer >= m_deleteTime) {
+				m_defeatFlag = true;
 			}
 		}
 

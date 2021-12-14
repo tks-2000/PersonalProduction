@@ -15,7 +15,7 @@ namespace mainGame {
 		void RepairTools::InitData()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/sphere/sphere.tkm");
+			m_itemModel->Init("Assets/modelData/item/item_guardup.tkm");
 
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 

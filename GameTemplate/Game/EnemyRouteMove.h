@@ -41,7 +41,12 @@ namespace mainGame {
 
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 
+			
+
 		private:
+
+			void ApplyGravity();
+
 			bool m_isInitd = false;
 			/// @brief ˆÚ“®‘¬“x
 			Vector3 m_moveSpeed = g_vec3Zero;

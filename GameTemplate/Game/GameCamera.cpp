@@ -176,8 +176,6 @@ namespace mainGame {
 
 			Vector3 up = { 0.0f,0.0f,1.0f };
 
-			//m_cameraYRot.Apply(up);
-
 			m_miniMap->SetMapCameraUp(up);
 
 			//ƒ‚[ƒh‚ğØ‚è‘Ö‚¦‚é

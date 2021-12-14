@@ -48,8 +48,12 @@ namespace mainGame {
 			/// @param initData 敵の初期化情報
 			void Init(const EnemyInitData& initData);
 
+			
+
 			/// @brief 実行
 			void Execution();
+
+			
 
 			/// @brief 座標を入手
 			/// @return 敵の座標のconst参照
@@ -83,10 +87,21 @@ namespace mainGame {
 			/// @return 敵に設定されている種類
 			const EnEnemyType& GetEnemyType() { return m_enemyType; }
 
+			const float GetDeleteTime() const { return m_deleteTime; }
+
+			const bool IsDefeat() { return m_defeatFlag; }
+
 			/// @brief 削除
 			void DeleteEnemy();
 
 		private:
+
+			/// @brief 個別の情報を初期化
+			/// @param initData 初期化情報
+			virtual void InitData(const EnemyInitData& initData);
+
+			/// @brief 個別の行動を実行
+			virtual void ExecuteBehavior();
 
 			/// @brief 倒された時の処理
 			void DownExecution();
@@ -128,6 +143,10 @@ namespace mainGame {
 			int m_enemyNum = 0;
 			/// @brief ダウンしてから自身が削除されるまでの時間
 			float m_deleteTimer = 0.0;
+
+			float m_deleteTime = 0.0f;
+
+			bool m_defeatFlag = false;
 			/// @brief 敵生成器の情報
 			Generator* m_generator = nullptr;
 
