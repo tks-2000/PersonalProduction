@@ -16,6 +16,10 @@ namespace mainGame {
 
 		const float GRAVITY = 100.0f;
 
+		const float MOVE_STOP_DISTANCE = 200.0f;
+
+		const float MOVE_STOP_ANGLE_MATCH_RATE = 0.0f;
+
 		RouteMove::RouteMove()
 		{
 
@@ -45,6 +49,8 @@ namespace mainGame {
 
 			m_friction = NORMAL_FRICTION;
 
+			m_moveStopDistance = MOVE_STOP_DISTANCE;
+
 			m_isInitd = true;
 		}
 
@@ -61,8 +67,6 @@ namespace mainGame {
 				ENEMY_COLLISION_RADIUS,
 				ENEMY_COLLISION_HEIGHT
 			);
-
-			m_enemy->SetState(enEnemyMove);
 		}
 
 		void RouteMove::Execution()
@@ -85,6 +89,9 @@ namespace mainGame {
 			case enEnemyDamage: {
 				IdleExecution();
 			}break;
+			case enEnemySeeTheSituation: {
+				StopExecution();
+			}break;
 			case enEnemyDown: {
 				StopExecution();
 			}break;
@@ -92,7 +99,7 @@ namespace mainGame {
 				break;
 			}
 
-			m_moveVerocity += 0.01f;
+			//m_moveVerocity += 0.01f;
 		}
 
 		void RouteMove::IdleExecution()
@@ -104,6 +111,7 @@ namespace mainGame {
 			if (m_moveStartTimer > ENEMY_MOVE_START_TIME) {
 				RouteSearch();
 				m_moveStartTimer = 0.0f;
+				m_enemy->SetState(enEnemyMove);
 				return;
 			}
 
@@ -122,9 +130,18 @@ namespace mainGame {
 
 			m_targetDistance = m_toTarget.Length();
 
-			if (m_targetDistance < 200.0f) {
-				m_enemy->SetState(enEnemyAttack);
-				return;
+			if (m_targetDistance < m_moveStopDistance) {
+
+				Vector3 targetDirection = m_toTarget;
+
+				targetDirection.Normalize();
+
+				float rate = Dot(targetDirection, m_enemy->GetDirection());
+
+				if (rate >= MOVE_STOP_ANGLE_MATCH_RATE) {
+					m_enemy->SetState(enEnemyAttack);
+					return;
+				}
 			}
 
 			bool isEnd = false;

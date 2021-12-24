@@ -22,6 +22,8 @@ namespace mainGame {
 			m_playerAnimationClip[enPlayerAnimationRun].SetLoopFlag(true);
 			m_playerAnimationClip[enPlayerAnimationClear].Load("Assets/animData/unityChan/clear.tka");
 			m_playerAnimationClip[enPlayerAnimationClear].SetLoopFlag(false);
+			m_playerAnimationClip[enPlayerAnimationDamage].Load("Assets/animData/unityChan/damage.tka");
+			m_playerAnimationClip[enPlayerAnimationDamage].SetLoopFlag(false);
 			m_playerAnimationClip[enPlayerAnimationKneelDown].Load("Assets/animData/unityChan/KneelDown.tka");
 			m_playerAnimationClip[enPlayerAnimationKneelDown].SetLoopFlag(false);
 		}
@@ -71,7 +73,7 @@ namespace mainGame {
 					m_playerAnimState = enPlayerAnimationClear;
 				}break;
 				case enPlayerDamage: {
-					m_playerAnimState = enPlayerAnimationIdle;
+					m_playerAnimState = enPlayerAnimationDamage;
 				}break;
 				default:
 					break;

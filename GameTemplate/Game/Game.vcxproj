@@ -289,11 +289,13 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TkmFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
+    <ClCompile Include="EnemyAttackThePlayer.cpp" />
     <ClCompile Include="BaseEndurance.cpp" />
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BSP.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Chaser.cpp" />
     <ClCompile Include="DefensiveTarget.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAnimation.cpp" />
@@ -349,6 +351,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TknFile.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Walker.cpp" />
     <ClCompile Include="WaveFile.cpp" />
     <ClCompile Include="WaveFileBank.cpp" />
   </ItemGroup>
@@ -413,11 +416,13 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
+    <ClInclude Include="EnemyAttackThePlayer.h" />
     <ClInclude Include="BaseEndurance.h" />
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="BSP.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Chaser.h" />
     <ClInclude Include="DefensiveTarget.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyAnimation.h" />
@@ -467,6 +472,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TknFile.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Walker.h" />
     <ClInclude Include="WaveFile.h" />
     <ClInclude Include="WaveFileBank.h" />
   </ItemGroup>

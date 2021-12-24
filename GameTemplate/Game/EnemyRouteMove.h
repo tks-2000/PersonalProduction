@@ -41,8 +41,9 @@ namespace mainGame {
 
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 
-			
+			void SetMoveTarget(const Vector3& target) { m_moveTarget = target; RouteSearch(); }
 
+			void SetMoveStopDistance(const float stopDistance) { m_moveStopDistance = stopDistance; }
 		private:
 
 			void ApplyGravity();
@@ -64,6 +65,8 @@ namespace mainGame {
 			float m_targetDistance = 0.0f;
 			/// @brief 移動開始するまでの時間
 			float m_moveStartTimer = 0.0f;
+			/// @brief 移動を終了する距離
+			float m_moveStopDistance = 0.0f;
 			/// @brief キャラクターコントローラー
 			CharacterController m_charaCon;
 			/// @brief 敵クラス

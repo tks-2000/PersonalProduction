@@ -118,14 +118,18 @@ namespace mainGame {
 			/// @return UŒ‚‰Â”\‚È•ûŒüˆê’v—¦
 			const float GetAttackPossibleMatchRate() const { return m_playerAttack.GetAttackPossibleMatchRate(); }
 
+			/// @brief –³“Gó‘Ô‚©H
+			/// @return true‚Å–³“G false‚Å–³“G‚Å‚È‚¢
+			bool IsInvincible() const { return m_invincibleFlag; }
+
 			/// @brief Às
 			void Execution();
 
 		private:
-			void GameStartExecution();
-			void GameInProgressExecution();
-			void GameClearExecution();
-			void GameOverExecution();
+			
+			void DamageExecution();
+
+			void InvincibleExecution();
 
 			bool m_isInitd = false;
 			/// @brief À•W
@@ -148,6 +152,12 @@ namespace mainGame {
 			Attack m_playerAttack;
 
 			ItemSlot m_itemSlot;
+
+			float m_damageTimer = 0.0f;
+
+			bool m_invincibleFlag = false;
+
+			float m_invincibleTimer = 0.0f;
 
 			Game* m_game = nullptr;
 		};

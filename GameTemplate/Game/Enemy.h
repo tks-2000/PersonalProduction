@@ -31,6 +31,8 @@ namespace mainGame {
 			enEnemyAttack,
 			/// @brief ダメージ中・しばらく動けない
 			enEnemyDamage,
+			/// @brief 様子を見る・その場で辺りを見回す
+			enEnemySeeTheSituation,
 			/// @brief 倒された・変更がない限り動かない
 			enEnemyDown,
 			/// @brief ステータスの合計数
@@ -42,18 +44,14 @@ namespace mainGame {
 		{
 		public:
 			Enemy();
-			~Enemy();
+			virtual ~Enemy();
 
 			/// @brief 初期化
 			/// @param initData 敵の初期化情報
 			void Init(const EnemyInitData& initData);
 
-			
-
 			/// @brief 実行
 			void Execution();
-
-			
 
 			/// @brief 座標を入手
 			/// @return 敵の座標のconst参照
@@ -65,7 +63,13 @@ namespace mainGame {
 
 			/// @brief 移動速度を設定
 			/// @param speed 設定する移動速度
-			void SetMoveSpeed(const Vector3& speed) { m_enemyRouteMove.SetMoveSpeed(speed); }
+			virtual void SetMoveSpeed(const Vector3& speed);
+
+			virtual const Vector3& GetMoveSpeed() const { return g_vec3Zero; }
+
+			const Vector3& GetDirection() { return m_enemyRotation.GetDirection(); };
+
+			void SetRotation(const Quaternion qRot) { m_qRot = qRot; }
 
 			/// @brief ダメージを受ける
 			/// @param damage 受けるダメージ量
@@ -94,7 +98,7 @@ namespace mainGame {
 			/// @brief 削除
 			void DeleteEnemy();
 
-		private:
+		protected:
 
 			/// @brief 個別の情報を初期化
 			/// @param initData 初期化情報
@@ -106,10 +110,7 @@ namespace mainGame {
 			/// @brief 倒された時の処理
 			void DownExecution();
 
-			void GameStartExecution();
-			void GameInProgressExecution();
-			void GameClearExecution();
-			void GameOverExecution();
+			
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
@@ -124,13 +125,13 @@ namespace mainGame {
 			/// @brief 敵の移動
 			//Move m_enemyMove;
 
-			RouteMove m_enemyRouteMove;
+			//RouteMove m_enemyRouteMove;
 			/// @brief 敵の回転
 			Rotation m_enemyRotation;
 			/// @brief 敵の攻撃
-			Attack m_enemyAttack;
+			//Attack m_enemyAttack;
 			/// @brief 敵のアニメーション
-			Animation m_enemyAnimation;
+			//Animation m_enemyAnimation;
 			/// @brief 自分の種類を表す列挙型
 			EnEnemyType m_enemyType = enEnemyTypeNum;
 			/// @brief 状態を表すステート

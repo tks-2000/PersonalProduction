@@ -392,6 +392,15 @@
     <ClCompile Include="NutritionDrink.cpp">
       <Filter>inGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Chaser.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAttackThePlayer.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -741,6 +750,15 @@
     </ClInclude>
     <ClInclude Include="NutritionDrink.h">
       <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Chaser.h">
+      <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAttackThePlayer.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

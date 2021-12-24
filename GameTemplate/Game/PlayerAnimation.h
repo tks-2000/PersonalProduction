@@ -14,6 +14,7 @@ namespace mainGame {
 			enPlayerAnimationWark,	//ï‡Ç´
 			enPlayerAnimationRun,
 			enPlayerAnimationClear,
+			enPlayerAnimationDamage,
 			enPlayerAnimationKneelDown,
 			enPlayerAnimationNum	//çáåvêî
 		};

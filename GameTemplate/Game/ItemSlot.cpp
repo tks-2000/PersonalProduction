@@ -14,14 +14,19 @@ namespace mainGame {
 
 		}
 
-		void ItemSlot::Init()
+		void ItemSlot::Init(Player* player)
 		{
+			m_player = player;
 			m_isInitd = true;
 		}
 
 		void ItemSlot::Execution()
 		{
 			if (m_isInitd == false) {
+				return;
+			}
+
+			if (m_player->GetPlayerStatus() == enPlayerDamage) {
 				return;
 			}
 

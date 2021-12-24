@@ -85,7 +85,7 @@ namespace nsAI {
 			return;
 		}
 
-		int skipCellCount = cellList.size() - 1;
+		int skipCellCount = static_cast<int>(cellList.size() - 1);
 		while (skipCellCount > 2) {
 			// セルの数が３以上なら、パスの可視判定を行って、不要なセルを除外していく。
 			// レイの始点となるセル。

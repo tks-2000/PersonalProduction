@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "EnemyGenerator.h"
+#include "Walker.h"
+#include "Chaser.h"
 #include <random>
 
 namespace mainGame {
@@ -61,9 +63,9 @@ namespace mainGame {
 
 			//初期配置
 			CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
-			CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
+			//CreateEnemy(enEnemyTypePowerful, m_spawnPos[1]);
 			//CreateEnemy(enEnemyTypeNormal, m_spawnPos[3]);
-			CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
+			//CreateEnemy(enEnemyTypeFast, m_spawnPos[2]);
 
 			m_spawnInterval = MAX_SPAWN_INTERVAL;
 
@@ -104,7 +106,7 @@ namespace mainGame {
 				num %= enEnemyTypeNum;
 				num2 %= SPAWN_POS_NUM;
 
-				CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
+				//CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
 
 				m_spawnTimer = 0.0f;
 			}
@@ -115,7 +117,7 @@ namespace mainGame {
 				m_spawnInterval = MIN_SPAWN_INTERVAL;
 			}
 			else {
-				m_spawnInterval -= g_gameTime->GetFrameDeltaTime() / 20.0f;
+				m_spawnInterval -= g_gameTime->GetFrameDeltaTime() / 30.0f;
 			}
 
 			//出現している敵の数だけ実行する
@@ -157,7 +159,25 @@ namespace mainGame {
 
 
 			//敵を生成
-			m_enemys.push_back(NewGO<Enemy>(PRIORITY_VERYLOW));
+			std::random_device rand;
+
+			int rand1 = rand();
+
+			if (rand1 < 0) {
+				rand1 *= -1;
+			}
+
+			/*switch (rand1 % 2)
+			{
+			case 1: {
+				m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
+			}break;
+			default: {
+				m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
+			}break;
+			}*/
+
+			m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
 
 			//ランダムな数値から敵のパラメーターを決定
 			std::random_device rnd;

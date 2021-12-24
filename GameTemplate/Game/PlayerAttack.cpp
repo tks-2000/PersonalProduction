@@ -49,6 +49,7 @@ namespace mainGame {
 			if (m_isInitd == true) {
 				return;
 			}
+			
 
 			//î•ñ‚ð“üŽè
 			m_player = pl;
@@ -71,6 +72,13 @@ namespace mainGame {
 		{
 			//–¢‰Šú‰»‚È‚çŽÀs‚µ‚È‚¢
 			if (m_isInitd == false) {
+				return;
+			}
+
+			if (m_player->GetPlayerStatus() == enPlayerDamage) {
+				m_isAttackJudgement = false;
+				m_attackJudgementTimer = 0.0f;
+				m_isFollCharge = false;
 				return;
 			}
 

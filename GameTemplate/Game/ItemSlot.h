@@ -15,7 +15,7 @@ namespace mainGame {
 			~ItemSlot();
 
 			/// @brief èâä˙âª
-			void Init();
+			void Init(Player* player);
 
 			/// @brief é¿çs
 			void Execution();
@@ -54,6 +54,8 @@ namespace mainGame {
 			int m_selectNo = 0;
 
 			item::Item* m_items[MAX_ITEM_NUM] = { nullptr };
+
+			Player* m_player = nullptr;
 		};
 
 	}

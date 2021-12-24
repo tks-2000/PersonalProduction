@@ -62,6 +62,9 @@ namespace mainGame {
 				case enEnemyDamage: {
 					m_state = enEnemyAnimationDamage;
 				}break;
+				case enEnemySeeTheSituation: {
+					m_state = enEnemyAnimationIdle;
+				}break;
 				case enEnemyDown: {
 					m_state = enEnemyAnimationKneelDown;
 				}break;

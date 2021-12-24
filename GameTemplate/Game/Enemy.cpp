@@ -5,21 +5,22 @@ namespace mainGame {
 	namespace enemy {
 
 		/// @brief 敵モデルのファイルパス
-		const char* ENEMY_MODEL_TKM_FILEPATH[enEnemyTypeNum] = {
+		/*const char* ENEMY_MODEL_TKM_FILEPATH[enEnemyTypeNum] = {
 			"Assets/modelData/unityChan/utc_green.tkm",
 			"Assets/modelData/unityChan/utc_red.tkm",
 			"Assets/modelData/unityChan/utc_blue.tkm"
-		};
+		};*/
 
-		const char* ENEMY_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
+		//const char* ENEMY_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
 
 
 		/// @brief 敵モデルのスケルトンファイルパス
-		const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+		//const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
 		/// @brief 敵の最大体力
-		const int MAX_HP = 3;
+		//const int MAX_HP = 3;
+
 		/// @brief アニメーション補完率
-		const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
+		//const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 		/// @brief 削除されるまでの時間
 		const float DELETE_TIME = 5.0f;
 
@@ -88,7 +89,7 @@ namespace mainGame {
 			ExecuteBehavior();
 		
 			//アニメーションを進める
-			m_enemyAnimation.AnimationUpdate();
+			//m_enemyAnimation.AnimationUpdate();
 
 			//モデルに更新された情報を伝える
 			m_enemyModel->SetPosition(m_position);
@@ -99,7 +100,7 @@ namespace mainGame {
 
 			m_enemyMapModel->SetRotation(m_qRot);
 
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+			//m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
 
 			m_enemyModel->Execution();
 
@@ -115,12 +116,18 @@ namespace mainGame {
 			}
 		}
 
+		void Enemy::SetMoveSpeed(const Vector3& speed)
+		{
+			//m_enemyRouteMove.SetMoveSpeed(speed);
+		}
 		
 
 		void Enemy::ReceiveDamage(const int damage)
 		{
 			//ダメージを受ける
 			m_hp -= damage;
+
+			//m_enemyRotation.StartSeeTheSituation();
 
 			//体力が0以下になったら
 			if (m_hp <= 0) {
@@ -142,33 +149,29 @@ namespace mainGame {
 		void Enemy::InitData(const EnemyInitData& initData)
 		{
 			//体力
-			m_hp = MAX_HP;
+			m_hp = 0;
 
 			//削除時間
 			m_deleteTime = DELETE_TIME;
 
 			//メンバクラスを初期化
 			//m_enemyMove.Init(this);
-			m_enemyRouteMove.Init(this);
+			//m_enemyRouteMove.Init(this);
 			m_enemyRotation.Init(this);
-			m_enemyAttack.Init(this);
-			m_enemyAnimation.Init(this);
+			//m_enemyAttack.Init(this);
+			//m_enemyAnimation.Init(this);
 
-			//モデルをアニメーション有りで初期化
+			//モデルを初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
-				ENEMY_MODEL_TKM_FILEPATH[initData.enemyType],
-				render::model::enMainRenderTarget,
-				ENEMY_MODEL_TKS_FILEPATH,
-				m_enemyAnimation.GetAnimationClip(),
-				m_enemyAnimation.GetAnimationNum(),
-				enModelUpAxisY
+				"Assets/modelData/unityChan/utc_green.tkm",
+				render::model::enMainRenderTarget
 			);
 			m_enemyModel->CreateShadow();
 
 			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
-			m_enemyMapModel->Init(ENEMY_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
+			m_enemyMapModel->Init("Assets/modelData/miniMap/enemyMapModel.tkm", render::model::enExpandModelGroup1);
 		}
 
 		void Enemy::ExecuteBehavior()
@@ -179,9 +182,9 @@ namespace mainGame {
 
 			}break;
 			case enGameInProgress: {
-				m_enemyRouteMove.Execution();
-				m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
-				m_enemyAttack.Execution();
+				//m_enemyRouteMove.Execution();
+				//m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
+				//m_enemyAttack.Execution();
 				if (m_state == enEnemyDown) {
 					DownExecution();
 				}
@@ -210,62 +213,6 @@ namespace mainGame {
 			}
 		}
 
-		void Enemy::GameStartExecution()
-		{
-			
-		}
-
-		void Enemy::GameInProgressExecution()
-		{
-			//自分のステートによって処理を分ける
-			switch (m_state)
-			{
-				//待機
-			case enEnemyIdle: {
-				//m_position = m_enemyMove.IdleExecute(m_position);
-				m_enemyRouteMove.IdleExecution();
-			}break;
-				//移動
-			case enEnemyMove: {
-				//m_position = m_enemyMove.MoveExecute(m_position);
-
-				m_enemyRouteMove.MoveExecution(1.0f);
-			}break;
-				//攻撃
-			case enEnemyAttack: {
-				m_enemyRouteMove.StopExecution();
-				m_enemyAttack.Execution();
-			}break;
-				//ダメージ
-			case enEnemyDamage: {
-				m_enemyRouteMove.IdleExecution();
-			}break;
-				//ダウン
-			case enEnemyDown: {
-				m_enemyRouteMove.StopExecution();
-				DownExecution();
-			}break;
-			default:
-				break;
-			}
-
-			//回転を適用
-			m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
-
-			
-
-			
-
-		}
-
-		void Enemy::GameClearExecution()
-		{
-			
-		}
-
-		void Enemy::GameOverExecution()
-		{
-			
-		}
+		
 	}
 }

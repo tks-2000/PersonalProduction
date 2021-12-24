@@ -60,7 +60,7 @@ namespace mainGame {
 			m_LStickX = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickXF();
 			m_LStickY = g_pad[PLAYER1_CONTROLLER_NUM]->GetLStickYF();
 
-			if (m_player->GetPlayerStatus() != enPlayerAttack) {
+			if (m_player->GetPlayerStatus() != enPlayerAttack && m_player->GetPlayerStatus() != enPlayerDamage) {
 
 				//左スティック入力があれば…
 				if (m_LStickX != 0.0f || m_LStickY != 0.0f) {
@@ -102,7 +102,7 @@ namespace mainGame {
 			}break;
 				//
 			case enPlayerDamage: {
-
+				IdleExecute();
 			}break;
 			default:
 				break;

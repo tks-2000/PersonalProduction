@@ -12,7 +12,10 @@ namespace {
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 	/// @brief プレイヤーの初期座標
 	const Vector3 PLAYER_START_POS = { 0.0f,500.0f,0.0f };
+	/// @brief ダメージから復帰するまでの時間
+	const float PLAYER_DAMAGE_RETURN_TIME = 1.0f;
 
+	const float PLAYER_INVINCIBLE_RETURN_TIME = 3.0f;
 }
 namespace mainGame {
 	namespace player {
@@ -41,7 +44,7 @@ namespace mainGame {
 			m_playerRot.Init(this);
 			m_playerAnimation.Init(this);
 			m_playerAttack.Init(this);
-			m_itemSlot.Init();
+			m_itemSlot.Init(this);
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -87,16 +90,29 @@ namespace mainGame {
 			switch (m_game->GetGameState())
 			{
 			case enGameStart: {
-				GameStartExecution();
+				
 			}break;
 			case enGameInProgress: {
-				GameInProgressExecution();
+				m_playerMove.Execution();
+
+				m_playerAttack.Execute();
+
+				m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
+
+				m_itemSlot.Execution();
+
+				if (m_playerState == enPlayerDamage) {
+					DamageExecution();
+				}
+				if (m_invincibleFlag == true) {
+					InvincibleExecution();
+				}
 			}break;
 			case enGameClear: {
-				GameClearExecution();
+				
 			}break;
 			case enGameOver: {
-				GameOverExecution();
+				
 			}break;
 			default:
 				break;
@@ -119,32 +135,25 @@ namespace mainGame {
 			m_plMapModel->Execution();
 		}
 
-		void Player::GameStartExecution()
+		void Player::DamageExecution()
 		{
+			m_damageTimer += g_gameTime->GetFrameDeltaTime();
+			m_invincibleFlag = true;
 
+			if (m_damageTimer > PLAYER_DAMAGE_RETURN_TIME) {
+				m_playerState = enPlayerIdle;
+				m_damageTimer = 0.0f;
+			}
 		}
 
-		void Player::GameInProgressExecution()
+		void Player::InvincibleExecution()
 		{
-			//データメンバのクラスを更新する
-			m_playerMove.Execution();
-
-			m_playerAttack.Execute();
-
-			m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
-
-			m_itemSlot.Execution();
-
+			m_invincibleTimer += g_gameTime->GetFrameDeltaTime();
+			if (m_invincibleTimer > PLAYER_INVINCIBLE_RETURN_TIME) {
+				m_invincibleFlag = false;
+				m_invincibleTimer = 0.0f;
+			}
 		}
-
-		void Player::GameClearExecution()
-		{
-			
-		}
-
-		void Player::GameOverExecution()
-		{
-			
-		}
+		
 	}
 }
