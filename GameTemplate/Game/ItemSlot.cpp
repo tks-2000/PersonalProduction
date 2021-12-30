@@ -79,6 +79,11 @@ namespace mainGame {
 			return true;
 		}
 
+		const item::EnItemType& ItemSlot::GetItemType(const int slotNum)
+		{
+			return m_items[slotNum]->GetItemType();
+		}
+
 		void ItemSlot::ItemSelect()
 		{
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRight)) {

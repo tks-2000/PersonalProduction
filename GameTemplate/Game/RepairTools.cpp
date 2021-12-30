@@ -14,6 +14,8 @@ namespace mainGame {
 
 		void RepairTools::InitData()
 		{
+			m_itemType = enItemRepairTools;
+
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_itemModel->Init("Assets/modelData/item/item_guardup.tkm");
 

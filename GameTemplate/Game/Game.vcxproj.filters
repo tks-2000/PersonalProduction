@@ -760,5 +760,8 @@
     <ClInclude Include="EnemyAttackThePlayer.h">
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ItemResource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

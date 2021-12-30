@@ -40,6 +40,8 @@ namespace mainGame {
 
 		void Bomb::InitData()
 		{
+			m_itemType = enItemBomb;
+
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
 

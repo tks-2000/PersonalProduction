@@ -4,6 +4,7 @@
 #include "PlayerRotation.h"
 #include "PlayerAttack.h"
 #include "ItemSlot.h"
+#include "ItemResource.h"
 
 class SkinModelRender;
 
@@ -121,6 +122,11 @@ namespace mainGame {
 			/// @brief 無敵状態か？
 			/// @return trueで無敵 falseで無敵でない
 			bool IsInvincible() const { return m_invincibleFlag; }
+
+			/// @brief アイテムスロット内のアイテムの種類を取得
+			/// @param slotNum スロット番号
+			/// @return アイテムの種類
+			const item::EnItemType& GetSlotItemType(const int slotNum) { return m_itemSlot.GetItemType(slotNum); }
 
 			/// @brief 実行
 			void Execution();

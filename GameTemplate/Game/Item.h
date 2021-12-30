@@ -1,4 +1,5 @@
 #pragma once
+#include "ItemResource.h"
 
 namespace mainGame {
 
@@ -29,6 +30,8 @@ namespace mainGame {
 			void SetPosition(const Vector3& pos) { m_position = pos; }
 
 			void DeleteThis() { DeleteGO(this); }
+
+			const EnItemType& GetItemType() const { return m_itemType; }
 
 		protected:
 
@@ -63,6 +66,8 @@ namespace mainGame {
 			player::Player* m_player = nullptr;
 
 			ItemGenerator* m_itemGenerator = nullptr;
+
+			EnItemType m_itemType = enItemTypeNum;
 		};
 	}
 }

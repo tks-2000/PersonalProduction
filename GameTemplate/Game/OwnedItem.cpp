@@ -4,17 +4,30 @@
 namespace mainGame {
 	namespace ui {
 
-		const Vector2 ITEM_SLOT_FONT_POS[3] = {
-			{-550.0f,-250.0f},
-			{-475.0f,-250.0f},
-			{-400.0f,-250.0f}
+		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 427.5f,-240.0f,0.0f };
+
+		const int ITEM_SLOT_BASE_SPRITE_WIDTH = 325;
+
+		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 140;
+
+		const Vector3 ITEM_SLOT_SPRITE_POS[3] = {
+			{ 327.5f,-250.0f,0.0f },
+			{ 427.5f,-250.0f,0.0f },
+			{ 527.5f,-250.0f,0.0f }
 		};
 
-		const Vector3 SELECT_SPRITE_POS[3] = {
-			{-537.5f,-270.0f,0.0f},
-			{-462.5f,-270.0f,0.0f},
-			{-387.5f,-270.0f,0.0f}
-		};
+		const int ITEM_SLOT_SPRITE_WIDTH = 75;
+
+		const int ITEM_SLOT_SPRITE_HEIGHT = 75;
+
+
+		const int ITEM_SPRITE_WIDTH = 70;
+
+		const int ITEM_SPRITE_HEIGHT = 70;
+
+		const int ITEM_SELECT_SPRITE_WIDTH = 90;
+
+		const int ITEM_SELECT_SPRITE_HEIGHT = 90;
 
 		OwnedItem::OwnedItem()
 		{
@@ -25,31 +38,44 @@ namespace mainGame {
 		OwnedItem::~OwnedItem()
 		{
 			for (int slotNum = 0; slotNum < 3; slotNum++) {
-				DeleteGO(m_itemSlotFont[slotNum]);
+				DeleteGO(m_itemSlotSprite[slotNum]);
+			
+				if (m_itemSpriteFlag[slotNum] == true) {
+					DeleteGO(m_itemSprite[slotNum]);
+				}
 			}
-
+			
 			DeleteGO(m_selectSprite);
+			DeleteGO(m_itemSlotBaseSprite);
 		}
 
 		void OwnedItem::Init()
 		{
-			for (int slotNum = 0; slotNum < 3; slotNum++) {
-				m_itemSlotFont[slotNum] = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
-				m_itemSlotFontPos[slotNum] = ITEM_SLOT_FONT_POS[slotNum];
-				m_itemSlotFont[slotNum]->SetPosition(m_itemSlotFontPos[slotNum]);
-				m_itemSlotFontColor[slotNum] = g_vec4White;
-				std::wstring conversion;
-				conversion = std::to_wstring(slotNum+1);
-				m_itemSlotFont[slotNum]->Init(conversion.c_str());
-			}
+			m_itemSlotBaseSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+			m_itemSlotBaseSprite->Init("Assets/Image/WB.dds", ITEM_SLOT_BASE_SPRITE_WIDTH, ITEM_SLOT_BASE_SPRITE_HEIGHT);
+			m_itemSlotBaseSprite->SetPosition(ITEM_SLOT_BASE_SPRITE_POS);
+			m_itemSlotBaseSprite->SetColor(g_vec4Black);
 
 			m_selectSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 
-			m_selectSprite->Init("Assets/Image/sight.dds", 100, 100);
+			m_selectSprite->Init("Assets/Image/WB.dds", ITEM_SELECT_SPRITE_WIDTH, ITEM_SELECT_SPRITE_HEIGHT);
+
+			m_selectSprite->SetColor({1.0f,0.0f,0.0f,1.0f});
+
+			for (int slotNum = 0; slotNum < 3; slotNum++) {
+				m_itemSlotSprite[slotNum] = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+				m_itemSlotSprite[slotNum]->Init("Assets/Image/WB.dds", ITEM_SLOT_SPRITE_WIDTH, ITEM_SLOT_SPRITE_HEIGHT);
+				m_itemSlotSprite[slotNum]->SetPosition(ITEM_SLOT_SPRITE_POS[slotNum]);
+
+				
+			
+			}
+
+			
 
 			//m_selectSprite->SetPivot({ 1.0f,0.0f });
 
-			m_selectSpritePos = SELECT_SPRITE_POS[0];
+			m_selectSpritePos = ITEM_SLOT_SPRITE_POS[0];
 
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
@@ -62,22 +88,59 @@ namespace mainGame {
 				return;
 			}
 
+			m_itemSlotBaseSprite->Execute();
+
 			for (int slotNum = 0; slotNum < 3; slotNum++) {
 
 				if (m_player->IsOwnedItem(slotNum) == true) {
-					m_itemSlotFontColor[slotNum] = g_vec4White;
+					if (m_itemSpriteFlag[slotNum] == false) {
+						CreateItemSprite(slotNum);
+						m_itemSpriteFlag[slotNum] = true;
+					}
+					else {
+						m_itemSprite[slotNum]->Execute();
+					}
+					
 				}
 				else {
-					m_itemSlotFontColor[slotNum] = g_vec4Black;
+					if (m_itemSpriteFlag[slotNum] == true) {
+						DeleteGO(m_itemSprite[slotNum]);
+						m_itemSpriteFlag[slotNum] = false;
+					}
+
+					
 				}
+				m_itemSlotSprite[slotNum]->Execute();
 				
-				m_selectSpritePos = SELECT_SPRITE_POS[m_player->GetSelectSlotNum()];
-				m_itemSlotFont[slotNum]->SetColor(m_itemSlotFontColor[slotNum]);
-				m_itemSlotFont[slotNum]->Execution();
+				
 			}
 
+			m_selectSpritePos = ITEM_SLOT_SPRITE_POS[m_player->GetSelectSlotNum()];
 			m_selectSprite->SetPosition(m_selectSpritePos);
 			m_selectSprite->Execute();
+		}
+
+		void OwnedItem::CreateItemSprite(const int slotNum)
+		{
+			m_itemSprite[slotNum] = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+
+			switch (m_player->GetSlotItemType(slotNum))
+			{
+			case item::enItemBomb: {
+				m_itemSprite[slotNum]->Init("Assets/Image/bomb.dds", ITEM_SPRITE_WIDTH, ITEM_SPRITE_HEIGHT);
+			}break;
+			case item::enItemRepairTools: {
+				m_itemSprite[slotNum]->Init("Assets/Image/wrench.dds", ITEM_SPRITE_WIDTH, ITEM_SPRITE_HEIGHT);
+			}break;
+			case item::enItemNutritionDrink: {
+				m_itemSprite[slotNum]->Init("Assets/Image/portion.dds", ITEM_SPRITE_WIDTH, ITEM_SPRITE_HEIGHT);
+			}break;
+			default:
+				break;
+			}
+			m_itemSprite[slotNum]->SetPosition(ITEM_SLOT_SPRITE_POS[slotNum]);
+
+			m_itemSprite[slotNum]->Execute();
 		}
 	}
 }

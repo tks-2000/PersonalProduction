@@ -1,4 +1,6 @@
 #pragma once
+#include "ItemResource.h"
+
 namespace mainGame {
 
 	namespace enemy {
@@ -10,12 +12,7 @@ namespace mainGame {
 
 		class Item;
 
-		enum EnItemType {
-			enItemBomb,
-			enItemRepairTools,
-			enItemNutritionDrink,
-			enItemTypeNum
-		};
+		
 
 		/// @brief ÉAÉCÉeÉÄê∂ê¨äÌ
 		class ItemGenerator : public IGameObject

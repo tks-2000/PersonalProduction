@@ -439,6 +439,7 @@
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemGenerator.h" />
+    <ClInclude Include="ItemResource.h" />
     <ClInclude Include="ItemSlot.h" />
     <ClInclude Include="NutritionDrink.h" />
     <ClInclude Include="OwnedItem.h" />

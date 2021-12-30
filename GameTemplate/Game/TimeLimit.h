@@ -12,7 +12,11 @@ namespace mainGame {
 		private:
 			bool m_isInitd = false;
 
-			render::font::FontRender* m_timerFont = nullptr;
+			render::sprite::SpriteRender* m_timerBaseSprite = nullptr;
+
+			render::font::FontRender* m_timeFont = nullptr;
+
+			render::font::FontRender* m_timerNumFont = nullptr;
 
 			timer::Timer* m_timer = nullptr;
 		};

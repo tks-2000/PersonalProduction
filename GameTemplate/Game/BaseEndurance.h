@@ -27,10 +27,12 @@ namespace mainGame {
 			Vector3 m_enduranceSpriteScale = g_vec3One;
 			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ‚ÌƒJƒ‰[
 			Vector4 m_enduranceSpriteColor = g_vec4White;
-			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ
-			render::sprite::SpriteRender* m_enduranceSprite = nullptr;
 			/// @brief ‘Ï‹v—Í‚Ì‰º’n‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceBaseSprite = nullptr;
+			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ
+			render::sprite::SpriteRender* m_enduranceSprite = nullptr;
+			/// @brief ‘Ï‹v—Í‚Ì‰º‚Ì‰æ‘œ
+			render::sprite::SpriteRender* m_enduranceUnderSprite = nullptr;
 
 			/// @brief –h‰q‘ÎÛ
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;

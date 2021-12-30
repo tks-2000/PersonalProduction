@@ -5,7 +5,7 @@ namespace mainGame {
 
 		const Vector3 MINI_MAP_CAMERA_POS = { 0.0f,2000.0f,0.0f };
 
-		const Vector3 MINI_MAP_POS = { 500.0f,200.0f,0.0f };
+		const Vector3 MINI_MAP_POS = { 500.0f,150.0f,0.0f };
 
 		const float FRICTION = 20.0f;
 

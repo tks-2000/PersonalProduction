@@ -27,6 +27,8 @@ namespace mainGame {
 
 		void NutritionDrink::InitData()
 		{
+			m_itemType = enItemNutritionDrink;
+
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_itemModel->Init("Assets/modelData/item/item_speedup.tkm");
 

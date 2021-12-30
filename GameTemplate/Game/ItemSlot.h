@@ -1,4 +1,6 @@
 #pragma once
+#include "ItemResource.h"
+
 
 namespace mainGame {
 	namespace item {
@@ -38,6 +40,11 @@ namespace mainGame {
 			/// @return trueなら持っている falseならもっていない
 			bool IsOwnedItem(const int slotNum)const;
 			
+			/// @brief 
+			/// @param slotNum 
+			/// @return 
+			const item::EnItemType& GetItemType(const int slotNum);
+
 		private:
 
 			/// @brief 使用するアイテムスロット選択を行う関数

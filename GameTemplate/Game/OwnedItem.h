@@ -8,6 +8,7 @@ namespace mainGame {
 
 	namespace ui {
 
+		/// @brief 所有アイテムを表示するクラス
 		class OwnedItem
 		{
 		public:
@@ -17,18 +18,29 @@ namespace mainGame {
 			void Execution();
 
 		private:
+			/// @brief アイテム画像を作成
+			/// @param slotNum 作成するスロット番号
+			void CreateItemSprite(const int slotNum);
 
+			/// @brief 初期化フラグ
 			bool m_isInitd = false;
+			/// @brief アイテムスロットの下地の画像
+			render::sprite::SpriteRender* m_itemSlotBaseSprite = nullptr;
+			/// @brief アイテムスロットの画像
+			render::sprite::SpriteRender* m_itemSlotSprite[3] = { nullptr };
+			/// @brief アイテムの画像
+			render::sprite::SpriteRender* m_itemSprite[3] = { nullptr };
+			/// @brief アイテムの画像の表示フラグ
+			bool m_itemSpriteFlag[3] = { false };
+			/// @brief プレイヤーが選択しているアイテムを示す画像
+			render::sprite::SpriteRender* m_selectSprite = nullptr;
 
-			render::font::FontRender* m_itemSlotFont[3] = { nullptr };
+			
 
-			Vector2 m_itemSlotFontPos[3];
-
-			Vector4 m_itemSlotFontColor[3];
+			
 
 			player::Player* m_player = nullptr;
-
-			render::sprite::SpriteRender* m_selectSprite = nullptr;
+			
 
 			Vector3 m_selectSpritePos = g_vec3Zero;
 		};
