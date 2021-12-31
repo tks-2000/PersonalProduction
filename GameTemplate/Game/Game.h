@@ -11,6 +11,9 @@ namespace nsAI {
 }
 
 namespace mainGame {
+	namespace title {
+		class Title;
+	}
 	namespace player {
 		class Player;
 	}
@@ -41,6 +44,8 @@ namespace mainGame {
 
 	/// @brief ゲームの状態を表す列挙型
 	enum EnGameState {
+		/// @brief タイトル画面
+		enTitleScene,
 		/// @brief ゲーム開始前
 		enGameStart,
 		/// @brief ゲーム進行中
@@ -64,6 +69,8 @@ namespace mainGame {
 
 		bool Start();
 		void Update();
+
+		void GameSceneStart();
 
 		/// @brief ゲームの状態を変更
 		/// @param state ゲームの状態を表すステート
@@ -122,6 +129,8 @@ namespace mainGame {
 		bool m_isDead = false;
 
 		bool m_pause = false;
+
+		title::Title* m_title = nullptr;
 
 		/// @brief ゲームカメラ
 		GameCamera* m_gameCamera = nullptr;

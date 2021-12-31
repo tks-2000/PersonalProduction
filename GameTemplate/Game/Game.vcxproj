@@ -307,6 +307,7 @@
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -349,6 +350,7 @@
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="TimeLimit.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="TknFile.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Walker.cpp" />
@@ -435,6 +437,7 @@
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Item.h" />
@@ -471,6 +474,7 @@
     <ClInclude Include="system\system.h" />
     <ClInclude Include="TimeLimit.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="TknFile.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Walker.h" />

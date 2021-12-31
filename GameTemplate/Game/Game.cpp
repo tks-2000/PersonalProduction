@@ -5,8 +5,11 @@ namespace mainGame {
 
 	Game::Game()
 	{
-		AllNew();
-
+		//AllNew();
+		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
+		
+		m_state = enTitleScene;
+		m_isDead = true;
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 	}
 
@@ -18,9 +21,7 @@ namespace mainGame {
 	void Game::Init()
 	{
 
-		if (m_isInitd == true) {
-			return;
-		}
+		
 		m_pause = false;
 
 		m_miniMap->Init();
@@ -60,47 +61,54 @@ namespace mainGame {
 
 		m_gameUI->Init();
 
-		m_isInitd = true;
+		
 		m_isDead = false;
 	}
 
 	bool Game::Start()
 	{
 		
-		Init();
+		//Init();
+		m_title->Init();
+		m_isInitd = true;
 		
-
 		return true;
 	}
 
 	void Game::Update()
 	{
-		//ポーズ中は実行しない
-		if (m_pause == true) {
-			Pause();
-			if (g_pad[0]->IsTrigger(enButtonStart)) {
-				m_pause = false;
-				m_renderingEngine->SetLightFlag(true);
-			}
-			return;
-		}
-		else {
-			if (g_pad[0]->IsTrigger(enButtonStart)) {
-				m_pause = true;
-				m_renderingEngine->SetLightFlag(false);
-				return;
-			}
-		}
+		
 
 		//未初期化なら実行しない
 		if (m_isInitd == false) {
 			return;
 		}
 
-		
+		if (m_state == enGameInProgress) {
+			//ポーズ中は実行しない
+			if (m_pause == true) {
+				Pause();
+				if (g_pad[0]->IsTrigger(enButtonStart)) {
+					m_pause = false;
+					m_renderingEngine->SetLightFlag(true);
+				}
+				return;
+			}
+			else {
+				if (g_pad[0]->IsTrigger(enButtonStart)) {
+					m_pause = true;
+					m_renderingEngine->SetLightFlag(false);
+					return;
+				}
+			}
+		}
+
 
 		switch (m_state)
 		{
+		case enTitleScene: {
+			m_title->Execution();
+		}break;
 		case enGameStart: {
 			GameStartExecution();
 		}break;
@@ -122,38 +130,7 @@ namespace mainGame {
 
 
 		
-		if (m_state != enGameOver && m_state != enGameClear) {
-			int hp = m_defensiveTarget->GetDefensiveTargetHp();
-			std::wstring conversion;
-			conversion = std::to_wstring(hp);
-			
-			
-			bool isEnd;
-			
-			if (g_pad[0]->IsTrigger(enButtonB)) {
-				m_pathFinding.Execute(
-					m_path,
-					m_nvmMesh,
-					m_pos,
-					m_player->GetPlayerPosition(),
-					50.0f,
-					200.0f
-				);
-			}
-			m_pos = m_path.Move(
-				m_pos,
-				10.0f,
-				isEnd
-			);
-
-
-
-
-			m_unityChanModel2->SetPosition(m_pos);
-			m_unityChanModel2->Execution();
-
-			
-		}
+		
 
 		if (m_isDead == false) {
 			m_player->Execution();
@@ -173,6 +150,12 @@ namespace mainGame {
 			m_sampleSprite->Execute();
 		}
 		
+	}
+
+	void Game::GameSceneStart()
+	{
+		AllNew();
+		Init();
 	}
 
 	void Game::SetGameOver()
@@ -208,8 +191,7 @@ namespace mainGame {
 
 		if (m_isDead == true) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
-				AllNew();
-				Init();
+				
 			}
 		}
 		else {
@@ -219,8 +201,11 @@ namespace mainGame {
 				
 				DeleteGO(m_unityChanModel2);
 				AllDelete();
-				m_state = enGameClear;
+				
 				m_isDead = true;
+				m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
+				m_title->Init();
+				m_state = enTitleScene;
 			}
 		}
 	}
@@ -233,8 +218,7 @@ namespace mainGame {
 		
 		if (m_isDead == true) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
-				AllNew();
-				Init();
+				
 			}
 		}
 		else {
@@ -244,14 +228,18 @@ namespace mainGame {
 			
 				DeleteGO(m_unityChanModel2);
 				AllDelete();
-				m_state = enGameOver;
+				
 				m_isDead = true;
+				m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
+				m_title->Init();
+				m_state = enTitleScene;
 			}
 		}
 	}
 
 	void Game::AllNew()
 	{
+		
 		m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
@@ -266,12 +254,13 @@ namespace mainGame {
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		
 		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
-
-		m_isInitd = false;
 	}
 
 	void Game::AllDelete()
 	{
+		if (m_state == enTitleScene) {
+			DeleteGO(m_title);
+		}
 		DeleteGO(m_gameCamera);
 		DeleteGO(m_enemyGenerator);
 		DeleteGO(m_player);

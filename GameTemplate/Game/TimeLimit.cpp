@@ -22,6 +22,7 @@ namespace mainGame {
 		TimeLimit::~TimeLimit()
 		{
 			DeleteGO(m_timerBaseSprite);
+			DeleteGO(m_timeFont);
 			DeleteGO(m_timerNumFont);
 		}
 

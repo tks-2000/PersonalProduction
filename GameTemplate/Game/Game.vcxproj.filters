@@ -72,6 +72,9 @@
     <Filter Include="inGame\UI">
       <UniqueIdentifier>{bb85dc4b-cc07-4095-b8d1-298fa0d79afe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="inGame\Title">
+      <UniqueIdentifier>{e282971d-4dbb-4b9c-81be-e5e562bd9d9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -400,6 +403,12 @@
     </ClCompile>
     <ClCompile Include="EnemyAttackThePlayer.cpp">
       <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>inGame\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>inGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -761,7 +770,13 @@
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="ItemResource.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>inGame\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>inGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

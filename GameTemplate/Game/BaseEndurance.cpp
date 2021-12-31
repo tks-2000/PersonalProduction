@@ -33,7 +33,10 @@ namespace mainGame {
 
 		BaseEndurance::~BaseEndurance()
 		{
+			DeleteGO(m_enduranceBaseSprite);
+			DeleteGO(m_enduranceUnderSprite);
 			DeleteGO(m_enduranceSprite);
+			
 		}
 
 		void BaseEndurance::Init()
