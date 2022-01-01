@@ -75,6 +75,9 @@
     <Filter Include="inGame\Title">
       <UniqueIdentifier>{e282971d-4dbb-4b9c-81be-e5e562bd9d9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ExEngine\Effect">
+      <UniqueIdentifier>{4ad4a1e8-b4e2-4d8d-a8cd-633b65452474}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -409,6 +412,12 @@
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\effect\Effect.cpp">
+      <Filter>ExEngine\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ExEngine\effect\EffectEngine.cpp">
+      <Filter>ExEngine\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -777,6 +786,12 @@
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\effect\Effect.h">
+      <Filter>ExEngine\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ExEngine\effect\EffectEngine.h">
+      <Filter>ExEngine\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

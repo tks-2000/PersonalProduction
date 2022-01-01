@@ -2,8 +2,10 @@
 
 class SkinModelRender;
 class SpriteRender;
+class Effect;
 class CSoundSource;
-;
+
+
 namespace nsAI {
 	class NaviMesh;
 	class Path;
@@ -158,6 +160,8 @@ namespace mainGame {
 		nsAI::NaviMesh m_nvmMesh;
 		nsAI::Path m_path;
 		nsAI::PathFinding m_pathFinding;
+
+		Effect m_effect;
 	};
 
 }

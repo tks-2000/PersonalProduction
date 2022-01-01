@@ -7,7 +7,8 @@ namespace mainGame {
 	{
 		//AllNew();
 		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		
+		m_effect.Init(u"Assets/effect/kick.efk");
+		m_effect.SetPosition({ 0.0f,0.0f,0.0f });
 		m_state = enTitleScene;
 		m_isDead = true;
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
@@ -77,8 +78,11 @@ namespace mainGame {
 
 	void Game::Update()
 	{
-		
-
+		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
+			m_effect.Play();
+			
+		}
+		m_effect.Update();
 		//ñ¢èâä˙âªÇ»ÇÁé¿çsÇµÇ»Ç¢
 		if (m_isInitd == false) {
 			return;

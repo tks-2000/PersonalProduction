@@ -15,6 +15,7 @@
 #include "SkinModelRender.h"
 #include "SpriteRender.h"
 #include "FontRender.h"
+#include "../../ExEngine/effect/Effect.h"
 #include "SoundSource.h"
 #include "NaviMesh.h"
 #include "Path.h"

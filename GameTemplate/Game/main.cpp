@@ -23,6 +23,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	GameObjectManager::CreateInstance();
 	PhysicsWorld::CreateInstance();
 
+	EffectEngine::CreateInstance();
+
 	CSoundEngine::CreateInstance();
 	CSoundEngine::GetInstance()->Init();
 
@@ -61,6 +63,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		GameObjectManager::GetInstance()->ExecuteUpdate();
 		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
 		
+		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+		EffectEngine::GetInstance()->Draw();
+
 		//////////////////////////////////////
 		//絵を描くコードを書くのはここまで！！！
 		//////////////////////////////////////
@@ -68,6 +73,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	}
 	//ゲームオブジェクトマネージャーを削除。
 	GameObjectManager::DeleteInstance();
+	//EffectEngine::DeleteInstance();
 	CSoundEngine::DeleteInstance();
 	return 0;
 }
