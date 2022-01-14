@@ -13,6 +13,7 @@ namespace mainGame {
 			enPlayerAnimationIdle,	//‘Ò‹@
 			enPlayerAnimationWark,	//•à‚«
 			enPlayerAnimationRun,
+			enPlayerAnimationAttack,
 			enPlayerAnimationClear,
 			enPlayerAnimationDamage,
 			enPlayerAnimationKneelDown,

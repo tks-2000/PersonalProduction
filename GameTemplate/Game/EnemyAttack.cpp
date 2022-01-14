@@ -97,6 +97,10 @@ namespace mainGame {
 
 			//–h‰q‘ÎÛ‚ÉUŒ‚‚ð‰Á‚¦‚é
 			m_defensiveTarget->ReceiveDamage(m_attackPower);
+
+			/*CSoundSource* attackSe = NewGO<CSoundSource>(PRIORITY_VERYLOW);
+			attackSe->Init(L"Assets/sound/se/WeakCollide.wav");
+			attackSe->Play(false);*/
 		}
 
 	}

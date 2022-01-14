@@ -14,17 +14,19 @@ namespace mainGame {
 			m_isInitd = false;
 
 			//アニメーションクリップをロード
-			m_playerAnimationClip[enPlayerAnimationIdle].Load("Assets/animData/unityChan/idle.tka");
+			m_playerAnimationClip[enPlayerAnimationIdle].Load("Assets/animData/hero/Hero_Idle.tka");
 			m_playerAnimationClip[enPlayerAnimationIdle].SetLoopFlag(true);
-			m_playerAnimationClip[enPlayerAnimationWark].Load("Assets/animData/unityChan/walk.tka");
+			m_playerAnimationClip[enPlayerAnimationWark].Load("Assets/animData/hero/Hero_Walk.tka");
 			m_playerAnimationClip[enPlayerAnimationWark].SetLoopFlag(true);
-			m_playerAnimationClip[enPlayerAnimationRun].Load("Assets/animData/unityChan/run.tka");
+			m_playerAnimationClip[enPlayerAnimationRun].Load("Assets/animData/hero/Hero_Run.tka");
 			m_playerAnimationClip[enPlayerAnimationRun].SetLoopFlag(true);
-			m_playerAnimationClip[enPlayerAnimationClear].Load("Assets/animData/unityChan/clear.tka");
+			m_playerAnimationClip[enPlayerAnimationAttack].Load("Assets/animData/hero/Hero_Attack.tka");
+			m_playerAnimationClip[enPlayerAnimationAttack].SetLoopFlag(false);
+			m_playerAnimationClip[enPlayerAnimationClear].Load("Assets/animData/hero/Hero_Clear.tka");
 			m_playerAnimationClip[enPlayerAnimationClear].SetLoopFlag(false);
-			m_playerAnimationClip[enPlayerAnimationDamage].Load("Assets/animData/unityChan/damage.tka");
+			m_playerAnimationClip[enPlayerAnimationDamage].Load("Assets/animData/hero/Hero_Damage.tka");
 			m_playerAnimationClip[enPlayerAnimationDamage].SetLoopFlag(false);
-			m_playerAnimationClip[enPlayerAnimationKneelDown].Load("Assets/animData/unityChan/KneelDown.tka");
+			m_playerAnimationClip[enPlayerAnimationKneelDown].Load("Assets/animData/hero/Hero_Down.tka");
 			m_playerAnimationClip[enPlayerAnimationKneelDown].SetLoopFlag(false);
 		}
 
@@ -70,7 +72,7 @@ namespace mainGame {
 					m_playerAnimState = enPlayerAnimationRun;
 				}break;
 				case enPlayerAttack: {
-					m_playerAnimState = enPlayerAnimationClear;
+					m_playerAnimState = enPlayerAnimationAttack;
 				}break;
 				case enPlayerDamage: {
 					m_playerAnimState = enPlayerAnimationDamage;

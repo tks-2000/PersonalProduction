@@ -56,6 +56,7 @@ namespace mainGame {
 
 						if (rate >= ATTACK_THE_PLAYER_ANGLE_MATCH_RATE) {
 							DamageThePlayer();
+
 						}
 					}
 				}
@@ -79,6 +80,9 @@ namespace mainGame {
 				return;
 			}
 			m_player->SetPlayerState(player::enPlayerDamage);
+			/*CSoundSource* attackSe = NewGO<CSoundSource>(PRIORITY_VERYLOW);
+			attackSe->Init(L"Assets/sound/se/WeakCollide.wav");
+			attackSe->Play(false);*/
 		}
 	}
 }

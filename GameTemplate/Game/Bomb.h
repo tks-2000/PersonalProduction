@@ -1,6 +1,8 @@
 #pragma once
 #include "Item.h"
 
+class Effect;
+
 namespace mainGame {
 
 	namespace enemy {
@@ -53,6 +55,8 @@ namespace mainGame {
 
 			/// @brief 弾丸の配列のポインタ
 			std::vector<player::Bullet*>* m_bullets = nullptr;
+
+			Effect m_explosion;
 		};
 
 	}

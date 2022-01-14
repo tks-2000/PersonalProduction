@@ -3,9 +3,9 @@
 
 namespace {
 	/// @brief プレイヤーのモデルファイルパス
-	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/unityChan/unityChan.tkm";
+	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/character/HeroPBR.tkm";
 	/// @brief プレイヤーのスケルトンファイルパス
-	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/character/HeroPBR.tks";
 
 	const char* PLAYER_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/plMapModel.tkm";
 	/// @brief アニメーション補完率
@@ -53,9 +53,9 @@ namespace mainGame {
 				render::model::enMainRenderTarget,
 				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
-				m_playerAnimation.GetAnimationNum(),
-				enModelUpAxisY
+				m_playerAnimation.GetAnimationNum()
 			);
+			m_playerModel->SetScale({ 2.0f,2.0f,2.0f });
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plMapModel->SetFxFilePath("Assets/shader/mapModel.fx");

@@ -64,6 +64,9 @@ namespace mainGame {
 			m_remainingBullets = m_maxBulletNum;
 			m_attackPossibleMatchRate = ATTACK_POSSIBLE_MATCH_RATE;
 
+			m_attackEffect.Init(u"Assets/effect/kick.efk");
+
+
 			//初期化完了
 			m_isInitd = true;
 		}
@@ -183,6 +186,12 @@ namespace mainGame {
 			}
 
 			BulletExecution();
+			m_effectPos = m_player->GetPlayerPosition();
+			m_effectRotation.SetRotationY(m_player->GetPlayerAngle());
+			m_attackEffect.SetPosition(m_effectPos);
+			m_attackEffect.SetRotation(m_effectRotation);
+			m_attackEffect.SetScale({ 2.0f,2.0f,2.0f });
+			m_attackEffect.Update();
 		}
 
 		void Attack::DeleteEnemyData(enemy::Enemy* enemy)
@@ -220,6 +229,7 @@ namespace mainGame {
 
 				//攻撃可能な距離だった場合…
 				if (toEnemyPos.Length() < m_attackRange) {
+					
 
 					//敵へのベクトルで衝撃を与える
 					toEnemyPos.Normalize();
@@ -230,11 +240,23 @@ namespace mainGame {
 						return;
 					}
 
-					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * m_attackPower);
+					
 
 					//敵にダメージを与える
+					if (m_enemys[enemyNum]->GetState() == enemy::enEnemyDamage || m_enemys[enemyNum]->GetState() == enemy::enEnemyDown) {
+						return;
+					}
+
+					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * m_attackPower);
 					m_enemys[enemyNum]->SetState(enemy::enEnemyDamage);
 					m_enemys[enemyNum]->ReceiveDamage(NORMAL_ATTACK_DAMAGE);
+
+					/*CSoundSource* attackSe = NewGO<CSoundSource>(PRIORITY_VERYLOW);
+					attackSe->Init(L"Assets/sound/se/WeakCollide.wav");
+					attackSe->SetVolume(1.0f);
+					attackSe->Play(false);*/
+
+					//m_attackEffect.Play();
 				}
 			}
 		}

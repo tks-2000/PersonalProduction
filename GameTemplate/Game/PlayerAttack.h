@@ -1,6 +1,8 @@
 #pragma once
 #include "PlayerBullet.h"
 
+class Effect;
+
 namespace mainGame {
 
 	class GameCamera;
@@ -98,6 +100,13 @@ namespace mainGame {
 			std::vector<Bullet*> m_bullets;
 			/// @brief ÉQÅ[ÉÄÉJÉÅÉâ
 			GameCamera* m_gameCamera = nullptr;
+
+			Effect m_attackEffect;
+
+			Vector3 m_effectPos = g_vec3Zero;
+
+			Quaternion m_effectRotation = Quaternion::Identity;
+
 		};
 	}
 }

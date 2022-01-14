@@ -51,6 +51,9 @@ namespace mainGame {
 
 			m_bullets = m_player->GetBulletData();
 
+			m_explosion.Init(u"Assets/effect/fire.efk");
+			m_explosion.SetScale({ 0.1f,0.1f,0.1f });
+
 			m_endTime = DISAPPEARANCE_TIME;
 		}
 
@@ -84,6 +87,9 @@ namespace mainGame {
 
 				BulletCollision();
 			}
+
+			m_explosion.SetPosition(m_position);
+			m_explosion.Update();
 		}
 
 		void Bomb::CreateModel()
@@ -203,6 +209,12 @@ namespace mainGame {
 					enemyData->ReceiveDamage(EXPLOSION_DAMAGE);
 				}
 			}
+
+			m_explosion.Play();
+			//CSoundSource* se = NewGO<CSoundSource>(PRIORITY_VERYLOW);
+			//se->Init(L"Assets/sound/se/explosion.wav");
+			//se->Play(false);
+
 
 			//ƒ‚ƒfƒ‹‚ğíœ
 			DeleteGO(m_itemModel);

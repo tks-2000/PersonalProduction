@@ -106,6 +106,11 @@ namespace mainGame {
 
 		render::model::SkinModelRender* m_unityChanModel = nullptr;
 		render::model::SkinModelRender* m_unityChanModel2 = nullptr;
+		enum EnAnim {
+			enAnim1,
+			enAnimNum
+		};
+		AnimationClip m_anim[enAnimNum];
 		render::model::SkinModelRender* m_backGroundModel = nullptr;
 		render::model::SkinModelRender* m_backGroundModel2 = nullptr;
 

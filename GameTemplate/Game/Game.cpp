@@ -7,8 +7,9 @@ namespace mainGame {
 	{
 		//AllNew();
 		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		m_effect.Init(u"Assets/effect/kick.efk");
+		m_effect.Init(u"Assets/effect/fire.efk");
 		m_effect.SetPosition({ 0.0f,0.0f,0.0f });
+		m_effect.SetScale({ 0.1f,0.1f,0.1f });
 		m_state = enTitleScene;
 		m_isDead = true;
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
@@ -39,9 +40,20 @@ namespace mainGame {
 
 		m_timer->Init();
 
-		
+		m_anim[enAnim1].Load("Assets/animData/hero/Hero_Run.tka");
+		m_anim[enAnim1].SetLoopFlag(true);
 
-		m_unityChanModel2->Init("Assets/modelData/unityChan/unityChan.tkm");
+		m_unityChanModel2->Init("Assets/modelData/character/HeroPBR.tkm");
+		m_unityChanModel2->Init(
+			"Assets/modelData/character/HeroPBR.tkm",
+			render::model::enMainRenderTarget,
+			"Assets/modelData/character/HeroPBR.tks",
+			m_anim,
+			enAnimNum
+			//enModelUpAxisY
+		);
+		m_unityChanModel2->SetScale({ 1.0f,1.0f,1.0f });
+		
 
 
 		m_sampleSprite->Init("Assets/image/sight.dds", 100, 100);
@@ -152,6 +164,7 @@ namespace mainGame {
 				m_sampleSprite->FadeIn(2.0f);
 			}
 			m_sampleSprite->Execute();
+			m_unityChanModel2->Execution();
 		}
 		
 	}
