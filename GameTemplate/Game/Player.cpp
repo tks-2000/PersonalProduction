@@ -6,8 +6,16 @@ namespace {
 	const char* PLAYER_TKM_FILEPATH = "Assets/modelData/character/HeroPBR.tkm";
 	/// @brief プレイヤーのスケルトンファイルパス
 	const char* PLAYER_TKS_FILEPATH = "Assets/modelData/character/HeroPBR.tks";
-
+	/// @brief プレイヤーのミニマップ上のモデルファイルパス
 	const char* PLAYER_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/plMapModel.tkm";
+	/// @brief 剣のモデルファイルパス
+	const char* SWORD_MODEL_FILEPATH = "Assets/modelData/character/Hero_Sword.tkm";
+	/// @brief 盾のモデルファイルパス
+	const char* SHIELD_MODEL_FILEPATH = "Assets/modelData/character/Hero_Shield.tkm";
+	/// @brief 剣の位置を決めるボーンの名前
+	const wchar_t* SWORD_POS_BONE_NAME = L"hand_l";
+	/// @brief 盾の位置を決めるボーンの名前
+	const wchar_t* SHIELD_POS_BONE_NAME = L"hand_r";
 	/// @brief アニメーション補完率
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 	/// @brief プレイヤーの初期座標
@@ -27,6 +35,8 @@ namespace mainGame {
 		Player::~Player()
 		{
 			DeleteGO(m_playerModel);
+			DeleteGO(m_swordModel);
+			DeleteGO(m_shieldModel);
 			DeleteGO(m_plMapModel);
 		}
 
@@ -56,6 +66,12 @@ namespace mainGame {
 				m_playerAnimation.GetAnimationNum()
 			);
 			m_playerModel->SetScale({ 2.0f,2.0f,2.0f });
+
+			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_swordModel->Init(SWORD_MODEL_FILEPATH);
+
+			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_shieldModel->Init(SHIELD_MODEL_FILEPATH);
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
@@ -133,6 +149,8 @@ namespace mainGame {
 			m_playerModel->Execution();
 
 			m_plMapModel->Execution();
+
+			SetWeapons();
 		}
 
 		void Player::DamageExecution()
@@ -153,6 +171,31 @@ namespace mainGame {
 				m_invincibleFlag = false;
 				m_invincibleTimer = 0.0f;
 			}
+		}
+
+		void Player::SetWeapons()
+		{
+			//プレイヤーのスケルトン情報を取得
+			Skeleton* heroSkeleton = m_playerModel->GetSkeleton();
+
+			int boneId = heroSkeleton->FindBoneID(SWORD_POS_BONE_NAME);
+
+			Bone* hand = heroSkeleton->GetBone(boneId);
+
+			Matrix boneMatrix = hand->GetWorldMatrix();
+
+			m_swordModel->SetWorldMatrix(boneMatrix);
+			m_swordModel->Execution();
+
+			boneId = heroSkeleton->FindBoneID(SHIELD_POS_BONE_NAME);
+
+			hand = heroSkeleton->GetBone(boneId);
+
+			boneMatrix = hand->GetWorldMatrix();
+
+			m_shieldModel->SetWorldMatrix(boneMatrix);
+			m_shieldModel->Execution();
+
 		}
 		
 	}

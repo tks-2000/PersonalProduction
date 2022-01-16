@@ -19,9 +19,9 @@ namespace {
 	/// @brief 通常の弾丸の再装填時間
 	const float NORMAL_BULLET_RELOAD_TIME = 3.0f;
 	/// @brief 攻撃判定が始まるまでの時間
-	const float ATTACK_JUDGEMENT_START_TIME = 0.2f;
+	const float ATTACK_JUDGEMENT_START_TIME = 0.5f;
 	/// @brief 攻撃判定が終わるまでの時間
-	const float ATTACK_JUDGEMENT_END_TIME = 0.5f;
+	const float ATTACK_JUDGEMENT_END_TIME = 1.0f;
 }
 
 namespace mainGame {
@@ -124,6 +124,14 @@ namespace mainGame {
 
 					m_isFollCharge = false;
 				}
+			}
+			else {
+				//当たり判定のタイマーを元に戻す
+				m_attackJudgementTimer = 0.0f;
+				//当たり判定が出ていないことにする
+				m_isAttackJudgement = false;
+
+				m_isFollCharge = false;
 			}
 
 			//Aボタンが押されていたら…

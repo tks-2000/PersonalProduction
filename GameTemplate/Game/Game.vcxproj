@@ -350,6 +350,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Preview|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="TimeLimit.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -476,6 +477,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="TimeLimit.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />

@@ -113,6 +113,12 @@ public:
 	{
 		return *m_tkmFile;
 	}
+
+	void SetWorldMatrix(const Matrix& matrix)
+	{
+		m_world = matrix;
+	}
+
 private:
 
 	Matrix m_world;														//ワールド行列。

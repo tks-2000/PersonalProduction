@@ -38,15 +38,19 @@ namespace render {
 
 			/// @brief モデルの座標を設定
 			/// @param pos 座標
-			void SetPosition(const Vector3& pos) { m_position = pos; }
+			void SetPosition(const Vector3& pos) { m_position = pos; m_updateWithMatrix = false; }
 
 			/// @brief モデルの大きさを設定
 			/// @param scale 拡大率
-			void SetScale(const Vector3& scale) { m_scale = scale; }
+			void SetScale(const Vector3& scale) { m_scale = scale; m_updateWithMatrix = false; }
 
 			/// @brief モデルの回転を設定
 			/// @param rot クォータニオン
-			void SetRotation(const Quaternion& rot) { m_qRot = rot; }
+			void SetRotation(const Quaternion& rot) { m_qRot = rot; m_updateWithMatrix = false; }
+
+			/// @brief モデルのワールド行列を設定
+			/// @param matrix ワールド行列
+			void SetWorldMatrix(const Matrix& matrix) { m_world = matrix; m_updateWithMatrix = true; }
 
 			/// @brief モデルの座標を入手
 			/// @return 座標
@@ -91,6 +95,10 @@ namespace render {
 			/// @return モデルのワールド行列
 			const Matrix& GetModelWorldMatrix() { return m_model.GetWorldMatrix(); }
 
+			/// @brief モデルのスケルトンを入手
+			/// @return スケルトンのアドレス
+			Skeleton* GetSkeleton() { return &m_skeleton; }
+
 			/// @brief 実行
 			void Execution();
 
@@ -131,6 +139,9 @@ namespace render {
 			Vector3 m_scale = Vector3::One;				//拡大率
 			Quaternion m_qRot = Quaternion::Identity;	//回転
 
+			/// @brief 行列で更新を行うフラグ
+			bool m_updateWithMatrix = false;
+			Matrix m_world;//行列
 
 			/// @brief アニメーションを再生するかどうかのフラグ
 			bool m_animFlag = false;

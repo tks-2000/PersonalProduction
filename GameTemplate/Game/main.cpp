@@ -2,6 +2,7 @@
 #include "SoundEngine.h"
 #include "system/system.h"
 #include "../../MiniEngine/RenderTarget.h"
+#include "Test.h"
 
 void InitRootSignature(RootSignature& rs);
 
@@ -30,6 +31,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	NewGO<render::RenderingEngine>(0, render::RENDERING_ENGINE_NAME);
 	NewGO<mainGame::Game>(0,mainGame::GAME_NAME);
+	//NewGO<test::Test>(0);
 
 	/*float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 	RenderTarget shadow;

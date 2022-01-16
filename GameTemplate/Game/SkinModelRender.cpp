@@ -195,12 +195,22 @@ namespace render {
 				return;
 			}
 
-			m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+			if (m_updateWithMatrix == true) {
+				m_model.SetWorldMatrix(m_world);
+			}
+			else {
+				m_model.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+			}
 			m_skeleton.Update(m_model.GetWorldMatrix());
 			m_animation.Progress(1.0f / 60.0f);
 
 			if (m_shadowFlag == true) {
-				m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+				if (m_updateWithMatrix == true) {
+					m_shadowModel.SetWorldMatrix(m_world);
+				}
+				else {
+					m_shadowModel.UpdateWorldMatrix(m_position, m_qRot, m_scale);
+				}
 			}
 		}
 	}

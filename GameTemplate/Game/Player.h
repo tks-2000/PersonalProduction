@@ -137,14 +137,20 @@ namespace mainGame {
 
 			void InvincibleExecution();
 
+			void SetWeapons();
+
 			bool m_isInitd = false;
 			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
 			/// @brief 回転
 			Quaternion m_qRot = g_quatIdentity;
-			/// @brief モデル
+			/// @brief プレイヤーモデル
 			render::model::SkinModelRender* m_playerModel = nullptr;
-
+			/// @brief 剣のモデル
+			render::model::SkinModelRender* m_swordModel = nullptr;
+			/// @brief 盾のモデル
+			render::model::SkinModelRender* m_shieldModel = nullptr;
+			/// @brief マップ上のモデル
 			render::model::SkinModelRender* m_plMapModel = nullptr;
 			/// @brief ステート
 			EnPlayerStates m_playerState = enPlayerIdle;
