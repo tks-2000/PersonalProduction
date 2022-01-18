@@ -14,6 +14,7 @@ namespace test {
 		render::model::SkinModelRender* m_hero = nullptr;
 		render::model::SkinModelRender* m_shield = nullptr;
 		render::model::SkinModelRender* m_sword = nullptr;
+		render::model::SkinModelRender* m_stage = nullptr;
 
 		Vector3 m_pos = g_vec3Zero;
 

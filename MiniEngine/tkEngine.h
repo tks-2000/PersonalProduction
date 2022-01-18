@@ -50,10 +50,22 @@ public:
 		programName += entryPointFuncName;
 		m_shaderBank.Regist(programName.c_str(), shader);
 	}
+
+	LowTexture* GetLowTextureFromBank(const char* filePath)
+	{
+		return m_lowTextureBank.Get(filePath);
+	}
+
+	void RegistLowTextureToBank(const char* filePath, LowTexture* textureLow)
+	{
+		m_lowTextureBank.Regist(filePath, textureLow);
+	}
+
 private:
 	GraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
 	TResourceBank<TkmFile> m_tkmFileBank;
 	TResourceBank<Shader> m_shaderBank;
+	TResourceBank<LowTexture> m_lowTextureBank;
 	GamePad m_pad[GamePad::CONNECT_PAD_MAX];		//ゲームパッド。
 	GameTime m_gameTime;							//ゲームタイム。
 	

@@ -8,6 +8,13 @@
 
 #pragma once
 
+#include "../../GameTemplate/Game/BSP.h"
+
+struct LowTexture {
+	std::string filePath;			//ファイルパス
+	std::unique_ptr<char[]> data;	//生データ(ddsファイル)
+	unsigned int dataSize;			//データのサイズ
+};
 	
 /// <summary>
 /// tkmファイルクラス。
@@ -17,7 +24,7 @@ public:
 	/// <summary>
 	/// マテリアル
 	/// </summary>
-	struct SMaterial {
+	/*struct SMaterial {
 		std::string albedoMapFileName;			//アルベドマップのファイル名。
 		std::string normalMapFileName;			//法線マップのファイル名。
 		std::string specularMapFileName;		//スペキュラマップのファイル名。
@@ -33,6 +40,19 @@ public:
 		unsigned int reflectionMapSize;			//リフレクションマップのサイズ。(ddsファイル)
 		std::unique_ptr<char[]>	refractionMap;	//ロードされた屈折マップ。(ddsファイル)
 		unsigned int refractionMapSize;			//屈折マップのサイズ。(ddsファイル)
+	};*/
+	struct SMaterial {
+		int uniqID;
+		std::string albedoMapFileName;			// アルベドマップのファイル名。
+		std::string normalMapFileName;			// 法線マップのファイル名。
+		std::string specularMapFileName;		// スペキュラマップのファイル名。
+		std::string reflectionMapFileName;		// リフレクションマップのファイル名。
+		std::string refractionMapFileName;		// 屈折マップのファイル名。
+		LowTexture* albedoMap;					// ロードされたアルベドマップの生テクスチャデータ。(ddsファイル)
+		LowTexture* normalMap;					// ロードされた法線マップの生テクスチャデータ。(ddsファイル9
+		LowTexture* specularMap;				// ロードされたスペキュラマップの生テクスチャデータ。(ddsファイル)
+		LowTexture* reflectionMap;				// ロードされたリフレクションマップの生テクスチャデータ。(ddsファイル)
+		LowTexture* refractionMap;				// ロードされた屈折マップの生テクスチャデータ。(ddsファイル)
 	};
 	/// <summary>
 	/// 頂点。
@@ -76,8 +96,9 @@ public:
 	/// 3Dモデルをロード。
 	/// </summary>
 	/// <param name="filePath">ファイルパス。</param>
-	void Load(const char* filePath);
+	bool Load(const char* filePath, bool isOptimize, bool isLoadTexture = true, bool isOutputErrorCodeTTY = false);
 		
+	bool Save(const char* filePath);
 	/// <summary>
 	/// メッシュパーツに対してクエリを行う。
 	/// </summary>
@@ -120,7 +141,7 @@ private:
 	/// マテリアルを構築。
 	/// </summary>
 	/// <param name="tkmMat"></param>
-	void BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath);
+	void BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath, bool isLoadTexture, bool isOutputErrorCodeTTY);
 	/// <summary>
 	/// 接ベクトルと従ベクトルを計算する。
 	/// </summary>
@@ -128,6 +149,11 @@ private:
 	/// 3dsMaxScriptでやるべきなんだろうけど、デバッグしたいので今はこちらでやる。
 	/// </remarks>
 	void BuildTangentAndBiNormal();
+
 private:
+	/// @brief TKMファイルの最適化
+	void Optimize();
+private:
+	BSP m_bpsOnVertexPosition;
 	std::vector< SMesh>	m_meshParts;		//メッシュパーツ。
 };

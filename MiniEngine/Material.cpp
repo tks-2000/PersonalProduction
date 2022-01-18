@@ -12,7 +12,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 {
 	const auto& nullTextureMaps = g_graphicsEngine->GetNullTextureMaps();
 	if (tkmMat.albedoMap != nullptr) {
-		m_albedoMap.InitFromMemory(tkmMat.albedoMap.get(), tkmMat.albedoMapSize);
+		m_albedoMap.InitFromMemory(tkmMat.albedoMap->data.get(), tkmMat.albedoMap->dataSize);
 	}
 	else {
 		m_albedoMap.InitFromMemory(
@@ -20,7 +20,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 			nullTextureMaps.GetAlbedoMapSize());
 	}
 	if (tkmMat.normalMap != nullptr) {
-		m_normalMap.InitFromMemory(tkmMat.normalMap.get(), tkmMat.normalMapSize);
+		m_normalMap.InitFromMemory(tkmMat.normalMap->data.get(), tkmMat.normalMap->dataSize);
 	}
 	else {
 		m_normalMap.InitFromMemory(
@@ -28,7 +28,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 			nullTextureMaps.GetNormalMapSize());
 	}
 	if (tkmMat.specularMap != nullptr) {
-		m_specularMap.InitFromMemory(tkmMat.specularMap.get(), tkmMat.specularMapSize);
+		m_specularMap.InitFromMemory(tkmMat.specularMap->data.get(), tkmMat.specularMap->dataSize);
 	}
 	else {
 		m_specularMap.InitFromMemory(
@@ -37,7 +37,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 	}
 
 	if (tkmMat.reflectionMap != nullptr) {
-		m_reflectionMap.InitFromMemory(tkmMat.reflectionMap.get(), tkmMat.reflectionMapSize);
+		m_reflectionMap.InitFromMemory(tkmMat.reflectionMap->data.get(), tkmMat.reflectionMap->dataSize);
 	}
 	else {
 		m_reflectionMap.InitFromMemory(
@@ -46,7 +46,7 @@ void Material::InitTexture(const TkmFile::SMaterial& tkmMat)
 	}
 
 	if (tkmMat.refractionMap != nullptr) {
-		m_refractionMap.InitFromMemory(tkmMat.refractionMap.get(), tkmMat.refractionMapSize);
+		m_refractionMap.InitFromMemory(tkmMat.refractionMap->data.get(), tkmMat.refractionMap->dataSize);
 	}
 	else {
 		m_refractionMap.InitFromMemory(

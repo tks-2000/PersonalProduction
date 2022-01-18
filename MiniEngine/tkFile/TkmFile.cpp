@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "tkFile/TkmFile.h"
-
+#include "../../GameTemplate/Game/Util.h"
 
 //法線スムージング。
 class NormalSmoothing {
@@ -224,7 +224,13 @@ void TkmFile::LoadIndexBuffer(std::vector<T>& indices, int numIndex, FILE* fp)
 	}
 }
 
-void TkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
+void TkmFile::BuildMaterial(
+	SMaterial& tkmMat,
+	FILE* fp,
+	const char* filePath,
+	bool isLoadTexture,
+	bool isOutputErrorCodeTTY
+)
 {
 	//アルベドのファイル名をロード。
 	tkmMat.albedoMapFileName = LoadTextureFileName(fp);
@@ -240,8 +246,7 @@ void TkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
 	std::string texFilePath = filePath;
 	auto loadTexture = [&](
 		std::string& texFileName, 
-		std::unique_ptr<char[]>& ddsFileMemory, 
-		unsigned int& fileSize
+		LowTexture*& lowTexture
 	) {
 		int filePathLength = static_cast<int>(texFilePath.length());
 		if (texFileName.length() > 0) {
@@ -258,30 +263,55 @@ void TkmFile::BuildMaterial(SMaterial& tkmMat, FILE* fp, const char* filePath)
 			replaceLen = texFilePath.length() - replaseStartPos;
 			texFilePath.replace(replaseStartPos, replaceLen, "dds");
 				
-			//テクスチャをロード。
-			FILE* texFileFp = fopen(texFilePath.c_str(), "rb");
-			if (texFileFp != nullptr) {
-				//ファイルサイズを取得。
-				fseek(texFileFp, 0L, SEEK_END);		
-				fileSize = ftell(texFileFp);
-				fseek(texFileFp, 0L, SEEK_SET);
+			lowTexture = g_engine->GetLowTextureFromBank(texFilePath.c_str());
+			if (lowTexture == nullptr) {
+				lowTexture = new LowTexture();
+				//テクスチャをロード。
+				FILE* texFileFp = fopen(texFilePath.c_str(), "rb");
+				if (texFileFp != nullptr) {
+					//ファイルサイズを取得。
+					fseek(texFileFp, 0L, SEEK_END);
+					lowTexture->dataSize = ftell(texFileFp);
+					fseek(texFileFp, 0L, SEEK_SET);
 
-				ddsFileMemory = std::make_unique<char[]>(fileSize);
-				fread(ddsFileMemory.get(), fileSize, 1, texFileFp);
-				fclose(texFileFp);
-			}
-			else {
-				MessageBoxA(nullptr, "テクスチャのロードに失敗しました。", "エラー", MB_OK);
-				std::abort();
+					lowTexture->data = std::make_unique<char[]>(lowTexture->dataSize);
+					fread(lowTexture->data.get(), lowTexture->dataSize, 1, texFileFp);
+					fclose(texFileFp);
+					lowTexture->filePath = texFilePath;
+					g_engine->RegistLowTextureToBank(lowTexture->filePath.c_str(), lowTexture);
+				}
+				else {
+					MessageBoxA(nullptr, "テクスチャのロードに失敗しました。", "エラー", MB_OK);
+					std::abort();
+				}
 			}
 		}
 	};
-	//テクスチャをロード。
-	loadTexture( tkmMat.albedoMapFileName, tkmMat.albedoMap, tkmMat.albedoMapSize );
-	loadTexture( tkmMat.normalMapFileName, tkmMat.normalMap, tkmMat.normalMapSize );
-	loadTexture( tkmMat.specularMapFileName, tkmMat.specularMap, tkmMat.specularMapSize );
-	loadTexture( tkmMat.reflectionMapFileName, tkmMat.reflectionMap, tkmMat.reflectionMapSize );
-	loadTexture( tkmMat.refractionMapFileName, tkmMat.refractionMap, tkmMat.refractionMapSize) ;
+	if (isLoadTexture) {
+		//テクスチャをロード。
+		loadTexture(tkmMat.albedoMapFileName, tkmMat.albedoMap);
+		loadTexture(tkmMat.normalMapFileName, tkmMat.normalMap);
+		loadTexture(tkmMat.specularMapFileName, tkmMat.specularMap);
+		loadTexture(tkmMat.reflectionMapFileName, tkmMat.reflectionMap);
+		loadTexture(tkmMat.refractionMapFileName, tkmMat.refractionMap);
+	}
+
+	// マテリアルのユニークIDを生成する。
+	std::string sourceName = tkmMat.albedoMapFileName;
+	if (!tkmMat.normalMapFileName.empty()) {
+		sourceName += tkmMat.normalMapFileName;
+	}
+	if (!tkmMat.specularMapFileName.empty()) {
+		sourceName += tkmMat.specularMapFileName;
+	}
+	if (!tkmMat.reflectionMapFileName.empty()) {
+		sourceName += tkmMat.reflectionMapFileName;
+	}
+	if (!tkmMat.refractionMapFileName.empty()) {
+		sourceName += tkmMat.refractionMapFileName;
+	}
+	// テクスチャ名からユニークIDを生成する。
+	tkmMat.uniqID = Util::MakeHash(sourceName.c_str());
 }
 void TkmFile::BuildTangentAndBiNormal()
 {
@@ -297,12 +327,21 @@ void TkmFile::BuildTangentAndBiNormal()
 		}
 	}
 }
-void TkmFile::Load(const char* filePath)
+bool TkmFile::Load(const char* filePath,bool isOptimize,bool isLoadTexture, bool isOutputErrorCodeTTY)
 {
 	FILE* fp = fopen(filePath, "rb");
 	if (fp == nullptr) {
-		MessageBoxA(nullptr, "tkmファイルが開けません。", "エラー", MB_OK);
-		return ;
+		char errorMessage[256];
+		sprintf(errorMessage, "tkmファイルのオープンに失敗しました。filePath = %s\n", filePath);
+
+		if (!isOutputErrorCodeTTY) {
+			MessageBoxA(nullptr, errorMessage, "エラー", MB_OK);
+		}
+		else {
+			printf(errorMessage);
+		}
+		// 失敗。
+		return false;
 	}
 	//tkmファイルのヘッダーを読み込み。
 	tkmFileFormat::SHeader header;
@@ -324,7 +363,7 @@ void TkmFile::Load(const char* filePath)
 		//マテリアル情報を構築していく。
 		for (unsigned int materialNo = 0; materialNo < meshPartsHeader.numMaterial; materialNo++) {
 			auto& material = meshParts.materials[materialNo];
-			BuildMaterial(material, fp, filePath);
+			BuildMaterial(material, fp, filePath,isLoadTexture,isOutputErrorCodeTTY);
 		}
 			
 		//続いて頂点バッファ。
@@ -380,9 +419,190 @@ void TkmFile::Load(const char* filePath)
 
 		}
 	}
-	//接ベクトルと従ベクトルを構築する。
-	BuildTangentAndBiNormal();
+	
 
 	fclose(fp);
 
+	//m_bpsOnVertexPosition.Build();
+
+	//接ベクトルと従ベクトルを構築する。
+	BuildTangentAndBiNormal();
+
+	if (isOptimize) {
+		Optimize();
+	}
+	return true;
+}
+bool TkmFile::Save(const char* filePath)
+{
+	FILE* fp = fopen(filePath, "wb");
+	if (fp == nullptr) {
+		printf("出力用のtkmファイルのオープンに失敗しました。%s\n", filePath);
+		return false;
+	}
+	if (m_meshParts.empty()) {
+		printf("オリジナルのtkmファイルがロードされていません。%s\n", filePath);
+		return false;
+	}
+	// ヘッダー情報の構築。
+	tkmFileFormat::SHeader header;
+	header.isFlatShading = m_meshParts[0].isFlatShading ? 1 : 0;
+	header.numMeshParts = m_meshParts.size();
+	header.version = tkmFileFormat::VERSION;
+	fwrite(&header, sizeof(header), 1, fp);
+
+	// 続いてメッシュパーツ本体のデータを書き込んでいく。
+	for (int meshPartsNo = 0; meshPartsNo < header.numMeshParts; meshPartsNo++) {
+		tkmFileFormat::SMeshePartsHeader meshPartsHeader;
+		meshPartsHeader.numMaterial = m_meshParts[meshPartsNo].materials.size();
+		meshPartsHeader.numVertex = m_meshParts[meshPartsNo].vertexBuffer.size();
+		meshPartsHeader.indexSize = 4; // 32ビット固定。
+		fwrite(&meshPartsHeader, sizeof(meshPartsHeader), 1, fp);
+		// マテリアル情報を書き込んでいく。
+		for (int matNo = 0; matNo < m_meshParts[meshPartsNo].materials.size(); matNo++) {
+			SMaterial& mat = m_meshParts[meshPartsNo].materials[matNo];
+			// テクスチャのファイル名情報を書き込む匿名関数。
+			auto WriteTextureFileNameInfo = [&](const std::string& fineName)
+			{
+				std::uint32_t fileNameLen = fineName.length();
+				// ファイル名情報を書き込む。
+				if (fineName.empty()) {
+					fileNameLen = 0;
+					fwrite(&fileNameLen, sizeof(fileNameLen), 1, fp);
+				}
+				else {
+					fileNameLen = fineName.length();
+					fwrite(&fileNameLen, sizeof(fileNameLen), 1, fp);
+					fwrite(fineName.c_str(), fileNameLen + 1, 1, fp);
+				}
+			};
+			// アルベドテクスチャのファイル名情報を書き込む。
+			WriteTextureFileNameInfo(mat.albedoMapFileName);
+			// 法線マップ
+			WriteTextureFileNameInfo(mat.normalMapFileName);
+			// スペキュラマップのファイル名情報を書き込む。
+			WriteTextureFileNameInfo(mat.specularMapFileName);
+			// リフレクションマップ。
+			WriteTextureFileNameInfo(mat.reflectionMapFileName);
+			// 屈折マップ。
+			WriteTextureFileNameInfo(mat.refractionMapFileName);
+
+		}
+		// 続いて頂点バッファを書き込んでいく。
+		for (int vertNo = 0; vertNo < m_meshParts[meshPartsNo].vertexBuffer.size(); vertNo++) {
+			tkmFileFormat::SVertex vertex;
+			auto& vertexTmp = m_meshParts[meshPartsNo].vertexBuffer[vertNo];
+			vertex.pos[0] = vertexTmp.pos.x;
+			vertex.pos[1] = vertexTmp.pos.y;
+			vertex.pos[2] = vertexTmp.pos.z;
+			vertex.normal[0] = vertexTmp.normal.x;
+			vertex.normal[1] = vertexTmp.normal.y;
+			vertex.normal[2] = vertexTmp.normal.z;
+
+			vertex.uv[0] = vertexTmp.uv.x;
+			vertex.uv[1] = vertexTmp.uv.y;
+
+			vertex.weights[0] = vertexTmp.skinWeights.x;
+			vertex.weights[1] = vertexTmp.skinWeights.y;
+			vertex.weights[2] = vertexTmp.skinWeights.z;
+			vertex.weights[3] = vertexTmp.skinWeights.w;
+
+			vertex.indices[0] = vertexTmp.indices[0];
+			vertex.indices[1] = vertexTmp.indices[1];
+			vertex.indices[2] = vertexTmp.indices[2];
+			vertex.indices[3] = vertexTmp.indices[3];
+
+			// 頂点を書き込む
+			fwrite(&vertex, sizeof(vertex), 1, fp);
+		}
+
+		// 続いてインデックスバッファ。
+		// 最適化後は32ビットしかサポートしない。
+		for (int matNo = 0; matNo < meshPartsHeader.numMaterial; matNo++) {
+			std::uint32_t numPolygon = m_meshParts[meshPartsNo].indexBuffer32Array[matNo].indices.size() / 3;
+			fwrite(&numPolygon, sizeof(numPolygon), 1, fp);
+			const auto& indeces = m_meshParts[meshPartsNo].indexBuffer32Array[matNo].indices;
+			for (int i = 0; i < indeces.size(); i++) {
+				// インデックスバッファを書き込む
+				int index = indeces[i] + 1;	// 3dsMaxから出力される際に＋１されているので、それに合わせて戻す。
+				fwrite(
+					&index,
+					sizeof(std::uint32_t),
+					1,
+					fp
+				);
+			}
+		}
+	}
+
+	fclose(fp);
+	return true;
+}
+
+void TkmFile::Optimize()
+{
+	// 同じマテリアルを使っているメッシュをひとまとめにする。
+	// 最悪のケースでマテリアルの数分だけメッシュが存在するので、
+	// メッシュの最大数を調べておく。
+	int maxMesh = 0;
+	for (SMesh& mesh : m_meshParts) {
+		maxMesh += mesh.materials.size();
+	}
+	std::vector< SMesh > optimizeMeshParts;
+	// 最適化済みのメッシュを記憶する領域を最悪のケースで確保しておく。
+	optimizeMeshParts.reserve(maxMesh);
+
+	std::map<int, SMesh*> meshMap;
+	for (SMesh& mesh : m_meshParts) {
+		for (int matNo = 0; matNo < mesh.materials.size(); matNo++) {
+			int matId = mesh.materials[matNo].uniqID;
+			auto it = meshMap.find(matId);
+			if (it == meshMap.end()) {
+				// 新規マテリアル。
+				SMesh optMesh;
+				optMesh.materials.emplace_back(mesh.materials[matNo]);
+				optMesh.vertexBuffer = mesh.vertexBuffer;
+				optMesh.indexBuffer32Array.resize(1);
+				optMesh.isFlatShading = m_meshParts[0].isFlatShading;
+				// もう16bitのイ0ンデックスバッファは使わない。
+				if (mesh.indexBuffer32Array.size() != 0) {
+					for (int index : mesh.indexBuffer32Array[matNo].indices) {
+						optMesh.indexBuffer32Array[0].indices.emplace_back(index);
+					}
+				}
+				if (mesh.indexBuffer16Array.size() != 0) {
+					for (int index : mesh.indexBuffer16Array[matNo].indices) {
+						optMesh.indexBuffer32Array[0].indices.emplace_back(index);
+					}
+				}
+				optimizeMeshParts.emplace_back(optMesh);
+				meshMap.insert(std::pair<int, SMesh*>(matId, &optimizeMeshParts.back()));
+			}
+			else {
+				// 重複マテリアルなので統合する。
+				// 頂点バッファを連結。
+				SMesh* optMesh = it->second;
+				int baseIndex = optMesh->vertexBuffer.size();
+				optMesh->vertexBuffer.insert(
+					optMesh->vertexBuffer.end(),
+					mesh.vertexBuffer.begin(),
+					mesh.vertexBuffer.end()
+				);
+
+				// インデックスバッファを連結。
+				if (mesh.indexBuffer32Array.size() != 0) {
+					for (int index : mesh.indexBuffer32Array[matNo].indices) {
+						optMesh->indexBuffer32Array[0].indices.emplace_back(index + baseIndex);
+					}
+				}
+				if (mesh.indexBuffer16Array.size() != 0) {
+					for (int index : mesh.indexBuffer16Array[matNo].indices) {
+						optMesh->indexBuffer32Array[0].indices.emplace_back(index + baseIndex);
+					}
+				}
+			}
+		}
+	}
+	// 最適化済みメッシュに差し替える。
+	m_meshParts = optimizeMeshParts;
 }

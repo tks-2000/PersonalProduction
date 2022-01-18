@@ -20,11 +20,14 @@ namespace test {
 			enAnimNum
 		);
 
-		m_hero->SetScale({ 2.0f,2.0f,2.0f });
+		//m_hero->SetScale({ 2.0f,2.0f,2.0f });
 		m_shield->Init("Assets/modelData/character/Hero_Shield.tkm");
 		m_sword->Init("Assets/modelData/character/Hero_Sword.tkm");
 		//m_sword->Init("Assets/modelData/sphere/sphere.tkm");
 		//m_sword->SetScale({ 0.1f,0.1f,0.1f });
+
+		m_stage = NewGO <render::model::SkinModelRender>(0);
+		m_stage->Init("Assets/modelData/stage/Stage.tkm");
 
 	}
 
@@ -67,6 +70,8 @@ namespace test {
 
 		m_shield->Execution();
 		m_sword->Execution();
+
+		m_stage->Execution();
 
 	}
 
