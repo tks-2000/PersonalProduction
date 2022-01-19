@@ -302,6 +302,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAnimation.cpp" />
     <ClCompile Include="EnemyAttack.cpp" />
+    <ClCompile Include="EnemyEffect.cpp" />
     <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
     <ClCompile Include="EnemyRotation.cpp" />
@@ -328,6 +329,7 @@
     <ClCompile Include="PlayerAnimation.cpp" />
     <ClCompile Include="PlayerAttack.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="PlayerEffect.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerRotation.cpp" />
     <ClCompile Include="PostEffect.cpp" />
@@ -434,6 +436,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyAnimation.h" />
     <ClInclude Include="EnemyAttack.h" />
+    <ClInclude Include="EnemyEffect.h" />
     <ClInclude Include="EnemyGenerator.h" />
     <ClInclude Include="EnemyMove.h" />
     <ClInclude Include="EnemyResource.h" />
@@ -461,6 +464,7 @@
     <ClInclude Include="PlayerAnimation.h" />
     <ClInclude Include="PlayerAttack.h" />
     <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="PlayerEffect.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerRotation.h" />
     <ClInclude Include="PostEffect.h" />

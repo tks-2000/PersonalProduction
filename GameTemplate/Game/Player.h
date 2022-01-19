@@ -3,6 +3,7 @@
 #include "PlayerAnimation.h"
 #include "PlayerRotation.h"
 #include "PlayerAttack.h"
+#include "PlayerEffect.h"
 #include "ItemSlot.h"
 #include "ItemResource.h"
 
@@ -65,6 +66,8 @@ namespace mainGame {
 			void SetAddVerocity(const float addVerocity) { m_playerMove.SetAddVerocity(addVerocity); }
 
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
+
+			const Quaternion& GetPlayerRotation() {return m_playerRot.GetRotation(); }
 
 			/// @brief プレイヤーの方向を入手
 			/// @return プレイヤーの向いている方向のconst参照
@@ -162,6 +165,8 @@ namespace mainGame {
 			Rotation m_playerRot;
 			/// @brief 攻撃
 			Attack m_playerAttack;
+
+			EffectGenerator  m_playerEffect;
 
 			ItemSlot m_itemSlot;
 

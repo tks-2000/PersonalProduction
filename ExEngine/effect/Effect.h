@@ -26,7 +26,7 @@ public:
 	/// <remark>
 	/// この関数を呼び出すとエフェクトの再生が開始されます。
 	/// </remark>
-	void Play();
+	void Play(const bool isStopAndPlay);
 	/*!
 	*@brief	座標を設定。
 	*/
@@ -78,6 +78,11 @@ public:
 	bool IsPlay() const
 	{
 		return EffectEngine::GetInstance()->IsPlay(m_handle);
+	}
+
+	void Stop()
+	{
+		EffectEngine::GetInstance()->Stop(m_handle);
 	}
 	/*!
 	 *@brief	更新。

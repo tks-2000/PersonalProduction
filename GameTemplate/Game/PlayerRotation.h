@@ -24,6 +24,7 @@ namespace mainGame {
 			/// @return 速度によって決まった回転クォータニオン
 			const Quaternion& RotationExecution(const Vector3& moveSpeed);
 
+			const Quaternion& GetRotation() { return m_qRot; }
 
 			const Vector3& GetDirection() { return m_direction; }
 

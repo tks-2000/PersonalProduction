@@ -20,7 +20,7 @@ namespace mainGame {
 
 			void SetAttackTarget(const Vector3& target) { m_attackTarget = target; }
 
-
+			const bool IsHit() { return m_isHit; }
 
 		private:
 
@@ -31,6 +31,8 @@ namespace mainGame {
 			Vector3 m_attackTarget = g_vec3Zero;
 
 			float m_attackTimer = 0.0f;
+
+			bool m_isHit = false;
 
 			Enemy* m_enemy = nullptr;
 

@@ -67,6 +67,8 @@ namespace mainGame {
 				return;
 			}
 
+			m_isHit = false;
+
 			if (m_enemy->GetState() != enEnemyAttack) {
 				return;
 			}
@@ -87,6 +89,8 @@ namespace mainGame {
 				ExecuteAttack();
 				//タイマーを0に戻す
 				m_attackTimer = 0.0f;
+
+				m_isHit = true;
 			}
 
 		}

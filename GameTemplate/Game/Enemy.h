@@ -5,6 +5,7 @@
 #include "EnemyRotation.h"
 #include "EnemyResource.h"
 #include "EnemyRouteMove.h";
+#include "EnemyEffect.h"
 
 namespace mainGame {
 
@@ -67,7 +68,11 @@ namespace mainGame {
 
 			virtual const Vector3& GetMoveSpeed() const { return g_vec3Zero; }
 
-			const Vector3& GetDirection() { return m_enemyRotation.GetDirection(); };
+			virtual const bool IsHitAttack() { return false; };
+
+			const Vector3& GetDirection() { return m_enemyRotation.GetDirection(); }
+
+			const Quaternion& GetRotation() { return m_enemyRotation.GetRotation(); }
 
 			void SetRotation(const Quaternion qRot) { m_qRot = qRot; }
 
@@ -91,9 +96,17 @@ namespace mainGame {
 			/// @return 敵に設定されている種類
 			const EnEnemyType& GetEnemyType() { return m_enemyType; }
 
+			/// @brief ダウンから死亡までかかる時間を取得
+			/// @return ダウンしてから死亡するまでの時間
 			const float GetDeleteTime() const { return m_deleteTime; }
 
+			/// @brief ダウンから死亡するまでの時間を計るタイマーを取得
+			/// @return ダウンしてから死亡するまでの時間を計るタイマー
+			const float GetDeleteTimer() const { return m_deleteTimer; }
+
 			const bool IsDefeat() { return m_defeatFlag; }
+
+			
 
 			/// @brief 削除
 			void DeleteEnemy();
@@ -128,6 +141,8 @@ namespace mainGame {
 			//RouteMove m_enemyRouteMove;
 			/// @brief 敵の回転
 			Rotation m_enemyRotation;
+
+			EffectGenerator m_enemyEffect;
 			/// @brief 敵の攻撃
 			//Attack m_enemyAttack;
 			/// @brief 敵のアニメーション

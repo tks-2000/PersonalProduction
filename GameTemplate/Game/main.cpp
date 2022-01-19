@@ -65,8 +65,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		GameObjectManager::GetInstance()->ExecuteUpdate();
 		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
 		
-		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-		EffectEngine::GetInstance()->Draw();
+		//EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+		//EffectEngine::GetInstance()->Draw();
 
 		//////////////////////////////////////
 		//絵を描くコードを書くのはここまで！！！

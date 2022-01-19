@@ -27,6 +27,8 @@ namespace mainGame {
 
 			void EndSeeTheSituation();
 
+			const Quaternion& GetRotation() { return m_qRot; }
+
 		private:
 			void ExecuteSeeTheSituation();
 			

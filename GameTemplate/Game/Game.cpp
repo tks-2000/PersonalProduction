@@ -7,9 +7,12 @@ namespace mainGame {
 	{
 		//AllNew();
 		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		m_effect.Init(u"Assets/effect/fire.efk");
+		m_effect.Init(u"Assets/effect/smallTexturesRibbon.efk");
 		m_effect.SetPosition({ 0.0f,0.0f,0.0f });
-		m_effect.SetScale({ 0.1f,0.1f,0.1f });
+		Quaternion efkRot;
+		efkRot.SetRotationDegX(90.0f);
+		m_effect.SetRotation(efkRot);
+		m_effect.SetScale({ 20.0f,20.0f,1.0f });
 		m_state = enTitleScene;
 		m_isDead = true;
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
@@ -91,7 +94,7 @@ namespace mainGame {
 	void Game::Update()
 	{
 		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
-			m_effect.Play();
+			m_effect.Play(false);
 			
 		}
 		m_effect.Update();

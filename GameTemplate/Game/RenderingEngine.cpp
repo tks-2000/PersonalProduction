@@ -98,6 +98,9 @@ namespace render {
 		//メインレンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderTarget);
 
+		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+		EffectEngine::GetInstance()->Draw();
+
 		//ポストエフェクトを実行
 		m_postEffect->Execute(rc);
 

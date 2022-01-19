@@ -54,6 +54,7 @@ namespace mainGame {
 			m_playerRot.Init(this);
 			m_playerAnimation.Init(this);
 			m_playerAttack.Init(this);
+			m_playerEffect.Init(this);
 			m_itemSlot.Init(this);
 
 			//プレイヤーのモデルを初期化
@@ -114,6 +115,8 @@ namespace mainGame {
 				m_playerAttack.Execute();
 
 				m_qRot = m_playerRot.RotationExecution(m_playerMove.GetMoveSpssd());
+
+				m_playerEffect.Execution();
 
 				m_itemSlot.Execution();
 

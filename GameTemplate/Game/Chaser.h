@@ -15,6 +15,8 @@ namespace mainGame {
 			void SetMoveSpeed(const Vector3& speed) { m_enemyRouteMove.SetMoveSpeed(speed); };
 
 			const Vector3& GetMoveSpeed() const { return m_enemyRouteMove.GetMoveSpeed(); }
+
+			const bool IsHitAttack();
 		private:
 			void InitData(const EnemyInitData& initData);
 

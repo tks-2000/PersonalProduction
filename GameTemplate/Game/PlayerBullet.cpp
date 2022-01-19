@@ -93,6 +93,10 @@ namespace mainGame {
 				//敵のデータを取り出す
 				enemy::Enemy* enemyData = *(m_enemys->begin() + enemyNum);
 
+				if (enemyData->GetState() == enemy::enEnemyDown) {
+					continue;
+				}
+
 				//敵との距離を測る
 				Vector3 toEnemyVec = enemyData->GetPosition() - m_position;
 
@@ -106,7 +110,6 @@ namespace mainGame {
 					enemyData->SetMoveSpeed(toEnemyVec * BULLET_IMPACT_FORCE);
 
 					//敵にダメージを与える
-					enemyData->SetState(enemy::enEnemyDamage);
 					enemyData->ReceiveDamage(BULLET_DAMAGE);
 
 					//自身を削除

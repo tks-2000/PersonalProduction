@@ -30,6 +30,7 @@ namespace mainGame {
 			m_enemyRotation.Init(this);
 			m_enemyAttack.Init(this);
 			m_enemyAnimation.Init(this);
+			m_enemyEffect.Init(this);
 
 			//モデルをアニメーション有りで初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -59,6 +60,7 @@ namespace mainGame {
 				m_enemyRouteMove.Execution();
 				m_enemyRotation.RotationExecute();
 				m_enemyAttack.Execution();
+				m_enemyEffect.Execution();
 				if (m_state == enEnemyDown) {
 					DownExecution();
 				}

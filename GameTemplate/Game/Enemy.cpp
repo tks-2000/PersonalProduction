@@ -107,6 +107,13 @@ namespace mainGame {
 			m_enemyMapModel->Execution();
 
 
+			//体力が0以下になったら
+			if (m_hp <= 0) {
+				//ダウン状態に移行
+				m_state = enEnemyDown;
+				m_hp = 0;
+			}
+
 			if (m_position.y < -1000.0f) {
 				//生成器に削除を伝える
 				m_generator->DeleteEnemy(this);
@@ -127,14 +134,10 @@ namespace mainGame {
 			//ダメージを受ける
 			m_hp -= damage;
 
+			m_state = enEnemyDamage;
 			//m_enemyRotation.StartSeeTheSituation();
 
-			//体力が0以下になったら
-			if (m_hp <= 0) {
-				//ダウン状態に移行
-				m_state = enEnemyDown;
-				m_hp = 0;
-			}
+			
 		}
 
 		void Enemy::DeleteEnemy()
@@ -158,6 +161,7 @@ namespace mainGame {
 			//m_enemyMove.Init(this);
 			//m_enemyRouteMove.Init(this);
 			m_enemyRotation.Init(this);
+			m_enemyEffect.Init(this);
 			//m_enemyAttack.Init(this);
 			//m_enemyAnimation.Init(this);
 

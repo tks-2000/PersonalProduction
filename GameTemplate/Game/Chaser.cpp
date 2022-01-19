@@ -36,6 +36,7 @@ namespace mainGame {
 			m_enemyAttackThePlayer.Init(this);
 			m_enemyAttack.Init(this);
 			m_enemyAnimation.Init(this);
+			m_enemyEffect.Init(this);
 
 			//モデルをアニメーション有りで初期化
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
@@ -55,6 +56,15 @@ namespace mainGame {
 
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
+		}
+
+		const bool Chaser::IsHitAttack()
+		{
+			if (m_enemyAttack.IsHit() == true || m_enemyAttackThePlayer.IsHit() == true) {
+				return true;
+			}
+
+			return false;
 		}
 
 		void Chaser::ExecuteBehavior()
@@ -87,6 +97,8 @@ namespace mainGame {
 				m_enemyRouteMove.Execution();
 				//回転を実行
 				m_enemyRotation.RotationExecute();
+
+				m_enemyEffect.Execution();
 
 				//追跡状態なら…
 				if (m_chaseMode == true) {

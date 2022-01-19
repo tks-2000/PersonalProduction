@@ -206,11 +206,11 @@ namespace mainGame {
 					enemyData->SetState(enemy::enEnemyDamage);
 
 					//“G‚É”š”­‚Ìƒ_ƒ[ƒW‚ð—^‚¦‚é
-					enemyData->ReceiveDamage(EXPLOSION_DAMAGE);
+					//enemyData->ReceiveDamage(EXPLOSION_DAMAGE);
 				}
 			}
 
-			m_explosion.Play();
+			m_explosion.Play(true);
 			//CSoundSource* se = NewGO<CSoundSource>(PRIORITY_VERYLOW);
 			//se->Init(L"Assets/sound/se/explosion.wav");
 			//se->Play(false);

@@ -104,7 +104,8 @@ namespace mainGame {
 				}
 				
 				num %= enEnemyTypeNum;
-				num2 %= SPAWN_POS_NUM;
+				//num2 %= SPAWN_POS_NUM;
+				num2 = 0;
 
 				CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
 
