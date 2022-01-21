@@ -70,6 +70,15 @@ void EffectEngine::Stop(int effectHandle)
 	m_manager->StopEffect(effectHandle);
 }
 
+void EffectEngine::StopRoot(int effectHandle)
+{
+	m_manager->StopRoot(effectHandle);
+}
+
+void EffectEngine::StopRootEffect(Effekseer::EffectRef& effect)
+{
+	m_manager->StopRoot(effect);
+}
 
 void EffectEngine::Update(float deltaTime)
 {

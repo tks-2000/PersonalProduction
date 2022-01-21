@@ -166,7 +166,7 @@ namespace mainGame {
 		nsAI::Path m_path;
 		nsAI::PathFinding m_pathFinding;
 
-		Effect m_effect;
+		render::effect::EffectRender* m_effect = nullptr;
 	};
 
 }

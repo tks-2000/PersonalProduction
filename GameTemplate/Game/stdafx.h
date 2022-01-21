@@ -16,6 +16,7 @@
 #include "SpriteRender.h"
 #include "FontRender.h"
 #include "../../ExEngine/effect/Effect.h"
+#include "EffectRender.h"
 #include "SoundSource.h"
 #include "NaviMesh.h"
 #include "Path.h"

@@ -74,6 +74,8 @@ namespace render {
 
 		void SetLightFlag(const bool Authenticity) { m_ligFlag = Authenticity; }
 
+		void SetEffectFlag(const bool Authenticity) { m_effectFlag = Authenticity; }
+
 	private:
 		/// @brief ライトの更新
 		void LightUpdate();
@@ -125,6 +127,8 @@ namespace render {
 		Vector3 m_ligColor = g_vec3Zero;
 
 		bool m_ligFlag = false;
+
+		bool m_effectFlag = false;
 
 	};
 }

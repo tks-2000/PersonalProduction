@@ -251,7 +251,7 @@ namespace mainGame {
 					
 
 					//“G‚Éƒ_ƒ[ƒW‚ð—^‚¦‚é
-					if (m_enemys[enemyNum]->GetState() == enemy::enEnemyDamage || m_enemys[enemyNum]->GetState() == enemy::enEnemyDown) {
+					if (m_enemys[enemyNum]->GetState() == enemy::enEnemyDown) {
 						return;
 					}
 

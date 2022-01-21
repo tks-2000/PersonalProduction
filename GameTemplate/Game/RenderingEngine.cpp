@@ -59,6 +59,7 @@ namespace render {
 		);
 
 		m_ligFlag = true;
+		m_effectFlag = true;
 		//m_shadow->SetLightCameraTarget({ 0.0f,0.0f,0.0f });
 
 		//ブラーをかける
@@ -98,8 +99,10 @@ namespace render {
 		//メインレンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderTarget);
 
-		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-		EffectEngine::GetInstance()->Draw();
+		if (m_effectFlag == true) {
+			EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+			EffectEngine::GetInstance()->Draw();
+		}
 
 		//ポストエフェクトを実行
 		m_postEffect->Execute(rc);

@@ -84,6 +84,16 @@ public:
 	{
 		EffectEngine::GetInstance()->Stop(m_handle);
 	}
+
+	void StopRoot()
+	{
+		EffectEngine::GetInstance()->StopRoot(m_handle);
+	}
+
+	void StopRootEffect()
+	{
+		EffectEngine::GetInstance()->StopRootEffect(m_effect);
+	}
 	/*!
 	 *@brief	XVB
 	 */

@@ -121,6 +121,8 @@ namespace mainGame {
 				//©g‚ğíœ
 				DeleteGO(this);
 			}
+
+			m_isDamage = false;
 		}
 
 		void Enemy::SetMoveSpeed(const Vector3& speed)
@@ -137,7 +139,7 @@ namespace mainGame {
 			m_state = enEnemyDamage;
 			//m_enemyRotation.StartSeeTheSituation();
 
-			
+			m_isDamage = true;
 		}
 
 		void Enemy::DeleteEnemy()

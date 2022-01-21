@@ -36,30 +36,38 @@ namespace mainGame {
 
 		EffectGenerator::EffectGenerator()
 		{
-
+			m_spawnEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_damageEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_stanEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_attackEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_deathEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
 		}
 
 		EffectGenerator::~EffectGenerator()
 		{
-
+			DeleteGO(m_spawnEffect);
+			DeleteGO(m_damageEffect);
+			DeleteGO(m_stanEffect);
+			DeleteGO(m_attackEffect);
+			DeleteGO(m_deathEffect);
 		}
 
 		void EffectGenerator::Init(Enemy* enemy)
 		{
 			//初期化が必要な情報を初期化する
-			m_spawnEffect.effect.Init(SPAWN_EFFECT_FILEPATH);
-			m_spawnEffect.scale = SPAWN_EFFECT_SCALE;
-			m_damageEffect.effect.Init(DAMAGE_EFFECT_FILEPATH);
-			m_damageEffect.scale = DAMAGE_EFFECT_SCALE;
-			m_stanEffect.effect.Init(STAN_EFFECT_FILEPATH);
-			m_stanEffect.scale = STAN_EFFECT_SCALE;
-			m_attackEffect.effect.Init(ATTACK_EFFECT_FILEPATH);
-			m_attackEffect.scale = ATTACK_EFFECT_SCALE;
-			m_deathEffect.effect.Init(DEATH_EFFECT_FILEPATH);
-			m_deathEffect.scale = DEATH_EFFECT_SCALE;
+			m_spawnEffect->Init(SPAWN_EFFECT_FILEPATH);
+			m_spawnEffect->SetScale(SPAWN_EFFECT_SCALE);
+			m_damageEffect->Init(DAMAGE_EFFECT_FILEPATH);
+			m_damageEffect->SetScale(DAMAGE_EFFECT_SCALE);
+			m_stanEffect->Init(STAN_EFFECT_FILEPATH);
+			m_stanEffect->SetScale(STAN_EFFECT_SCALE);
+			m_attackEffect->Init(ATTACK_EFFECT_FILEPATH);
+			m_attackEffect->SetScale(ATTACK_EFFECT_SCALE);
+			m_deathEffect->Init(DEATH_EFFECT_FILEPATH);
+			m_deathEffect->SetScale(DEATH_EFFECT_SCALE);
 			m_enemy = enemy;
 
-			m_spawnEffect.effect.Play(true);
+			m_spawnEffect->Play(false);
 
 			m_isInitd = true;
 		}
@@ -77,69 +85,45 @@ namespace mainGame {
 
 		}
 
-		void EffectGenerator::UpdateEffect(EffectData& effectData)
-		{
-			//エフェクトのデータを適用する
-			effectData.effect.SetPosition(effectData.pos);
-			effectData.effect.SetRotation(effectData.qRot);
-			effectData.effect.SetScale(effectData.scale);
-			effectData.effect.Update();
-		}
+		
 
 		void EffectGenerator::SpawnEffectExecution()
 		{
-			if (m_spawnEffect.effect.IsPlay() == false) {
-				return;
-			}
-
 			Vector3 efkPos = m_enemy->GetPosition();
 			efkPos.y += SPAWN_EFFECT_HEIGHT;
-			m_spawnEffect.pos = efkPos;
-			m_spawnEffect.qRot = m_enemy->GetRotation();
-
-			UpdateEffect(m_spawnEffect);
+			m_spawnEffect->SetPosition(efkPos);
+			m_spawnEffect->SetRotation(m_enemy->GetRotation());
+			m_spawnEffect->Execution();
 		}
 
 		void EffectGenerator::DamageEffectExecution()
 		{
-			//敵がダメージ中のとき…
-			if (m_enemy->GetState() == enEnemyDamage) {
-				//エフェクトの座標と回転を設定
-				Vector3 efkPos = m_enemy->GetPosition();
-				efkPos.y += DAMAGE_EFFECT_HEIGHT;
-				m_damageEffect.pos = efkPos;
-				m_damageEffect.qRot = m_enemy->GetRotation();
-				efkPos = m_enemy->GetPosition();
-				efkPos.y += STAN_EFFECT_HEIGHT;
-				m_stanEffect.pos = efkPos;
+			//エフェクトの座標と回転を設定
+			Vector3 efkPos = m_enemy->GetPosition();
+			efkPos.y += DAMAGE_EFFECT_HEIGHT;
+			m_damageEffect->SetPosition(efkPos);
+			m_damageEffect->SetRotation(m_enemy->GetRotation());
+			efkPos = m_enemy->GetPosition();
+			efkPos.y += STAN_EFFECT_HEIGHT;
+			m_stanEffect->SetPosition(efkPos);
 
-				//ダメージエフェクトが再生されていなければ…
-				if (m_damageEffect.playFlag == false) {
-
-					m_damageEffect.effect.Play(true);
-					m_damageEffect.playFlag = true;
-				}
-				//ダメージエフェクトが再生されていれば…
-				else {
-					//スタンエフェクトが再生されていなければ…
-					if (m_stanEffect.playFlag == false) {
-						//スタンエフェクトを再生
-						m_stanEffect.effect.Play(false);
-						m_stanEffect.playFlag = true;
-					}
-				}
+			//敵がダメージを受けたとき…
+			if (m_enemy->IsDamage() == true) {
+				//エフェクトを再生
+				m_damageEffect->Play(false,true);
+				m_stanEffect->Play(false);
 			}
+
 			//ダメージ中でない場合…
-			else {
+			if(m_enemy->GetState() != enEnemyDamage) {
 				//エフェクトの再生を止める
-				m_damageEffect.playFlag = false;
-				m_stanEffect.playFlag = false;
-				m_stanEffect.effect.Stop();
+				//m_damageEffect->Stop(false);
+				m_stanEffect->Stop(true);
 			}
 
 			//エフェクトを更新
-			UpdateEffect(m_damageEffect);
-			UpdateEffect(m_stanEffect);
+			m_damageEffect->Execution();
+			m_stanEffect->Execution();
 		}
 
 		void EffectGenerator::AttackEffectExecution()
@@ -147,15 +131,16 @@ namespace mainGame {
 			if (m_enemy->IsHitAttack() == true) {
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += ATTACK_EFFECT_HEIGHT;
-				m_attackEffect.pos = efkPos;
-				m_attackEffect.qRot = m_enemy->GetRotation();
+				m_attackEffect->SetPosition(efkPos);
+				m_attackEffect->SetRotation(m_enemy->GetRotation());
 
-				if (m_attackEffect.effect.IsPlay() == false) {
-					m_attackEffect.effect.Play(true);
-				}
+				m_attackEffect->Play(false);
+			}
+			else {
+				m_attackEffect->Stop(false);
 			}
 
-			UpdateEffect(m_attackEffect);
+			m_attackEffect->Execution();
 		}
 
 		void EffectGenerator::DeathEffectExecution()
@@ -163,15 +148,13 @@ namespace mainGame {
 			if (m_enemy->GetDeleteTimer() > m_enemy->GetDeleteTime() / 1.5f) {
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += DEATH_EFFECT_HEIGHT;
-				m_deathEffect.pos = efkPos;
-				m_deathEffect.qRot = m_enemy->GetRotation();
+				m_deathEffect->SetPosition(efkPos);
+				m_deathEffect->SetRotation(m_enemy->GetRotation());
 
-				if (m_deathEffect.effect.IsPlay() == false) {
-					m_deathEffect.effect.Play(true);
-				}
+				m_deathEffect->Play(false);
 			}
 
-			UpdateEffect(m_deathEffect);
+			m_deathEffect->Execution();
 		}
 	}
 }

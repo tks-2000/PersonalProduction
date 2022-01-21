@@ -2,21 +2,7 @@
 
 namespace mainGame {
 	namespace enemy {
-		/// @brief エフェクトの情報をまとめた構造体
-		struct EffectData
-		{
-			/// @brief エフェクト
-			Effect effect;
-			/// @brief 座標
-			Vector3 pos = g_vec3Zero;
-			/// @brief 回転
-			Quaternion qRot = Quaternion::Identity;
-			/// @brief 拡大率
-			Vector3 scale = g_vec3One;
-			/// @brief 任意で操作する再生フラグ
-			bool playFlag = false;
-
-		};
+		
 
 		/// @brief エフェクト発生器
 		class EffectGenerator
@@ -44,23 +30,19 @@ namespace mainGame {
 
 			/// @brief 死亡エフェクト処理の実行
 			void DeathEffectExecution();
-
-			/// @brief エフェクト情報を更新
-			/// @param effectData 更新エフェクト情報
-			void UpdateEffect(EffectData& effectData);
 			
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 出現エフェクト
-			EffectData m_spawnEffect;
+			render::effect::EffectRender* m_spawnEffect = nullptr;
 			/// @brief ダメージエフェクト
-			EffectData m_damageEffect;
+			render::effect::EffectRender* m_damageEffect = nullptr;
 			/// @brief スタンエフェクト
-			EffectData m_stanEffect;
+			render::effect::EffectRender* m_stanEffect = nullptr;
 			/// @brief 攻撃エフェクト
-			EffectData m_attackEffect;
+			render::effect::EffectRender* m_attackEffect = nullptr;
 			/// @brief 死亡エフェクト
-			EffectData m_deathEffect;
+			render::effect::EffectRender* m_deathEffect = nullptr;
 			/// @brief 敵のデータ
 			Enemy* m_enemy = nullptr;
 		};

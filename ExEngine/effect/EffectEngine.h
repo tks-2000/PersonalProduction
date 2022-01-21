@@ -94,6 +94,10 @@ public:
 	/// </summary>
 	/// <param name="effectHandle"></param>
 	void Stop(int effectHandle);
+
+	void StopRoot(int effectHandle);
+
+	void StopRootEffect(Effekseer::EffectRef& effect);
 	/// <summary>
 	/// エフェクトをロード。
 	/// </summary>

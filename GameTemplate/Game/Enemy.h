@@ -106,7 +106,7 @@ namespace mainGame {
 
 			const bool IsDefeat() { return m_defeatFlag; }
 
-			
+			const bool IsDamage() { return m_isDamage; }
 
 			/// @brief íœ
 			void DeleteEnemy();
@@ -163,6 +163,8 @@ namespace mainGame {
 			float m_deleteTime = 0.0f;
 
 			bool m_defeatFlag = false;
+
+			bool m_isDamage = false;
 			/// @brief “G¶¬Ší‚Ìî•ñ
 			Generator* m_generator = nullptr;
 

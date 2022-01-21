@@ -7,12 +7,8 @@ namespace mainGame {
 	{
 		//AllNew();
 		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		m_effect.Init(u"Assets/effect/smallTexturesRibbon.efk");
-		m_effect.SetPosition({ 0.0f,0.0f,0.0f });
-		Quaternion efkRot;
-		efkRot.SetRotationDegX(90.0f);
-		m_effect.SetRotation(efkRot);
-		m_effect.SetScale({ 20.0f,20.0f,1.0f });
+		
+		
 		m_state = enTitleScene;
 		m_isDead = true;
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
@@ -77,6 +73,12 @@ namespace mainGame {
 
 		m_gameUI->Init();
 
+		m_effect->Init(u"Assets/effect/LightningStrike.efk");
+		m_effect->SetPosition({ 0.0f,0.0f,0.0f });
+		Quaternion efkRot;
+		efkRot.SetRotationDegX(0.0f);
+		m_effect->SetRotation(efkRot);
+		m_effect->SetScale({ 10.0f,10.0f,10.0f });
 		
 		m_isDead = false;
 	}
@@ -93,15 +95,15 @@ namespace mainGame {
 
 	void Game::Update()
 	{
-		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
-			m_effect.Play(false);
-			
-		}
-		m_effect.Update();
+		
 		//未初期化なら実行しない
 		if (m_isInitd == false) {
 			return;
 		}
+
+
+		
+		
 
 		if (m_state == enGameInProgress) {
 			//ポーズ中は実行しない
@@ -110,6 +112,7 @@ namespace mainGame {
 				if (g_pad[0]->IsTrigger(enButtonStart)) {
 					m_pause = false;
 					m_renderingEngine->SetLightFlag(true);
+					m_renderingEngine->SetEffectFlag(true);
 				}
 				return;
 			}
@@ -117,6 +120,7 @@ namespace mainGame {
 				if (g_pad[0]->IsTrigger(enButtonStart)) {
 					m_pause = true;
 					m_renderingEngine->SetLightFlag(false);
+					m_renderingEngine->SetEffectFlag(false);
 					return;
 				}
 			}
@@ -168,6 +172,15 @@ namespace mainGame {
 			}
 			m_sampleSprite->Execute();
 			m_unityChanModel2->Execution();
+
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
+				m_effect->Play(false,true);
+
+			}
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
+				m_effect->Stop(true);
+			}
+			m_effect->Execution();
 		}
 		
 	}
@@ -274,6 +287,7 @@ namespace mainGame {
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 		
 		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
+		m_effect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
 	}
 
 	void Game::AllDelete()
@@ -291,6 +305,7 @@ namespace mainGame {
 		DeleteGO(m_miniMap);
 		DeleteGO(m_itemGenerator);
 		DeleteGO(m_gameUI);
+		DeleteGO(m_effect);
 	}
 
 	void Game::Pause()

@@ -81,6 +81,27 @@
     <Filter Include="Test">
       <UniqueIdentifier>{119e2b67-37b7-4384-9b1d-985eda0fb6be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyEngine\Model">
+      <UniqueIdentifier>{be1405c7-ef81-4297-a849-f357f7c0d71f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\Sprite">
+      <UniqueIdentifier>{0d5ffd59-5fcc-4c7f-999d-34f080828638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\Font">
+      <UniqueIdentifier>{8b6e870a-2f12-428f-9c83-a86db932e1da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\Effect">
+      <UniqueIdentifier>{2f4ece29-f6dd-46d2-a1be-3c4322dbcab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\PostEffect">
+      <UniqueIdentifier>{7b2e40ab-1242-4859-9eb5-c875175e7c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\Light">
+      <UniqueIdentifier>{fd83dfb4-95f3-4095-b547-556f972592a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyEngine\Shadow">
+      <UniqueIdentifier>{daaf9704-01cb-4147-8f0d-685992fb33f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -245,25 +266,7 @@
     <ClCompile Include="..\..\MiniEngine\RenderTarget.cpp">
       <Filter>MiniEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Lighting.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Bloom.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="PostEffect.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
     <ClCompile Include="RenderingEngine.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="SkinModelRender.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlur.cpp">
       <Filter>MyEngine</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
@@ -283,12 +286,6 @@
     </ClCompile>
     <ClCompile Include="PlayerRotation.cpp">
       <Filter>inGame\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteRender.cpp">
-      <Filter>MyEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="FontRender.cpp">
-      <Filter>MyEngine</Filter>
     </ClCompile>
     <ClCompile Include="DefensiveTarget.cpp">
       <Filter>inGame</Filter>
@@ -430,6 +427,33 @@
     </ClCompile>
     <ClCompile Include="EnemyEffect.cpp">
       <Filter>inGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRender.cpp">
+      <Filter>MyEngine\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>MyEngine\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRender.cpp">
+      <Filter>MyEngine\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectRender.cpp">
+      <Filter>MyEngine\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PostEffect.cpp">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Bloom.cpp">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting.cpp">
+      <Filter>MyEngine\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>MyEngine\Shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -619,25 +643,7 @@
     <ClInclude Include="..\..\MiniEngine\RenderTarget.h">
       <Filter>MiniEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Bloom.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Lighting.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="PostEffect.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
     <ClInclude Include="RenderingEngine.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="SkinModelRender.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="GaussianBlur.h">
       <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
@@ -658,13 +664,7 @@
     <ClInclude Include="PlayerRotation.h">
       <Filter>inGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRender.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
     <ClInclude Include="RenderResource.h">
-      <Filter>MyEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="FontRender.h">
       <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="DefensiveTarget.h">
@@ -813,6 +813,33 @@
     </ClInclude>
     <ClInclude Include="EnemyEffect.h">
       <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRender.h">
+      <Filter>MyEngine\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>MyEngine\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRender.h">
+      <Filter>MyEngine\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectRender.h">
+      <Filter>MyEngine\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PostEffect.h">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Bloom.h">
+      <Filter>MyEngine\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting.h">
+      <Filter>MyEngine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>MyEngine\Shadow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
