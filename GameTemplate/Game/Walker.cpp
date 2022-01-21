@@ -47,6 +47,8 @@ namespace mainGame {
 			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
 			m_enemyMapModel->Init(WALKER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
+
+			m_isModelDisplay = true;
 		}
 
 		void Walker::ExecuteBehavior()

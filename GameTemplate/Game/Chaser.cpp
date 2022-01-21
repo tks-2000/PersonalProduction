@@ -39,7 +39,7 @@ namespace mainGame {
 			m_enemyEffect.Init(this);
 
 			//モデルをアニメーション有りで初期化
-			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			/*m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
 				CHASER_MODEL_TKM_FILEPATH,
 				render::model::enMainRenderTarget,
@@ -54,8 +54,18 @@ namespace mainGame {
 			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
 			m_enemyMapModel->Init(CHASER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
 
-			m_player = FindGO<player::Player>(player::PLAYER_NAME);
-			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
+			m_isModelDisplay = true;*/
+
+			m_tkmFilepath = CHASER_MODEL_TKM_FILEPATH;
+			m_tksFilepath = CHASER_MODEL_TKS_FILEPATH;
+			m_animation = m_enemyAnimation.GetAnimationClip();
+			m_animationNum = m_enemyAnimation.GetAnimationNum();
+			m_mapModelFilepath = CHASER_MAP_MODEL_FILEPATH;
+
+			//CreateModel();
+
+			/*m_player = FindGO<player::Player>(player::PLAYER_NAME);
+			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);*/
 		}
 
 		const bool Chaser::IsHitAttack()
@@ -131,7 +141,10 @@ namespace mainGame {
 			//アニメーションを進める
 			m_enemyAnimation.AnimationUpdate();
 
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), CHASER_ANIMATION_COMPLEMENTARY_RATE);
+			if (m_isModelDisplay == true) {
+				m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), CHASER_ANIMATION_COMPLEMENTARY_RATE);
+			}
+			
 		}
 
 		void Chaser::PlayerSearch()

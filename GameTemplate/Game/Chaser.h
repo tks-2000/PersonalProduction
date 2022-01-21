@@ -37,10 +37,6 @@ namespace mainGame {
 			RouteMove m_enemyRouteMove;
 
 			Animation m_enemyAnimation;
-
-			player::Player* m_player = nullptr;
-
-			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 		};
 	}
 }

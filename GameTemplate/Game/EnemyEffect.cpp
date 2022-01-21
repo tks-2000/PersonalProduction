@@ -22,15 +22,15 @@ namespace mainGame {
 		/// @brief 攻撃エフェクトを表示する高さ
 		const float ATTACK_EFFECT_HEIGHT = 50.0f;
 		/// @brief 死亡エフェクトのファイルパス
-		const char16_t* DEATH_EFFECT_FILEPATH = u"Assets/effect/enemy_explosion.efk";
+		const char16_t* DEATH_EFFECT_FILEPATH = u"Assets/effect/CosmicMist.efk";
 		/// @brief 死亡エフェクトの拡大率
-		const Vector3 DEATH_EFFECT_SCALE = { 10.0f,10.0f,10.0f };
+		const Vector3 DEATH_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
 		/// @brief 死亡エフェクトを表示する高さ
-		const float DEATH_EFFECT_HEIGHT = 100.0f;
+		const float DEATH_EFFECT_HEIGHT = 50.0f;
 		/// @brief 出現エフェクトのファイルパス
-		const char16_t* SPAWN_EFFECT_FILEPATH = u"Assets/effect/shot_mine_burst.efk";
+		const char16_t* SPAWN_EFFECT_FILEPATH = u"Assets/effect/enemy_explosion.efk";
 		/// @brief 出現エフェクトの拡大率
-		const Vector3 SPAWN_EFFECT_SCALE = { 10.0f,10.0f,10.0f };
+		const Vector3 SPAWN_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
 		/// @brief 出現エフェクトを表示する高さ
 		const float SPAWN_EFFECT_HEIGHT = 100.0f;
 

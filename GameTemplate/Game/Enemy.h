@@ -123,10 +123,29 @@ namespace mainGame {
 			/// @brief 倒された時の処理
 			void DownExecution();
 
+			/// @brief モデルを作成
+			void CreateModel();
+
+			/// @brief モデル表示を行うまでのカウントを行う
+			void ModelDisplayCount();
 			
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
+			/// @brief モデル表示フラグ
+			bool m_isModelDisplay = false;
+			/// @brief モデルのファイルパス
+			const char* m_tkmFilepath = nullptr;
+			/// @brief スケルトンのファイルパス
+			const char* m_tksFilepath = nullptr;
+			/// @brief アニメーションクリップ
+			AnimationClip* m_animation = nullptr;
+			/// @brief アニメーションの数
+			int m_animationNum = 0;
+			/// @brief マップに表示するモデルのファイルパス
+			const char* m_mapModelFilepath = nullptr;
+			/// @brief モデル表示を行うまでの時間を計るタイマー
+			float m_modelDisplayTimer = 0.0f;
 			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
 			/// @brief 回転クォータニオン

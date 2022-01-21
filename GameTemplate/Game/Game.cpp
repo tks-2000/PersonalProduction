@@ -73,7 +73,7 @@ namespace mainGame {
 
 		m_gameUI->Init();
 
-		m_effect->Init(u"Assets/effect/LightningStrike.efk");
+		m_effect->Init(u"Assets/effect/CosmicMist.efk");
 		m_effect->SetPosition({ 0.0f,0.0f,0.0f });
 		Quaternion efkRot;
 		efkRot.SetRotationDegX(0.0f);

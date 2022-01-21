@@ -4,23 +4,7 @@
 namespace mainGame {
 	namespace enemy {
 
-		/// @brief 敵モデルのファイルパス
-		/*const char* ENEMY_MODEL_TKM_FILEPATH[enEnemyTypeNum] = {
-			"Assets/modelData/unityChan/utc_green.tkm",
-			"Assets/modelData/unityChan/utc_red.tkm",
-			"Assets/modelData/unityChan/utc_blue.tkm"
-		};*/
-
-		//const char* ENEMY_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
-
-
-		/// @brief 敵モデルのスケルトンファイルパス
-		//const char* ENEMY_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
-		/// @brief 敵の最大体力
-		//const int MAX_HP = 3;
-
-		/// @brief アニメーション補完率
-		//const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
+		const float DISPLAY_TIME = 1.0f;
 		/// @brief 削除されるまでの時間
 		const float DELETE_TIME = 5.0f;
 
@@ -63,7 +47,7 @@ namespace mainGame {
 			//プレイヤーの情報を入手
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
-			m_defensiveTarget = FindGO < defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
+			m_defensiveTarget = FindGO <defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 			//プレイヤーに自分の情報を追加
 			m_player->SetEnemyData(this);
 			//待機中で開始
@@ -86,26 +70,31 @@ namespace mainGame {
 				return;
 			}
 
+			if (m_isModelDisplay == false) {
+				ModelDisplayCount();
+			}
+
 			ExecuteBehavior();
 		
 			//アニメーションを進める
 			//m_enemyAnimation.AnimationUpdate();
 
-			//モデルに更新された情報を伝える
-			m_enemyModel->SetPosition(m_position);
+			if (m_isModelDisplay == true) {
+				//モデルに更新された情報を伝える
+				m_enemyModel->SetPosition(m_position);
 
-			m_enemyMapModel->SetPosition(m_position);
+				m_enemyMapModel->SetPosition(m_position);
 
-			m_enemyModel->SetRotation(m_qRot);
+				m_enemyModel->SetRotation(m_qRot);
 
-			m_enemyMapModel->SetRotation(m_qRot);
+				m_enemyMapModel->SetRotation(m_qRot);
 
-			//m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
+				//m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), ANIMATION_COMPLEMENTARY_RATE);
 
-			m_enemyModel->Execution();
+				m_enemyModel->Execution();
 
-			m_enemyMapModel->Execution();
-
+				m_enemyMapModel->Execution();
+			}
 
 			//体力が0以下になったら
 			if (m_hp <= 0) {
@@ -219,6 +208,37 @@ namespace mainGame {
 			}
 		}
 
-		
+		void Enemy::CreateModel()
+		{
+			if (m_isInitd == false) {
+				return;
+			}
+
+			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_enemyModel->Init(
+				m_tkmFilepath,
+				render::model::enMainRenderTarget,
+				m_tksFilepath,
+				m_animation,
+				m_animationNum,
+				enModelUpAxisY
+			);
+			m_enemyModel->CreateShadow();
+
+			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
+			m_enemyMapModel->Init(m_mapModelFilepath, render::model::enExpandModelGroup1);
+
+			m_isModelDisplay = true;
+		}
+
+		void Enemy::ModelDisplayCount()
+		{
+			m_modelDisplayTimer += g_gameTime->GetFrameDeltaTime();
+
+			if (m_modelDisplayTimer > DISPLAY_TIME) {
+				CreateModel();
+			}
+		}
 	}
 }
