@@ -24,6 +24,10 @@ namespace mainGame {
 			/// @param enemy 処理を適用する敵のアドレス
 			void Init(Enemy* enemy);
 
+			/// @brief 攻撃を行っているか？
+			/// @return 行っていれば true 行っていなければ false
+			const bool IsAttack() { return m_isAttack; }
+
 			/// @brief 攻撃がヒットしているか？
 			/// @return ヒットしていればtrue そうでなければ false
 			const bool IsHit() { return m_isHit; }
@@ -40,6 +44,8 @@ namespace mainGame {
 			int m_attackPower = 0;
 			/// @brief 攻撃するまでのタイマー
 			float m_attackTimer = 0.0f;
+			/// @brief 攻撃を行ったかの判定
+			bool m_isAttack = false;
 			/// @brief 攻撃が当たっているかの判定
 			bool m_isHit = false;
 

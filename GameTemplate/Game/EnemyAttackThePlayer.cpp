@@ -37,6 +37,7 @@ namespace mainGame {
 				return;
 			}
 
+			m_isAttack = false;
 			m_isHit = false;
 
 			if (m_enemy->GetState() == enEnemyDamage) {
@@ -46,6 +47,9 @@ namespace mainGame {
 
 
 			if (m_enemy->GetState() == enEnemyAttack) {
+				if (m_attackTimer == 0.0f) {
+					m_isAttack = true;
+				}
 
 				m_attackTimer += g_gameTime->GetFrameDeltaTime();
 

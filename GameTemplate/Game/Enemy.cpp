@@ -41,6 +41,8 @@ namespace mainGame {
 
 			InitData(initData);
 
+			m_enemySound.Init(this);
+
 			m_game = FindGO<Game>(GAME_NAME);
 			//敵生成器の情報を入手
 			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
@@ -75,6 +77,7 @@ namespace mainGame {
 			}
 
 			ExecuteBehavior();
+			m_enemySound.Execution();
 		
 			//アニメーションを進める
 			//m_enemyAnimation.AnimationUpdate();

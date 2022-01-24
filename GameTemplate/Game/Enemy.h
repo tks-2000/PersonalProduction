@@ -4,8 +4,9 @@
 #include "EnemyAnimation.h"
 #include "EnemyRotation.h"
 #include "EnemyResource.h"
-#include "EnemyRouteMove.h";
+#include "EnemyRouteMove.h"
 #include "EnemyEffect.h"
+#include "EnemySound.h"
 
 namespace mainGame {
 
@@ -68,6 +69,12 @@ namespace mainGame {
 
 			virtual const Vector3& GetMoveSpeed() const { return g_vec3Zero; }
 
+			/// @brief 攻撃を行ったか？
+			/// @return trueで行った falseで行っていない
+			virtual const bool IsAttack() { return false; }
+
+			/// @brief 攻撃が命中したか？
+			/// @return trueで命中した falseで命中しなかった
 			virtual const bool IsHitAttack() { return false; };
 
 			const Vector3& GetDirection() { return m_enemyRotation.GetDirection(); }
@@ -162,6 +169,8 @@ namespace mainGame {
 			Rotation m_enemyRotation;
 
 			EffectGenerator m_enemyEffect;
+
+			SoundPlayer m_enemySound;
 			/// @brief 敵の攻撃
 			//Attack m_enemyAttack;
 			/// @brief 敵のアニメーション

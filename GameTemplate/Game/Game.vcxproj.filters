@@ -455,6 +455,9 @@
     <ClCompile Include="Shadow.cpp">
       <Filter>MyEngine\Shadow</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySound.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -840,6 +843,9 @@
     </ClInclude>
     <ClInclude Include="Shadow.h">
       <Filter>MyEngine\Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySound.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

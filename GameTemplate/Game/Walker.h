@@ -10,6 +10,8 @@ namespace mainGame {
 
 			const Vector3& GetMoveSpeed() const { return m_enemyRouteMove.GetMoveSpeed(); }
 
+			const bool IsAttack() { return m_enemyAttack.IsAttack(); }
+
 			const bool IsHitAttack() { return m_enemyAttack.IsHit(); }
 		private:
 			void InitData(const EnemyInitData& initData);

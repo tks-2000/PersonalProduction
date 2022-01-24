@@ -68,6 +68,11 @@ namespace mainGame {
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);*/
 		}
 
+		const bool Chaser::IsAttack()
+		{
+			return m_enemyAttack.IsAttack() || m_enemyAttackThePlayer.IsAttack();
+		}
+
 		const bool Chaser::IsHitAttack()
 		{
 			if (m_enemyAttack.IsHit() == true || m_enemyAttackThePlayer.IsHit() == true) {

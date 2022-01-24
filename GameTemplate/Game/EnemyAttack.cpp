@@ -66,7 +66,7 @@ namespace mainGame {
 			if (m_isInitd == false) {
 				return;
 			}
-
+			m_isAttack = false;
 			m_isHit = false;
 
 			if (m_enemy->GetState() != enEnemyAttack) {
@@ -77,6 +77,7 @@ namespace mainGame {
 
 			if (toDefensiveTargetPos.Length() > ATTACK_RANGE) {
 				m_enemy->SetState(enEnemyMove);
+				m_attackTimer = 0.0f;
 				return;
 			}
 
@@ -89,7 +90,7 @@ namespace mainGame {
 				ExecuteAttack();
 				//ƒ^ƒCƒ}[‚ð0‚É–ß‚·
 				m_attackTimer = 0.0f;
-
+				m_isAttack = true;
 				m_isHit = true;
 			}
 
@@ -102,9 +103,7 @@ namespace mainGame {
 			//–h‰q‘ÎÛ‚ÉUŒ‚‚ð‰Á‚¦‚é
 			m_defensiveTarget->ReceiveDamage(m_attackPower);
 
-			/*CSoundSource* attackSe = NewGO<CSoundSource>(PRIORITY_VERYLOW);
-			attackSe->Init(L"Assets/sound/se/WeakCollide.wav");
-			attackSe->Play(false);*/
+			
 		}
 
 	}
