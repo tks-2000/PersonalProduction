@@ -175,7 +175,6 @@ namespace mainGame {
 				m_sampleSprite->FadeIn(2.0f);
 			}
 			m_sampleSprite->Execute();
-			m_unityChanModel2->Execution();
 
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
 				m_effect->Play(false,true);

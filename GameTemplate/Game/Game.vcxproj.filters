@@ -102,6 +102,9 @@
     <Filter Include="MyEngine\Shadow">
       <UniqueIdentifier>{daaf9704-01cb-4147-8f0d-685992fb33f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="inGame\DefensiveTarget">
+      <UniqueIdentifier>{0ef749d2-a986-4ddf-8c25-be98e9592e7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -287,9 +290,6 @@
     <ClCompile Include="PlayerRotation.cpp">
       <Filter>inGame\Player</Filter>
     </ClCompile>
-    <ClCompile Include="DefensiveTarget.cpp">
-      <Filter>inGame</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
@@ -463,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="PlayerSound.cpp">
       <Filter>inGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="DefensiveTarget.cpp">
+      <Filter>inGame\DefensiveTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemSound.cpp">
+      <Filter>inGame\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -676,9 +682,6 @@
     <ClInclude Include="RenderResource.h">
       <Filter>MyEngine</Filter>
     </ClInclude>
-    <ClInclude Include="DefensiveTarget.h">
-      <Filter>inGame</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>inGame\Enemy</Filter>
     </ClInclude>
@@ -858,6 +861,12 @@
     </ClInclude>
     <ClInclude Include="PlayerSound.h">
       <Filter>inGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DefensiveTarget.h">
+      <Filter>inGame\DefensiveTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSound.h">
+      <Filter>inGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

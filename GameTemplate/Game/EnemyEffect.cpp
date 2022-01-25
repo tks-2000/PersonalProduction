@@ -22,11 +22,13 @@ namespace mainGame {
 		/// @brief 攻撃エフェクトを表示する高さ
 		const float ATTACK_EFFECT_HEIGHT = 50.0f;
 		/// @brief 死亡エフェクトのファイルパス
-		const char16_t* DEATH_EFFECT_FILEPATH = u"Assets/effect/CosmicMist.efk";
+		const char16_t* DEATH_EFFECT_FILEPATH = u"Assets/effect/Simple_Sprite_BillBoard.efk";
 		/// @brief 死亡エフェクトの拡大率
 		const Vector3 DEATH_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
 		/// @brief 死亡エフェクトを表示する高さ
 		const float DEATH_EFFECT_HEIGHT = 50.0f;
+		/// @brief 死亡エフェクトを表示する時間の割合
+		const float DEATH_EFFECT_PLAY_TAME_RATE = 0.99;
 		/// @brief 出現エフェクトのファイルパス
 		const char16_t* SPAWN_EFFECT_FILEPATH = u"Assets/effect/enemy_explosion.efk";
 		/// @brief 出現エフェクトの拡大率
@@ -145,7 +147,7 @@ namespace mainGame {
 
 		void EffectGenerator::DeathEffectExecution()
 		{
-			if (m_enemy->GetDeleteTimer() > m_enemy->GetDeleteTime() / 1.5f) {
+			if (m_enemy->GetDeleteTimer() > m_enemy->GetDeleteTime() * DEATH_EFFECT_PLAY_TAME_RATE) {
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += DEATH_EFFECT_HEIGHT;
 				m_deathEffect->SetPosition(efkPos);

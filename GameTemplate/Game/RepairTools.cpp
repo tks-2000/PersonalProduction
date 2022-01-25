@@ -10,6 +10,8 @@ namespace mainGame {
 		{
 			//拠点に負のダメージを与えて回復させる
 			m_defensiveTarget->ReceiveDamage(-50.0f);
+
+			m_isActivate = true;
 		}
 
 		void RepairTools::InitData()

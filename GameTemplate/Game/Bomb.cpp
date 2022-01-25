@@ -31,6 +31,8 @@ namespace mainGame {
 
 		const float SET_HEIGHT = 50.0f;
 
+		const wchar_t* EXPLOSION_SE_FILEPATH = L"Assets/sound/se/explosion.wav";
+
 		Bomb::~Bomb()
 		{
 			if (m_modelFlag == true) {
@@ -46,6 +48,7 @@ namespace mainGame {
 			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
 
 			m_enemys = m_enemyGenerator->GetEnemys();
 

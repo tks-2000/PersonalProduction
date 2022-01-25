@@ -30,6 +30,8 @@ namespace mainGame {
 
 			InitData();
 
+			m_itemSound.Init(this);
+
 			m_isInitd = true;
 
 		}
@@ -58,6 +60,8 @@ namespace mainGame {
 					DeleteGO(this);
 				}
 			}
+
+			m_itemSound.Execution();
 		}
 
 		void Item::InitData()

@@ -20,7 +20,7 @@ namespace mainGame {
 
 		const float DEAD_SE_VOLUME = 0.1f;
 
-		const float DEAD_SE_PLAYING_TIME_RATE = 0.7;
+		const float DEAD_SE_PLAYING_TIME_RATE = 0.99;
 		
 		SoundPlayer::SoundPlayer()
 		{

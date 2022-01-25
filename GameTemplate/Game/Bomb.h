@@ -57,6 +57,10 @@ namespace mainGame {
 			std::vector<player::Bullet*>* m_bullets = nullptr;
 
 			Effect m_explosion;
+
+			int m_explosionSoundID = 0;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
 		};
 
 	}

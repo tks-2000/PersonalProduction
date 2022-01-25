@@ -318,6 +318,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemGenerator.cpp" />
     <ClCompile Include="ItemSlot.cpp" />
+    <ClCompile Include="ItemSound.cpp" />
     <ClCompile Include="NutritionDrink.cpp" />
     <ClCompile Include="OwnedItem.cpp" />
     <ClCompile Include="Lighting.cpp" />
@@ -458,6 +459,7 @@
     <ClInclude Include="ItemGenerator.h" />
     <ClInclude Include="ItemResource.h" />
     <ClInclude Include="ItemSlot.h" />
+    <ClInclude Include="ItemSound.h" />
     <ClInclude Include="NutritionDrink.h" />
     <ClInclude Include="OwnedItem.h" />
     <ClInclude Include="Lighting.h" />

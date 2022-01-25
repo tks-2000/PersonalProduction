@@ -1,5 +1,6 @@
 #pragma once
 #include "ItemResource.h"
+#include "ItemSound.h"
 
 namespace mainGame {
 
@@ -33,6 +34,10 @@ namespace mainGame {
 
 			const EnItemType& GetItemType() const { return m_itemType; }
 
+			const bool IsPlayerGet() { return m_isPlayerGet; }
+
+			const bool IsActivate() { return m_isActivate; }
+
 		protected:
 
 			/// @brief 初期化済み？
@@ -60,12 +65,17 @@ namespace mainGame {
 			/// @brief アイテムの効果が終了する時間
 			float m_endTime = 0.0f;
 
+			/// @brief プレイヤーの入手範囲内だが入手出来ないフラグ
+			bool m_isCantGet = false;
+
 			render::model::SkinModelRender* m_itemModel = nullptr;
 
 			/// @brief プレイヤー
 			player::Player* m_player = nullptr;
 
 			ItemGenerator* m_itemGenerator = nullptr;
+
+			Sound m_itemSound;
 
 			EnItemType m_itemType = enItemTypeNum;
 		};
