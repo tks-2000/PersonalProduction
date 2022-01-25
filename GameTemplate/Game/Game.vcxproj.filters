@@ -461,6 +461,9 @@
     <ClCompile Include="SoundPlayer.cpp">
       <Filter>MyEngine\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerSound.cpp">
+      <Filter>inGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -852,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="SoundPlayer.h">
       <Filter>MyEngine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSound.h">
+      <Filter>inGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

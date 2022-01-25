@@ -134,10 +134,10 @@ namespace mainGame {
 
 			}break;
 			case enGameClear: {
-
+				m_state = enEnemyDown;
 			}break;
 			case enGameOver: {
-
+				m_state = enEnemyIdle;
 			}break;
 			default:
 				break;

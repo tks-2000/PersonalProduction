@@ -4,6 +4,7 @@
 #include "PlayerRotation.h"
 #include "PlayerAttack.h"
 #include "PlayerEffect.h"
+#include "PlayerSound.h"
 #include "ItemSlot.h"
 #include "ItemResource.h"
 
@@ -50,6 +51,10 @@ namespace mainGame {
 			/// @brief プレイヤーの状態を入手
 			/// @return プレイヤーのステータス
 			const EnPlayerStates& GetPlayerStatus() { return m_playerState; }
+
+			/// @brief プレイヤーの再生中のアニメーションを入手
+			/// @return プレイヤーのアニメーションのステータス
+			const EnPlayerAnimations& GetPlayerAnimation() { return m_playerAnimation.GetAnimationState(); }
 
 			/// @brief プレイヤーの座標を入手
 			/// @return プレイヤーの座標のconst参照
@@ -131,6 +136,10 @@ namespace mainGame {
 			/// @return アイテムの種類
 			const item::EnItemType& GetSlotItemType(const int slotNum) { return m_itemSlot.GetItemType(slotNum); }
 
+			/// @brief プレイヤーが攻撃を開始したか？
+			/// @return trueで開始した falseで開始していない・もう攻撃している
+			const bool IsAttackStart() { return m_playerAttack.IsAttackStart(); }
+
 			/// @brief 実行
 			void Execution();
 
@@ -167,6 +176,8 @@ namespace mainGame {
 			Attack m_playerAttack;
 
 			EffectGenerator  m_playerEffect;
+
+			Sound m_playerSound;
 
 			ItemSlot m_itemSlot;
 

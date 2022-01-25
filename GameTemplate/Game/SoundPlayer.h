@@ -40,6 +40,12 @@ namespace sound {
 		/// @param isLoop ループフラグ
 		void PlayVoice(const int VoiceID,const bool isLoop = false);
 
+		void StopBGM(const int bgmID);
+
+		void StopSE(const int seID);
+
+		void StopVoice(const int voiceID);
+
 	private:
 		/// @brief ファイルパスが既に入っているか調べる
 		/// @param filePaths 調べるファイルパスの配列

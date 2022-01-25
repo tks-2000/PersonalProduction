@@ -55,6 +55,7 @@ namespace mainGame {
 			m_playerAnimation.Init(this);
 			m_playerAttack.Init(this);
 			m_playerEffect.Init(this);
+			m_playerSound.Init(this);
 			m_itemSlot.Init(this);
 
 			//プレイヤーのモデルを初期化
@@ -118,6 +119,8 @@ namespace mainGame {
 
 				m_playerEffect.Execution();
 
+				
+
 				m_itemSlot.Execution();
 
 				if (m_playerState == enPlayerDamage) {
@@ -128,10 +131,10 @@ namespace mainGame {
 				}
 			}break;
 			case enGameClear: {
-				
+				m_playerState = enPlayerIdle;
 			}break;
 			case enGameOver: {
-				
+				m_playerState = enPlayerIdle;
 			}break;
 			default:
 				break;
@@ -152,6 +155,8 @@ namespace mainGame {
 			m_playerModel->Execution();
 
 			m_plMapModel->Execution();
+
+			m_playerSound.Execution();
 
 			SetWeapons();
 		}

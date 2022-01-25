@@ -72,7 +72,7 @@ namespace mainGame {
 
 		void SoundPlayer::PlayAttackSound()
 		{
-			if (m_enemy->IsAttack() == true) {
+			if (m_enemy->GetState() == enEnemyAttack && m_enemy->IsAttack() == true) {
 				
 				m_soundPlayer->SetSEVolume(m_attackSoundID, ATTACK_SE_VOLUME);
 				m_soundPlayer->PlaySE(m_attackSoundID);
@@ -81,7 +81,7 @@ namespace mainGame {
 
 		void SoundPlayer::PlayDamageSound()
 		{
-			if (m_enemy->IsDamage() == true) {
+			if (m_enemy->GetState() == enEnemyDamage && m_enemy->IsDamage() == true) {
 
 				m_soundPlayer->SetSEVolume(m_damageSoundID, DAMAGE_SE_VOLUME);
 				m_soundPlayer->PlaySE(m_damageSoundID);

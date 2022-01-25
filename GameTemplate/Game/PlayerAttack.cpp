@@ -78,6 +78,8 @@ namespace mainGame {
 				return;
 			}
 
+			m_isAttackStart = false;
+
 			if (m_player->GetPlayerStatus() == enPlayerDamage) {
 				m_isAttackJudgement = false;
 				m_attackJudgementTimer = 0.0f;
@@ -87,7 +89,9 @@ namespace mainGame {
 
 			//プレイヤーが攻撃状態の場合…
 			if (m_player->GetPlayerStatus() == enPlayerAttack) {
-
+				if (m_attackJudgementTimer == 0.0f) {
+					m_isAttackStart = true;
+				}
 				//当たり判定の時間を計るタイマーを進める
 				m_attackJudgementTimer += g_gameTime->GetFrameDeltaTime();
 

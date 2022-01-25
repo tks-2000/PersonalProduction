@@ -51,6 +51,8 @@ namespace mainGame {
 
 			const float GetAttackPossibleMatchRate() const{ return m_attackPossibleMatchRate; }
 
+			const bool IsAttackStart() { return m_isAttackStart; }
+
 		private:
 			/// @brief 近接攻撃を実行
 			void MeleeAttack();
@@ -73,6 +75,8 @@ namespace mainGame {
 			float m_chargeMeleeAttackTime = 0.0f;
 			/// @brief チャージ完了フラグ
 			bool m_isFollCharge = false;
+			/// @brief 攻撃開始フラグ
+			bool m_isAttackStart = false;
 			/// @brief 攻撃の衝撃力
 			float m_attackPower = 0.0f;
 			/// @brief 攻撃可能な範囲

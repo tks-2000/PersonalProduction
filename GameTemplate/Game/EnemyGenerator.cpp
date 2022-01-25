@@ -105,7 +105,7 @@ namespace mainGame {
 				
 				num %= enEnemyTypeNum;
 				num2 %= SPAWN_POS_NUM;
-				num2 = 0;
+				//num2 = 0;
 
 				CreateEnemy(SPAWN_ENEMY_TYPE[num],m_spawnPos[num2]);
 
@@ -168,7 +168,7 @@ namespace mainGame {
 				rand1 *= -1;
 			}
 
-			/*switch (rand1 % 2)
+			switch (rand1 % 2)
 			{
 			case 1: {
 				m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
@@ -176,9 +176,9 @@ namespace mainGame {
 			default: {
 				m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
 			}break;
-			}*/
+			}
 
-			m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
+			//m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
 
 			//ランダムな数値から敵のパラメーターを決定
 			std::random_device rnd;

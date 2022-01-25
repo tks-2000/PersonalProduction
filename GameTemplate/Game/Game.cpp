@@ -180,6 +180,7 @@ namespace mainGame {
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
 				m_effect->Play(false,true);
 				m_soundPlayer->PlaySE(m_soundID);
+				m_defensiveTarget->ReceiveDamage(100.0f);
 
 			}
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {

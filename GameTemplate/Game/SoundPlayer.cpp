@@ -137,6 +137,21 @@ namespace sound {
 		}
 	}
 
+	void SoundPlayer::StopBGM(const int bgmID)
+	{
+		m_bgm[bgmID]->Stop();
+	}
+
+	void SoundPlayer::StopSE(const int seID)
+	{
+		m_se[seID]->Stop();
+	}
+
+	void SoundPlayer::StopVoice(const int voiceID)
+	{
+		m_voice[voiceID]->Stop();
+	}
+
 	const int SoundPlayer::SearchFile(std::vector<const wchar_t*>& filePaths, const wchar_t* filePath)
 	{
 		for (int fileNum = 0; fileNum < filePaths.size(); fileNum++) {

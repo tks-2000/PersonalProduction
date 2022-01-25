@@ -33,7 +33,7 @@ namespace mainGame {
 			m_enemyEffect.Init(this);
 
 			//モデルをアニメーション有りで初期化
-			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			/*m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->Init(
 				WALKER_MODEL_TKM_FILEPATH,
 				render::model::enMainRenderTarget,
@@ -46,9 +46,15 @@ namespace mainGame {
 
 			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
-			m_enemyMapModel->Init(WALKER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
+			m_enemyMapModel->Init(WALKER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);*/
 
-			m_isModelDisplay = true;
+			m_tkmFilepath = WALKER_MODEL_TKM_FILEPATH;
+			m_tksFilepath = WALKER_MODEL_TKS_FILEPATH;
+			m_animation = m_enemyAnimation.GetAnimationClip();
+			m_animationNum = m_enemyAnimation.GetAnimationNum();
+			m_mapModelFilepath = WALKER_MAP_MODEL_FILEPATH;
+
+			
 		}
 
 		void Walker::ExecuteBehavior()
@@ -69,10 +75,10 @@ namespace mainGame {
 
 			}break;
 			case enGameClear: {
-
+				m_state = enEnemyDown;
 			}break;
 			case enGameOver: {
-
+				m_state = enEnemyIdle;
 			}break;
 			default:
 				break;
@@ -81,7 +87,9 @@ namespace mainGame {
 			//アニメーションを進める
 			m_enemyAnimation.AnimationUpdate();
 
-			m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), WALKER_ANIMATION_COMPLEMENTARY_RATE);
+			if (m_isModelDisplay == true) {
+				m_enemyModel->PlayAnimation(m_enemyAnimation.GetAnimationState(), WALKER_ANIMATION_COMPLEMENTARY_RATE);
+			}
 		}
 	}
 }

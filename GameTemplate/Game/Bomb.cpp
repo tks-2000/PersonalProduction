@@ -13,7 +13,7 @@ namespace mainGame {
 		/// @brief 爆発の衝撃力
 		const float EXPLOSION_IMPACT = 5000.0f;
 		/// @brief 爆発のダメージ量
-		const int EXPLOSION_DAMAGE = 10;
+		const int EXPLOSION_DAMAGE = 0;
 		/// @brief 自然消滅する時間
 		const float DISAPPEARANCE_TIME = 10.0f;
 		/// @brief 爆発してから消滅する時間
@@ -203,10 +203,10 @@ namespace mainGame {
 					enemyData->SetMoveSpeed(toEnemyVec * EXPLOSION_IMPACT);
 
 					//敵をダメージ状態に変更
-					enemyData->SetState(enemy::enEnemyDamage);
+					//enemyData->SetState(enemy::enEnemyDamage);
 
 					//敵に爆発のダメージを与える
-					//enemyData->ReceiveDamage(EXPLOSION_DAMAGE);
+					enemyData->ReceiveDamage(EXPLOSION_DAMAGE);
 				}
 			}
 

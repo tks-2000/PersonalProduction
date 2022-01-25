@@ -3,9 +3,9 @@
 
 namespace {
 	/// @brief •à‚­‘¬“x
-	const float WARK_VEROCITY = 10.0f;
+	const float WARK_VEROCITY = 7.0f;
 	/// @brief ‘–‚é‘¬“x
-	const float RUN_VEROCITY = 20.0f;
+	const float RUN_VEROCITY = 14.0f;
 	/// @brief –€ŽC—Í
 	const float FRICTION = 0.03f;
 	/// @brief ’âŽ~‚·‚éˆÚ“®‘¬“x‚Ì‘å‚«‚³
