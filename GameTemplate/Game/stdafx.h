@@ -18,6 +18,7 @@
 #include "../../ExEngine/effect/Effect.h"
 #include "EffectRender.h"
 #include "SoundSource.h"
+#include "SoundPlayer.h"
 #include "NaviMesh.h"
 #include "Path.h"
 #include "PathFinding.h"
@@ -46,7 +47,9 @@ namespace {
 	const int PRIORITY_VERYLOW = 0;
 }
 
-
+namespace sound {
+	static const char* SOUND_PLAYER_NAME = "SoundPlayer";
+}
 
 namespace mainGame {
 
@@ -104,4 +107,6 @@ namespace mainGame {
 	namespace ui {
 		static const char* GAME_UI_NAME = "GameUI";
 	}
+
+	
 }

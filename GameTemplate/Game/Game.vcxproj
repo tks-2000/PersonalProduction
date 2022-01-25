@@ -341,6 +341,7 @@
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SkinModelRender.cpp" />
     <ClCompile Include="SoundEngine.cpp" />
+    <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="SoundPreCompile.cpp" />
     <ClCompile Include="SoundSource.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
@@ -479,6 +480,7 @@
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SkinModelRender.h" />
     <ClInclude Include="SoundEngine.h" />
+    <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="SoundPreCompile.h" />
     <ClInclude Include="SoundSource.h" />
     <ClInclude Include="SpriteRender.h" />

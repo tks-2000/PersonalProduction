@@ -47,6 +47,7 @@ namespace mainGame {
 		{
 			DeleteGO(m_spawnEffect);
 			DeleteGO(m_damageEffect);
+			m_stanEffect->Stop(true);
 			DeleteGO(m_stanEffect);
 			DeleteGO(m_attackEffect);
 			DeleteGO(m_deathEffect);
@@ -100,15 +101,15 @@ namespace mainGame {
 		{
 			//エフェクトの座標と回転を設定
 			Vector3 efkPos = m_enemy->GetPosition();
-			efkPos.y += DAMAGE_EFFECT_HEIGHT;
-			m_damageEffect->SetPosition(efkPos);
-			m_damageEffect->SetRotation(m_enemy->GetRotation());
-			efkPos = m_enemy->GetPosition();
 			efkPos.y += STAN_EFFECT_HEIGHT;
 			m_stanEffect->SetPosition(efkPos);
 
 			//敵がダメージを受けたとき…
 			if (m_enemy->IsDamage() == true) {
+				Vector3 efkPos = m_enemy->GetPosition();
+				efkPos.y += DAMAGE_EFFECT_HEIGHT;
+				m_damageEffect->SetPosition(efkPos);
+				m_damageEffect->SetRotation(m_enemy->GetRotation());
 				//エフェクトを再生
 				m_damageEffect->Play(false,true);
 				m_stanEffect->Play(false);
@@ -117,7 +118,6 @@ namespace mainGame {
 			//ダメージ中でない場合…
 			if(m_enemy->GetState() != enEnemyDamage) {
 				//エフェクトの再生を止める
-				//m_damageEffect->Stop(false);
 				m_stanEffect->Stop(true);
 			}
 

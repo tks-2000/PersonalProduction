@@ -7,7 +7,7 @@ namespace mainGame {
 	{
 		//AllNew();
 		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		
+		m_soundPlayer = NewGO<sound::SoundPlayer>(PRIORITY_VERYLOW, sound::SOUND_PLAYER_NAME);
 		
 		m_state = enTitleScene;
 		m_isDead = true;
@@ -79,6 +79,10 @@ namespace mainGame {
 		efkRot.SetRotationDegX(0.0f);
 		m_effect->SetRotation(efkRot);
 		m_effect->SetScale({ 10.0f,10.0f,10.0f });
+
+		m_soundID = m_soundPlayer->SetSE(L"Assets/sound/se/StrongCollide.wav");
+		//m_soundID = m_soundPlayer->SetSE(L"Assets/sound/se/WeakCollide.wav");
+		//m_soundPlayer->SetSEVolume(m_soundID,1.0f);
 		
 		m_isDead = false;
 	}
@@ -175,12 +179,15 @@ namespace mainGame {
 
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
 				m_effect->Play(false,true);
+				m_soundPlayer->PlaySE(m_soundID);
 
 			}
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
 				m_effect->Stop(true);
 			}
 			m_effect->Execution();
+
+
 		}
 		
 	}

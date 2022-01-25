@@ -12,6 +12,10 @@ namespace nsAI {
 	class PathFinding;
 }
 
+namespace sound {
+	class SoundPlayer;
+}
+
 namespace mainGame {
 	namespace title {
 		class Title;
@@ -41,6 +45,7 @@ namespace mainGame {
 	namespace ui {
 		class GameUI;
 	}
+	
 
 	class GameCamera;
 
@@ -159,6 +164,10 @@ namespace mainGame {
 		item::ItemGenerator* m_itemGenerator = nullptr;
 
 		ui::GameUI* m_gameUI = nullptr;
+
+		sound::SoundPlayer* m_soundPlayer = nullptr;
+
+		int m_soundID = 0;
 
 		CSoundSource* m_sound = nullptr;
 

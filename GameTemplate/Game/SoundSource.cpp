@@ -54,7 +54,7 @@ void CSoundSource::Init(wchar_t* filePath, bool is3DSound)
 		unsigned int dummy;
 		m_waveFile->Read(m_waveFile->GetReadBuffer(), m_waveFile->GetSize(), &dummy);
 		m_waveFile->ResetFile();
-
+		m_filepath = filePath;
 	}
 
 	//サウンドボイスソースを作成。
@@ -94,6 +94,7 @@ void CSoundSource::Init(const WNameKey& nameKey, bool is3DSound)
 
 	m_is3DSound = is3DSound;
 	m_isAvailable = true;
+	
 }
 
 void CSoundSource::InitStreaming(wchar_t* filePath, bool is3DSound, unsigned int ringBufferSize, unsigned int bufferSize)

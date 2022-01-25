@@ -27,8 +27,21 @@ namespace mainGame {
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
+
+			int m_spawnSoundID = 0;
+
+			int m_attackSoundID = 0;
+
+			int m_damageSoundID = 0;
+
+			bool m_isPlayDeadSound = false;
+
+			int m_deadSoundID = 0;
+
 			/// @brief エネミー
 			Enemy* m_enemy = nullptr;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
 
 		};
 	}

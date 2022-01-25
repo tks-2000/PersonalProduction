@@ -134,6 +134,8 @@ public:
 		m_sourceVoice->GetVolume(&vol);
 		return vol;
 	}
+
+	
 	/*!
 	* @brief	音源の座標を設定。
 	* @details
@@ -203,6 +205,8 @@ public:
 	{
 		return &m_dspSettings;
 	}
+
+	const wchar_t* GetFilepath() { return m_filepath; }
 private:
 	void InitCommon();
 	//ストリーミング再生中の更新処理。
@@ -243,4 +247,6 @@ private:
 	X3DAUDIO_DSP_SETTINGS m_dspSettings;
 	bool m_isSetPositionFirst = true;	//!<一番最初のsetPosition?
 	bool m_isAvailable = false;			//!<インスタンスが利用可能？
+
+	wchar_t* m_filepath;
 };

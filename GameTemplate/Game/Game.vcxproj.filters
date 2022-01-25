@@ -458,6 +458,9 @@
     <ClCompile Include="EnemySound.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="SoundPlayer.cpp">
+      <Filter>MyEngine\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -846,6 +849,9 @@
     </ClInclude>
     <ClInclude Include="EnemySound.h">
       <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundPlayer.h">
+      <Filter>MyEngine\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
