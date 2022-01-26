@@ -18,6 +18,8 @@ namespace mainGame {
 
 			bool m_isInitd = false;
 
+			bool m_isSpawnSoundPlay = false;
+
 			int m_spawnSoundID = 0;
 
 			bool m_isGetSoundPlay = false;
@@ -27,6 +29,8 @@ namespace mainGame {
 			bool m_isCantGetSoundPlay = false;
 
 			int m_cantGetSoundID = 0;
+
+			float m_cantGetSoundPlayTimer = 0.0f;
 
 			bool m_isActivateSoundPlay = false;
 

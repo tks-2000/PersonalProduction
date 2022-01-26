@@ -5,7 +5,7 @@
 namespace mainGame {
 	namespace item {
 
-		const int ITEM_SPAWN_PROBABILITY = 5;
+		const int ITEM_SPAWN_PROBABILITY = 1;
 
 		ItemGenerator::ItemGenerator()
 		{
@@ -27,6 +27,7 @@ namespace mainGame {
 			SpawnItem(enItemRepairTools,{ -200.0f,50.0f,200.0f });
 			SpawnItem(enItemNutritionDrink,{ 200.0f,50.0f,-200.0f });
 
+			m_game = FindGO<Game>(GAME_NAME);
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 
 			m_enemys = m_enemyGenerator->GetEnemys();
@@ -40,6 +41,10 @@ namespace mainGame {
 				return;
 			}
 
+			
+			if (m_game->GetGameState() != enGameInProgress) {
+				return;
+			}
 
 			SpawnJudgement();
 
@@ -68,9 +73,9 @@ namespace mainGame {
 			}break;
 			}
 
-			m_items[m_items.size() - 1]->Init(this);
+			m_items[m_items.size() - 1]->Init(this,pos);
 
-			m_items[m_items.size() - 1]->SetPosition(pos);
+			//m_items[m_items.size() - 1]->SetPosition(pos);
 		}
 
 		void ItemGenerator::DeleteItem(Item* item)
@@ -99,6 +104,9 @@ namespace mainGame {
 					//ランダムな数値を生成する
 					std::random_device rnd;
 					int num = rnd();
+					if (num < 0) {
+						num *= -1;
+					}
 
 					//出現確率で
 					if (num % ITEM_SPAWN_PROBABILITY == 0) {

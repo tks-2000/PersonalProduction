@@ -19,14 +19,18 @@ namespace mainGame {
 			~Bomb();
 
 			/// @brief 効果発動時の処理
-			void Activation();
+			void Activation() override;
 
 		private:
 			/// @brief 個別の情報の初期化
-			void InitData();
+			void InitData() override;
+
+			void Spawn() override;
 
 			/// @brief 効果発動中の処理
-			void Efficacy();
+			void Efficacy() override;
+
+			void DeleteEfficacy() override;
 
 			/// @brief モデルを作成
 			void CreateModel();
@@ -56,7 +60,7 @@ namespace mainGame {
 			/// @brief 弾丸の配列のポインタ
 			std::vector<player::Bullet*>* m_bullets = nullptr;
 
-			Effect m_explosion;
+			render::effect::EffectRender* m_explosion = nullptr;
 
 			int m_explosionSoundID = 0;
 

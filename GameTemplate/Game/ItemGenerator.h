@@ -50,6 +50,8 @@ namespace mainGame {
 			enemy::Enemy* m_dropEnemy = nullptr;
 			/// @brief “G‚Ìî•ñ‚ğŠi”[‚·‚é”z—ñ‚Ìƒ|ƒCƒ“ƒ^
 			std::vector<enemy::Enemy*>* m_enemys = nullptr;
+
+			Game* m_game = nullptr;
 		};
 	}
 }

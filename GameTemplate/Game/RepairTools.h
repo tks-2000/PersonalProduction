@@ -10,13 +10,15 @@ namespace mainGame {
 
 			
 
-			void Activation();
+			void Activation() override;
 
 		private:
 
-			void InitData();
+			void InitData() override;
 
-			void Efficacy();
+			void Spawn() override;
+
+			void Efficacy() override;
 
 			/// @brief ñhâqëŒè€
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;

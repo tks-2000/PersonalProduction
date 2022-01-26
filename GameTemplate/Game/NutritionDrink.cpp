@@ -29,14 +29,19 @@ namespace mainGame {
 		{
 			m_itemType = enItemNutritionDrink;
 
-			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/item/item_speedup.tkm");
+			
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 
 			m_enemys = m_enemyGenerator->GetEnemys();
 
 			m_endTime = DISAPPEARANCE_TIME;
+		}
+
+		void NutritionDrink::Spawn()
+		{
+			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_itemModel->Init("Assets/modelData/item/item_speedup.tkm");
 		}
 
 		void NutritionDrink::Efficacy()

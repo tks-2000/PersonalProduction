@@ -15,14 +15,16 @@ namespace mainGame {
 
 			~NutritionDrink();
 			/// @brief Œø‰Ê”­“®‚Ìˆ—
-			void Activation();
+			void Activation() override;
 
 		private:
 			/// @brief ŒÂ•Ê‚Ìî•ñ‚Ì‰Šú‰»
-			void InitData();
+			void InitData() override;
+
+			void Spawn() override;
 
 			/// @brief Œø‰Ê”­“®’†‚Ìˆ—
-			void Efficacy();
+			void Efficacy() override;
 
 			/// @brief “G‚Æ‚ÌÚG‚ğ”»’è
 			void EnemyCollision();

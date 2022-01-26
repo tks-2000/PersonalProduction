@@ -12,9 +12,11 @@ namespace mainGame {
 
 		const float GET_SE_VOLUME = 0.1f;
 
-		const wchar_t* CANTGET_SE_FILEPATH = L"";
+		const wchar_t* CANTGET_SE_FILEPATH = L"Assets/sound/se/NoDamageCollide.wav";
 
 		const float CANTGET_SE_VOLUME = 0.1f;
+
+		const float CANTGET_SE_PLAY_TIMER_LOOP_TIME = 1.0f;
 
 		const wchar_t* ACTIVATE_SE_FILEPATH = L"Assets/sound/se/ItemGet.wav";
 
@@ -40,7 +42,7 @@ namespace mainGame {
 			m_cantGetSoundID = m_soundPlayer->SetSE(CANTGET_SE_FILEPATH);
 			m_activateSoundID = m_soundPlayer->SetSE(ACTIVATE_SE_FILEPATH);
 			
-			PlaySpawnSound();
+			
 
 			m_isInitd = true;
 		}
@@ -50,14 +52,20 @@ namespace mainGame {
 			if (m_isInitd == false) {
 				return;
 			}
+
+			PlaySpawnSound();
 			PlayGetSound();
+			PlayCantGetSound();
 			PlayActivateSound();
 		}
 
 		void Sound::PlaySpawnSound()
 		{
-			m_soundPlayer->SetSEVolume(m_spawnSoundID, SPAWN_SE_VOLUME);
-			m_soundPlayer->PlaySE(m_spawnSoundID);
+			if (m_item->IsSpawn() == true && m_isSpawnSoundPlay == false) {
+				m_soundPlayer->SetSEVolume(m_spawnSoundID, SPAWN_SE_VOLUME);
+				m_soundPlayer->PlaySE(m_spawnSoundID);
+				m_isSpawnSoundPlay = true;
+			}
 		}
 
 		void Sound::PlayGetSound()
@@ -72,7 +80,23 @@ namespace mainGame {
 
 		void Sound::PlayCantGetSound()
 		{
+			if (m_item->IsCantGet() == true) {
+				
+				if (m_cantGetSoundPlayTimer == 0.0f) {
+					m_soundPlayer->SetSEVolume(m_cantGetSoundID, CANTGET_SE_VOLUME);
+					m_soundPlayer->PlaySE(m_cantGetSoundID);
+				}
 
+				m_cantGetSoundPlayTimer += g_gameTime->GetFrameDeltaTime();
+				if (m_cantGetSoundPlayTimer > CANTGET_SE_PLAY_TIMER_LOOP_TIME) {
+					m_cantGetSoundPlayTimer = 0.0f;
+				}
+			}
+			else {
+				m_cantGetSoundPlayTimer = 0.0f;
+			}
+
+			
 		}
 
 		void Sound::PlayActivateSound()

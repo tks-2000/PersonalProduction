@@ -31,33 +31,50 @@ namespace mainGame {
 
 		const float SET_HEIGHT = 50.0f;
 
+		const float EXPLOSION_TIME = 5.0f;
+
+		const char16_t* EXPLOSION_EFFECT_FILEPATH = u"Assets/effect/CosmicMist.efk";
+
+		const Vector3 EXPLOSION_EFFECT_SCALE = { 15.0f,15.0f,15.0f };
+
 		const wchar_t* EXPLOSION_SE_FILEPATH = L"Assets/sound/se/explosion.wav";
+
+		const float EXPLOSION_SE_VOLUME = 0.1f;
 
 		Bomb::~Bomb()
 		{
 			if (m_modelFlag == true) {
 				DeleteGO(m_itemModel);
 			}
+
+			DeleteGO(m_explosion);
 		}
 
 		void Bomb::InitData()
 		{
 			m_itemType = enItemBomb;
 
-			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
+			
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+			m_explosionSoundID = m_soundPlayer->SetSE(EXPLOSION_SE_FILEPATH);
 
 			m_enemys = m_enemyGenerator->GetEnemys();
 
 			m_bullets = m_player->GetBulletData();
 
-			m_explosion.Init(u"Assets/effect/fire.efk");
-			m_explosion.SetScale({ 0.1f,0.1f,0.1f });
+			m_explosion = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_explosion->Init(EXPLOSION_EFFECT_FILEPATH);
+			m_explosion->SetScale(EXPLOSION_EFFECT_SCALE);
 
 			m_endTime = DISAPPEARANCE_TIME;
+		}
+
+		void Bomb::Spawn()
+		{
+			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
 		}
 
 		void Bomb::Activation()
@@ -89,10 +106,19 @@ namespace mainGame {
 				EnemyCollision();
 
 				BulletCollision();
+
+				if (m_activateTimer > EXPLOSION_TIME) {
+					Explosion();
+				}
 			}
 
-			m_explosion.SetPosition(m_position);
-			m_explosion.Update();
+			m_explosion->SetPosition(m_position);
+			m_explosion->Execution();
+		}
+
+		void Bomb::DeleteEfficacy()
+		{
+			
 		}
 
 		void Bomb::CreateModel()
@@ -213,10 +239,9 @@ namespace mainGame {
 				}
 			}
 
-			m_explosion.Play(true);
-			//CSoundSource* se = NewGO<CSoundSource>(PRIORITY_VERYLOW);
-			//se->Init(L"Assets/sound/se/explosion.wav");
-			//se->Play(false);
+			m_explosion->Play(false);
+			m_soundPlayer->SetSEVolume(m_explosionSoundID, EXPLOSION_SE_VOLUME);
+			m_soundPlayer->PlaySE(m_explosionSoundID);
 
 
 			//ÉÇÉfÉãÇçÌèú
