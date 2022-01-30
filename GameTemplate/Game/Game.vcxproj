@@ -362,6 +362,7 @@
     <ClCompile Include="TimeLimit.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="TitleModels.cpp" />
     <ClCompile Include="TknFile.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Walker.cpp" />
@@ -497,6 +498,7 @@
     <ClInclude Include="TimeLimit.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="TitleModels.h" />
     <ClInclude Include="TknFile.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Walker.h" />

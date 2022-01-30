@@ -473,6 +473,9 @@
     <ClCompile Include="ItemEffect.cpp">
       <Filter>inGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="TitleModels.cpp">
+      <Filter>inGame\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -873,6 +876,9 @@
     </ClInclude>
     <ClInclude Include="ItemEffect.h">
       <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleModels.h">
+      <Filter>inGame\Title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

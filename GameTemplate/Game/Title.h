@@ -1,4 +1,5 @@
 #pragma once
+#include "TitleModels.h"
 
 namespace mainGame {
 
@@ -22,6 +23,8 @@ namespace mainGame {
 			render::font::FontRender* m_font = nullptr;
 
 			Game* m_game = nullptr;
+
+			Models m_models;
 		};
 	}
 }
