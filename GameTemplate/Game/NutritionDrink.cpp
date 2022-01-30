@@ -63,16 +63,13 @@ namespace mainGame {
 				Vector3 toEnemyVec = enemyData->GetPosition() - m_position;
 
 				//敵との距離が接触距離以下なら…
-				if (toEnemyVec.Length() < ENEMY_COLLISION_DISTANCE) {
+				if (toEnemyVec.Length() < ENEMY_COLLISION_DISTANCE && enemyData->GetState() != enemy::enEnemyDown) {
 
 					//敵へと伸びるベクトルを正規化
 					toEnemyVec.Normalize();
 
 					//敵に衝撃を加える
 					enemyData->SetMoveSpeed(toEnemyVec * BODY_BLOW_IMPACT);
-
-					//敵をダメージ状態に変更
-					enemyData->SetState(enemy::enEnemyDamage);
 
 					//敵に爆発のダメージを与える
 					enemyData->ReceiveDamage(BODY_BLOW_DAMAGE);

@@ -115,6 +115,8 @@ namespace mainGame {
 
 			const bool IsDamage() { return m_isDamage; }
 
+			const Vector3& GetMoveTarget() { return m_moveTarget; }
+
 			/// @brief íœ
 			void DeleteEnemy();
 
@@ -193,6 +195,8 @@ namespace mainGame {
 			bool m_defeatFlag = false;
 
 			bool m_isDamage = false;
+
+			Vector3 m_moveTarget = g_vec3Zero;
 			/// @brief “G¶¬Ší‚Ìî•ñ
 			Generator* m_generator = nullptr;
 

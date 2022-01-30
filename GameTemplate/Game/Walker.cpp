@@ -32,28 +32,14 @@ namespace mainGame {
 			m_enemyAnimation.Init(this);
 			m_enemyEffect.Init(this);
 
-			//モデルをアニメーション有りで初期化
-			/*m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyModel->Init(
-				WALKER_MODEL_TKM_FILEPATH,
-				render::model::enMainRenderTarget,
-				WALKER_MODEL_TKS_FILEPATH,
-				m_enemyAnimation.GetAnimationClip(),
-				m_enemyAnimation.GetAnimationNum(),
-				enModelUpAxisY
-			);
-			m_enemyModel->CreateShadow();
-
-			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
-			m_enemyMapModel->Init(WALKER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);*/
+			
 
 			m_tkmFilepath = WALKER_MODEL_TKM_FILEPATH;
 			m_tksFilepath = WALKER_MODEL_TKS_FILEPATH;
 			m_animation = m_enemyAnimation.GetAnimationClip();
 			m_animationNum = m_enemyAnimation.GetAnimationNum();
 			m_mapModelFilepath = WALKER_MAP_MODEL_FILEPATH;
-
+			m_moveTarget = m_defensiveTarget->GetPosition();
 			
 		}
 

@@ -42,6 +42,8 @@ namespace mainGame {
 
 			InitData();
 
+			m_itemEffect.Init(this);
+
 			m_itemSound.Init(this);
 
 			m_spawnPos = spawnPos;
@@ -89,6 +91,7 @@ namespace mainGame {
 				}
 			}
 
+			m_itemEffect.Execution();
 			m_itemSound.Execution();
 		}
 

@@ -16,6 +16,8 @@ namespace mainGame {
 
 		const float GRAVITY = 100.0f;
 
+		const float ROUTE_MOVE_STOP_DISTANCE = 300.0f;
+
 		const float MOVE_STOP_DISTANCE = 200.0f;
 
 		const float MOVE_STOP_ANGLE_MATCH_RATE = 0.0f;
@@ -44,6 +46,8 @@ namespace mainGame {
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 
 			m_moveTarget = m_defensiveTarget->GetPosition();
+
+			m_searchMoveFlag = true;
 
 			m_moveVerocity = NORMAL_VEROCITY;
 
@@ -81,7 +85,7 @@ namespace mainGame {
 				IdleExecution();
 			}break;
 			case enEnemyMove: {
-				MoveExecution(m_moveVerocity);
+				MoveExecution();
 			}break;
 			case enEnemyAttack: {
 				StopExecution();
@@ -122,56 +126,17 @@ namespace mainGame {
 			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
 		}
 
-		void RouteMove::MoveExecution(const float moveVerocity)
+		void RouteMove::MoveExecution()
 		{
-			Vector3 pos = m_enemy->GetPosition();
-
-			m_toTarget = m_moveTarget - pos;
-
-			m_targetDistance = m_toTarget.Length();
-
-			if (m_targetDistance < m_moveStopDistance) {
-
-				Vector3 targetDirection = m_toTarget;
-
-				targetDirection.Normalize();
-
-				float rate = Dot(targetDirection, m_enemy->GetDirection());
-
-				if (rate >= MOVE_STOP_ANGLE_MATCH_RATE) {
-					m_enemy->SetState(enEnemyAttack);
-					return;
-				}
+			if (m_searchMoveFlag == true) {
+				SearchMove();
+			}
+			else {
+				NormalMove();
 			}
 
-			bool isEnd = false;
-
-			Vector3 movePos = m_path.Move(
-				pos,
-				moveVerocity * g_gameTime->GetFrameDeltaTime(),
-				isEnd
-			);
-			
-			
-			Vector3 oldPos = pos;
-
-			Vector3 moveSpeed = movePos - pos;
-
-			moveSpeed.Normalize();
-
-			m_moveSpeed += moveSpeed * moveVerocity;
-
-			
-			m_moveSpeed -= m_moveSpeed * m_friction;
-			
-			ApplyGravity();
-			
-			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed,g_gameTime->GetFrameDeltaTime()));
-
-			Vector3 toMovePos = pos - oldPos;
-
-			if (toMovePos.Length() < 1.0f) {
-				//RouteSearch();
+			if (m_targetDistance < m_moveStopDistance) {
+				m_enemy->SetState(enEnemyAttack);
 			}
 		}
 
@@ -187,6 +152,93 @@ namespace mainGame {
 		void RouteMove::ApplyGravity()
 		{
 			m_moveSpeed.y -= GRAVITY;
+		}
+
+		void RouteMove::NormalMove()
+		{
+			Vector3 pos = m_enemy->GetPosition();
+
+			m_toTarget = m_enemy->GetMoveTarget() - pos;
+
+			m_targetDistance = m_toTarget.Length();
+
+			if (m_moveStopDistance >= ROUTE_MOVE_STOP_DISTANCE) {
+
+				Vector3 targetDirection = m_toTarget;
+
+				targetDirection.Normalize();
+
+				float rate = Dot(targetDirection, m_enemy->GetDirection());
+
+				if (rate < MOVE_STOP_ANGLE_MATCH_RATE) {
+					SetMoveTarget(m_enemy->GetMoveTarget());
+					return;
+				}
+			}
+
+			Vector3 moveDirection = m_toTarget;
+
+			moveDirection.Normalize();
+
+			m_moveSpeed += moveDirection * m_moveVerocity;
+
+			m_moveSpeed -= m_moveSpeed * m_friction;
+
+			ApplyGravity();
+
+			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
+			
+		}
+
+		void RouteMove::SearchMove()
+		{
+			Vector3 pos = m_enemy->GetPosition();
+
+			m_toTarget = m_moveTarget - pos;
+
+			m_targetDistance = m_toTarget.Length();
+
+			if (m_targetDistance < ROUTE_MOVE_STOP_DISTANCE) {
+
+				Vector3 targetDirection = m_toTarget;
+
+				targetDirection.Normalize();
+
+				float rate = Dot(targetDirection, m_enemy->GetDirection());
+
+				if (rate >= MOVE_STOP_ANGLE_MATCH_RATE) {
+					m_searchMoveFlag = false;
+					return;
+				}
+			}
+
+			m_isMoveEnd = false;
+
+			bool isEnd = false;
+
+			Vector3 movePos = m_path.Move(
+				pos,
+				m_moveVerocity * g_gameTime->GetFrameDeltaTime(),
+				isEnd
+			);
+
+
+			Vector3 oldPos = pos;
+
+			Vector3 moveSpeed = movePos - pos;
+
+			moveSpeed.Normalize();
+
+			m_moveSpeed += moveSpeed * m_moveVerocity;
+
+
+			m_moveSpeed -= m_moveSpeed * m_friction;
+
+			ApplyGravity();
+
+			m_enemy->SetPosition(m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime()));
+
+			
 		}
 	}
 }

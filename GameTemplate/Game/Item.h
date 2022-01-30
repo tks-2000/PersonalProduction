@@ -1,5 +1,6 @@
 #pragma once
 #include "ItemResource.h"
+#include "ItemEffect.h"
 #include "ItemSound.h"
 
 namespace mainGame {
@@ -27,6 +28,8 @@ namespace mainGame {
 
 			/// @brief ”­“®
 			virtual void Activation();
+
+			const Vector3& GetPosition() { return m_position; }
 
 			void SetPosition(const Vector3& pos) { m_position = pos; }
 
@@ -99,6 +102,8 @@ namespace mainGame {
 			player::Player* m_player = nullptr;
 
 			ItemGenerator* m_itemGenerator = nullptr;
+
+			EffectGenerator m_itemEffect;
 
 			Sound m_itemSound;
 

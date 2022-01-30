@@ -33,7 +33,7 @@ namespace mainGame {
 			void IdleExecution();
 			/// @brief 移動
 			/// @param moveVerocity 
-			void MoveExecution(const float moveVerocity);
+			void MoveExecution();
 
 			void StopExecution();
 
@@ -41,12 +41,20 @@ namespace mainGame {
 
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 
-			void SetMoveTarget(const Vector3& target) { m_moveTarget = target; RouteSearch(); }
+			void SetMoveTarget(const Vector3& target) { m_moveTarget = target; RouteSearch(); m_searchMoveFlag = true; }
+
+			void SetSearchMove(const bool authenticity) { m_searchMoveFlag = authenticity; }
 
 			void SetMoveStopDistance(const float stopDistance) { m_moveStopDistance = stopDistance; }
+
+			const bool IsMoveEnd() { return m_isMoveEnd; }
 		private:
 
 			void ApplyGravity();
+
+			void NormalMove();
+
+			void SearchMove();
 
 			bool m_isInitd = false;
 			/// @brief 移動速度
@@ -63,6 +71,8 @@ namespace mainGame {
 			Vector3 m_moveDirection = g_vec3Zero;
 			/// @brief 移動目標との距離
 			float m_targetDistance = 0.0f;
+			/// @brief 移動終了フラグ
+			bool m_isMoveEnd = false;
 			/// @brief 移動開始するまでの時間
 			float m_moveStartTimer = 0.0f;
 			/// @brief 移動を終了する距離
@@ -71,6 +81,8 @@ namespace mainGame {
 			CharacterController m_charaCon;
 			/// @brief 敵クラス
 			Enemy* m_enemy = nullptr;
+
+			bool m_searchMoveFlag = false;
 
 			/// @brief 防衛目標
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;

@@ -5,7 +5,7 @@
 namespace mainGame {
 	namespace item {
 
-		const int ITEM_SPAWN_PROBABILITY = 1;
+		const int ITEM_SPAWN_PROBABILITY = 4;
 
 		ItemGenerator::ItemGenerator()
 		{

@@ -470,6 +470,9 @@
     <ClCompile Include="ItemSound.cpp">
       <Filter>inGame\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemEffect.cpp">
+      <Filter>inGame\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -866,6 +869,9 @@
       <Filter>inGame\DefensiveTarget</Filter>
     </ClInclude>
     <ClInclude Include="ItemSound.h">
+      <Filter>inGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemEffect.h">
       <Filter>inGame\Item</Filter>
     </ClInclude>
   </ItemGroup>

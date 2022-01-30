@@ -38,9 +38,6 @@ namespace mainGame {
 			//初期座標を設定
 			m_position = initData.enemyStartPos;
 
-
-			InitData(initData);
-
 			m_enemySound.Init(this);
 
 			m_game = FindGO<Game>(GAME_NAME);
@@ -50,6 +47,9 @@ namespace mainGame {
 			m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
 			m_defensiveTarget = FindGO <defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
+
+			InitData(initData);
+
 			//プレイヤーに自分の情報を追加
 			m_player->SetEnemyData(this);
 			//待機中で開始

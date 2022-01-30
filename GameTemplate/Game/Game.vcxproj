@@ -316,6 +316,7 @@
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemEffect.cpp" />
     <ClCompile Include="ItemGenerator.cpp" />
     <ClCompile Include="ItemSlot.cpp" />
     <ClCompile Include="ItemSound.cpp" />
@@ -456,6 +457,7 @@
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemEffect.h" />
     <ClInclude Include="ItemGenerator.h" />
     <ClInclude Include="ItemResource.h" />
     <ClInclude Include="ItemSlot.h" />

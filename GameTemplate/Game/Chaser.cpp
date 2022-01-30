@@ -38,23 +38,7 @@ namespace mainGame {
 			m_enemyAnimation.Init(this);
 			m_enemyEffect.Init(this);
 
-			//モデルをアニメーション有りで初期化
-			/*m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyModel->Init(
-				CHASER_MODEL_TKM_FILEPATH,
-				render::model::enMainRenderTarget,
-				CHASER_MODEL_TKS_FILEPATH,
-				m_enemyAnimation.GetAnimationClip(),
-				m_enemyAnimation.GetAnimationNum(),
-				enModelUpAxisY
-			);
-			m_enemyModel->CreateShadow();
-
-			m_enemyMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
-			m_enemyMapModel->Init(CHASER_MAP_MODEL_FILEPATH, render::model::enExpandModelGroup1);
-
-			m_isModelDisplay = true;*/
+			
 
 			m_tkmFilepath = CHASER_MODEL_TKM_FILEPATH;
 			m_tksFilepath = CHASER_MODEL_TKS_FILEPATH;
@@ -62,10 +46,9 @@ namespace mainGame {
 			m_animationNum = m_enemyAnimation.GetAnimationNum();
 			m_mapModelFilepath = CHASER_MAP_MODEL_FILEPATH;
 
-			//CreateModel();
+			m_moveTarget = m_defensiveTarget->GetPosition();
 
-			/*m_player = FindGO<player::Player>(player::PLAYER_NAME);
-			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);*/
+			
 		}
 
 		const bool Chaser::IsAttack()
@@ -91,23 +74,17 @@ namespace mainGame {
 			}break;
 			case enGameInProgress: {
 
+				if (m_chaseMode == true) {
+					m_moveTarget = m_player->GetPlayerPosition();
+				}
+				else {
+					m_moveTarget = m_defensiveTarget->GetPosition();
+				}
+
 				//プレイヤーを探す
 				PlayerSearch();
 
-				//動いているとき…
-				if (m_state == enEnemyMove) {
-					//追跡状態なら…
-					if (m_chaseMode == true) {
-						//移動目標をプレイヤーに設定
-						m_enemyRouteMove.SetMoveTarget(m_player->GetPlayerPosition());
-						
-					}
-					//追跡していない状態なら…
-					else {
-						//移動目標を防衛対象に設定
-						m_enemyRouteMove.SetMoveTarget(m_defensiveTarget->GetPosition());
-					}
-				}
+				
 				//移動を実行
 				m_enemyRouteMove.Execution();
 				//回転を実行
@@ -159,6 +136,8 @@ namespace mainGame {
 				return;
 			}
 
+			
+
 			//プレイヤーに向かうベクトルを求める
 			Vector3 toPlayerPosition = m_player->GetPlayerPosition() - m_position;
 
@@ -181,6 +160,10 @@ namespace mainGame {
 						m_state = enEnemyMove;
 						//追跡状態に移行
 						m_chaseMode = true;
+
+						//移動目標をプレイヤーに設定
+						m_moveTarget = m_player->GetPlayerPosition();
+						m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 					}
 				}
 				//内積の結果が探す範囲外のとき…
@@ -210,7 +193,8 @@ namespace mainGame {
 				//その場で様子を見る
 				m_enemyRotation.StartSeeTheSituation();
 				m_state = enEnemySeeTheSituation;
-				m_enemyRouteMove.SetMoveTarget(m_defensiveTarget->GetPosition());
+				m_moveTarget = m_defensiveTarget->GetPosition();
+				m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 			}
 		}
 	}
