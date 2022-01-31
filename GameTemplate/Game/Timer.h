@@ -33,6 +33,9 @@ namespace mainGame {
 			const EnTimerState& GetTimerState() { return m_state; }
 
 			const int GetTimer() const { return m_timeNum; }
+
+			const int GetStartTimer() const { return m_startTimeNum; }
+
 		private:
 			/// @brief 開始時のタイマーを進める
 			void ExecuteStartTimer();
@@ -42,9 +45,11 @@ namespace mainGame {
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 開始時のタイマー
-			float m_stastTimer = 0.0f;
+			float m_startTimer = 0.0f;
 			/// @brief ゲーム中のタイマー
 			float m_inGameTimer = 0.0f;
+
+			int m_startTimeNum = 0;
 			/// @brief フォントに設定する数値
 			int m_timeNum = 0;
 			/// @brief フォントの状態を表すステート

@@ -19,7 +19,7 @@ namespace mainGame {
 
 			DeleteGO(m_gameEndSprite);
 
-			DeleteGO(m_startFont);
+			
 		}
 
 		void GameUI::Init()
@@ -34,7 +34,7 @@ namespace mainGame {
 
 			m_remainingBullets.Init();
 
-			m_startFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
+			
 
 			m_gameEndSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 
@@ -60,9 +60,7 @@ namespace mainGame {
 
 			m_remainingBullets.Execution();
 
-			if (m_startFontFlag == false && m_timer->GetTimerState() == timer::enTimerExecute) {
-				DisplayStartFont();
-			}
+			
 
 			if (m_gameEndSpriteFlag == false &&
 				m_gameScene->GetGameSceneState() == enGameSceneClear ||
@@ -72,20 +70,13 @@ namespace mainGame {
 				DisplayGameEndSprite();
 			}
 
-			if (m_startFontFlag == true) {
-				StartFontExecution();
-			}
+			
 			if (m_gameEndSpriteFlag == true) {
 				GameEndSpriteExecution();
 			}
 		}
 
-		void GameUI::DisplayStartFont()
-		{
-			m_startFont->Init(L"Start");
-
-			m_startFontFlag = true;
-		}
+		
 
 		void GameUI::DisplayGameEndSprite()
 		{
@@ -99,17 +90,7 @@ namespace mainGame {
 			m_gameEndSpriteFlag = true;
 		}
 
-		void GameUI::StartFontExecution()
-		{
-			m_startFontDisplayTimer += g_gameTime->GetFrameDeltaTime();
-
-			if (m_startFontDisplayTimer > 3.0f) {
-				m_startFont->SetColor({ 0.0f,0.0f,0.0f,0.0f });
-				m_startFontFlag = false;
-			}
-
-			m_startFont->Execution();
-		}
+		
 
 		void GameUI::GameEndSpriteExecution()
 		{

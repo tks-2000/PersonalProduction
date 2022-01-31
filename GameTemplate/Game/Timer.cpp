@@ -29,12 +29,12 @@ namespace mainGame {
 			}
 
 			//タイマーの量を設定
-			m_stastTimer = START_TIME;
+			m_startTimer = START_TIME;
 			m_inGameTimer = INGAME_TIME;
 
 			//タイマー表示のフォントを作成
 			
-			m_timeNum = m_stastTimer + 1.0f;
+			m_timeNum = m_startTimer + 1.0f;
 			
 			m_timeFontPos = { 0.0f,300.0f };
 			
@@ -73,14 +73,14 @@ namespace mainGame {
 		void Timer::ExecuteStartTimer()
 		{
 			//開始時のタイマーを進める
-			m_stastTimer -= g_gameTime->GetFrameDeltaTime();
+			m_startTimer -= g_gameTime->GetFrameDeltaTime();
 
 			//フォントにタイマーの数値を伝える
-			m_timeNum = m_stastTimer + 1.0f;
+			m_timeNum = m_startTimeNum = m_startTimer + 1.0f;
 			
 
 			//タイマーが0以下になったら…
-			if (m_stastTimer <= 0.0f) {
+			if (m_startTimer <= 0.0f) {
 				//ゲーム中のカウントを進め始める
 				m_state = enTimerExecute;
 				
