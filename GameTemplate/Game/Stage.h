@@ -31,6 +31,12 @@ namespace mainGame {
 			render::model::SkinModelRender* m_bgModel = nullptr;
 
 			render::model::SkinModelRender* m_miniMapModel = nullptr;
+
+			int m_stageSoundID = 0;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
+
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }

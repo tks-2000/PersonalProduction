@@ -21,6 +21,20 @@ namespace mainGame {
 
 		const float CHASE_END_TIME = 5.0f;
 
+		Chaser::Chaser()
+		{
+
+		}
+
+		Chaser::~Chaser()
+		{
+			if (m_isModelDisplay == true) {
+				DeleteGO(m_enemyModel);
+				DeleteGO(m_enemyMapModel);
+			}
+		}
+
+
 		void Chaser::InitData(const EnemyInitData& enemyInitData)
 		{
 			//‘Ì—Í

@@ -13,6 +13,10 @@ namespace mainGame {
 
 		const float TITLE_CAMERA_FAR = 10000.0f;
 
+		const wchar_t* TITLE_BGM_FILEPATH = L"Assets/sound/bgm/titleBgm.wav";
+
+		const float TITLE_BGM_VOLUME = 0.1f;
+
 		Title::Title()
 		{
 
@@ -21,6 +25,7 @@ namespace mainGame {
 		Title::~Title()
 		{
 			//DeleteGO(m_titleSprite);
+			m_soundPlayer->StopBGM(m_titleSoundID);
 			DeleteGO(m_font);
 		}
 
@@ -41,6 +46,15 @@ namespace mainGame {
 			g_camera3D->SetPosition(TITLE_CAMERA_POS);
 			g_camera3D->SetTarget(TITLE_CAMERA_TARGET_POS);
 			g_camera3D->SetFar(TITLE_CAMERA_FAR);
+
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+
+			m_titleSoundID =  m_soundPlayer->SetBGM(TITLE_BGM_FILEPATH);
+
+			m_soundPlayer->SetBGMVolume(m_titleSoundID, TITLE_BGM_VOLUME);
+
+			m_soundPlayer->PlayBGM(m_titleSoundID, true);
+
 			m_isInitd = true;
 		}
 

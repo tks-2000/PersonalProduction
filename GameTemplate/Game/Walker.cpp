@@ -16,6 +16,19 @@ namespace mainGame {
 		/// @brief íœ‚³‚ê‚é‚Ü‚Å‚ÌŠÔ
 		const float WALKER_DELETE_TIME = 5.0f;
 
+		Walker::Walker()
+		{
+
+		}
+
+		Walker::~Walker()
+		{
+			if (m_isModelDisplay == true) {
+				DeleteGO(m_enemyModel);
+				DeleteGO(m_enemyMapModel);
+			}
+		}
+
 		void Walker::InitData(const EnemyInitData& enemyInitData)
 		{
 			//‘Ì—Í

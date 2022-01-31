@@ -12,6 +12,10 @@ namespace mainGame {
 		class Chaser : public Enemy
 		{
 		public:
+
+			Chaser();
+			~Chaser();
+
 			void SetMoveSpeed(const Vector3& speed) { m_enemyRouteMove.SetMoveSpeed(speed); };
 
 			const Vector3& GetMoveSpeed() const { return m_enemyRouteMove.GetMoveSpeed(); }

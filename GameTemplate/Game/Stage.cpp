@@ -7,6 +7,12 @@ namespace {
 
 namespace mainGame {
 	namespace stage {
+
+
+		const wchar_t* STAGE_BGM_FILEPATH = L"Assets/sound/bgm/inGameBgm.wav";
+
+		const float STAGE_BGM_VOLUME = 0.1f;
+
 		Stage::Stage()
 		{
 			m_isInitd = false;
@@ -35,9 +41,29 @@ namespace mainGame {
 			m_miniMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
 			m_miniMapModel->Init(STAGE_MODEL_TKM_FILEPATH, render::model::enExpandModelGroup1);
 			m_miniMapModel->Execution();*/
+
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
+
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+			m_stageSoundID = m_soundPlayer->SetBGM(STAGE_BGM_FILEPATH);
+			m_soundPlayer->SetBGMVolume(m_stageSoundID, STAGE_BGM_VOLUME);
+			m_soundPlayer->PlayBGM(m_stageSoundID, true);
+
 			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ðì¬
 			m_staticStageObject.CreateFromModel(m_stageModel->GetModel(), m_stageModel->GetModelWorldMatrix());
 			m_isInitd = true;
+		}
+
+		void Stage::Execution()
+		{
+			if (m_isInitd == false) {
+				return;
+			}
+
+			if (m_gameScene->GetGameSceneState() == enGameSceneClear || m_gameScene->GetGameSceneState() == enGameSceneOver) {
+				m_soundPlayer->StopBGM(m_stageSoundID);
+			}
+
 		}
 	}
 }

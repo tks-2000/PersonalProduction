@@ -25,6 +25,10 @@ namespace mainGame {
 			Game* m_game = nullptr;
 
 			Models m_models;
+
+			int m_titleSoundID = 0;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
 		};
 	}
 }

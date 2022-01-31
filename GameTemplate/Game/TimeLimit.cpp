@@ -42,6 +42,11 @@ namespace mainGame {
 			DeleteGO(m_timerBaseSprite);
 			DeleteGO(m_timeFont);
 			DeleteGO(m_timerNumFont);
+			for (int spriteNum = 0; spriteNum < NUM_SPRITE_NUM; spriteNum++) {
+				DeleteGO(m_count[spriteNum]);
+			}
+
+			DeleteGO(m_go);
 		}
 
 		void TimeLimit::Init()

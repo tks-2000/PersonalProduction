@@ -17,9 +17,9 @@ namespace mainGame {
 		Enemy::~Enemy()
 		{
 			
-			DeleteGO(m_enemyModel);
+			/*DeleteGO(m_enemyModel);
 
-			DeleteGO(m_enemyMapModel);
+			DeleteGO(m_enemyMapModel);*/
 		}
 
 		void Enemy::Init(const EnemyInitData& initData)

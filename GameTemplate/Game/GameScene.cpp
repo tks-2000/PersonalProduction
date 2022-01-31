@@ -119,6 +119,7 @@ namespace mainGame {
 		m_itemGenerator->Execution();
 		m_gameUI->Execution();
 		m_defensiveTarget->Execution();
+		m_stage->Execution();
 
 		if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
 			m_sampleSprite->FadeOut(2.0f);
