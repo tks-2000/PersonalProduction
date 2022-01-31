@@ -30,8 +30,7 @@ namespace render {
 			}break;
 			default: {
 				m_renderingEngine->DeleteExpansionDrawModel(m_target, &m_model);
-			}
-				break;
+			}break;
 			}
 			
 		}

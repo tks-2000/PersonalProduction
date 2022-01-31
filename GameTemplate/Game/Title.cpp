@@ -52,7 +52,7 @@ namespace mainGame {
 
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
 				m_game->GameSceneStart();
-				DeleteGO(this);
+				m_game->DeleteTitleScene();
 			}
 
 			//m_titleSprite->Execute();

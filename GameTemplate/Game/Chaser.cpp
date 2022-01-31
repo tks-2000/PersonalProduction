@@ -67,12 +67,12 @@ namespace mainGame {
 
 		void Chaser::ExecuteBehavior()
 		{
-			switch (m_game->GetGameState())
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enGameStart: {
+			case enGameSceneStart: {
 
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 
 				if (m_chaseMode == true) {
 					m_moveTarget = m_player->GetPlayerPosition();
@@ -110,10 +110,10 @@ namespace mainGame {
 				
 
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_state = enEnemyDown;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_state = enEnemyIdle;
 			}break;
 			default:

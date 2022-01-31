@@ -5,12 +5,7 @@ namespace mainGame {
 
 	Game::Game()
 	{
-		//AllNew();
-		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-		m_soundPlayer = NewGO<sound::SoundPlayer>(PRIORITY_VERYLOW, sound::SOUND_PLAYER_NAME);
-		
-		m_state = enTitleScene;
-		m_isDead = true;
+		m_soundPlayer = NewGO<sound::SoundPlayer>(PRIORITY_VERYLOW, sound::SOUND_PLAYER_NAME);	
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 	}
 
@@ -22,78 +17,13 @@ namespace mainGame {
 	void Game::Init()
 	{
 
-		
-		m_pause = false;
-
-		m_miniMap->Init();
-
-		m_player->Init();
-
-		m_defensiveTarget->Init();
-
-		m_gameCamera->Init();
-
-		m_enemyGenerator->Init({ 0.0f,0.0f,0.0f });
-
-		m_stage->Init();
-
-		m_timer->Init();
-
-		m_anim[enAnim1].Load("Assets/animData/hero/Hero_Run.tka");
-		m_anim[enAnim1].SetLoopFlag(true);
-
-		m_unityChanModel2->Init("Assets/modelData/character/HeroPBR.tkm");
-		m_unityChanModel2->Init(
-			"Assets/modelData/character/HeroPBR.tkm",
-			render::model::enMainRenderTarget,
-			"Assets/modelData/character/HeroPBR.tks",
-			m_anim,
-			enAnimNum
-			//enModelUpAxisY
-		);
-		m_unityChanModel2->SetScale({ 1.0f,1.0f,1.0f });
-		
-
-
-		m_sampleSprite->Init("Assets/image/sight.dds", 100, 100);
-		m_sampleSprite->SetPosition({ 0.0f,0.0f,0.0f });
-		m_sampleSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
-
-		
-
-		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
-		m_sound->SetVolume(1.0f);
-		//m_sound->Play(true);
-
-		m_state = enGameStart;
-
-		m_nvmMesh.Init("Assets/nvmData/stage3.tkn");
-
-		m_itemGenerator->Init();
-
-		m_gameUI->Init();
-
-		m_effect->Init(u"Assets/effect/CosmicMist.efk");
-		m_effect->SetPosition({ 0.0f,0.0f,0.0f });
-		Quaternion efkRot;
-		efkRot.SetRotationDegX(0.0f);
-		m_effect->SetRotation(efkRot);
-		m_effect->SetScale({ 10.0f,10.0f,10.0f });
-
-		m_soundID = m_soundPlayer->SetSE(L"Assets/sound/se/StrongCollide.wav");
-		//m_soundID = m_soundPlayer->SetSE(L"Assets/sound/se/WeakCollide.wav");
-		//m_soundPlayer->SetSEVolume(m_soundID,1.0f);
-		
-		m_isDead = false;
 	}
 
 	bool Game::Start()
 	{
-		
-		//Init();
-		m_title->Init();
+
+		TitleSceneStart();
 		m_isInitd = true;
-		
 		return true;
 	}
 
@@ -105,218 +35,37 @@ namespace mainGame {
 			return;
 		}
 
-
-		
-		
+		if (m_state == enTitleScene) {
+			m_title->Execution();
+		}
 
 		if (m_state == enGameInProgress) {
-			//ポーズ中は実行しない
-			if (m_pause == true) {
-				Pause();
-				if (g_pad[0]->IsTrigger(enButtonStart)) {
-					m_pause = false;
-					m_renderingEngine->SetLightFlag(true);
-					m_renderingEngine->SetEffectFlag(true);
-				}
-				return;
-			}
-			else {
-				if (g_pad[0]->IsTrigger(enButtonStart)) {
-					m_pause = true;
-					m_renderingEngine->SetLightFlag(false);
-					m_renderingEngine->SetEffectFlag(false);
-					return;
-				}
-			}
-		}
-
-
-		switch (m_state)
-		{
-		case enTitleScene: {
-			m_title->Execution();
-		}break;
-		case enGameStart: {
-			GameStartExecution();
-		}break;
-		case enGameInProgress: {
-			InGameExecution();
-		}break;
-		case enGameClear: {
-			GameClearExecution();
-		}break;
-		case enGameOver: {
-			GameOverExecution();
-		}break;
-		case enGameStateNum: {
-
-		}break;
-		default:
-			break;
-		}
-
-
-		
-		
-
-		if (m_isDead == false) {
-			m_player->Execution();
-			m_enemyGenerator->Execute();
-			m_gameCamera->Execution();
-			m_miniMap->Execution();
-			m_itemGenerator->Execution();
-			m_gameUI->Execution();
-			m_defensiveTarget->Execution();
-
-			if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
-				m_sampleSprite->FadeOut(2.0f);
-			}
-			else {
-				m_sampleSprite->FadeIn(2.0f);
-			}
-			m_sampleSprite->Execute();
-
-			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonB)) {
-				m_effect->Play(false,true);
-				m_soundPlayer->PlaySE(m_soundID);
-				m_defensiveTarget->ReceiveDamage(100.0f);
-
-			}
-			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
-				m_effect->Stop(true);
-			}
-			m_effect->Execution();
-
-
+			m_gameScene->Execution();
 		}
 		
+	}
+
+	void Game::TitleSceneStart()
+	{
+		m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
+		m_title->Init();
+		m_state = enTitleScene;
+	}
+
+	void Game::DeleteTitleScene()
+	{
+		DeleteGO(m_title);
 	}
 
 	void Game::GameSceneStart()
 	{
-		AllNew();
-		Init();
+		m_gameScene = NewGO<GameScene>(PRIORITY_VERYLOW, GAME_SCENE_NAME);
+		m_gameScene->Init();
+		m_state = enGameInProgress;
 	}
 
-	void Game::SetGameOver()
+	void Game::DeleteGameScene()
 	{
-		m_renderingEngine->SetLightFlag(false);
-
-		m_state = enGameOver;
-	}
-
-	void Game::GameStartExecution()
-	{
-		m_timer->Execution();
-	}
-
-	void Game::InGameExecution()
-	{
-		
-		
-		m_timer->Execution();
-
-		if (m_timer->GetTimerState() == timer::enTimerEnd) {
-			m_state = enGameClear;
-		}
-		if (m_defensiveTarget->IsBreak() == true) {
-			m_state = enGameOver;
-		}
-	}
-
-	void Game::GameClearExecution()
-	{
-		m_renderingEngine->SetLightFlag(false);
-
-
-		if (m_isDead == true) {
-			if (g_pad[0]->IsTrigger(enButtonA)) {
-				
-			}
-		}
-		else {
-			
-			if (g_pad[0]->IsTrigger(enButtonX)) {
-				DeleteGO(m_sampleSprite);
-				
-				DeleteGO(m_unityChanModel2);
-				AllDelete();
-				
-				m_isDead = true;
-				m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-				m_title->Init();
-				m_state = enTitleScene;
-			}
-		}
-	}
-
-	void Game::GameOverExecution()
-	{
-		
-		m_renderingEngine->SetLightFlag(false);
-
-		
-		if (m_isDead == true) {
-			if (g_pad[0]->IsTrigger(enButtonA)) {
-				
-			}
-		}
-		else {
-			
-			if (g_pad[0]->IsTrigger(enButtonX)) {
-				DeleteGO(m_sampleSprite);
-			
-				DeleteGO(m_unityChanModel2);
-				AllDelete();
-				
-				m_isDead = true;
-				m_title = NewGO<title::Title>(PRIORITY_VERYLOW, title::TITLE_NAME);
-				m_title->Init();
-				m_state = enTitleScene;
-			}
-		}
-	}
-
-	void Game::AllNew()
-	{
-		
-		m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
-		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
-		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
-		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW, defensiveTarget::DEFENSIVE_TARGET_NAME);
-		m_enemyGenerator = NewGO<enemy::Generator>(PRIORITY_VERYLOW, enemy::ENEMY_GENERATOR_NAME);
-		m_stage = NewGO<stage::Stage>(PRIORITY_VERYLOW, stage::STAGE_NAME);
-		m_timer = NewGO<timer::Timer>(PRIORITY_VERYLOW, timer::TIMER_NAME);
-		m_itemGenerator = NewGO<item::ItemGenerator>(PRIORITY_VERYLOW, item::ITEM_GENERATOR_NAME);
-		m_gameUI = NewGO<ui::GameUI>(PRIORITY_VERYLOW, ui::GAME_UI_NAME);
-
-		m_unityChanModel2 = NewGO<render::model::SkinModelRender>(1);
-		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
-		
-		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
-		m_effect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
-	}
-
-	void Game::AllDelete()
-	{
-		if (m_state == enTitleScene) {
-			DeleteGO(m_title);
-		}
-		DeleteGO(m_gameCamera);
-		DeleteGO(m_enemyGenerator);
-		DeleteGO(m_player);
-		DeleteGO(m_defensiveTarget);
-		DeleteGO(m_stage);
-		DeleteGO(m_timer);
-		DeleteGO(m_sound);
-		DeleteGO(m_miniMap);
-		DeleteGO(m_itemGenerator);
-		DeleteGO(m_gameUI);
-		DeleteGO(m_effect);
-	}
-
-	void Game::Pause()
-	{
-
+		DeleteGO(m_gameScene);
 	}
 }

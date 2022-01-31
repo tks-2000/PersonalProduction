@@ -15,7 +15,7 @@ namespace mainGame {
 
 		EffectGenerator::~EffectGenerator()
 		{
-
+			DeleteGO(m_spawnEffect);
 		}
 
 		void EffectGenerator::Init(Item* item)

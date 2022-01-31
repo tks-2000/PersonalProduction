@@ -38,7 +38,7 @@ namespace mainGame {
 
 			m_gameEndSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			m_timer = FindGO<timer::Timer>(timer::TIMER_NAME);
 
@@ -65,8 +65,8 @@ namespace mainGame {
 			}
 
 			if (m_gameEndSpriteFlag == false &&
-				m_game->GetGameState() == enGameClear ||
-				m_game->GetGameState() == enGameOver
+				m_gameScene->GetGameSceneState() == enGameSceneClear ||
+				m_gameScene->GetGameSceneState() == enGameSceneOver
 				) 
 			{
 				DisplayGameEndSprite();
@@ -89,10 +89,10 @@ namespace mainGame {
 
 		void GameUI::DisplayGameEndSprite()
 		{
-			if (m_game->GetGameState() == enGameClear) {
+			if (m_gameScene->GetGameSceneState() == enGameSceneClear) {
 				m_gameEndSprite->Init("Assets/Image/GAMECLEAR.dds", GAME_END_SPRITE_WIDTH, GAME_END_SPRITE_HEIGHT);
 			}
-			if (m_game->GetGameState() == enGameOver) {
+			if (m_gameScene->GetGameSceneState() == enGameSceneOver) {
 				m_gameEndSprite->Init("Assets/Image/GAMEOVER.dds", GAME_END_SPRITE_WIDTH, GAME_END_SPRITE_HEIGHT);
 			}
 

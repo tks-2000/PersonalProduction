@@ -6,7 +6,7 @@
 
 namespace mainGame {
 
-	class Game;
+	class GameScene;
 
 	namespace timer {
 		class Timer;
@@ -56,7 +56,7 @@ namespace mainGame {
 			RemainingBullets m_remainingBullets;
 
 			/// @brief ゲーム
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 			/// @brief タイマー
 			timer::Timer* m_timer = nullptr;
 		};

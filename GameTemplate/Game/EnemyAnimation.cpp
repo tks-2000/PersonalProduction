@@ -31,7 +31,7 @@ namespace mainGame {
 			//敵の情報を入手
 			m_enemy = enemy;
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			m_isInitd = true;
 		}
@@ -43,11 +43,11 @@ namespace mainGame {
 				return;
 			}
 
-			switch (m_game->GetGameState()) {
-			case enGameStart: {
+			switch (m_gameScene->GetGameSceneState()) {
+			case enGameSceneStart: {
 				m_state = enEnemyAnimationIdle;
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 				//敵のステータスの状態によって再生するアニメーションを変える
 				switch (m_enemy->GetState()) {
 				case enEnemyIdle: {
@@ -70,10 +70,10 @@ namespace mainGame {
 				}break;
 				}
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_state = enEnemyAnimationKneelDown;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_state = enEnemyAnimationIdle;
 			}break;
 			}

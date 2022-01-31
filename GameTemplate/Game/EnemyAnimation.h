@@ -58,7 +58,7 @@ namespace mainGame {
 			/// @brief “GƒNƒ‰ƒX
 			Enemy* m_enemy = nullptr;
 
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }

@@ -69,7 +69,7 @@ namespace mainGame {
 
 			m_spawnInterval = MAX_SPAWN_INTERVAL;
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;
@@ -82,7 +82,7 @@ namespace mainGame {
 				return;
 			}
 
-			if (m_game->GetGameState() != enGameInProgress) {
+			if (m_gameScene->GetGameSceneState() != enGameSceneInProgress) {
 				for (int enemyNum = 0; enemyNum < m_enemys.size(); enemyNum++) {
 					m_enemys[enemyNum]->Execution();
 				}

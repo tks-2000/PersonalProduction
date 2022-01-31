@@ -82,7 +82,7 @@ namespace mainGame {
 			//プレイヤーモデルの影を生成
 			m_playerModel->CreateShadow();
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			m_isInitd = true;
 		}
@@ -105,12 +105,12 @@ namespace mainGame {
 				return;
 			}
 
-			switch (m_game->GetGameState())
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enGameStart: {
+			case enGameSceneStart: {
 				
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 				m_playerMove.Execution();
 
 				m_playerAttack.Execute();
@@ -130,10 +130,10 @@ namespace mainGame {
 					InvincibleExecution();
 				}
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_playerState = enPlayerIdle;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_playerState = enPlayerIdle;
 			}break;
 			default:

@@ -5,6 +5,8 @@ namespace mainGame {
 
 	GameScene::GameScene()
 	{
+		
+
 		m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
@@ -23,7 +25,17 @@ namespace mainGame {
 
 	GameScene::~GameScene()
 	{
-
+		DeleteGO(m_gameCamera);
+		DeleteGO(m_enemyGenerator);
+		DeleteGO(m_player);
+		DeleteGO(m_defensiveTarget);
+		DeleteGO(m_stage);
+		DeleteGO(m_timer);
+		DeleteGO(m_sound);
+		DeleteGO(m_miniMap);
+		DeleteGO(m_itemGenerator);
+		DeleteGO(m_gameUI);
+		DeleteGO(m_sampleSprite);
 	}
 
 	void GameScene::Init()
@@ -62,6 +74,10 @@ namespace mainGame {
 
 		m_gameUI->Init();
 
+		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
+
+		m_game = FindGO<Game>(GAME_NAME);
+
 		m_isInitd = true;
 		
 	}
@@ -70,6 +86,57 @@ namespace mainGame {
 	{
 		if (m_isInitd == false) {
 			return;
+		}
+
+
+
+		//ポーズ中は実行しない
+		if (m_pause == true) {
+
+			if (g_pad[0]->IsTrigger(enButtonStart)) {
+				m_pause = false;
+				m_renderingEngine->SetLightFlag(true);
+				m_renderingEngine->SetEffectFlag(true);
+			}
+			return;
+		}
+		else {
+			if (g_pad[0]->IsTrigger(enButtonStart)) {
+				m_pause = true;
+				m_renderingEngine->SetLightFlag(false);
+				m_renderingEngine->SetEffectFlag(false);
+				return;
+			}
+		}
+
+
+		m_timer->Execution();
+
+		m_player->Execution();
+		m_enemyGenerator->Execute();
+		m_gameCamera->Execution();
+		m_miniMap->Execution();
+		m_itemGenerator->Execution();
+		m_gameUI->Execution();
+		m_defensiveTarget->Execution();
+
+		if (m_gameCamera->GetCameraMode() == enCameraModeTps) {
+			m_sampleSprite->FadeOut(2.0f);
+		}
+		else {
+			m_sampleSprite->FadeIn(2.0f);
+		}
+		m_sampleSprite->Execute();
+
+
+		if (m_defensiveTarget->IsBreak() == true) {
+			m_gameSceneState = enGameSceneOver;
+		}
+
+		if (m_gameSceneState == enGameSceneClear || m_gameSceneState == enGameSceneOver) {
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
+				GameSceneEnd();
+			}
 		}
 
 	}
@@ -82,5 +149,11 @@ namespace mainGame {
 	void GameScene::DeleteGameScene()
 	{
 
+	}
+
+	void GameScene::GameSceneEnd()
+	{
+		m_game->TitleSceneStart();
+		m_game->DeleteGameScene();
 	}
 }

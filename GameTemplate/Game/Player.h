@@ -13,7 +13,7 @@ class SkinModelRender;
 
 namespace mainGame {
 
-	class Game;
+	class GameScene;
 
 	namespace player {
 		
@@ -187,7 +187,7 @@ namespace mainGame {
 
 			float m_invincibleTimer = 0.0f;
 
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }

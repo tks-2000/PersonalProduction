@@ -61,7 +61,7 @@ namespace mainGame {
 				g_vec3Zero
 			};
 
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 
 			/// @brief èoåªä‘äu
 			float m_spawnInterval = 0.0f;

@@ -29,8 +29,8 @@ namespace mainGame {
 			}
 
 			//タイマーの量を設定
-			m_stastTimer = 3.0f;
-			m_inGameTimer = 120.0f;
+			m_stastTimer = START_TIME;
+			m_inGameTimer = INGAME_TIME;
 
 			//タイマー表示のフォントを作成
 			
@@ -39,7 +39,8 @@ namespace mainGame {
 			m_timeFontPos = { 0.0f,300.0f };
 			
 
-			m_game = FindGO<Game>(GAME_NAME);
+			
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			//初期化完了
 			m_isInitd = true;
@@ -53,17 +54,15 @@ namespace mainGame {
 			}
 
 			//状態によって実行する処理を決める
-			switch (m_state)
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enTimerStart: {
+			case enGameSceneStart: {
 				ExecuteStartTimer();
 			}break;
-			case enTimerExecute: {
+			case enGameSceneInProgress: {
 				ExecuteInGameTimer();
 			}break;
-			case enTimerEnd: {
-
-			}break;
+			
 			default:
 				break;
 			}
@@ -85,7 +84,7 @@ namespace mainGame {
 				//ゲーム中のカウントを進め始める
 				m_state = enTimerExecute;
 				
-				m_game->SetGameState(enGameInProgress);
+				m_gameScene->SetGameSceneState(enGameSceneInProgress);
 				return;
 			}
 			
@@ -105,7 +104,7 @@ namespace mainGame {
 			if (m_inGameTimer <= 0.0f) {
 				//ゲーム終了後のカウントを進め始める
 				m_state = enTimerEnd;
-				m_game->SetGameState(enGameClear);
+				m_gameScene->SetGameSceneState(enGameSceneClear);
 				return;
 			}
 		}

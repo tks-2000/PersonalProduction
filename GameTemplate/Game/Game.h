@@ -46,6 +46,7 @@ namespace mainGame {
 		class GameUI;
 	}
 	
+	class GameScene;
 
 	class GameCamera;
 
@@ -53,14 +54,8 @@ namespace mainGame {
 	enum EnGameState {
 		/// @brief タイトル画面
 		enTitleScene,
-		/// @brief ゲーム開始前
-		enGameStart,
 		/// @brief ゲーム進行中
 		enGameInProgress,
-		/// @brief ゲームクリア
-		enGameClear,
-		/// @brief ゲームオーバー
-		enGameOver,
 		/// @brief ゲームの状態を表すステートの数
 		enGameStateNum
 	};
@@ -77,7 +72,13 @@ namespace mainGame {
 		bool Start();
 		void Update();
 
+		void TitleSceneStart();
+
+		void DeleteTitleScene(); 
+
 		void GameSceneStart();
+
+		void DeleteGameScene();
 
 		/// @brief ゲームの状態を変更
 		/// @param state ゲームの状態を表すステート
@@ -87,95 +88,23 @@ namespace mainGame {
 		/// @return ゲームの状態を表すステート
 		const EnGameState& GetGameState() { return m_state; }
 
-		void SetGameOver();
-
+		
 
 	private:
-		/// @brief ゲーム開始時の処理
-		void GameStartExecution();
-		/// @brief ゲームプレイ時の処理
-		void InGameExecution();
-		/// @brief ゲームクリア時の処理
-		void GameClearExecution();
-		/// @brief ゲームオーバー時の処理
-		void GameOverExecution();
-		/// @brief ゲーム中のオブジェクトを全て作成
-		void AllNew();
-		/// @brief ゲーム中のオブジェクトを全て削除
-		void AllDelete();
-		/// @brief ポーズ中の処理
-		void Pause();
+		
 
 		/// @brief 初期化フラグ
 		bool m_isInitd = false;
 
-		render::model::SkinModelRender* m_unityChanModel = nullptr;
-		render::model::SkinModelRender* m_unityChanModel2 = nullptr;
-		enum EnAnim {
-			enAnim1,
-			enAnimNum
-		};
-		AnimationClip m_anim[enAnimNum];
-		render::model::SkinModelRender* m_backGroundModel = nullptr;
-		render::model::SkinModelRender* m_backGroundModel2 = nullptr;
-
-		render::sprite::SpriteRender* m_sampleSprite = nullptr;
-		
-		Vector3 m_pos = g_vec3Zero;
-
-		Quaternion m_qRot = g_quatIdentity;
-
-		Quaternion m_qRot2 = g_quatIdentity;
-
-		enum UnityChanAnimation {
-			enIdle,
-			enWark,
-			enAnimationNum
-		};
-
-		AnimationClip m_unityChanAnimationClip[enAnimationNum];
-
-		EnGameState m_state = enGameStart;
-
-
-		bool m_isDead = false;
-
-		bool m_pause = false;
+		EnGameState m_state = enGameStateNum;
 
 		title::Title* m_title = nullptr;
 
-		/// @brief ゲームカメラ
-		GameCamera* m_gameCamera = nullptr;
-		/// @brief プレイヤー
-		player::Player* m_player = nullptr;
-		/// @brief 防衛対象
-		defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
-		/// @brief 敵生成器
-		enemy::Generator* m_enemyGenerator = nullptr;
-		/// @brief ステージ
-		stage::Stage* m_stage = nullptr;
-		/// @brief タイマー
-		timer::Timer* m_timer = nullptr;
-		/// @brief レンダリングエンジン
-		render::RenderingEngine* m_renderingEngine = nullptr;
-
-		map::MiniMap* m_miniMap = nullptr;
-
-		item::ItemGenerator* m_itemGenerator = nullptr;
-
-		ui::GameUI* m_gameUI = nullptr;
+		GameScene* m_gameScene = nullptr;
 
 		sound::SoundPlayer* m_soundPlayer = nullptr;
 
-		int m_soundID = 0;
-
-		CSoundSource* m_sound = nullptr;
-
-		nsAI::NaviMesh m_nvmMesh;
-		nsAI::Path m_path;
-		nsAI::PathFinding m_pathFinding;
-
-		render::effect::EffectRender* m_effect = nullptr;
+		render::RenderingEngine* m_renderingEngine = nullptr;
 	};
 
 }

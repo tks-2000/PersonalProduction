@@ -5,6 +5,8 @@ class CSoundSource;
 
 namespace mainGame {
 
+	class Game;
+
 	namespace player {
 		class Player;
 	}
@@ -31,11 +33,17 @@ namespace mainGame {
 		class GameUI;
 	}
 
+	/// @brief ゲームシーンの状態を表すステート
 	enum EnGameSceneState {
+		/// @brief ゲーム開始直後のカウント中
 		enGameSceneStart,
+		/// @brief ゲームをプレイ中
 		enGameSceneInProgress,
+		/// @brief ゲームクリア
 		enGameSceneClear,
+		/// @brief ゲームオーバー
 		enGameSceneOver,
+		/// @brief ゲームシーンのステートの数
 		enGameSceneNum
 	};
 
@@ -49,9 +57,15 @@ namespace mainGame {
 		void Init();
 		void Execution();
 
+		const EnGameSceneState& GetGameSceneState() { return m_gameSceneState; }
+
+		void SetGameSceneState(const EnGameSceneState& state) { m_gameSceneState = state; }
+
 	private:
 		void CreateGameScene();
 		void DeleteGameScene();
+
+		void GameSceneEnd();
 
 		bool m_isInitd = false;
 
@@ -83,5 +97,7 @@ namespace mainGame {
 		CSoundSource* m_sound = nullptr;
 
 		render::sprite::SpriteRender* m_sampleSprite = nullptr;
+
+		Game* m_game = nullptr;
 	};
 }

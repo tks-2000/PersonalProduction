@@ -40,7 +40,7 @@ namespace mainGame {
 			//データを取得
 			m_player = pl;
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			//初期化完了
 			m_isInitd = true;
@@ -53,12 +53,12 @@ namespace mainGame {
 				return;
 			}
 
-			switch (m_game->GetGameState())
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enGameStart: {
+			case enGameSceneStart: {
 				m_playerAnimState = enPlayerAnimationIdle;
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 				//状態によって再生するアニメーションを変える
 				switch (m_player->GetPlayerStatus())
 				{
@@ -81,10 +81,10 @@ namespace mainGame {
 					break;
 				}
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_playerAnimState = enPlayerAnimationClear;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_playerAnimState = enPlayerAnimationKneelDown;
 			}
 			default:

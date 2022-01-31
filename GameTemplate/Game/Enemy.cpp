@@ -40,7 +40,7 @@ namespace mainGame {
 
 			m_enemySound.Init(this);
 
-			m_game = FindGO<Game>(GAME_NAME);
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 			//“G¶¬Ší‚Ìî•ñ‚ğ“üè
 			m_generator = FindGO<Generator>(ENEMY_GENERATOR_NAME);
 			//ƒvƒŒƒCƒ„[‚Ìî•ñ‚ğ“üè
@@ -174,12 +174,12 @@ namespace mainGame {
 
 		void Enemy::ExecuteBehavior()
 		{
-			switch (m_game->GetGameState())
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enGameStart: {
+			case enGameSceneStart: {
 
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 				//m_enemyRouteMove.Execution();
 				//m_qRot = m_enemyRotation.RotationExecute(m_enemyRouteMove.GetMoveSpeed());
 				//m_enemyAttack.Execution();
@@ -188,10 +188,10 @@ namespace mainGame {
 				}
 
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_state == enEnemyDown;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_state == enEnemyIdle;
 			}break;
 			default:

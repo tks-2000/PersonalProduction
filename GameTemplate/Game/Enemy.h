@@ -200,7 +200,7 @@ namespace mainGame {
 			/// @brief “G¶¬Ší‚Ìî•ñ
 			Generator* m_generator = nullptr;
 
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 		};

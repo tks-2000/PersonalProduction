@@ -45,12 +45,12 @@ namespace mainGame {
 
 		void Walker::ExecuteBehavior()
 		{
-			switch (m_game->GetGameState())
+			switch (m_gameScene->GetGameSceneState())
 			{
-			case enGameStart: {
+			case enGameSceneStart: {
 
 			}break;
-			case enGameInProgress: {
+			case enGameSceneInProgress: {
 				m_enemyRouteMove.Execution();
 				m_enemyRotation.RotationExecute();
 				m_enemyAttack.Execution();
@@ -60,10 +60,10 @@ namespace mainGame {
 				}
 
 			}break;
-			case enGameClear: {
+			case enGameSceneClear: {
 				m_state = enEnemyDown;
 			}break;
-			case enGameOver: {
+			case enGameSceneOver: {
 				m_state = enEnemyIdle;
 			}break;
 			default:

@@ -55,7 +55,7 @@ namespace mainGame {
 			/// @brief ƒvƒŒƒCƒ„[
 			Player* m_player = nullptr;
 
-			Game* m_game = nullptr;
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }

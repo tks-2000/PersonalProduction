@@ -2,7 +2,7 @@
 
 namespace mainGame {
 
-	class Game;
+	class GameScene;
 
 	namespace timer {
 
@@ -53,7 +53,8 @@ namespace mainGame {
 			/// @brief タイマーの表示位置
 			Vector2 m_timeFontPos = g_vec2Zero;
 
-			Game* m_game = nullptr;
+
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }
