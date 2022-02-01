@@ -119,10 +119,17 @@ namespace render {
 		/// @brief 描画するフォントの配列
 		std::vector<font::FontData*> m_drawFontsData;
 
-		/// @brief フレームバッファのスプライトの初期化情報
-		SpriteInitData m_frameBufferSpriteInitData;
-		/// @brief フレームバッファのスプライト
-		Sprite m_frameBufferSprite;
+		/// @brief メインレンダリングターゲットのスプライトの初期化情報
+		SpriteInitData m_mainRenderTargetSpriteInitData;
+		/// @brief メインレンダリングターゲットのスプライト
+		Sprite m_mainRenderTargetSprite;
+
+		RenderTarget m_finalRenderTarget;
+
+		SpriteInitData m_finalSpriteInitData;
+
+		Sprite m_finalSprite;
+
 
 		Vector3 m_ligColor = g_vec3Zero;
 

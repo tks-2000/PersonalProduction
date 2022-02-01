@@ -19,13 +19,28 @@ namespace render {
 		);
 
 		//フレームバッファのコピー用のスプライトを用意する
-		m_frameBufferSpriteInitData.m_textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();
-		m_frameBufferSpriteInitData.m_width = 1280;
-		m_frameBufferSpriteInitData.m_height = 720;
-		m_frameBufferSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+		m_mainRenderTargetSpriteInitData.m_textures[0] = &m_mainRenderTarget.GetRenderTargetTexture();
+		m_mainRenderTargetSpriteInitData.m_width = 1280;
+		m_mainRenderTargetSpriteInitData.m_height = 720;
+		m_mainRenderTargetSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
 
-		m_frameBufferSprite.Init(m_frameBufferSpriteInitData);
+		m_mainRenderTargetSprite.Init(m_mainRenderTargetSpriteInitData);
 
+		m_finalRenderTarget.Create(
+			1280,
+			720,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+
+		m_finalSpriteInitData.m_textures[0] = &m_finalRenderTarget.GetRenderTargetTexture();
+		m_finalSpriteInitData.m_width = 1280;
+		m_finalSpriteInitData.m_height = 720;
+		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+
+		m_finalSprite.Init(m_finalSpriteInitData);
 		
 	
 	}
@@ -124,8 +139,13 @@ namespace render {
 			}
 		}
 
-		//フレームバッファのコピーのスプライトを表示する
-		m_frameBufferSprite.Draw(rc);
+
+		/*rc.WaitUntilToPossibleSetRenderTarget(m_finalRenderTarget);
+		rc.SetRenderTargetAndViewport(m_finalRenderTarget);
+		rc.ClearRenderTargetView(m_finalRenderTarget);*/
+
+		//メインレンダリングターゲットのコピーのスプライトを表示する
+		m_mainRenderTargetSprite.Draw(rc);
 
 		//スプライトを描画
 		for (int spriteNum = 0; spriteNum < m_drawSprites.size(); spriteNum++) {
@@ -150,6 +170,8 @@ namespace render {
 			m_drawFontsData[fontNum]->font.End(rc);
 
 		}
+
+
 	}
 
 	void RenderingEngine::LightUpdate()

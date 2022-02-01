@@ -294,12 +294,12 @@
     <ClCompile Include="EffectRender.cpp" />
     <ClCompile Include="EnemyAttackThePlayer.cpp" />
     <ClCompile Include="BaseEndurance.cpp" />
-    <ClCompile Include="Bloom.cpp" />
+    <ClCompile Include="DefensiveTarget.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="BSP.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Chaser.cpp" />
-    <ClCompile Include="DefensiveTarget.cpp" />
+    <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAnimation.cpp" />
     <ClCompile Include="EnemyAttack.cpp" />

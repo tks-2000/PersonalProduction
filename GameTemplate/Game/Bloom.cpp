@@ -105,7 +105,7 @@ namespace render {
 
 			m_blurSpriteInitData.m_width = 1280;
 			m_blurSpriteInitData.m_height = 720;
-			m_blurSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+			m_blurSpriteInitData.m_fxFilePath = "Assets/shader/kawaseBloom.fx";
 			m_blurSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
 			m_blurSpriteInitData.m_colorBufferFormat[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
