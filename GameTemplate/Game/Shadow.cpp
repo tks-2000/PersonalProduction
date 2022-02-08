@@ -15,6 +15,8 @@ namespace render {
 				DXGI_FORMAT_D32_FLOAT,
 				m_clearColor
 			);
+
+
 		}
 
 		Shadow::~Shadow()
@@ -26,6 +28,10 @@ namespace render {
 		{
 			m_ligCameraPos = { 0.0f,1500.0f,0.0f };
 			m_ligCameraTarget = { 0.0f,0.0f,0.0f };
+			m_lightCamera.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
+			m_lightCamera.SetWidth(1024.0f);
+			m_lightCamera.SetHeight(1024.0f);
+
 			return true;
 		}
 
@@ -94,7 +100,7 @@ namespace render {
 			cameraDir.Normalize();
 			Vector3 cameraUp = Cross(cameraDir, m_lightCamera.GetRight());
 			m_lightCamera.SetUp(m_ligCameraUp);
-			m_lightCamera.SetViewAngle(Math::DegToRad(m_ligCameraViewAngle));
+			//m_lightCamera.SetViewAngle(Math::DegToRad(m_ligCameraViewAngle));
 			m_lightCamera.Update();
 		}
 	}

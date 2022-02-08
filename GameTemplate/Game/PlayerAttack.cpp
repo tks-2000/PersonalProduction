@@ -19,9 +19,11 @@ namespace {
 	/// @brief 通常の弾丸の再装填時間
 	const float NORMAL_BULLET_RELOAD_TIME = 3.0f;
 	/// @brief 攻撃判定が始まるまでの時間
-	const float ATTACK_JUDGEMENT_START_TIME = 0.5f;
+	const float ATTACK_JUDGEMENT_START_TIME = 0.4f;
 	/// @brief 攻撃判定が終わるまでの時間
-	const float ATTACK_JUDGEMENT_END_TIME = 1.0f;
+	const float ATTACK_JUDGEMENT_END_TIME = 0.6f;
+	/// @brief 攻撃が終わるまでの時間
+	const float ATTACK_END_TIME = 1.0f;
 }
 
 namespace mainGame {
@@ -96,7 +98,7 @@ namespace mainGame {
 				m_attackJudgementTimer += g_gameTime->GetFrameDeltaTime();
 
 				//当たり判定のタイマーが当たり判定の出始めの時間まで進んだら…
-				if (m_attackJudgementTimer >= ATTACK_JUDGEMENT_START_TIME) {
+				if (m_attackJudgementTimer >= ATTACK_JUDGEMENT_START_TIME && m_attackJudgementTimer < ATTACK_JUDGEMENT_END_TIME) {
 					//フルチャージ状態なら…
 					if (m_isFollCharge == true) {
 						//フルチャージ近接攻撃を行う
@@ -119,10 +121,19 @@ namespace mainGame {
 
 				//当たり判定のタイマーが当たり判定の終了時間まで進んだら…
 				if (m_attackJudgementTimer >= ATTACK_JUDGEMENT_END_TIME) {
+					
+					//当たり判定が出ていないことにする
+					m_isAttackJudgement = false;
+
+					m_isFollCharge = false;
+				}
+
+				if (m_attackJudgementTimer >= ATTACK_END_TIME) {
 					//プレイヤーを待機状態に戻す
 					m_player->SetPlayerState(enPlayerIdle);
 					//当たり判定のタイマーを元に戻す
 					m_attackJudgementTimer = 0.0f;
+
 					//当たり判定が出ていないことにする
 					m_isAttackJudgement = false;
 

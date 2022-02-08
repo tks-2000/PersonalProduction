@@ -71,9 +71,11 @@ namespace mainGame {
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_swordModel->Init(SWORD_MODEL_FILEPATH);
+			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_shieldModel->Init(SHIELD_MODEL_FILEPATH);
+			m_shieldModel->CreateShadow();
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plMapModel->SetFxFilePath("Assets/shader/mapModel.fx");
@@ -159,6 +161,11 @@ namespace mainGame {
 			m_playerSound.Execution();
 
 			SetWeapons();
+
+			if (m_position.y < -1000.0f) {
+				m_position = PLAYER_START_POS;
+				m_playerMove.SetPosition(m_position);
+			}
 		}
 
 		void Player::DamageExecution()

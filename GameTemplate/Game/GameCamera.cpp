@@ -16,6 +16,10 @@ namespace {
 	const float FPS_CAMERA_FRICTION = 5.0f;
 	/// @brief カメラの移動が止まる距離
 	const float CAMERA_MOVE_STOP_DISTANCE = 0.01f;
+
+	const Vector3 LIGHT_CAMERA_START_POS = { 0.0f,1000.0f,0.0f };
+
+	const Vector3 LIGHT_CAMERA_START_TARGET = { 0.0f,0.0f,0.0f };
 }
 
 namespace mainGame {
@@ -46,6 +50,11 @@ namespace mainGame {
 		m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
 		m_miniMap = FindGO<map::MiniMap>(map::MINI_MAP_NAME);
+
+		m_shadow = FindGO<render::shadow::Shadow>(render::shadow::SHADOW_NAME);
+
+		m_shadow->SetLightCameraPos(LIGHT_CAMERA_START_POS);
+		m_shadow->SetLightCameraTarget(LIGHT_CAMERA_START_TARGET);
 
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 
@@ -100,6 +109,17 @@ namespace mainGame {
 		//カメラの注視点と座標を渡す
 		g_camera3D->SetTarget(m_cameraGazePoint);
 		g_camera3D->SetPosition(m_cameraPos);
+
+		Vector3 plPos = m_player->GetPlayerPosition();
+
+		m_shadow->SetLightCameraTarget(plPos);
+
+		plPos.y += 1000.0f;
+		plPos.z -= 1100.0f;
+
+		m_shadow->SetLightCameraPos(plPos);
+
+		
 	}
 
 	void GameCamera::TpsCameraUpdate()
@@ -216,10 +236,15 @@ namespace mainGame {
 		//カメラの座標とカメラの移動地点の距離を計算する
 		m_cameraMoveDistance = m_cameraMovePos - m_cameraPos;
 
+		Vector3 ligCameraPos = m_shadow->GetLightCameraPos();
+		Vector3 ligCameraTarget = m_shadow->GetLightCameraTarget();
+
 		//距離が停止距離以下なら…
 		if (m_cameraMoveDistance.Length() < m_cameraMoveStopDistance) {
 			//カメラの座標にカメラの移動地点の座標を渡す
 			m_cameraPos = m_cameraMovePos;
+			ligCameraPos += m_cameraMoveDistance;
+			ligCameraTarget += m_cameraMoveDistance;
 		}
 		else {
 			//カメラの座標からカメラの移動地点へのベクトルをカメラの移動方向にする
@@ -228,7 +253,14 @@ namespace mainGame {
 			m_cameraMoveDirection.Normalize();
 			//カメラの座標に計算した移動量を加算する
 			m_cameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
+
+			ligCameraPos += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
+			
+			ligCameraTarget += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
 		}
+
+		//m_shadow->SetLightCameraPos(ligCameraPos);
+		//m_shadow->SetLightCameraTarget(ligCameraTarget);
 	}
 
 	void GameCamera::FpsCameraMove()

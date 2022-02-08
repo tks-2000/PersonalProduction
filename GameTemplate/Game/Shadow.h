@@ -64,9 +64,9 @@ namespace render {
 			/// @brief ライトカメラの注視点
 			Vector3 m_ligCameraTarget = g_vec3Zero;
 			/// @brief ライトカメラの上方向
-			Vector3 m_ligCameraUp = { 1.0f,0.0f,0.0f };
+			Vector3 m_ligCameraUp = { 0.0f,0.0f,1.0f };
 			/// @brief ライトカメラの画角
-			float m_ligCameraViewAngle = 40.0f;
+			float m_ligCameraViewAngle = 50.0f;
 			/// @brief シャドウマップに書き込むモデルの合計数
 			int m_shadowModelSum = 0;
 			/// @brief シャドウマップ生成のためのモデル

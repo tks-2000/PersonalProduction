@@ -37,6 +37,8 @@ namespace mainGame {
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 
 			void SetAddVerocity(const float addVerocity) { m_addVerocity = addVerocity; }
+
+			void SetPosition(const Vector3& pos) { m_position = pos; m_charaCon.SetPosition(m_position); }
 		private:
 
 			/// @brief –€ŽC—Í‚ð“K—p

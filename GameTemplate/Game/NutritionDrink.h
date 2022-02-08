@@ -29,6 +29,8 @@ namespace mainGame {
 			/// @brief 敵との接触を判定
 			void EnemyCollision();
 
+			void DeleteEfficacy();
+
 			/// @brief 敵の配列のポインタ
 			std::vector<enemy::Enemy*>* m_enemys = nullptr;
 

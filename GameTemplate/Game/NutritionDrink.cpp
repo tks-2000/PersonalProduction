@@ -17,7 +17,7 @@ namespace mainGame {
 
 		NutritionDrink::~NutritionDrink()
 		{
-			m_player->SetAddVerocity(0.0f);
+			
 		}
 
 		void NutritionDrink::Activation()
@@ -75,6 +75,11 @@ namespace mainGame {
 					enemyData->ReceiveDamage(BODY_BLOW_DAMAGE);
 				}
 			}
+		}
+
+		void NutritionDrink::DeleteEfficacy()
+		{
+			m_player->SetAddVerocity(0.0f);
 		}
 	}
 }

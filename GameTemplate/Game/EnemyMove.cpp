@@ -3,7 +3,7 @@
 
 namespace {
 	/// @brief ’Êí‚ÌˆÚ“®‘¬“x
-	const float NORMAL_MOVE_VEROCITY = 30.0f;
+	const float NORMAL_MOVE_VEROCITY = 60.0f;
 	/// @brief ‘¬‚¢ˆÚ“®‘¬“x
 	const float FAST_MOVE_VEROCITY = 40.0f;
 	/// @brief ’x‚¢ˆÚ“®‘¬“x

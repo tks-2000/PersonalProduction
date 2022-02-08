@@ -55,23 +55,25 @@ namespace render {
 	bool RenderingEngine::Start()
 	{
 		m_lig->Init();
-		m_lig->SetDirectionLightColor({ 0.3f, 0.3f, 0.3f });
-		m_lig->SetDirectionLightDirection({ 0.0f, -0.5f, 1.0f });
+		m_lig->SetDirectionLightColor({ 0.2f, 0.2f, 0.2f });
+		Vector3 dir = { 0.0f,-1000.0,1100.0f };
+		dir.Normalize();
+		m_lig->SetDirectionLightDirection(dir);
 		m_lig->SetAmbientLight({ 0.1f,0.1f,0.1f });
 		
-		m_lig->SetHemiSphereLifhtGroundColor({ 0.0f,0.0f,0.5f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.1f,0.2f,0.1f });
+		m_lig->SetHemiSphereLifhtGroundColor({ 1.0f,1.0f,3.0f });
+		m_lig->SetHemiSphereLifhtSkyColor({ 0.4f,0.4f,0.4f });
 		m_lig->SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
 		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
 		m_lig->SetPointLightRange(0, 1000.0f);
 		m_lig->SetSpotLightPos(0, { 0.0f, 1000.0f, 0.0f });
 		m_lig->SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
-		m_lig->SetSpotLightColor(0, { 5.0f,5.0f,5.0f });
-		m_lig->SetDirectionLightFlickering(
+		m_lig->SetSpotLightColor(0, { 4.0f,4.0f,4.0f });
+		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },
 			0.1f
-		);
+		);*/
 
 		m_ligFlag = true;
 		m_effectFlag = true;

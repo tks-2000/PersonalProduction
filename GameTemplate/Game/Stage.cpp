@@ -33,6 +33,7 @@ namespace mainGame {
 			//ƒ‚ƒfƒ‹‚ð•\Ž¦
 			m_stageModel = NewGO <render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_stageModel->Init(STAGE_MODEL_TKM_FILEPATH);
+			//m_stageModel->CreateShadow();
 			m_stageModel->Execution();
 			m_bgModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_bgModel->Init("Assets/modelData/bg/sky_a.tkm");
