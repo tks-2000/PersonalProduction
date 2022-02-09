@@ -1,5 +1,7 @@
 #pragma once
 #include "RenderResource.h"
+#include "DeferredRender.h"
+#include "Lighting.h"
 #include "FontRender.h"
 
 namespace render {
@@ -56,6 +58,10 @@ namespace render {
 		/// @param modelGroupNum 
 		void DeleteExpansionModelDrawCamera(int modelGroupNum);
 
+		void SetDeferredModel(Model* model) { m_deferredRender.SetDrawModel(model); }
+
+		void DeleteDeferrdModel(Model* model) { m_deferredRender.DeleteDrawModel(model); }
+
 		/// @brief 描画するスプライトを追加
 		/// @param sprite 追加するスプライトのアドレス
 		void SetDrawSprite(Sprite* sprite);
@@ -76,14 +82,20 @@ namespace render {
 
 		void SetEffectFlag(const bool Authenticity) { m_effectFlag = Authenticity; }
 
+		light::Lighting* GetLighting(){ return &m_lig; }
+
+		const int GetLightingSize(){return sizeof(m_lig); }
+
 	private:
 		/// @brief ライトの更新
 		void LightUpdate();
 
 		void DrawExpansionModel(int modelGroupNum,RenderContext& rc);
+
+		DeferredRender m_deferredRender;
 		
 		/// @brief ライティング
-		light::Lighting* m_lig = nullptr;
+		light::Lighting m_lig;
 		/// @brief シャドウ
 		shadow::Shadow* m_shadow = nullptr;
 		/// @brief ポストエフェクト

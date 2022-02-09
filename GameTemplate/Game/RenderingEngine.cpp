@@ -4,7 +4,7 @@
 namespace render {
 	RenderingEngine::RenderingEngine()
 	{
-		m_lig = NewGO<light::Lighting>(0, light::LIGHTING_NAME);
+		//m_lig = NewGO<light::Lighting>(0, light::LIGHTING_NAME);
 		m_shadow = NewGO<shadow::Shadow>(0, shadow::SHADOW_NAME);
 		m_postEffect = NewGO<postEffect::PostEffect>(0, postEffect::POST_EFFECT_NAME);
 
@@ -41,39 +41,41 @@ namespace render {
 		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
 
 		m_finalSprite.Init(m_finalSpriteInitData);
-		
+		m_lig.Init();
+		m_deferredRender.Init(this);
 	
 	}
 
 	RenderingEngine::~RenderingEngine()
 	{
-		DeleteGO(m_lig);
+		//DeleteGO(m_lig);
 		DeleteGO(m_shadow);
 		DeleteGO(m_postEffect);
 	}
 
 	bool RenderingEngine::Start()
 	{
-		m_lig->Init();
-		m_lig->SetDirectionLightColor({ 0.2f, 0.2f, 0.2f });
-		Vector3 dir = { 0.0f,-1000.0,1100.0f };
-		dir.Normalize();
-		m_lig->SetDirectionLightDirection(dir);
-		m_lig->SetAmbientLight({ 0.1f,0.1f,0.1f });
 		
-		m_lig->SetHemiSphereLifhtGroundColor({ 1.0f,1.0f,3.0f });
-		m_lig->SetHemiSphereLifhtSkyColor({ 0.4f,0.4f,0.4f });
-		m_lig->SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
-		m_lig->SetPointLightColor(0, { 0.0f,1.0f,0.0f });
-		m_lig->SetPointLightRange(0, 1000.0f);
-		m_lig->SetSpotLightPos(0, { 0.0f, 1000.0f, 0.0f });
-		m_lig->SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
-		m_lig->SetSpotLightColor(0, { 4.0f,4.0f,4.0f });
+		m_lig.SetDirectionLightColor({ 1.0f, 1.0f, 1.0f });
+		Vector3 dir = { 0.0f,0.0,1.0f };
+		dir.Normalize();
+		m_lig.SetDirectionLightDirection(dir);
+		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
+		
+		m_lig.SetHemiSphereLifhtGroundColor({ 0.0f,0.0f,0.0f });
+		m_lig.SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.0f });
+		m_lig.SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
+		m_lig.SetPointLightColor(0, { 0.0f,0.0f,0.0f });
+		m_lig.SetPointLightRange(0, 1000.0f);
+		m_lig.SetSpotLightPos(0, { 0.0f, 200.0f, 0.0f });
+		m_lig.SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
+		m_lig.SetSpotLightColor(0, { 0.0f,0.0f,0.0f });
 		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },
 			0.1f
 		);*/
+		
 
 		m_ligFlag = true;
 		m_effectFlag = true;
@@ -83,7 +85,7 @@ namespace render {
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
 
 		//ブルームをかける
-		m_postEffect->SetBloom(&m_mainRenderTarget);
+		//m_postEffect->SetBloom(&m_mainRenderTarget);
 
 		return true;
 	}
@@ -103,10 +105,14 @@ namespace render {
 
 		m_shadow->CreateShadowMap(rc);
 
+		m_deferredRender.Execute(rc);
+
 		//メインレンダリングターゲットを使用可能になるまで待つ
 		rc.WaitUntilToPossibleSetRenderTarget(m_mainRenderTarget);
 		rc.SetRenderTargetAndViewport(m_mainRenderTarget);
 		rc.ClearRenderTargetView(m_mainRenderTarget);
+
+		m_deferredRender.Draw(rc);
 
 		//描画するモデルを全て描画する
 		for (int modelNum = 0; modelNum < m_drawModels.size(); modelNum++) {
@@ -228,7 +234,7 @@ namespace render {
 			}
 		}
 
-		m_lig->Execution();
+		m_lig.Execution();
 	}
 
 	void RenderingEngine::DrawExpansionModel(int modelGroupNum,RenderContext& rc)

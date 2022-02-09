@@ -17,7 +17,8 @@ namespace render {
 			enExpandModelGroup1,
 			enExpandModelGroup2,
 			enExpandModelGroup3,
-			enMainRenderTarget
+			enMainRenderTarget,
+			enDeferrdRender
 		};
 		
 		/// @brief 3Dモデルの表示を行うクラス
@@ -69,6 +70,14 @@ namespace render {
 			void Init(
 				const char* modelFilePath,
 				const EnModelDrawTarget& drawTarget = enMainRenderTarget,
+				const char* skeletonPath = nullptr,
+				AnimationClip* animationClip = nullptr,
+				int animationNum = 0,
+				EnModelUpAxis enAxsis = enModelUpAxisZ
+			);
+
+			void InitDeferrd(
+				const char* modelFilePath,
 				const char* skeletonPath = nullptr,
 				AnimationClip* animationClip = nullptr,
 				int animationNum = 0,
@@ -150,6 +159,8 @@ namespace render {
 			bool m_isInitd = false;
 
 			mainGame::map::MiniMap* m_miniMap = nullptr;
+
+			bool m_isDeferred = false;
 
 			/// @brief 自身の描画先
 			EnModelDrawTarget m_target = enMainRenderTarget;

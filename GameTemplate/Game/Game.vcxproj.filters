@@ -476,6 +476,9 @@
     <ClCompile Include="TitleModels.cpp">
       <Filter>inGame\Title</Filter>
     </ClCompile>
+    <ClCompile Include="DeferredRender.cpp">
+      <Filter>MyEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -879,6 +882,9 @@
     </ClInclude>
     <ClInclude Include="TitleModels.h">
       <Filter>inGame\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="DeferredRender.h">
+      <Filter>MyEngine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

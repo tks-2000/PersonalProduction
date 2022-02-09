@@ -6,7 +6,7 @@ namespace render {
 		SkinModelRender::SkinModelRender()
 		{
 			m_renderingEngine = FindGO<RenderingEngine>(RENDERING_ENGINE_NAME);
-			m_lig = FindGO<light::Lighting>(light::LIGHTING_NAME);
+			m_lig = m_renderingEngine->GetLighting();
 			m_shadow = FindGO<shadow::Shadow>(shadow::SHADOW_NAME);
 			m_miniMap = FindGO<mainGame::map::MiniMap>(mainGame::map::MINI_MAP_NAME);
 			m_shadowFlag = false;
@@ -22,17 +22,22 @@ namespace render {
 			if (m_shadowFlag == true) {
 				m_shadow->DeleteShadowModel(&m_shadowModel);
 			}
-			switch (m_target)
-			{
-			case enMainRenderTarget: {
-				
-				m_renderingEngine->DeleteModel(&m_model);
-			}break;
-			default: {
-				m_renderingEngine->DeleteExpansionDrawModel(m_target, &m_model);
-			}break;
+
+			if (m_isDeferred == true) {
+				m_renderingEngine->DeleteDeferrdModel(&m_model);
 			}
-			
+			else {
+				switch (m_target)
+				{
+				case enMainRenderTarget: {
+
+					m_renderingEngine->DeleteModel(&m_model);
+				}break;
+				default: {
+					m_renderingEngine->DeleteExpansionDrawModel(m_target, &m_model);
+				}break;
+				}
+			}
 		}
 
 		bool SkinModelRender::Start()
@@ -127,14 +132,68 @@ namespace render {
 				//初期化したモデルをレンダリングエンジンに渡す
 				m_renderingEngine->SetDrawModel(&m_model);
 			}break;
-			
+			case enDeferrdRender: {
+				//初期化したモデルをレンダリングエンジンに渡す
+				m_renderingEngine->SetDrawModel(&m_model);
+			}break;
 			default:
 				break;
 			}
 
-			
+			m_isDeferred = false;
 
 			//初期化完了
+			m_isInitd = true;
+		}
+
+		void SkinModelRender::InitDeferrd(
+			const char* modelFilepath,
+			const char* skeletonPath,
+			AnimationClip* animationClip,
+			int animationNum,
+			EnModelUpAxis enAxsis)
+		{
+			//モデルのファイルパスを設定
+			m_modelFilePath = modelFilepath;
+			m_modelInitData.m_tkmFilePath = modelFilepath;
+
+			m_modelInitData.m_fxFilePath = "Assets/shader/deferredModel.fx";
+
+			//スケルトンのファイルパスが指定されていたらスケルトンを作成
+			if (skeletonPath != nullptr) {
+
+				//スケルトンのファイルパスを記憶しておく
+				m_skeletonFilePath = skeletonPath;
+
+				m_skeleton.Init(skeletonPath);
+				//スケルトンをモデルに設定
+				m_modelInitData.m_skeleton = &m_skeleton;
+
+				//頂点シェーダーのエントリーポイントを指定
+				m_modelInitData.m_vsSkinEntryPointFunc = "VSSkinMain";
+
+				//アニメーションクリップとアニメーションの数が設定されていたらアニメーションを作成
+				if (animationClip != nullptr && animationNum != 0) {
+
+					m_animationClip = animationClip;
+
+					m_animation.Init(m_skeleton, m_animationClip, animationNum);
+
+					m_animFlag = true;
+				}
+			}
+			else {
+				//アニメーション無しの頂点シェーダーのエントリーポイントを設定
+				m_modelInitData.m_vsEntryPointFunc = "VSMain";
+			}
+			
+
+			m_model.Init(m_modelInitData);
+
+			m_renderingEngine->SetDeferredModel(&m_model);
+
+			m_isDeferred = true;
+
 			m_isInitd = true;
 		}
 

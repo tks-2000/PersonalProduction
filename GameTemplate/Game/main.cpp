@@ -30,8 +30,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	CSoundEngine::GetInstance()->Init();
 
 	NewGO<render::RenderingEngine>(0, render::RENDERING_ENGINE_NAME);
-	NewGO<mainGame::Game>(0,mainGame::GAME_NAME);
-	//NewGO<test::Test>(0);
+	//NewGO<mainGame::Game>(0,mainGame::GAME_NAME);
+	NewGO<test::Test>(0);
 
 	/*float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };
 	RenderTarget shadow;

@@ -97,7 +97,7 @@ namespace render {
 			m_light.directionLight.color.x = 0.5f;
 			m_light.directionLight.color.y = 0.5f;
 			m_light.directionLight.color.z = 0.5f;
-			m_dirLigRotFlag = false;
+			m_dirLigRotFlag = true;
 			m_dirLigFlickering = false;
 		}
 

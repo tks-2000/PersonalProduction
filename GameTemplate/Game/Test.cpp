@@ -12,22 +12,21 @@ namespace test {
 		m_heroAnim[enAnim1].Load("Assets/animData/hero/Hero_Idle.tka");
 		m_heroAnim[enAnim1].SetLoopFlag(true);
 
-		m_hero->Init(
+		m_hero->InitDeferrd(
 			"Assets/modelData/character/HeroPBR.tkm",
-			render::model::enMainRenderTarget,
 			"Assets/modelData/character/HeroPBR.tks",
 			m_heroAnim,
 			enAnimNum
 		);
 
 		//m_hero->SetScale({ 2.0f,2.0f,2.0f });
-		m_shield->Init("Assets/modelData/character/Hero_Shield.tkm");
-		m_sword->Init("Assets/modelData/character/Hero_Sword.tkm");
+		m_shield->InitDeferrd("Assets/modelData/character/Hero_Shield.tkm");
+		m_sword->InitDeferrd("Assets/modelData/character/Hero_Sword.tkm");
 		//m_sword->Init("Assets/modelData/sphere/sphere.tkm");
 		//m_sword->SetScale({ 0.1f,0.1f,0.1f });
 
 		m_stage = NewGO <render::model::SkinModelRender>(0);
-		m_stage->Init("Assets/modelData/stage/Stage.tkm");
+		m_stage->InitDeferrd("Assets/modelData/bg/testStage3.tkm");
 
 	}
 
