@@ -7,13 +7,13 @@ namespace render {
 		const int MAX_SHADOW_MODEL_NUM = 100;
 
 		/// @brief 影生成を行うクラス
-		class Shadow : public IGameObject
+		class Shadow
 		{
 		public:
 			Shadow();
 			~Shadow();
-			bool Start();
-			void Update();
+			void Init();
+			void Execute();
 			/// @brief シャドウマップを取得
 			/// @return シャドウマップのconst参照
 			const RenderTarget& GetShadowMap() const { return m_shadowMap; }
@@ -53,6 +53,8 @@ namespace render {
 
 			void CreateShadowMap(RenderContext& rc);
 		private:
+			/// @brief 初期化フラグ
+			bool m_isInitd = false;
 			/// @brief シャドウマップ
 			RenderTarget m_shadowMap;
 			/// @brief カラーバッファのクリアカラー

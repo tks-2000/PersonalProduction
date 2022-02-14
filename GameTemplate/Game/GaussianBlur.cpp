@@ -85,8 +85,8 @@ namespace render {
 
 			xBlurSpriteInitData.m_textures[0] = m_originalTexture;
 
-			xBlurSpriteInitData.m_expandConstantBuffer = &m_weights;
-			xBlurSpriteInitData.m_expandConstantBufferSize = sizeof(m_weights);
+			xBlurSpriteInitData.m_expandConstantBuffer[0] = &m_weights;
+			xBlurSpriteInitData.m_expandConstantBufferSize[0] = sizeof(m_weights);
 
 			m_xBlurSprite.Init(xBlurSpriteInitData);
 
@@ -100,8 +100,8 @@ namespace render {
 
 			yBlurSpriteInitData.m_textures[0] = m_originalTexture;
 
-			yBlurSpriteInitData.m_expandConstantBuffer = &m_weights;
-			yBlurSpriteInitData.m_expandConstantBufferSize = sizeof(m_weights);
+			yBlurSpriteInitData.m_expandConstantBuffer[0] = &m_weights;
+			yBlurSpriteInitData.m_expandConstantBufferSize[0] = sizeof(m_weights);
 
 			m_yBlurSprite.Init(yBlurSpriteInitData);
 		}

@@ -39,7 +39,7 @@ namespace mainGame {
 
 			//–h‰q‘ÎÛ‚Ìƒ‚ƒfƒ‹‚ğ‰Šú‰»
 			m_defensiveTargetModel = NewGO<render::model::SkinModelRender>(0);
-			m_defensiveTargetModel->Init(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
+			m_defensiveTargetModel->InitDeferrd(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
 
 			m_miniMapdefensiveTargetModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_miniMapdefensiveTargetModel->SetFxFilePath("Assets/shader/mapModel.fx");

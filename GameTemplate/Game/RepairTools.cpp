@@ -28,7 +28,7 @@ namespace mainGame {
 		void RepairTools::Spawn()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/item/item_guardup.tkm");
+			m_itemModel->InitDeferrd("Assets/modelData/item/item_guardup.tkm");
 		}
 
 		void RepairTools::Efficacy()

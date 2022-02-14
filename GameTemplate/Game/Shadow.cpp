@@ -5,6 +5,18 @@ namespace render {
 	namespace shadow {
 		Shadow::Shadow()
 		{
+			
+
+
+		}
+
+		Shadow::~Shadow()
+		{
+
+		}
+
+		void Shadow::Init()
+		{
 			//シャドウマップ描画用のレンダリングターゲットを作成
 			m_shadowMap.Create(
 				1024,
@@ -16,27 +28,19 @@ namespace render {
 				m_clearColor
 			);
 
-
-		}
-
-		Shadow::~Shadow()
-		{
-
-		}
-
-		bool Shadow::Start()
-		{
-			m_ligCameraPos = { 0.0f,1500.0f,0.0f };
+			m_ligCameraPos = { 0.0f,1100.0f,1000.0f };
 			m_ligCameraTarget = { 0.0f,0.0f,0.0f };
 			m_lightCamera.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
 			m_lightCamera.SetWidth(1024.0f);
 			m_lightCamera.SetHeight(1024.0f);
-
-			return true;
+			m_isInitd = true;
 		}
 
-		void Shadow::Update()
+		void Shadow::Execute()
 		{
+			if (m_isInitd == false) {
+				return;
+			}
 			//Quaternion qRot;
 
 			//qRot.SetRotationDegY(0.5f);

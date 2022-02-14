@@ -75,9 +75,12 @@ void Sprite::InitDescriptorHeap(const SpriteInitData& initData)
 		);
 	}
 	m_descriptorHeap.RegistConstantBuffer(0, m_constantBufferGPU);
-	if (m_userExpandConstantBufferCPU != nullptr) {
-		//ユーザー拡張の定数バッファはb1に関連付けする。
-		m_descriptorHeap.RegistConstantBuffer(1, m_userExpandConstantBufferGPU);
+
+	for (int bufferNum = 0; bufferNum < 10; bufferNum++) {
+		if (m_userExpandConstantBufferCPU[bufferNum] != nullptr) {
+			//ユーザー拡張の定数バッファはb1に関連付けする。
+			m_descriptorHeap.RegistConstantBuffer(bufferNum + 1, m_userExpandConstantBufferGPU[bufferNum]);
+		}
 	}
 	m_descriptorHeap.Commit();
 }
@@ -175,13 +178,16 @@ void Sprite::InitConstantBuffer(const SpriteInitData& initData)
 {
 	//定数バッファの初期化。
 	m_constantBufferGPU.Init(sizeof(m_constantBufferCPU), nullptr);
-	//ユーザー拡張の定数バッファが指定されている。
-	if (initData.m_expandConstantBuffer != nullptr) {
-		m_userExpandConstantBufferCPU = initData.m_expandConstantBuffer;
-		m_userExpandConstantBufferGPU.Init(
-			initData.m_expandConstantBufferSize,
-			initData.m_expandConstantBuffer
-		);
+
+	for (int bufferNum = 0; bufferNum < 10; bufferNum++) {
+		//ユーザー拡張の定数バッファが指定されている。
+		if (initData.m_expandConstantBuffer[bufferNum] != nullptr) {
+			m_userExpandConstantBufferCPU[bufferNum] = initData.m_expandConstantBuffer[bufferNum];
+			m_userExpandConstantBufferGPU[bufferNum].Init(
+				initData.m_expandConstantBufferSize[bufferNum],
+				initData.m_expandConstantBuffer[bufferNum]
+			);
+		}
 	}
 }
 void Sprite::Init(const SpriteInitData& initData)
@@ -267,8 +273,10 @@ void Sprite::Draw(RenderContext& renderContext)
 
 	//定数バッファを更新。
 	m_constantBufferGPU.CopyToVRAM(&m_constantBufferCPU);
-	if (m_userExpandConstantBufferCPU != nullptr) {
-		m_userExpandConstantBufferGPU.CopyToVRAM(m_userExpandConstantBufferCPU);
+	for (int bufferNum = 0; bufferNum < 10; bufferNum++) {
+		if (m_userExpandConstantBufferCPU[bufferNum] != nullptr) {
+			m_userExpandConstantBufferGPU[bufferNum].CopyToVRAM(m_userExpandConstantBufferCPU[bufferNum]);
+		}
 	}
 	//ルートシグネチャを設定。
 	renderContext.SetRootSignature(m_rootSignature);

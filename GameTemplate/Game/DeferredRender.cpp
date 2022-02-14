@@ -3,7 +3,7 @@
 
 namespace render {
 
-	const int RENDER_TARGET_NUM = 4;
+	const int RENDER_TARGET_NUM = 6;
 
 	DeferredRender::DeferredRender()
 	{
@@ -55,6 +55,42 @@ namespace render {
 			DXGI_FORMAT_UNKNOWN
 		);
 
+		m_depthRT.Create(
+			FRAME_BUFFER_W,
+			FRAME_BUFFER_H,
+			1,
+			1,
+			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+
+		m_lvpRT.Create(
+			FRAME_BUFFER_W,
+			FRAME_BUFFER_H,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_UNKNOWN
+		);
+
+		m_effectRenderTarget.Create(
+			FRAME_BUFFER_W,
+			FRAME_BUFFER_H,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+
+		SpriteInitData effectSpriteInitData;
+		effectSpriteInitData.m_textures[0] = &m_effectRenderTarget.GetRenderTargetTexture();
+		effectSpriteInitData.m_width = FRAME_BUFFER_W;
+		effectSpriteInitData.m_height = FRAME_BUFFER_H;
+		effectSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+		effectSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
+
+		m_effectSprite.Init(effectSpriteInitData);
+
 		
 		m_defferdLightSpriteInitData.m_width = FRAME_BUFFER_W;
 		m_defferdLightSpriteInitData.m_height = FRAME_BUFFER_H;
@@ -63,9 +99,14 @@ namespace render {
 		m_defferdLightSpriteInitData.m_textures[1] = &m_normalRT.GetRenderTargetTexture();
 		m_defferdLightSpriteInitData.m_textures[2] = &m_worldPosRT.GetRenderTargetTexture();
 		m_defferdLightSpriteInitData.m_textures[3] = &m_normalInViewRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[4] = &m_depthRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[5] = &m_lvpRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[6] = &m_renderingEngine->GetShadow()->GetShadowMapTexture();
 		m_defferdLightSpriteInitData.m_fxFilePath = "Assets/shader/deferredLighting.fx";
-		m_defferdLightSpriteInitData.m_expandConstantBuffer = m_renderingEngine->GetLighting()->GetLightAddress();
-		m_defferdLightSpriteInitData.m_expandConstantBufferSize = sizeof(m_renderingEngine->GetLighting()->GetLight());
+		m_defferdLightSpriteInitData.m_expandConstantBuffer[0] = m_renderingEngine->GetLighting()->GetLightAddress();
+		m_defferdLightSpriteInitData.m_expandConstantBufferSize[0] = sizeof(m_renderingEngine->GetLighting()->GetLight());
+		m_defferdLightSpriteInitData.m_expandConstantBuffer[1] = (void*)&m_renderingEngine->GetShadow()->GetLightCameraMatrix();
+		m_defferdLightSpriteInitData.m_expandConstantBufferSize[1] = sizeof(m_renderingEngine->GetShadow()->GetLightCameraMatrix());
 		m_defferdLightSprite.Init(m_defferdLightSpriteInitData);
 	
 
@@ -82,7 +123,9 @@ namespace render {
 			&m_albedRT,
 			&m_normalRT,
 			&m_worldPosRT,
-			&m_normalInViewRT
+			&m_normalInViewRT,
+			&m_depthRT,
+			&m_lvpRT
 		};
 
 		rc.WaitUntilToPossibleSetRenderTargets(RENDER_TARGET_NUM, rts);
@@ -92,7 +135,21 @@ namespace render {
 		{
 			m_deferredModels[modelNum]->Draw(rc);
 		}
+
+		
+
 		rc.WaitUntilFinishDrawingToRenderTargets(RENDER_TARGET_NUM, rts);
+		/*EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+		EffectEngine::GetInstance()->Draw();*/
+
+		rc.WaitUntilToPossibleSetRenderTarget(m_effectRenderTarget);
+		rc.SetRenderTargetAndViewport(m_effectRenderTarget);
+		rc.ClearRenderTargetView(m_effectRenderTarget);
+
+		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+		EffectEngine::GetInstance()->Draw();
+
+		rc.WaitUntilFinishDrawingToRenderTarget(m_effectRenderTarget);
 
 		
 	}
@@ -100,6 +157,7 @@ namespace render {
 	void DeferredRender::Draw(RenderContext& rc)
 	{
 		m_defferdLightSprite.Draw(rc);
+		m_effectSprite.Draw(rc);
 	}
 
 	void DeferredRender::SetDrawModel(Model* model)

@@ -27,7 +27,8 @@ struct SPSIn{
 	float2 uv 			: TEXCOORD0;	//uv座標。
 	float3 worldPos 	: TEXCOORD1;
 	float3 normalInView : TEXCOORD2;	//カメラ空間の法線
-	//float4 posInLVP		: TEXCOORD3;	//ライトビュースクリーン空間でのピクセルの座標
+	float4 depth		: TEXCOORD3;
+	float4 posInLVP		: TEXCOORD4;	//ライトビュースクリーン空間でのピクセルの座標
 };
 //ピクセルシェーダーからの出力
 struct SPSOut
@@ -36,6 +37,8 @@ struct SPSOut
 	float3 normal : SV_Target1;
 	float3 worldPos : SV_Target2;
 	float3 normalInView : SV_Target3;
+	float4 depth		: SV_Target4;
+	float4 posInLVP : SV_Target5;
 };
 
 ////////////////////////////////////////////////
@@ -46,6 +49,12 @@ cbuffer ModelCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
+};
+
+cbuffer shadowCb : register(b1)
+{
+	float4x4 mLVP;
+
 };
 
 ////////////////////////////////////////////////
@@ -106,7 +115,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.uv = vsIn.uv;
 
 	psIn.normalInView = mul(mView,psIn.normal);	//カメラ空間の法線を求める
-	//psIn.posInLVP = mul(mLVP,worldPos);
+	psIn.posInLVP = mul(mLVP,worldPos);
 
 	return psIn;
 }
@@ -137,6 +146,10 @@ SPSOut PSMain( SPSIn psIn )
 	psOut.normal = (psIn.normal/2.0f) + 0.5f;
 	psOut.worldPos = psIn.worldPos;
 	psOut.normalInView = (psIn.normalInView/2.0f) + 0.5f;
+	
+	psOut.depth = float4 (psIn.pos.z,psIn.pos.z,psIn.pos.z,1.0f);
+
+	psOut.posInLVP = psIn.posInLVP;
 
 	return psOut;
 }

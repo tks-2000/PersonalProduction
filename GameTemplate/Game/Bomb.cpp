@@ -74,7 +74,7 @@ namespace mainGame {
 		void Bomb::Spawn()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/item/item_attackup.tkm");
+			m_itemModel->InitDeferrd("Assets/modelData/item/item_attackup.tkm");
 		}
 
 		void Bomb::Activation()
@@ -124,7 +124,7 @@ namespace mainGame {
 		void Bomb::CreateModel()
 		{
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->Init("Assets/modelData/sphere/sphere.tkm");
+			m_itemModel->InitDeferrd("Assets/modelData/sphere/sphere.tkm");
 
 			m_modelFlag = true;
 		}

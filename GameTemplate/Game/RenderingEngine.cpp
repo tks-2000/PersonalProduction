@@ -5,7 +5,7 @@ namespace render {
 	RenderingEngine::RenderingEngine()
 	{
 		//m_lig = NewGO<light::Lighting>(0, light::LIGHTING_NAME);
-		m_shadow = NewGO<shadow::Shadow>(0, shadow::SHADOW_NAME);
+		//m_shadow = NewGO<shadow::Shadow>(0, shadow::SHADOW_NAME);
 		m_postEffect = NewGO<postEffect::PostEffect>(0, postEffect::POST_EFFECT_NAME);
 
 		//メインレンダリングターゲットを作成
@@ -26,6 +26,8 @@ namespace render {
 
 		m_mainRenderTargetSprite.Init(m_mainRenderTargetSpriteInitData);
 
+		
+
 		m_finalRenderTarget.Create(
 			1280,
 			720,
@@ -38,18 +40,20 @@ namespace render {
 		m_finalSpriteInitData.m_textures[0] = &m_finalRenderTarget.GetRenderTargetTexture();
 		m_finalSpriteInitData.m_width = 1280;
 		m_finalSpriteInitData.m_height = 720;
-		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/spriteDepth.fx";
 
 		m_finalSprite.Init(m_finalSpriteInitData);
 		m_lig.Init();
+		m_shadow.Init();
 		m_deferredRender.Init(this);
+		
 	
 	}
 
 	RenderingEngine::~RenderingEngine()
 	{
 		//DeleteGO(m_lig);
-		DeleteGO(m_shadow);
+		//DeleteGO(m_shadow);
 		DeleteGO(m_postEffect);
 	}
 
@@ -57,7 +61,7 @@ namespace render {
 	{
 		
 		m_lig.SetDirectionLightColor({ 1.0f, 1.0f, 1.0f });
-		Vector3 dir = { 0.0f,0.0,1.0f };
+		Vector3 dir = { 0.0f,1.0f,1.0f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(dir);
 		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
@@ -76,7 +80,7 @@ namespace render {
 			0.1f
 		);*/
 		
-
+	
 		m_ligFlag = true;
 		m_effectFlag = true;
 		//m_shadow->SetLightCameraTarget({ 0.0f,0.0f,0.0f });
@@ -103,29 +107,41 @@ namespace render {
 			LightUpdate();
 		}
 
-		m_shadow->CreateShadowMap(rc);
+		m_shadow.Execute();
+		m_shadow.CreateShadowMap(rc);
 
 		m_deferredRender.Execute(rc);
+
+		
 
 		//メインレンダリングターゲットを使用可能になるまで待つ
 		rc.WaitUntilToPossibleSetRenderTarget(m_mainRenderTarget);
 		rc.SetRenderTargetAndViewport(m_mainRenderTarget);
 		rc.ClearRenderTargetView(m_mainRenderTarget);
 
+		
+
 		m_deferredRender.Draw(rc);
+		
+
+		if (m_effectFlag == true) {
+			/*EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+			EffectEngine::GetInstance()->Draw();*/
+		}
 
 		//描画するモデルを全て描画する
 		for (int modelNum = 0; modelNum < m_drawModels.size(); modelNum++) {
 			m_drawModels[modelNum]->Draw(rc);
 		}
 
+		
+
 		//メインレンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderTarget);
 
-		if (m_effectFlag == true) {
-			EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-			EffectEngine::GetInstance()->Draw();
-		}
+		
+
+		
 
 		//ポストエフェクトを実行
 		m_postEffect->Execute(rc);

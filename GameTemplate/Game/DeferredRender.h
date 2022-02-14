@@ -23,6 +23,12 @@ namespace render {
 		RenderTarget m_normalRT;
 		RenderTarget m_worldPosRT;
 		RenderTarget m_normalInViewRT;
+		RenderTarget m_depthRT;
+		RenderTarget m_lvpRT;
+
+
+		RenderTarget m_effectRenderTarget;
+		Sprite m_effectSprite;
 
 		/// @brief ディファードレンダリングを行うモデルの配列
 		std::vector<Model*> m_deferredModels;

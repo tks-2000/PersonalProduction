@@ -2,6 +2,7 @@
 #include "RenderResource.h"
 #include "DeferredRender.h"
 #include "Lighting.h"
+#include "Shadow.h"
 #include "FontRender.h"
 
 namespace render {
@@ -86,6 +87,8 @@ namespace render {
 
 		const int GetLightingSize(){return sizeof(m_lig); }
 
+		shadow::Shadow* GetShadow() { return &m_shadow; }
+
 	private:
 		/// @brief ライトの更新
 		void LightUpdate();
@@ -97,7 +100,7 @@ namespace render {
 		/// @brief ライティング
 		light::Lighting m_lig;
 		/// @brief シャドウ
-		shadow::Shadow* m_shadow = nullptr;
+		shadow::Shadow m_shadow;
 		/// @brief ポストエフェクト
 		postEffect::PostEffect* m_postEffect = nullptr;
 
@@ -136,11 +139,15 @@ namespace render {
 		/// @brief メインレンダリングターゲットのスプライト
 		Sprite m_mainRenderTargetSprite;
 
+		
+
 		RenderTarget m_finalRenderTarget;
 
 		SpriteInitData m_finalSpriteInitData;
 
 		Sprite m_finalSprite;
+
+		
 
 
 		Vector3 m_ligColor = g_vec3Zero;

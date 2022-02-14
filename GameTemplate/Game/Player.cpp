@@ -60,9 +60,8 @@ namespace mainGame {
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_playerModel->Init(
+			m_playerModel->InitDeferrd(
 				PLAYER_TKM_FILEPATH,
-				render::model::enMainRenderTarget,
 				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
 				m_playerAnimation.GetAnimationNum()
@@ -70,11 +69,11 @@ namespace mainGame {
 			m_playerModel->SetScale({ 2.0f,2.0f,2.0f });
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_swordModel->Init(SWORD_MODEL_FILEPATH);
+			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH);
 			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_shieldModel->Init(SHIELD_MODEL_FILEPATH);
+			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH);
 			m_shieldModel->CreateShadow();
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);

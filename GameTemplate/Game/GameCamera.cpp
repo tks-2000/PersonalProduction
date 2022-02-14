@@ -51,7 +51,9 @@ namespace mainGame {
 
 		m_miniMap = FindGO<map::MiniMap>(map::MINI_MAP_NAME);
 
-		m_shadow = FindGO<render::shadow::Shadow>(render::shadow::SHADOW_NAME);
+		render::RenderingEngine* renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
+
+		m_shadow = renderingEngine->GetShadow();
 
 		m_shadow->SetLightCameraPos(LIGHT_CAMERA_START_POS);
 		m_shadow->SetLightCameraTarget(LIGHT_CAMERA_START_TARGET);

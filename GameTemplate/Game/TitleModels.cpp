@@ -68,9 +68,8 @@ namespace mainGame {
 			m_plAnim[enTitlePlClear].Load(PLAYER_ANIMATION_FILEPATH[enTitlePlClear]);
 			m_plAnim[enTitlePlClear].SetLoopFlag(false);
 			m_plModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_plModel->Init(
+			m_plModel->InitDeferrd(
 				PLAYER_MODEL_FILEPATH,
-				render::model::enMainRenderTarget,
 				PLAYER_SKELTON_FILEPATH,
 				m_plAnim,
 				enTitlePlAnimNum
@@ -80,22 +79,24 @@ namespace mainGame {
 			Quaternion qRot;
 			qRot.SetRotationDegY(PLAYER_MODEL_ANGLE);
 			m_plModel->SetRotation(qRot);
+			m_plModel->CreateShadow();
 			m_plAnimState = enTitlePlIdle;
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_swordModel->Init(SWORD_MODEL_FILEPATH);
+			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH);
+			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_shieldModel->Init(SHIELD_MODEL_FILEPATH);
+			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH);
+			m_shieldModel->CreateShadow();
 
 			m_enemyAnim[enTitleEnemyIdle].Load(ENEMY_ANIMATION_FILEPATH);
 			m_enemyAnim[enTitleEnemyIdle].SetLoopFlag(true);
 
 			for (int enemyModelNum = 0; enemyModelNum < ENEMY_MODEL_NUM; enemyModelNum++) {
 				m_enemyModel[enemyModelNum] = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-				m_enemyModel[enemyModelNum]->Init(
+				m_enemyModel[enemyModelNum]->InitDeferrd(
 					ENEMY_MODEL_FILEPATH[enemyModelNum],
-					render::model::enMainRenderTarget,
 					ENEMY_SKELTON_FILEPATH,
 					m_enemyAnim,
 					enTitleEnemyAnimNum,
@@ -107,10 +108,10 @@ namespace mainGame {
 			}
 
 			m_stageModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_stageModel->Init(STAGE_MODEL_FILEPATH);
+			m_stageModel->InitDeferrd(STAGE_MODEL_FILEPATH);
 
 			m_backgroundModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_backgroundModel->Init(BACKGROUND_MODEL_FILEPATH);
+			m_backgroundModel->InitDeferrd(BACKGROUND_MODEL_FILEPATH);
 
 			m_title = title;
 			m_isInitd = true;

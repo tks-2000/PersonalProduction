@@ -7,7 +7,7 @@ namespace render {
 		{
 			m_renderingEngine = FindGO<RenderingEngine>(RENDERING_ENGINE_NAME);
 			m_lig = m_renderingEngine->GetLighting();
-			m_shadow = FindGO<shadow::Shadow>(shadow::SHADOW_NAME);
+			m_shadow = m_renderingEngine->GetShadow();
 			m_miniMap = FindGO<mainGame::map::MiniMap>(mainGame::map::MINI_MAP_NAME);
 			m_shadowFlag = false;
 			m_animFlag = false;
@@ -159,6 +159,8 @@ namespace render {
 
 			m_modelInitData.m_fxFilePath = "Assets/shader/deferredModel.fx";
 
+			m_modelInitData.m_modelUpAxis = enAxsis;
+
 			//スケルトンのファイルパスが指定されていたらスケルトンを作成
 			if (skeletonPath != nullptr) {
 
@@ -186,6 +188,10 @@ namespace render {
 				//アニメーション無しの頂点シェーダーのエントリーポイントを設定
 				m_modelInitData.m_vsEntryPointFunc = "VSMain";
 			}
+
+			//モデルにライトカメラの情報を渡す
+			m_modelInitData.m_expandConstantBuffer[0] = (void*)&m_shadow->GetLightCameraMatrix();
+			m_modelInitData.m_expandConstantBufferSize[0] = sizeof(m_shadow->GetLightCameraMatrix());
 			
 
 			m_model.Init(m_modelInitData);

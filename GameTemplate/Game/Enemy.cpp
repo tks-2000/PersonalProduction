@@ -218,9 +218,8 @@ namespace mainGame {
 			}
 
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_enemyModel->Init(
+			m_enemyModel->InitDeferrd(
 				m_tkmFilepath,
-				render::model::enMainRenderTarget,
 				m_tksFilepath,
 				m_animation,
 				m_animationNum,

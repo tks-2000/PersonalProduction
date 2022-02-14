@@ -80,6 +80,11 @@ cbuffer LightCb : register(b1)
 	float3 ambientLight;				//環境光
 };
 
+cbuffer shadowCb : register(b2)
+{
+	float4x4 mLVP;
+
+};
 
 
 ////////////////////////////////////////////////
@@ -96,6 +101,9 @@ Texture2D<float4> g_albedoTexture : register(t0);				//アルベドマップ
 Texture2D<float4> g_normalTexture : register(t1);
 Texture2D<float4> g_worldPosTexture : register(t2);
 Texture2D<float4> g_normalInViewTexture : register(t3);
+Texture2D<float4> g_depth : register(t4);
+Texture2D<float4> g_posInLVP : register(t5);
+Texture2D<float4> g_shadowMap : register(t6);
 sampler g_sampler : register(s0);	//サンプラステート。
 
 ////////////////////////////////////////////////
@@ -129,8 +137,11 @@ float4 PSMain(PSInput In) : SV_Target0
 	float3 normal = g_normalTexture.Sample(g_sampler,In.uv).xyz;
 	float3 worldPos = g_worldPosTexture.Sample(g_sampler,In.uv).xyz;
 	float3 normalInView = g_normalInViewTexture.Sample(g_sampler,In.uv).xyz;
+	float4 depth = g_depth.Sample(g_sampler,In.uv);
+	float4 shadowMap = g_shadowMap.Sample(g_sampler,In.uv);
 	normal = (normal * 2.0f)-1.0f;
 	normalInView = (normalInView * 2.0f)-1.0f;
+	float4 posInLVP = g_posInLVP.Sample(g_sampler,In.uv);
 
    ///////////////////////////////////////////////////////////////////////////
 
@@ -196,6 +207,9 @@ float4 PSMain(PSInput In) : SV_Target0
    ///////////////////////////////////////////////////////////////////////////
 
 
+   
+
+
    //全てのライティング結果を加算して最終的なカラーを求める
    float3 finalLigColor = directionlLigColor + pointLigColor + spotLigColor + hemiSphereLigColor;
 
@@ -203,6 +217,24 @@ float4 PSMain(PSInput In) : SV_Target0
 
    //アルベドカラーにライトのカラーを乗算し最終出力カラーを確定
    finalColor.xyz *= finalLigColor;
+
+   // 【注目】ライトビュースクリーン空間からUV座標空間に変換している
+   float2 shadowMapUV = posInLVP.xy / posInLVP.w;
+   shadowMapUV *= float2(0.5f, -0.5f);
+   shadowMapUV += 0.5f;
+   //ライトビュースクリーン空間でのz値を計算する
+   float zInLVP = posInLVP.z / posInLVP.w;
+   
+   float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV).r;
+   //UV座標を使ってシャドウマップから影情報をサンプリング 
+   if(shadowMapUV.x > 0.0f && shadowMapUV.x < 1.0f
+        && shadowMapUV.y > 0.0f && shadowMapUV.y < 1.0f
+		&& zInLVP < 1.0f && zInLVP > 0.1f) {
+			
+			if(zInLVP >= zInShadowMap + 0.00003f){
+				 finalColor.xyz *= 0.5f;
+			}
+	}
 
    return finalColor;
 }
