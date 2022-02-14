@@ -78,6 +78,7 @@ namespace render {
 
 			void InitDeferrd(
 				const char* modelFilePath,
+				const bool isPBR = false,
 				const char* skeletonPath = nullptr,
 				AnimationClip* animationClip = nullptr,
 				int animationNum = 0,
@@ -87,6 +88,9 @@ namespace render {
 			/// @brief シェーダーファイルパスを個別に設定
 			/// @param fxFilePath 設定するシェーダーファイルパス
 			void SetFxFilePath(const char* fxFilePath) { m_fxFilePath = fxFilePath; }
+
+			void SetDeferredFxFilepath(const char* fxFilepath) { m_deferredFxFilepath = fxFilepath; }
+
 
 			/// @brief レンダリングターゲットを個別に設定
 			/// @param rt 設定するレンダリングターゲットのアドレス
@@ -116,6 +120,8 @@ namespace render {
 			const char* m_modelFilePath = nullptr;
 			/// @brief シェーダーファイルパス
 			const char* m_fxFilePath = nullptr;
+
+			const char* m_deferredFxFilepath = nullptr;
 			/// @brief スケルトンのファイルパス
 			const char* m_skeletonFilePath = nullptr;
 			/// @brief モデル

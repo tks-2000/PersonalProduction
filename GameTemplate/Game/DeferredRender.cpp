@@ -5,6 +5,10 @@ namespace render {
 
 	const int RENDER_TARGET_NUM = 6;
 
+	const char* NORMAL_LIGHTING_FILEPATH = "Assets/shader/deferredLighting.fx";
+
+	const char* PBR_LIGHTING_FILEPATH = "Assets/shader/deferredLightingPBR.fx";
+
 	DeferredRender::DeferredRender()
 	{
 
@@ -24,7 +28,7 @@ namespace render {
 			FRAME_BUFFER_H,
 			1,
 			1,
-			DXGI_FORMAT_R8G8B8A8_UNORM,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
 			DXGI_FORMAT_D32_FLOAT
 		);
 
@@ -33,8 +37,17 @@ namespace render {
 			FRAME_BUFFER_H,
 			1,
 			1,
-			DXGI_FORMAT_R8G8B8A8_UNORM,
-			DXGI_FORMAT_UNKNOWN
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+
+		m_metallicAndSmoothRT.Create(
+			FRAME_BUFFER_W,
+			FRAME_BUFFER_H,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
 		);
 
 		m_worldPosRT.Create(
@@ -97,12 +110,17 @@ namespace render {
 		//使用するテクスチャはアルベドテクスチャと法線テクスチャ。
 		m_defferdLightSpriteInitData.m_textures[0] = &m_albedRT.GetRenderTargetTexture();
 		m_defferdLightSpriteInitData.m_textures[1] = &m_normalRT.GetRenderTargetTexture();
-		m_defferdLightSpriteInitData.m_textures[2] = &m_worldPosRT.GetRenderTargetTexture();
-		m_defferdLightSpriteInitData.m_textures[3] = &m_normalInViewRT.GetRenderTargetTexture();
-		m_defferdLightSpriteInitData.m_textures[4] = &m_depthRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[2] = &m_metallicAndSmoothRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[3] = &m_worldPosRT.GetRenderTargetTexture();
+		m_defferdLightSpriteInitData.m_textures[4] = &m_normalInViewRT.GetRenderTargetTexture();
 		m_defferdLightSpriteInitData.m_textures[5] = &m_lvpRT.GetRenderTargetTexture();
 		m_defferdLightSpriteInitData.m_textures[6] = &m_renderingEngine->GetShadow()->GetShadowMapTexture();
-		m_defferdLightSpriteInitData.m_fxFilePath = "Assets/shader/deferredLighting.fx";
+		if (m_isPBR == true) {
+			m_defferdLightSpriteInitData.m_fxFilePath = PBR_LIGHTING_FILEPATH;
+		}
+		else {
+			m_defferdLightSpriteInitData.m_fxFilePath = NORMAL_LIGHTING_FILEPATH;
+		}
 		m_defferdLightSpriteInitData.m_expandConstantBuffer[0] = m_renderingEngine->GetLighting()->GetLightAddress();
 		m_defferdLightSpriteInitData.m_expandConstantBufferSize[0] = sizeof(m_renderingEngine->GetLighting()->GetLight());
 		m_defferdLightSpriteInitData.m_expandConstantBuffer[1] = (void*)&m_renderingEngine->GetShadow()->GetLightCameraMatrix();
@@ -122,9 +140,9 @@ namespace render {
 		RenderTarget* rts[RENDER_TARGET_NUM] = {
 			&m_albedRT,
 			&m_normalRT,
+			&m_metallicAndSmoothRT,
 			&m_worldPosRT,
 			&m_normalInViewRT,
-			&m_depthRT,
 			&m_lvpRT
 		};
 

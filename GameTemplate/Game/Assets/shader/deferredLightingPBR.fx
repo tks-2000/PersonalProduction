@@ -247,9 +247,12 @@ float3 CalculateLambertDiffuse(float3 lightDirection, float3 lightColor, float3 
 
 	//内積の結果が0以下なら0にする。
 	t = max(0.0f, t);
-
+	
 	//拡散反射光を求める。
-	return lightColor * t;
+	float3 diffColor = lightColor * t;
+
+	//正規化ランバート拡散反射を返す
+	return diffColor / PI;
 }
 
 float3 CalculatePhoneSpecular(float3 lightDirection, float3 lightColor, float3 normal, float3 worldPos)

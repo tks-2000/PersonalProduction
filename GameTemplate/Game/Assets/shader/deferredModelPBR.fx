@@ -18,6 +18,9 @@ struct SVSIn{
 	float4 pos 		: POSITION;		//モデルの頂点座標。
 	float3 normal	: NORMAL;		//法線
 	float2 uv 		: TEXCOORD0;	//UV座標。
+
+	float3 tangent	: TANGENT;
+	float3 biNormal	: BINORMAL;
 	SSkinVSIn skinVert;				//スキン用のデータ。
 };
 //ピクセルシェーダーへの入力。
@@ -30,6 +33,9 @@ struct SPSIn{
 	float3 normalInView : TEXCOORD3;	//カメラ空間の法線
 	float4 depth		: TEXCOORD4;
 	float4 posInLVP		: TEXCOORD5;	//ライトビュースクリーン空間でのピクセルの座標
+
+	float3 tangent : TANGENT;
+	float3 biNormal : BINORMAL;
 };
 //ピクセルシェーダーからの出力
 struct SPSOut
@@ -68,6 +74,8 @@ cbuffer shadowCb : register(b1)
 // グローバル変数。
 ////////////////////////////////////////////////
 Texture2D<float4> g_texture : register(t0);				//アルベドマップ
+Texture2D<float4> g_normalMap : register(t1);
+Texture2D<float4> g_metaricSmoothMap : register(t2);
 //Texture2D<float4> g_shadowMap : register(t10);
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
@@ -114,6 +122,9 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.pos = mul(mProj, psIn.pos);
 	psIn.normal = mul(m, vsIn.normal); // 法線を回転させる。
 	psIn.normal = normalize(psIn.normal);
+	psIn.tangent = normalize(mul(m,vsIn.tangent));
+	psIn.biNormal = normalize(mul(m,vsIn.biNormal));
+
 	psIn.uv = vsIn.uv;
 
 	psIn.normalInView = mul(mView,psIn.normal);	//カメラ空間の法線を求める
@@ -145,8 +156,11 @@ SPSOut PSMain( SPSIn psIn )
 
 	SPSOut psOut;
 	psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);
-	psOut.normal = (psIn.normal/2.0f) + 0.5f;
-	psOut.metallicAndSmooth = float4(0.0f,0.0f,0.0f,0.0f);
+	float3 localNormal = g_normalMap.Sample(g_sampler,psIn.uv).xyz;
+	localNormal = (localNormal - 0.5f) * 2.0f;
+	float3 normal = psIn.tangent * localNormal.x + psIn.biNormal * localNormal.y + psIn.normal *localNormal.z;
+	psOut.normal = (normal/2.0f) + 0.5f;
+	psOut.metallicAndSmooth = g_metaricSmoothMap.Sample(g_sampler,psIn.uv);
 	psOut.worldPos = psIn.worldPos;
 	psOut.normalInView = (psIn.normalInView/2.0f) + 0.5f;
 	

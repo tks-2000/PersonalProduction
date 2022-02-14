@@ -45,6 +45,7 @@ namespace render {
 		m_finalSprite.Init(m_finalSpriteInitData);
 		m_lig.Init();
 		m_shadow.Init();
+		m_deferredRender.SetPBR(true);
 		m_deferredRender.Init(this);
 		
 	
@@ -60,7 +61,7 @@ namespace render {
 	bool RenderingEngine::Start()
 	{
 		
-		m_lig.SetDirectionLightColor({ 1.0f, 1.0f, 1.0f });
+		m_lig.SetDirectionLightColor({ 2.0f, 2.0f, 2.0f });
 		Vector3 dir = { 0.0f,1.0f,1.0f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(dir);
@@ -73,7 +74,7 @@ namespace render {
 		m_lig.SetPointLightRange(0, 1000.0f);
 		m_lig.SetSpotLightPos(0, { 0.0f, 200.0f, 0.0f });
 		m_lig.SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
-		m_lig.SetSpotLightColor(0, { 0.0f,0.0f,0.0f });
+		m_lig.SetSpotLightColor(0, { 1.0f,1.0f,1.0f });
 		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },

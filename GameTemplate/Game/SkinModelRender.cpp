@@ -3,6 +3,9 @@
 
 namespace render {
 	namespace model {
+
+		const char* DEFERRED_PBR_FILEPATH = "Assets/shader/deferredModelPBR.fx";
+
 		SkinModelRender::SkinModelRender()
 		{
 			m_renderingEngine = FindGO<RenderingEngine>(RENDERING_ENGINE_NAME);
@@ -13,6 +16,7 @@ namespace render {
 			m_animFlag = false;
 			m_modelFilePath = nullptr;
 			m_fxFilePath = "Assets/shader/model.fx";
+			m_deferredFxFilepath = "Assets/shader/deferredModel.fx";
 			m_skeletonFilePath = nullptr;
 			m_isInitd = false;
 		}
@@ -148,6 +152,7 @@ namespace render {
 
 		void SkinModelRender::InitDeferrd(
 			const char* modelFilepath,
+			const bool isPBR,
 			const char* skeletonPath,
 			AnimationClip* animationClip,
 			int animationNum,
@@ -157,7 +162,12 @@ namespace render {
 			m_modelFilePath = modelFilepath;
 			m_modelInitData.m_tkmFilePath = modelFilepath;
 
-			m_modelInitData.m_fxFilePath = "Assets/shader/deferredModel.fx";
+			if (isPBR == true) {
+				m_modelInitData.m_fxFilePath = DEFERRED_PBR_FILEPATH;
+			}
+			else {
+				m_modelInitData.m_fxFilePath = m_deferredFxFilepath;
+			}
 
 			m_modelInitData.m_modelUpAxis = enAxsis;
 

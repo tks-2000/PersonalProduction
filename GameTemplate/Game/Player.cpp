@@ -62,6 +62,7 @@ namespace mainGame {
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_playerModel->InitDeferrd(
 				PLAYER_TKM_FILEPATH,
+				true,
 				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
 				m_playerAnimation.GetAnimationNum()
@@ -69,11 +70,11 @@ namespace mainGame {
 			m_playerModel->SetScale({ 2.0f,2.0f,2.0f });
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH);
+			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH,true);
 			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH);
+			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH,true);
 			m_shieldModel->CreateShadow();
 
 			m_plMapModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);

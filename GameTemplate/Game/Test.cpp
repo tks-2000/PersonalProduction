@@ -14,6 +14,7 @@ namespace test {
 
 		m_hero->InitDeferrd(
 			"Assets/modelData/character/HeroPBR.tkm",
+			false,
 			"Assets/modelData/character/HeroPBR.tks",
 			m_heroAnim,
 			enAnimNum
