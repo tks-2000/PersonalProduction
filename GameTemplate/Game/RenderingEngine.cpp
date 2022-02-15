@@ -62,19 +62,19 @@ namespace render {
 	{
 		
 		m_lig.SetDirectionLightColor({ 2.0f, 2.0f, 2.0f });
-		Vector3 dir = { 0.0f,1.0f,1.0f };
+		Vector3 dir = { 0.0f,-1.0f,0.5f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(dir);
 		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
 		
-		m_lig.SetHemiSphereLifhtGroundColor({ 0.0f,0.0f,0.0f });
-		m_lig.SetHemiSphereLifhtSkyColor({ 0.0f,0.0f,0.0f });
+		m_lig.SetHemiSphereLifhtGroundColor({ 0.5f,0.2f,0.2f });
+		m_lig.SetHemiSphereLifhtSkyColor({ 0.2f,0.2f,0.5f });
 		m_lig.SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
-		m_lig.SetPointLightColor(0, { 0.0f,0.0f,0.0f });
+		m_lig.SetPointLightColor(0, { 0.0f,5.0f,0.0f });
 		m_lig.SetPointLightRange(0, 1000.0f);
-		m_lig.SetSpotLightPos(0, { 0.0f, 200.0f, 0.0f });
+		m_lig.SetSpotLightPos(0, { 0.0f, 500.0f, 0.0f });
 		m_lig.SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
-		m_lig.SetSpotLightColor(0, { 1.0f,1.0f,1.0f });
+		m_lig.SetSpotLightColor(0, { 15.0f,15.0f,15.0f });
 		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },
@@ -90,7 +90,7 @@ namespace render {
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
 
 		//ƒuƒ‹[ƒ€‚ğ‚©‚¯‚é
-		//m_postEffect->SetBloom(&m_mainRenderTarget);
+		m_postEffect->SetBloom(&m_mainRenderTarget);
 
 		return true;
 	}

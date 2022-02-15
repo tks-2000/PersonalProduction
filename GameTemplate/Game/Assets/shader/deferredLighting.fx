@@ -99,6 +99,7 @@ float3 CalculatePhoneSpecular(float3 lightDirection, float3 lightColor, float3 n
 ////////////////////////////////////////////////
 Texture2D<float4> g_albedoTexture : register(t0);				//アルベドマップ
 Texture2D<float4> g_normalTexture : register(t1);
+Texture2D<float4> g_metaricSmoothMap : register(t2);
 Texture2D<float4> g_worldPosTexture : register(t3);
 Texture2D<float4> g_normalInViewTexture : register(t4);
 Texture2D<float4> g_posInLVP : register(t5);
@@ -108,12 +109,20 @@ sampler g_sampler : register(s0);	//サンプラステート。
 ////////////////////////////////////////////////
 // 関数定義。
 ////////////////////////////////////////////////
+
+//ランバート拡散反射を計算する
 float3 CalculateLambertDiffuse(float3 lightDirection, float3 lightColor, float3 normal);
+//フォン鏡面反射を計算する
 float3 CalculatePhoneSpecular(float3 lightDirection, float3 lightColor, float3 normal, float3 worldPos);
+//影響率を計算
 float CalculateImpactRate(float3 ligPos, float ligRange, float3 worldPos);
+//ポイントライトを計算
 float3 CalculatePointLight(PointLight ptLig, float3 normal, float3 worldPos);
+//スポットライトを計算
 float3 CalculateSpotLight(SpotLight spLig, float3 normal, float3 worldPos);
+//リムライトを計算
 float3 CalculateRimlight(float3 lightDirection, float3 lightColor, float3 normal, float normalInViewZ);
+//半球ライトを計算
 float3 CalculateHemiSphereLight(HemiSphereLight hemLig, float3 normal);
 float3 CalculateShadow(float4 psLvp);
 
@@ -134,12 +143,15 @@ float4 PSMain(PSInput In) : SV_Target0
 	//G-BUfferの内容を取り出す
 	float4 albedo = g_albedoTexture.Sample(g_sampler,In.uv);
 	float3 normal = g_normalTexture.Sample(g_sampler,In.uv).xyz;
+	float metallic = g_metaricSmoothMap.Sample(g_sampler,In.uv).x;
+	float smooth = g_metaricSmoothMap.Sample(g_sampler,In.uv).w;
 	float3 worldPos = g_worldPosTexture.Sample(g_sampler,In.uv).xyz;
 	float3 normalInView = g_normalInViewTexture.Sample(g_sampler,In.uv).xyz;
 	float4 shadowMap = g_shadowMap.Sample(g_sampler,In.uv);
 	normal = (normal * 2.0f)-1.0f;
 	normalInView = (normalInView * 2.0f)-1.0f;
 	float4 posInLVP = g_posInLVP.Sample(g_sampler,In.uv);
+	float3 toEye = normalize(eyePos - worldPos);
 
    ///////////////////////////////////////////////////////////////////////////
 
@@ -151,6 +163,7 @@ float4 PSMain(PSInput In) : SV_Target0
 	   directionLight.color,
 	   normal
    );
+
    //鏡面反射を計算
    float3 specularColor = CalculatePhoneSpecular(
 	   directionLight.direction,
@@ -236,6 +249,8 @@ float4 PSMain(PSInput In) : SV_Target0
 
    return finalColor;
 }
+
+
 
 float3 CalculateLambertDiffuse(float3 lightDirection, float3 lightColor, float3 normal)
 {

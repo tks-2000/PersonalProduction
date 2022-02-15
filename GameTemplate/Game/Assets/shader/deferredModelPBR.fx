@@ -31,8 +31,7 @@ struct SPSIn{
 	float4 metallicAndSmooth : TEXCOORD1;
 	float3 worldPos 	: TEXCOORD2;
 	float3 normalInView : TEXCOORD3;	//カメラ空間の法線
-	float4 depth		: TEXCOORD4;
-	float4 posInLVP		: TEXCOORD5;	//ライトビュースクリーン空間でのピクセルの座標
+	float4 posInLVP		: TEXCOORD4;	//ライトビュースクリーン空間でのピクセルの座標
 
 	float3 tangent : TANGENT;
 	float3 biNormal : BINORMAL;
@@ -45,8 +44,7 @@ struct SPSOut
 	float4 metallicAndSmooth : SV_Target2;
 	float3 worldPos : SV_Target3;
 	float3 normalInView : SV_Target4;
-	float4 depth		: SV_Target5;
-	float4 posInLVP : SV_Target6;
+	float4 posInLVP : SV_Target5;
 };
 
 ////////////////////////////////////////////////
@@ -127,7 +125,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 
 	psIn.uv = vsIn.uv;
 
-	psIn.normalInView = mul(mView,psIn.normal);	//カメラ空間の法線を求める
+	psIn.normalInView = normalize(mul(mView,psIn.normal));	//カメラ空間の法線を求める
 	psIn.posInLVP = mul(mLVP,worldPos);
 
 	return psIn;
@@ -162,9 +160,8 @@ SPSOut PSMain( SPSIn psIn )
 	psOut.normal = (normal/2.0f) + 0.5f;
 	psOut.metallicAndSmooth = g_metaricSmoothMap.Sample(g_sampler,psIn.uv);
 	psOut.worldPos = psIn.worldPos;
-	psOut.normalInView = (psIn.normalInView/2.0f) + 0.5f;
-	
-	psOut.depth = float4 (psIn.pos.z,psIn.pos.z,psIn.pos.z,1.0f);
+	float3 normalInView = mul(mView,normal);
+	psOut.normalInView = (normalInView/2.0f) + 0.5f;
 
 	psOut.posInLVP = psIn.posInLVP;
 

@@ -28,7 +28,7 @@ namespace mainGame {
 		m_isInitd = false;
 
 		//ƒJƒƒ‰‚ÌÀ•W‚ª’‹“_‚©‚ç‚Ç‚ê‚¾‚¯—£‚ê‚Ä‚¢‚é‚©Œˆ‚ß‚é
-		m_targetToCameraPos = { 0.0f,300.0f,-600.0f };
+		m_targetToCameraPos = { 0.0f,200.0f,-500.0f };
 
 		m_playerToCameraPos = { 50.0f,70.0f,-100.0f };
 

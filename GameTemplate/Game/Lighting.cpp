@@ -106,7 +106,7 @@ namespace render {
 
 			Quaternion qRot;
 
-			qRot.SetRotationDegY(0.5f);
+			qRot.SetRotationDegY(1.0f);
 
 
 			qRot.Apply(m_light.directionLight.direction);
@@ -238,10 +238,10 @@ namespace render {
 			m_light.spotLight[num].direction.Normalize();
 
 			//Ëo”ÍˆÍ‚ğİ’è
-			m_light.spotLight[num].Range = 300.0f;
+			m_light.spotLight[num].Range = 1500.0f;
 
 			//ËoŠp“x‚ğİ’è
-			m_light.spotLight[num].angle = Math::DegToRad(10.0f);
+			m_light.spotLight[num].angle = Math::DegToRad(20.0f);
 		}
 
 		void Lighting::MoveSpotLight(int num)
