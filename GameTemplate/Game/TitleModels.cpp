@@ -70,6 +70,7 @@ namespace mainGame {
 			m_plModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plModel->InitDeferrd(
 				PLAYER_MODEL_FILEPATH,
+				//render::model::enMainRenderTarget,
 				true,
 				PLAYER_SKELTON_FILEPATH,
 				m_plAnim,

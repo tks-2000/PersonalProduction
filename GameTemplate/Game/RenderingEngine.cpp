@@ -45,7 +45,7 @@ namespace render {
 		m_finalSprite.Init(m_finalSpriteInitData);
 		m_lig.Init();
 		m_shadow.Init();
-		m_deferredRender.SetPBR(true);
+		m_deferredRender.SetPBR(false);
 		m_deferredRender.Init(this);
 		
 	
@@ -62,7 +62,7 @@ namespace render {
 	{
 		
 		m_lig.SetDirectionLightColor({ 2.0f, 2.0f, 2.0f });
-		Vector3 dir = { 0.0f,-1.0f,0.5f };
+		Vector3 dir = { 0.0f,0.0f,0.5f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(dir);
 		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
@@ -90,7 +90,7 @@ namespace render {
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
 
 		//ƒuƒ‹[ƒ€‚ğ‚©‚¯‚é
-		m_postEffect->SetBloom(&m_mainRenderTarget);
+		//m_postEffect->SetBloom(&m_mainRenderTarget);
 
 		return true;
 	}

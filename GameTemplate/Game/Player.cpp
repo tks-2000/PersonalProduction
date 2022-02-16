@@ -60,9 +60,9 @@ namespace mainGame {
 
 			//プレイヤーのモデルを初期化
 			m_playerModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_playerModel->InitDeferrd(
+			m_playerModel->Init(
 				PLAYER_TKM_FILEPATH,
-				true,
+				render::model::enMainRenderTarget,
 				PLAYER_TKS_FILEPATH,
 				m_playerAnimation.GetAnimatonClip(),
 				m_playerAnimation.GetAnimationNum()
