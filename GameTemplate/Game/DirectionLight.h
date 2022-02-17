@@ -44,7 +44,7 @@ namespace render {
 			void LightOFF();
 			/// @brief ディレクションライトを取得
 			/// @return ディレクションライト構造体のconst参照
-			const StDirectionLight& GetDirectionLight() { return m_directionLight; }
+			const StDirectionLight& GetDirectionLight() const { return m_directionLight; }
 			
 		private:
 

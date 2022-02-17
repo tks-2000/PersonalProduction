@@ -482,6 +482,9 @@
     <ClCompile Include="DirectionLight.cpp">
       <Filter>MyEngine\Light</Filter>
     </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>MyEngine\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -890,6 +893,9 @@
       <Filter>MyEngine</Filter>
     </ClInclude>
     <ClInclude Include="DirectionLight.h">
+      <Filter>MyEngine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
       <Filter>MyEngine\Light</Filter>
     </ClInclude>
   </ItemGroup>

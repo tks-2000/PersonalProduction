@@ -339,6 +339,7 @@
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerRotation.cpp" />
     <ClCompile Include="PlayerSound.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="RemainingBullets.cpp" />
     <ClCompile Include="RenderingEngine.cpp" />
@@ -483,6 +484,7 @@
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerRotation.h" />
     <ClInclude Include="PlayerSound.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="RemainingBullets.h" />
     <ClInclude Include="RenderingEngine.h" />

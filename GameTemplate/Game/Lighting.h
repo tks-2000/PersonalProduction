@@ -2,6 +2,7 @@
 #include "math.h"
 #include "stdafx.h"
 #include "DirectionLight.h"
+#include "PointLight.h"
 
 namespace render {
 	namespace light {
@@ -24,14 +25,14 @@ namespace render {
 		//};
 
 		/// @brief ポイントライト構造体
-		struct PointLight
-		{
-			Vector3 position = Vector3::Zero;	//位置
-			float pad0 = 0.0f;					//パディング
-			Vector3 color = Vector3::Zero;		//カラー
-			float Range = 0.0f;					//影響範囲
+		//struct PointLight
+		//{
+		//	Vector3 position = Vector3::Zero;	//位置
+		//	float pad0 = 0.0f;					//パディング
+		//	Vector3 color = Vector3::Zero;		//カラー
+		//	float Range = 0.0f;					//影響範囲
 
-		};
+		//};
 
 		/// @brief スポットライト構造体
 		struct SpotLight
@@ -64,7 +65,7 @@ namespace render {
 			const int spotLightNum = SPOT_LIGHT_SUM;
 			float pad0;*/
 			StDirectionLight directionLight;			//ディレクションライト
-			PointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
+			StPointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
 			SpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
 			HemiSphereLight hemiSphereLight;		//半球ライト
 			Vector3 eyePos = Vector3::Zero;			//視点の位置
@@ -110,10 +111,6 @@ namespace render {
 
 			void StopDirectionLightRotation() { m_directionLight.StopRotation(); }
 
-			/// @brief ポイントライトの初期化
-			void InitPointLight(int num);
-
-			void MovePointLight();
 
 			/// @brief ポイントライトの座標を入手
 			/// @return ポイントライトの座標
@@ -121,18 +118,16 @@ namespace render {
 
 			/// @brief ポイントライトの座標を設定
 			/// @param pos ポイントライトに設定する座標
-			void SetPointLighitPos(int num, Vector3 pos) { m_light.pointLight[num].position = pos; }
+			void SetPointLighitPos(const int num, const Vector3& pos) { m_pointLight[num].SetPosition(pos); }
 
 			/// @brief ポイントライトのカラーを設定
 			/// @param color ポイントライトに設定する座標
-			void SetPointLightColor(int num, Vector3 color) { m_light.pointLight[num].color = color; }
+			void SetPointLightColor(const int num, const Vector3& color) { m_pointLight[num].SetColor(color); }
 
 			/// @brief ポイントライトの影響範囲を設定
 			/// @param num 設定したいポイントライトの番号
 			/// @param range ポイントライトに設定する影響範囲
-			void SetPointLightRange(int num, float range) { m_light.pointLight[num].Range = range; }
-
-			void ResetPointLight();
+			void SetPointLightRange(const int num, const float range) { m_pointLight[num].SetRange(range); }
 
 			/// @brief スポットライトの初期化
 			void InitSpotLight(int num);
@@ -169,12 +164,6 @@ namespace render {
 
 			void ResetSpotLight();
 
-			/// @brief ポイントライトの点滅を設定
-			/// @param num 点滅させたいポイントライトの番号
-			/// @param Time 点滅させる時間
-			/// @param interval 点滅の間隔
-			void SetPointLightBlinking(int num, float time, float interval);
-
 			/// @brief 半球ライトの初期化
 			void InitHemiSphereLight();
 
@@ -190,6 +179,8 @@ namespace render {
 			Light m_light;
 
 			DirectionLight m_directionLight;
+
+			PointLight m_pointLight[POINT_LIGHT_SUM];
 
 			/// @brief スポットライトの点滅フラグ
 			bool m_spLigBlink[SPOT_LIGHT_SUM] = { false };
@@ -209,27 +200,7 @@ namespace render {
 			/// @brief スポットライトが点いているフラグ
 			bool m_spLigLit[SPOT_LIGHT_SUM] = { true };
 
-			/// @brief ポイントライトの点滅フラグ
-			bool m_ptLigBlink[POINT_LIGHT_SUM] = { false };
-
-			/// @brief ポイントライトの点滅時間
-			float m_ptLigBlinkTime[POINT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief ポイントライトの切り替え時間
-			float m_ptLigBlinkSwitchingTime[POINT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief ポイントライトの点滅間隔
-			float m_ptLigBlinkInterval[POINT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief ポイントライトを点滅させるカラー
-			Vector3 m_ptLigColor[POINT_LIGHT_SUM] = { {Vector3::Zero},{Vector3::Zero},{Vector3::Zero},{Vector3::Zero},{Vector3::Zero} };
-
-			/// @brief ポイントライトが点いているフラグ
-			bool m_ptLigLit[POINT_LIGHT_SUM] = { true };
-
 			void SpotLightBlinking(int num);
-
-			void PointLightBlinking(int num);
 		};
 	}
 }

@@ -70,9 +70,12 @@ namespace render {
 		
 		m_lig.SetHemiSphereLifhtGroundColor({ 0.5f,0.2f,0.2f });
 		m_lig.SetHemiSphereLifhtSkyColor({ 0.2f,0.2f,0.5f });
-		m_lig.SetPointLighitPos(0, { 0.0f,200.0f,0.0f });
+		m_lig.SetPointLighitPos(0, { 200.0f,200.0f,0.0f });
 		m_lig.SetPointLightColor(0, { 0.0f,5.0f,0.0f });
 		m_lig.SetPointLightRange(0, 1000.0f);
+		m_lig.SetPointLighitPos(1, { -200.0f,200.0f,0.0f });
+		m_lig.SetPointLightColor(1, { 5.0f,0.0f,0.0f });
+		m_lig.SetPointLightRange(1, 1000.0f);
 		m_lig.SetSpotLightPos(0, { 0.0f, 500.0f, 0.0f });
 		m_lig.SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
 		m_lig.SetSpotLightColor(0, { 15.0f,15.0f,15.0f });

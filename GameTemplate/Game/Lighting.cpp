@@ -27,7 +27,8 @@ namespace render {
 
 			}
 			for (int pointLigNo = 0; pointLigNo < POINT_LIGHT_SUM; pointLigNo++) {
-				InitPointLight(pointLigNo);
+				//InitPointLight(pointLigNo);
+				m_pointLight[pointLigNo].Init();
 			}
 			InitHemiSphereLight();
 
@@ -66,9 +67,10 @@ namespace render {
 				}
 			}
 			for (int ptLigNum = 0; ptLigNum < POINT_LIGHT_SUM; ptLigNum++) {
-				if (m_ptLigBlink[ptLigNum] == true) {
+				/*if (m_ptLigBlink[ptLigNum] == true) {
 					PointLightBlinking(ptLigNum);
-				}
+				}*/
+				m_light.pointLight[ptLigNum] = m_pointLight[ptLigNum].GetPointLight();
 			}
 
 			
@@ -82,77 +84,6 @@ namespace render {
 		void Lighting::Update()
 		{
 			
-		}
-
-		void Lighting::InitPointLight(int num)
-		{
-			//ポイントライトの座標
-			m_light.pointLight[num].position.x = 0.0f;
-			m_light.pointLight[num].position.y = 0.0f;
-			m_light.pointLight[num].position.z = 0.0f;
-
-			//ポイントライトのカラー
-			m_light.pointLight[num].color.x = 0.0f;
-			m_light.pointLight[num].color.y = 0.0f;
-			m_light.pointLight[num].color.z = 0.0f;
-
-			//ポイントライトの影響範囲
-			m_light.pointLight[num].Range = 0.0f;
-		}
-
-		void Lighting::MovePointLight()
-		{
-			//左スティック入力でポイントライトの座標を操作
-			/*m_light.pointLight.position.x -= g_pad[1]->GetLStickXF();
-			if (g_pad[0]->IsPress(enButtonB)) {
-				m_light.pointLight.position.y += g_pad[1]->GetLStickYF();
-			}
-			else {
-				m_light.pointLight.position.z -= g_pad[1]->GetLStickYF();
-			}
-			if (g_pad[0]->IsPress(enButtonA)) {
-				m_light.pointLight.position = Vector3::Zero;
-			}*/
-		}
-		void Lighting::SetPointLightBlinking(int num, float time, float interval)
-		{
-			if (m_ptLigBlink[num] == false) {
-				m_ptLigBlink[num] = true;
-				m_ptLigBlinkTime[num] = time;
-				m_ptLigBlinkInterval[num] = interval;
-				m_ptLigColor[num] = m_light.pointLight[num].color;
-			}
-		}
-
-		void Lighting::PointLightBlinking(int num)
-		{
-			m_ptLigBlinkTime[num] -= g_gameTime->GetFrameDeltaTime();
-			m_ptLigBlinkSwitchingTime[num] += g_gameTime->GetFrameDeltaTime();
-			if (m_ptLigBlinkTime[num] <= 0.0f) {
-				m_ptLigBlink[num] = false;
-				m_light.pointLight[num].color = m_ptLigColor[num];
-				m_ptLigBlinkSwitchingTime[num] = 0.0f;
-			}
-			else {
-				if (m_ptLigBlinkSwitchingTime[num] >= m_ptLigBlinkInterval[num]) {
-					if (m_ptLigLit[num] == true) {
-						m_light.pointLight[num].color = COLORLESS;
-						m_ptLigLit[num] = false;
-					}
-					else {
-						m_light.pointLight[num].color = m_ptLigColor[num];
-						m_ptLigLit[num] = true;
-					}
-					m_ptLigBlinkSwitchingTime[num] = 0.0f;
-				}
-			}
-		}
-
-		void Lighting::ResetPointLight()
-		{
-			for (int ptLig = 0; ptLig < POINT_LIGHT_SUM; ptLig++) {
-				InitPointLight(ptLig);
-			}
 		}
 
 		void Lighting::InitSpotLight(int num)
