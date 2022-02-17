@@ -407,9 +407,6 @@
     <ClCompile Include="EnemyAttackThePlayer.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>inGame\Title</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>inGame</Filter>
     </ClCompile>
@@ -473,11 +470,17 @@
     <ClCompile Include="ItemEffect.cpp">
       <Filter>inGame\Item</Filter>
     </ClCompile>
-    <ClCompile Include="TitleModels.cpp">
-      <Filter>inGame\Title</Filter>
-    </ClCompile>
     <ClCompile Include="DeferredRender.cpp">
       <Filter>MyEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleModels.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>inGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionLight.cpp">
+      <Filter>MyEngine\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -885,6 +888,9 @@
     </ClInclude>
     <ClInclude Include="DeferredRender.h">
       <Filter>MyEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionLight.h">
+      <Filter>MyEngine\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

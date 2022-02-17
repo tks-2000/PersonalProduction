@@ -1,6 +1,7 @@
 #pragma once
 #include "math.h"
 #include "stdafx.h"
+#include "DirectionLight.h"
 
 namespace render {
 	namespace light {
@@ -12,23 +13,15 @@ namespace render {
 		static const int SPOT_LIGHT_SUM = 4;
 
 
-		struct LightNums
-		{
-			int dLigNum = DIRECTION_LIGHT_SUM;
-			int pLigNum = POINT_LIGHT_SUM;
-			int sLigNum = SPOT_LIGHT_SUM;
-			float pad = 0.0f;
-		};
-
 		/// @brief ディレクションライト構造体
-		struct DirectionLight
-		{
-			Vector3 direction = Vector3::Zero;	//ライトの方向
-			float pad0 = 0.0f;					//パディング
-			Vector3 color = Vector3::Zero;		//ライトのカラー
-			float pad1 = 0.0f;					//パディング
+		//struct DirectionLight
+		//{
+		//	Vector3 direction = Vector3::Zero;	//ライトの方向
+		//	float pad0 = 0.0f;					//パディング
+		//	Vector3 color = Vector3::Zero;		//ライトのカラー
+		//	float pad1 = 0.0f;					//パディング
 
-		};
+		//};
 
 		/// @brief ポイントライト構造体
 		struct PointLight
@@ -70,7 +63,7 @@ namespace render {
 			const int pointLightNum = POINT_LIGHT_SUM;
 			const int spotLightNum = SPOT_LIGHT_SUM;
 			float pad0;*/
-			DirectionLight directionLight;			//ディレクションライト
+			StDirectionLight directionLight;			//ディレクションライト
 			PointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
 			SpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
 			HemiSphereLight hemiSphereLight;		//半球ライト
@@ -99,12 +92,7 @@ namespace render {
 			/// @return ライト構造体のアドレス
 			Light* GetLightAddress() { return &m_light; }
 
-			LightNums* GetLightNumAddress() { return &m_ligNum; }
-
 			void SetAmbientLight(const Vector3& color) { m_light.ambientlight = color; }
-
-			/// @brief ディレクションライトの初期化
-			void InitDirectionLight();
 
 			/// @brief ディレクションライトの方向を入手
 			/// @return ディレクションライトの方向
@@ -112,17 +100,15 @@ namespace render {
 
 			/// @brief ディレクションライトの方向を設定
 			/// @param dirLigVec ディレクションライトに設定する方向
-			void SetDirectionLightDirection(Vector3 dirLigVec) { m_light.directionLight.direction = dirLigVec; m_light.directionLight.direction.Normalize(); }
+			void SetDirectionLightDirection(Vector3 dirLigVec) { m_directionLight.SetDirection(dirLigVec); }
 
 			/// @brief ディレクションライトのカラーを設定
 			/// @param color ディレクションライトに設定するカラー
-			void SetDirectionLightColor(const Vector3& color) { m_light.directionLight.color = color; }
+			void SetDirectionLightColor(const Vector3& color) { m_directionLight.SetColor(color); }
 
-			void RotationDirectionLight();
+			void SetDirectionLightRotation(const Vector3& axis, const float angle) { m_directionLight.SetRotation(axis, angle); }
 
-			void RotationStopDirectionLight() { m_dirLigRotFlag = false; }
-
-			void SetDirectionLightFlickering(const Vector3& startColor, const Vector3 endColor, float speed);
+			void StopDirectionLightRotation() { m_directionLight.StopRotation(); }
 
 			/// @brief ポイントライトの初期化
 			void InitPointLight(int num);
@@ -203,24 +189,7 @@ namespace render {
 			/// @brief ライティング全てのデータ
 			Light m_light;
 
-			LightNums m_ligNum;
-
-			/// @brief ディレクションライト回転フラグ
-			bool m_dirLigRotFlag = false;
-
-			bool m_dirLigFlickering = false;
-
-			bool m_flickerState = false;
-
-			Vector3 m_flickeringColor = Vector3::Zero;
-
-			Vector3 m_flickeringStartColor = Vector3::Zero;
-
-			Vector3 m_flickeringEndColor = Vector3::Zero;
-
-			float m_flickeringSpeed = 0.0f;
-
-			float m_flickerRate = 0.0f;
+			DirectionLight m_directionLight;
 
 			/// @brief スポットライトの点滅フラグ
 			bool m_spLigBlink[SPOT_LIGHT_SUM] = { false };
@@ -261,8 +230,6 @@ namespace render {
 			void SpotLightBlinking(int num);
 
 			void PointLightBlinking(int num);
-
-			void DirectionLightFlickering();
 		};
 	}
 }

@@ -20,7 +20,7 @@ namespace render {
 				return;
 			}
 
-			InitDirectionLight();
+			m_directionLight.Init();
 
 			for (int spotLigNo = 0; spotLigNo < SPOT_LIGHT_SUM; spotLigNo++) {
 				InitSpotLight(spotLigNo);
@@ -56,6 +56,10 @@ namespace render {
 				return;
 			}
 
+			m_directionLight.Execution();
+
+			m_light.directionLight = m_directionLight.GetDirectionLight();
+
 			for (int spLigNum = 0; spLigNum < SPOT_LIGHT_SUM; spLigNum++) {
 				if (m_spLigBlink[spLigNum] == true) {
 					SpotLightBlinking(spLigNum);
@@ -67,13 +71,9 @@ namespace render {
 				}
 			}
 
-			if (m_dirLigRotFlag == true) {
-				RotationDirectionLight();
-			}
+			
 
-			if (m_dirLigFlickering == true) {
-				DirectionLightFlickering();
-			}
+			
 
 			RotationSpotLight(0);
 			m_light.eyePos = g_camera3D->GetPosition();
@@ -82,69 +82,6 @@ namespace render {
 		void Lighting::Update()
 		{
 			
-		}
-
-		void Lighting::InitDirectionLight()
-		{
-			//ディレクションライトの方向
-			m_light.directionLight.direction.x = 0.0f;
-			m_light.directionLight.direction.y = 0.0f;
-			m_light.directionLight.direction.z = -1.0f;
-			//正規化する
-			m_light.directionLight.direction.Normalize();
-
-			//ディレクションライトのカラー
-			m_light.directionLight.color.x = 0.5f;
-			m_light.directionLight.color.y = 0.5f;
-			m_light.directionLight.color.z = 0.5f;
-			m_dirLigRotFlag = true;
-			m_dirLigFlickering = false;
-		}
-
-		void Lighting::RotationDirectionLight()
-		{
-
-			Quaternion qRot;
-
-			qRot.SetRotationDegY(1.0f);
-
-
-			qRot.Apply(m_light.directionLight.direction);
-		}
-
-		void Lighting::SetDirectionLightFlickering(const Vector3& startColor, const Vector3 endColor, float speed)
-		{
-			m_flickeringStartColor = startColor;
-			m_flickeringEndColor = endColor;
-			m_flickeringSpeed = speed;
-			m_dirLigFlickering = true;
-			m_flickerRate = 0.0f;
-			m_flickerState = true;
-		}
-
-		void Lighting::DirectionLightFlickering()
-		{
-			if (m_flickerState == true) {
-				m_flickerRate += g_gameTime->GetFrameDeltaTime() * m_flickeringSpeed;
-				if (m_flickerRate > 1.0f) {
-					m_flickerRate = 1.0f;
-					m_flickerState = false;
-				}
-			}
-			else {
-				m_flickerRate -= g_gameTime->GetFrameDeltaTime() * m_flickeringSpeed;
-				if (m_flickerRate < 0.0f) {
-					m_flickerRate = 0.0f;
-					m_flickerState = true;
-				}
-			}
-
-			m_flickerRate;
-
-
-			m_flickeringColor.Lerp(m_flickerRate, m_flickeringStartColor, m_flickeringEndColor);
-
-			m_light.directionLight.color = m_flickeringColor;
 		}
 
 		void Lighting::InitPointLight(int num)
