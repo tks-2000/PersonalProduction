@@ -76,9 +76,9 @@ namespace render {
 		m_lig.SetPointLighitPos(1, { -200.0f,200.0f,0.0f });
 		m_lig.SetPointLightColor(1, { 5.0f,0.0f,0.0f });
 		m_lig.SetPointLightRange(1, 1000.0f);
-		m_lig.SetSpotLightPos(0, { 0.0f, 500.0f, 0.0f });
-		m_lig.SetSpotLightDirection(0, { 0.0f,-1.0f,0.0f });
-		m_lig.SetSpotLightColor(0, { 15.0f,15.0f,15.0f });
+		m_lig.SetSpotLightPos(0, { 0.0f, 400.0f, 300.0f });
+		m_lig.SetSpotLightTarget(0, { 0.0,0.0f,300.0f });
+		m_lig.SetSpotLightColor(0, { 0.0f,0.0f,15.0f });
 		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },

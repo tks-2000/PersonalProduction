@@ -485,6 +485,9 @@
     <ClCompile Include="PointLight.cpp">
       <Filter>MyEngine\Light</Filter>
     </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>MyEngine\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -896,6 +899,9 @@
       <Filter>MyEngine\Light</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
+      <Filter>MyEngine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
       <Filter>MyEngine\Light</Filter>
     </ClInclude>
   </ItemGroup>

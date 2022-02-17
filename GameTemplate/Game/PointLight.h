@@ -23,7 +23,7 @@ namespace render {
 			void Execution();
 			/// @brief 座標を設定
 			/// @param pos 設定する座標
-			void SetPosition(const Vector3 pos) { m_pointLight.position = pos; }
+			void SetPosition(const Vector3& pos) { m_pointLight.position = pos; }
 			/// @brief カラーを設定
 			/// @param color 設定するカラー
 			void SetColor(const Vector3& color) { m_pointLight.color = color; }

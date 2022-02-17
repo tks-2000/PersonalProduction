@@ -350,6 +350,7 @@
     <ClCompile Include="SoundPlayer.cpp" />
     <ClCompile Include="SoundPreCompile.cpp" />
     <ClCompile Include="SoundSource.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -496,6 +497,7 @@
     <ClInclude Include="SoundPlayer.h" />
     <ClInclude Include="SoundPreCompile.h" />
     <ClInclude Include="SoundSource.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />

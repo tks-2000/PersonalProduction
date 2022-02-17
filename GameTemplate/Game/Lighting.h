@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "DirectionLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 
 namespace render {
 	namespace light {
@@ -35,16 +36,16 @@ namespace render {
 		//};
 
 		/// @brief スポットライト構造体
-		struct SpotLight
-		{
-			Vector3 position = Vector3::Zero;	//位置
-			float pad0 = 0.0f;					//パディング
-			Vector3 color = Vector3::Zero;		//カラー
-			float Range = 0.0f;					//影響範囲
-			Vector3 direction = Vector3::Zero;	//射出方向
-			float angle = 0.0f;					//射出角度
+		//struct SpotLight
+		//{
+		//	Vector3 position = Vector3::Zero;	//位置
+		//	float pad0 = 0.0f;					//パディング
+		//	Vector3 color = Vector3::Zero;		//カラー
+		//	float Range = 0.0f;					//影響範囲
+		//	Vector3 direction = Vector3::Zero;	//射出方向
+		//	float angle = 0.0f;					//射出角度
 
-		};
+		//};
 
 		/// @brief 半球ライト構造体
 		struct HemiSphereLight
@@ -60,13 +61,9 @@ namespace render {
 		/// @brief ライト全ての構造体
 		struct Light
 		{
-			/*const int directionLightNum = DIRECTION_LIGHT_SUM;
-			const int pointLightNum = POINT_LIGHT_SUM;
-			const int spotLightNum = SPOT_LIGHT_SUM;
-			float pad0;*/
 			StDirectionLight directionLight;			//ディレクションライト
 			StPointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
-			SpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
+			StSpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
 			HemiSphereLight hemiSphereLight;		//半球ライト
 			Vector3 eyePos = Vector3::Zero;			//視点の位置
 			float pad4 = 0.0f;						//パディング
@@ -129,12 +126,7 @@ namespace render {
 			/// @param range ポイントライトに設定する影響範囲
 			void SetPointLightRange(const int num, const float range) { m_pointLight[num].SetRange(range); }
 
-			/// @brief スポットライトの初期化
-			void InitSpotLight(int num);
-
-			void MoveSpotLight(int num);
-
-			void RotationSpotLight(int num);
+			
 
 			/// @brief スポットライトの座標を入手
 			/// @param num 入手するスポットライトの番号
@@ -144,25 +136,23 @@ namespace render {
 			/// @brief スポットライトの座標を設定
 			/// @param num 設定したいスポットライトの番号
 			/// @param pos スポットライトに設定する座標
-			void SetSpotLightPos(int num, Vector3 pos) { m_light.spotLight[num].position = pos; }
+			void SetSpotLightPos(const int num, const Vector3& pos) { m_spotLight[num].SetPosition(pos); }
+
+			void SetSpotLightTarget(const int num, const Vector3& target) { m_spotLight[num].SetTarget(target); }
 
 			/// @brief スポットライトのカラーを設定
 			/// @param num 設定したいスポットライトの番号
 			/// @param color スポットライトに設定するカラー
-			void SetSpotLightColor(int num, Vector3 color) { m_light.spotLight[num].color = color; }
+			void SetSpotLightColor(const int num, const Vector3& color) { m_spotLight[num].SetColor(color); }
 
+			void SetSpotLightRange(const int num, const float range) { m_spotLight[num].SetRange(range); }
+			
 			/// @brief スポットライトの方向を設定
 			/// @param num 設定したいスポットライトの番号
 			/// @param dir スポットライトに設定する方向
-			void SetSpotLightDirection(int num, Vector3 dir) { m_light.spotLight[num].direction = dir; m_light.spotLight[num].direction.Normalize(); }
+			void SetSpotLightDirection(const int num, const Vector3& dir) { m_spotLight[num].SetDirection(dir); }
 
-			/// @brief スポットライトの点滅を設定
-			/// @param num 点滅させたいスポットライトの番号
-			/// @param Time 点滅させる時間
-			/// @param interval 点滅の間隔
-			void SetSpotLightBlinking(int num, float time, float interval);
-
-			void ResetSpotLight();
+			void SetSpotLightAngle(const int num, const float angle) { m_spotLight[num].SetAngle(angle); }
 
 			/// @brief 半球ライトの初期化
 			void InitHemiSphereLight();
@@ -182,25 +172,7 @@ namespace render {
 
 			PointLight m_pointLight[POINT_LIGHT_SUM];
 
-			/// @brief スポットライトの点滅フラグ
-			bool m_spLigBlink[SPOT_LIGHT_SUM] = { false };
-
-			/// @brief スポットライトの点滅時間
-			float m_spLigBlinkTime[SPOT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief スポットライトの切り替え時間
-			float m_spLigBlinkSwitchingTime[SPOT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief スポットライトの点滅間隔
-			float m_spLigBlinkInterval[SPOT_LIGHT_SUM] = { 0.0f };
-
-			/// @brief スポットライトを点滅させるカラー
-			Vector3 m_spLigColor[SPOT_LIGHT_SUM] = { {Vector3::Zero},{Vector3::Zero},{Vector3::Zero},{Vector3::Zero} };
-
-			/// @brief スポットライトが点いているフラグ
-			bool m_spLigLit[SPOT_LIGHT_SUM] = { true };
-
-			void SpotLightBlinking(int num);
+			SpotLight m_spotLight[SPOT_LIGHT_SUM];
 		};
 	}
 }
