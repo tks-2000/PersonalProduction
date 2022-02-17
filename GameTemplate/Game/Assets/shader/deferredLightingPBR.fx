@@ -2,6 +2,7 @@
  ///////////////////////////////////////////////
  //定数
  ///////////////////////////////////////////////
+static const int NUM_DIRECTION_LIGHT = 4;
 static const int NUM_SPOT_LIGHT = 4;
 static const int NUM_POINT_LIGHT = 5;
 static const float PI = 3.1415926f;
@@ -72,7 +73,7 @@ cbuffer Cb : register(b0){
 
 cbuffer LightCb : register(b1)
 {
-	DirectionLight directionLight;		//ディレクションライト
+	DirectionLight directionLight[NUM_DIRECTION_LIGHT];		//ディレクションライト
 	PointLight pointLight[NUM_POINT_LIGHT];				//ポイントライト
 	SpotLight spotLight[NUM_SPOT_LIGHT];				//スポットライト
 	HemiSphereLight hemiSphereLight;	//半球ライト
@@ -147,6 +148,16 @@ float3 CalculateRimlight(
 );
 //距離による影響率を計算
 float CalculateImpactRate(float3 ligPos, float ligRange, float3 worldPos);
+//ディレクションライトを計算
+float3 CalculateDirectionLight(
+	DirectionLight dirLig,
+	float3 normal,
+	float3 worldPos,
+	float3 toEye,
+	float metallic,
+	float smooth,
+	float3 albedoColor
+);
 //ポイントライトを計算
 float3 CalculatePointLight(
 	PointLight ptLig,
@@ -218,35 +229,20 @@ float4 PSMain(PSInput In) : SV_Target0
    //ここからディレクションライトの計算を行う
 
    //拡散反射を計算
-   float3 diffuseColor = CalculateDiffuseLight(
-	   directionLight.color,
-	   directionLight.direction,
-	   normal,
-	   toEye,
-	   smooth,
-	   albedo.xyz
-	);
 
-	float3 specularColor = CalculateSpecularLight(
-		directionLight.color,
-		directionLight.direction,
-		normal,
-		toEye,
-		metallic,
-		smooth,
-		albedo.xyz
-	);
+   float3 directionLigColor = {0.0f,0.0f,0.0f};
 
-   float3 dirLimColor =  CalculateRimlight(
-		directionLight.color,
-		directionLight.direction,
-		normal,
-		toEye
-	);
-
-   //滑らかさを参照して拡散反射を求めて鏡面反射とリムライトを加算
-   float3 directionLigColor = diffuseColor * (1.0f - smooth) + specularColor + dirLimColor;
-
+   for(int dirLigNum = 0; dirLigNum < NUM_DIRECTION_LIGHT; dirLigNum++){
+	   directionLigColor += CalculateDirectionLight(
+		   directionLight[dirLigNum],
+		   normal,
+		   worldPos,
+		   toEye,
+		   metallic,
+		   smooth,
+		   albedo.xyz
+	   );
+   }
    ///////////////////////////////////////////////////////////////////////////
 
    //ここからポイントライトの計算を行う
@@ -414,7 +410,7 @@ float3 CalculatePhoneSpecular(float3 lightDirection, float3 lightColor, float3 n
 	t = pow(t,5.0f);
 
 	//鏡面反射光を求める。
-	return directionLight.color * t;
+	return lightColor * t;
 }
 
 float3 CalculateHemiSphereLight(HemiSphereLight hemLig, float3 normal)
@@ -473,7 +469,7 @@ float3 CalculateSpecularLight(
 	   smooth
 	) * ligColor;
 
-	specularColor *= lerp(directionLight.color,albedoColor,metallic);
+	specularColor *= lerp(ligColor,albedoColor,metallic);
 
 	return specularColor;
 }
@@ -533,6 +529,49 @@ float CalculateImpactRate(float3 ligPos, float ligRange, float3 worldPos)
 	//影響を指数関数的にする。
 	lAffect = pow(lAffect,3.0f);
 	return lAffect;
+}
+
+float3 CalculateDirectionLight(
+	DirectionLight dirLig,
+	float3 normal,
+	float3 worldPos,
+	float3 toEye,
+	float metallic,
+	float smooth,
+	float3 albedoColor
+)
+{
+	 //拡散反射を計算
+   float3 diffuseColor = CalculateDiffuseLight(
+	   dirLig.color,
+	   dirLig.direction,
+	   normal,
+	   toEye,
+	   smooth,
+	   albedoColor
+	);
+
+	float3 specularColor = CalculateSpecularLight(
+		dirLig.color,
+		dirLig.direction,
+		normal,
+		toEye,
+		metallic,
+		smooth,
+		albedoColor
+	);
+
+   float3 dirLimColor =  CalculateRimlight(
+		dirLig.color,
+		dirLig.direction,
+		normal,
+		toEye
+	);
+
+   //滑らかさを参照して拡散反射を求めて鏡面反射とリムライトを加算
+   float3 dirLigColor = diffuseColor * (1.0f - smooth) + specularColor + dirLimColor;
+
+   return dirLigColor;
 }
 
 float3 CalculatePointLight(

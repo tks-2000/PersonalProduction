@@ -20,7 +20,9 @@ namespace render {
 				return;
 			}
 
-			m_directionLight.Init();
+			for (int dirLigNo = 0; dirLigNo < DIRECTION_LIGHT_SUM; dirLigNo++) {
+				m_directionLight[dirLigNo].Init();
+			}
 
 			for (int spotLigNo = 0; spotLigNo < SPOT_LIGHT_SUM; spotLigNo++) {
 				//InitSpotLight(spotLigNo);
@@ -57,10 +59,11 @@ namespace render {
 				return;
 			}
 
-			m_directionLight.Execution();
+			for (int dirLigNo = 0; dirLigNo < DIRECTION_LIGHT_SUM; dirLigNo++) {
 
-			m_light.directionLight = m_directionLight.GetDirectionLight();
-
+				m_directionLight[dirLigNo].Execution();
+				m_light.directionLight[dirLigNo] = m_directionLight[dirLigNo].GetDirectionLight();
+			}
 			
 			for (int ptLigNum = 0; ptLigNum < POINT_LIGHT_SUM; ptLigNum++) {
 				

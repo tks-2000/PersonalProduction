@@ -61,7 +61,7 @@ namespace render {
 		/// @brief ライト全ての構造体
 		struct Light
 		{
-			StDirectionLight directionLight;			//ディレクションライト
+			StDirectionLight directionLight[DIRECTION_LIGHT_SUM];			//ディレクションライト
 			StPointLight pointLight[POINT_LIGHT_SUM];					//ポイントライト
 			StSpotLight spotLight[SPOT_LIGHT_SUM];					//スポットライト
 			HemiSphereLight hemiSphereLight;		//半球ライト
@@ -94,19 +94,19 @@ namespace render {
 
 			/// @brief ディレクションライトの方向を入手
 			/// @return ディレクションライトの方向
-			Vector3 GetDirectionLightDirection() { return m_light.directionLight.direction; }
+			Vector3 GetDirectionLightDirection() { return m_light.directionLight[0].direction; }
 
 			/// @brief ディレクションライトの方向を設定
 			/// @param dirLigVec ディレクションライトに設定する方向
-			void SetDirectionLightDirection(Vector3 dirLigVec) { m_directionLight.SetDirection(dirLigVec); }
+			void SetDirectionLightDirection(const int num, const Vector3& dirLigVec) { m_directionLight[num].SetDirection(dirLigVec); }
 
 			/// @brief ディレクションライトのカラーを設定
 			/// @param color ディレクションライトに設定するカラー
-			void SetDirectionLightColor(const Vector3& color) { m_directionLight.SetColor(color); }
+			void SetDirectionLightColor(const int num, const Vector3& color) { m_directionLight[num].SetColor(color); }
 
-			void SetDirectionLightRotation(const Vector3& axis, const float angle) { m_directionLight.SetRotation(axis, angle); }
+			void SetDirectionLightRotation(const int num, const Vector3& axis, const float angle) { m_directionLight[num].SetRotation(axis, angle); }
 
-			void StopDirectionLightRotation() { m_directionLight.StopRotation(); }
+			void StopDirectionLightRotation(const int num) { m_directionLight[num].StopRotation(); }
 
 
 			/// @brief ポイントライトの座標を入手
@@ -146,6 +146,7 @@ namespace render {
 			void SetSpotLightColor(const int num, const Vector3& color) { m_spotLight[num].SetColor(color); }
 
 			void SetSpotLightRange(const int num, const float range) { m_spotLight[num].SetRange(range); }
+
 			
 			/// @brief スポットライトの方向を設定
 			/// @param num 設定したいスポットライトの番号
@@ -168,7 +169,7 @@ namespace render {
 			/// @brief ライティング全てのデータ
 			Light m_light;
 
-			DirectionLight m_directionLight;
+			DirectionLight m_directionLight[DIRECTION_LIGHT_SUM];
 
 			PointLight m_pointLight[POINT_LIGHT_SUM];
 

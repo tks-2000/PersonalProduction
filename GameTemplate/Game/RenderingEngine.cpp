@@ -61,11 +61,26 @@ namespace render {
 	bool RenderingEngine::Start()
 	{
 		
-		m_lig.SetDirectionLightColor({ 2.0f, 2.0f, 2.0f });
+		m_lig.SetDirectionLightColor(0, { 1.0f, 1.0f, 1.0f });
+		m_lig.SetDirectionLightColor(1, { 1.0f, 0.0f, 0.0f });
+		m_lig.SetDirectionLightColor(2, { 0.0f, 1.0f, 0.0f });
+		m_lig.SetDirectionLightColor(3, { 0.0f, 0.0f, 1.0f });
 		Vector3 dir = { 0.0f,0.0f,-1.0f };
 		dir.Normalize();
-		m_lig.SetDirectionLightDirection(dir);
-		m_lig.SetDirectionLightRotation(Vector3::AxisY, 0.01f);
+		m_lig.SetDirectionLightDirection(0,dir);
+		dir = { 0.0f,0.0f,1.0f };
+		dir.Normalize();
+		m_lig.SetDirectionLightDirection(1, dir);
+		dir = { 1.0f,0.0f,0.0f };
+		dir.Normalize();
+		m_lig.SetDirectionLightDirection(2, dir);
+		dir = { -1.0f,0.0f,0.0f };
+		dir.Normalize();
+		m_lig.SetDirectionLightDirection(3, dir);
+		m_lig.SetDirectionLightRotation(0, Vector3::AxisY, 0.01f);
+		m_lig.SetDirectionLightRotation(1, Vector3::AxisY, 0.01f);
+		m_lig.SetDirectionLightRotation(2, Vector3::AxisY, 0.01f);
+		m_lig.SetDirectionLightRotation(3, Vector3::AxisY, 0.01f);
 		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
 		
 		m_lig.SetHemiSphereLifhtGroundColor({ 0.5f,0.2f,0.2f });

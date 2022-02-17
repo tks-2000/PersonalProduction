@@ -473,12 +473,6 @@
     <ClCompile Include="DeferredRender.cpp">
       <Filter>MyEngine</Filter>
     </ClCompile>
-    <ClCompile Include="TitleModels.cpp">
-      <Filter>inGame\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>inGame\UI</Filter>
-    </ClCompile>
     <ClCompile Include="DirectionLight.cpp">
       <Filter>MyEngine\Light</Filter>
     </ClCompile>
@@ -487,6 +481,12 @@
     </ClCompile>
     <ClCompile Include="SpotLight.cpp">
       <Filter>MyEngine\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>inGame\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleModels.cpp">
+      <Filter>inGame\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
