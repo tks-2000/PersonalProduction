@@ -77,20 +77,29 @@ namespace render {
 		dir = { -1.0f,0.0f,0.0f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(3, dir);
-		m_lig.SetDirectionLightRotation(0, Vector3::AxisY, 0.01f);
-		m_lig.SetDirectionLightRotation(1, Vector3::AxisY, 0.01f);
-		m_lig.SetDirectionLightRotation(2, Vector3::AxisY, 0.01f);
-		m_lig.SetDirectionLightRotation(3, Vector3::AxisY, 0.01f);
+		//m_lig.SetDirectionLightRotation(0, Vector3::AxisY, 0.01f);
+		//m_lig.SetDirectionLightRotation(1, Vector3::AxisY, 0.01f);
+		//m_lig.SetDirectionLightRotation(2, Vector3::AxisY, 0.01f);
+		//m_lig.SetDirectionLightRotation(3, Vector3::AxisY, 0.01f);
 		m_lig.SetAmbientLight({ 0.1f,0.1f,0.1f });
 		
 		m_lig.SetHemiSphereLifhtGroundColor({ 0.5f,0.2f,0.2f });
 		m_lig.SetHemiSphereLifhtSkyColor({ 0.2f,0.2f,0.5f });
 		m_lig.SetPointLighitPos(0, { 200.0f,200.0f,0.0f });
-		m_lig.SetPointLightColor(0, { 0.0f,5.0f,0.0f });
+		m_lig.SetPointLightColor(0, { 5.0f,5.0f,5.0f });
 		m_lig.SetPointLightRange(0, 1000.0f);
+		m_lig.SetPointLightBlinking(0, 0.5f);
+		std::vector<Vector3> colors;
+		colors.push_back({ 5.0f,0.0f,0.0f });
+		colors.push_back({ 5.0f,5.0f,0.0f });
+		colors.push_back({ 0.0f,5.0f,0.0f });
+		colors.push_back({ 0.0f,5.0f,5.0f });
+		colors.push_back({ 0.0f,0.0f,5.0f });
+		colors.push_back({ 5.0f,0.0f,5.0f });
 		m_lig.SetPointLighitPos(1, { -200.0f,200.0f,0.0f });
 		m_lig.SetPointLightColor(1, { 5.0f,0.0f,0.0f });
 		m_lig.SetPointLightRange(1, 1000.0f);
+		m_lig.SetPointLightGradation(1, colors, 0.5f);
 		m_lig.SetSpotLightPos(0, { 0.0f, 400.0f, 300.0f });
 		m_lig.SetSpotLightTarget(0, { 0.0,0.0f,300.0f });
 		m_lig.SetSpotLightColor(0, { 0.0f,0.0f,15.0f });
@@ -220,55 +229,15 @@ namespace render {
 
 	void RenderingEngine::LightUpdate()
 	{
-		if (g_pad[0]->IsPress(enButtonSelect)) {
-
-
-			if (g_pad[0]->IsPress(enButtonUp)) {
-				m_ligColor.x += 0.01f;
-
-			}
-
-			if (g_pad[0]->IsPress(enButtonDown)) {
-				m_ligColor.x -= 0.01f;
-
-			}
-			if (g_pad[0]->IsPress(enButtonRight)) {
-
-				m_ligColor.y += 0.01f;
-
-			}
-
-			if (g_pad[0]->IsPress(enButtonLeft)) {
-
-				m_ligColor.y -= 0.01f;
-
-			}
-
+		if (g_pad[0]->IsTrigger(enButtonUp)) {
+			m_lig.StopPointLightBlinking(0);
+			m_lig.StopPointLightGradation(1);
 		}
-		else {
-
-			if (g_pad[0]->IsPress(enButtonUp)) {
-
-				m_ligColor.z += 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonDown)) {
-
-				m_ligColor.z -= 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonRight)) {
-				m_ligColor.x += 0.01f;
-				m_ligColor.y += 0.01f;
-				m_ligColor.z += 0.01f;
-			}
-
-			if (g_pad[0]->IsPress(enButtonLeft)) {
-				m_ligColor.x -= 0.01f;
-				m_ligColor.y -= 0.01f;
-				m_ligColor.z -= 0.01f;
-			}
+		if (g_pad[0]->IsTrigger(enButtonDown)) {
+			m_lig.StartPointLightBlinking(0);
+			m_lig.StartPointLightGradation(1);
 		}
+
 
 		m_lig.Execution();
 	}

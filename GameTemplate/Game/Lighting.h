@@ -126,8 +126,17 @@ namespace render {
 			/// @param range ポイントライトに設定する影響範囲
 			void SetPointLightRange(const int num, const float range) { m_pointLight[num].SetRange(range); }
 
-			
+			void SetPointLightBlinking(const int num, const float interval) { m_pointLight[num].SetBlinking(interval); }
 
+			void StartPointLightBlinking(const int num) { m_pointLight[num].StartBlinking(); }
+
+			void StopPointLightBlinking(const int num) { m_pointLight[num].StopBlinking(); }
+
+			void SetPointLightGradation(const int num, std::vector<Vector3>& colors, const float speed) { m_pointLight[num].SetGradation(colors, speed); }
+
+			void StartPointLightGradation(const int num) { m_pointLight[num].StartGradation(); }
+
+			void StopPointLightGradation(const int num) { m_pointLight[num].StopGradation(); }
 			/// @brief スポットライトの座標を入手
 			/// @param num 入手するスポットライトの番号
 			/// @return スポットライトの座標
