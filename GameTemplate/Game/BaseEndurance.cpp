@@ -9,14 +9,14 @@ namespace mainGame {
 		/// @brief 耐久値の下地画像の縦幅
 		const int ENDURANCE_BASE_SPRITE_HEIGHT = 60;
 		/// @brief 耐久値の下地画像の座標
-		const Vector3 ENDURANCE_BASE_SPRITE_POS = { 0.0f,280.0f,0.0f };
+		const Vector3 ENDURANCE_BASE_SPRITE_POS = { 0.0f,320.0f,0.0f };
 
 		/// @brief 耐久値の画像の横幅
 		const int ENDURANCE_SPRITE_WIDTH = 1000;
 		/// @brief 耐久値の画像の縦幅
 		const int ENDURANCE_SPRITE_HEIGHT = 30;
 		/// @brief 耐久値の画像の位置
-		const Vector3 ENDURANCE_SPRITE_POS = { -500.0f,280.0f,0.0f };
+		const Vector3 ENDURANCE_SPRITE_POS = { -500.0f,320.0f,0.0f };
 		/// @brief 耐久値の画像の最低値のカラー
 		const Vector4 ENDURANCE_SPRITE_MIN_COLOR = { 0.0f,2.0f,0.0f,1.0f };
 		/// @brief 耐久値の画像の最高値のカラー

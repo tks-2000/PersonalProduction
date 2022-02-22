@@ -14,11 +14,19 @@ namespace mainGame {
 
 			void PlaySpawnEffect();
 
+			void PlayGetEffect();
+
 			bool m_isInitd = false;
 
 			bool m_isSpawnEffectPlay = false;
 			
 			render::effect::EffectRender* m_spawnEffect = nullptr;
+
+			bool m_isGetEffectPlay = false;
+
+			render::effect::EffectRender* m_getEffect = nullptr;
+
+			Vector3 m_getEffectScale = g_vec3Zero;
 
 			Item* m_item = nullptr;
 		};
