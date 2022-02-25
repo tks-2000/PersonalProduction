@@ -45,12 +45,12 @@ namespace mainGame {
 			m_enduranceBaseSprite = NewGO <render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 			m_enduranceUnderSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 			m_enduranceSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
-			m_enduranceBaseSprite->Init("Assets/Image/WB.dds", ENDURANCE_BASE_SPRITE_WIDTH, ENDURANCE_BASE_SPRITE_HEIGHT);
+			m_enduranceBaseSprite->Init("Assets/modelData/bg/lace-wood.dds", ENDURANCE_BASE_SPRITE_WIDTH, ENDURANCE_BASE_SPRITE_HEIGHT);
 			m_enduranceUnderSprite->Init("Assets/Image/WB.dds", ENDURANCE_SPRITE_WIDTH, ENDURANCE_SPRITE_HEIGHT);
 			m_enduranceSprite->Init("Assets/Image/WB.dds", ENDURANCE_SPRITE_WIDTH,ENDURANCE_SPRITE_HEIGHT);
 
 			//画像の初期パラメーターを決定
-			m_enduranceBaseSprite->SetColor(g_vec4Black);
+			//m_enduranceBaseSprite->SetColor(g_vec4Black);
 			m_enduranceUnderSprite->SetColor(ENDURANCE_UNDER_SPRITE_COLOR);
 			m_enduranceSpritePos = ENDURANCE_SPRITE_POS;
 			m_enduranceSpriteColor = ENDURANCE_SPRITE_MIN_COLOR;

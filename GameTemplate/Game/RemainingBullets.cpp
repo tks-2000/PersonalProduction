@@ -56,7 +56,7 @@ namespace mainGame {
 			m_remainingBulletsBaseSprite->SetPosition(REMAINING_BULLETS_BASE_SPRITE_POS);
 			m_remainingBulletsSprite->SetPosition(REMAINING_BULLETS_SPRITE_POS);
 
-			m_remainingBulletsBaseSprite->SetColor(g_vec4Black);
+			m_remainingBulletsBaseSprite->SetColor({1.0f,1.0f,1.0f,0.0f});
 
 			m_isInitd = true;
 		}

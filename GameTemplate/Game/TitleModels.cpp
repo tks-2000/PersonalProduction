@@ -70,7 +70,7 @@ namespace mainGame {
 			m_plModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plModel->InitDeferrd(
 				PLAYER_MODEL_FILEPATH,
-				true,
+				false,
 				PLAYER_SKELTON_FILEPATH,
 				m_plAnim,
 				enTitlePlAnimNum
@@ -84,11 +84,11 @@ namespace mainGame {
 			m_plAnimState = enTitlePlIdle;
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH,true);
+			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH,false);
 			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH,true);
+			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH,false);
 			m_shieldModel->CreateShadow();
 
 			m_enemyAnim[enTitleEnemyIdle].Load(ENEMY_ANIMATION_FILEPATH);

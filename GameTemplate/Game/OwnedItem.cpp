@@ -4,11 +4,11 @@
 namespace mainGame {
 	namespace ui {
 
-		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 427.5f,-240.0f,0.0f };
+		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 427.5f,-190.0f,0.0f };
 
 		const int ITEM_SLOT_BASE_SPRITE_WIDTH = 325;
 
-		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 140;
+		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 240;
 
 		const Vector3 ITEM_SLOT_SPRITE_POS[3] = {
 			{ 327.5f,-250.0f,0.0f },
@@ -52,9 +52,9 @@ namespace mainGame {
 		void OwnedItem::Init()
 		{
 			m_itemSlotBaseSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
-			m_itemSlotBaseSprite->Init("Assets/Image/WB.dds", ITEM_SLOT_BASE_SPRITE_WIDTH, ITEM_SLOT_BASE_SPRITE_HEIGHT);
+			m_itemSlotBaseSprite->Init("Assets/modelData/bg/lace-wood.dds", ITEM_SLOT_BASE_SPRITE_WIDTH, ITEM_SLOT_BASE_SPRITE_HEIGHT);
 			m_itemSlotBaseSprite->SetPosition(ITEM_SLOT_BASE_SPRITE_POS);
-			m_itemSlotBaseSprite->SetColor(g_vec4Black);
+			//m_itemSlotBaseSprite->SetColor(g_vec4Black);
 
 			m_selectSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 

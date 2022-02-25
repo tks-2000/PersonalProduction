@@ -4,7 +4,7 @@
 namespace mainGame {
 	namespace ui {
 
-		const Vector3 TIMER_BASE_SPRITE_POS = { 0.0f,260.0f,0.0f };
+		const Vector3 TIMER_BASE_SPRITE_POS = { 0.0f,255.0f,0.0f };
 
 		const int TIMER_BASE_SPRITE_WIDTH = 270;
 
@@ -66,9 +66,9 @@ namespace mainGame {
 			m_go->SetColor(UI_SPRITE_START_COLOR);
 
 			m_timerBaseSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
-			m_timerBaseSprite->Init("Assets/Image/WB.dds", TIMER_BASE_SPRITE_WIDTH, TIMER_BASE_SPRITE_HEIGHT);
+			m_timerBaseSprite->Init("Assets/modelData/bg/lace-wood.dds", TIMER_BASE_SPRITE_WIDTH, TIMER_BASE_SPRITE_HEIGHT);
 			m_timerBaseSprite->SetPosition(TIMER_BASE_SPRITE_POS);
-			m_timerBaseSprite->SetColor(g_vec4Black);
+			//m_timerBaseSprite->SetColor(g_vec4Black);
 
 			m_timeFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
 			m_timeFont->Init(L"TIME :");
