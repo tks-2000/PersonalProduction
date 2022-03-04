@@ -32,6 +32,7 @@ struct SPSIn{
 	float3 worldPos 	: TEXCOORD2;
 	float3 normalInView : TEXCOORD3;	//カメラ空間の法線
 	float4 posInLVP		: TEXCOORD4;	//ライトビュースクリーン空間でのピクセルの座標
+	float distToEye : TEXCOORD5;
 
 	float3 tangent : TANGENT;
 	float3 biNormal : BINORMAL;
@@ -77,6 +78,14 @@ Texture2D<float4> g_metaricSmoothMap : register(t2);
 //Texture2D<float4> g_shadowMap : register(t10);
 StructuredBuffer<float4x4> g_boneMatrix : register(t3);	//ボーン行列。
 sampler g_sampler : register(s0);	//サンプラステート。
+
+//ティザパターン
+static const int pattern[4][4] = {
+	{0,32,8,40},
+	{48,16,56,24},
+	{12,44,4,36},
+	{60,28,52,20}
+};
 
 ////////////////////////////////////////////////
 // 関数定義。
@@ -128,6 +137,10 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.normalInView = normalize(mul(mView,psIn.normal));	//カメラ空間の法線を求める
 	psIn.posInLVP = mul(mLVP,worldPos);
 
+	float4 objectPos = m[3];
+	float4 objectPosInCamera = mul(mView,psIn.worldPos);
+	psIn.distToEye = length(psIn.pos);
+
 	return psIn;
 }
 
@@ -150,7 +163,18 @@ SPSIn VSSkinMain( SVSIn vsIn )
 /// </summary>
 SPSOut PSMain( SPSIn psIn )
 {
+	int x = (int)fmod(psIn.pos.x,4.0f);
+	int y = (int)fmod(psIn.pos.y,4.0f);
 	
+	int dither = pattern[y][x];
+
+	float clipRange = 300.0f;
+
+	float eyeToClipRange = max(0.0f,psIn.distToEye - clipRange);
+
+	float clipRate = 1.0f - min(1.0f,eyeToClipRange / 100.0f);
+
+	clip(dither - 64 * clipRate);
 
 	SPSOut psOut;
 	psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);

@@ -16,7 +16,7 @@ namespace mainGame {
 
 		const float GRAVITY = 100.0f;
 
-		const float ROUTE_MOVE_STOP_DISTANCE = 300.0f;
+		const float ROUTE_MOVE_STOP_DISTANCE = 400.0f;
 
 		const float MOVE_STOP_DISTANCE = 200.0f;
 
@@ -39,7 +39,7 @@ namespace mainGame {
 			}
 			m_enemy = enemy;
 
-			m_naviMesh.Init("Assets/nvmData/stage3_2.tkn");
+			m_naviMesh.Init("Assets/nvmData/Stage.tkn");
 
 			m_charaCon.Init(ENEMY_COLLISION_RADIUS, ENEMY_COLLISION_HEIGHT, m_enemy->GetPosition());
 

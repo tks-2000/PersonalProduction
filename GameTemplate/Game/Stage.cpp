@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 namespace {
-	const char* STAGE_MODEL_TKM_FILEPATH = "Assets/modelData/bg/testStage3.tkm";
+	const char* STAGE_MODEL_TKM_FILEPATH = "Assets/modelData/bg/Stage2.tkm";
 	//const char* STAGE_MODEL_TKM_FILEPATH = "Assets/modelData/stage/Stage.tkm";
 }
 
@@ -32,7 +32,7 @@ namespace mainGame {
 			}
 			//ƒ‚ƒfƒ‹‚ð•\Ž¦
 			m_stageModel = NewGO <render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_stageModel->InitDeferrd(STAGE_MODEL_TKM_FILEPATH);
+			m_stageModel->InitDeferrd(STAGE_MODEL_TKM_FILEPATH,true);
 			//m_stageModel->CreateShadow();
 			m_stageModel->Execution();
 			m_bgModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);

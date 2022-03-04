@@ -55,8 +55,8 @@ namespace mainGame {
 
 		m_shadow = renderingEngine->GetShadow();
 
-		m_shadow->SetLightCameraPos(LIGHT_CAMERA_START_POS);
-		m_shadow->SetLightCameraTarget(LIGHT_CAMERA_START_TARGET);
+		//m_shadow->SetLightCameraPos(LIGHT_CAMERA_START_POS);
+		//m_shadow->SetLightCameraTarget(LIGHT_CAMERA_START_TARGET);
 
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 
@@ -346,7 +346,7 @@ namespace mainGame {
 		toCameraPos.Normalize();
 
 		//Y方向に大きく振れすぎていたら…
-		if (toCameraPos.y > 0.9f || toCameraPos.y < 0.0f) {
+		if (toCameraPos.y > 0.9f || toCameraPos.y < 0.1f) {
 			//回転適用前のベクトルに戻す
 			m_targetToCameraPos = oldPos;
 			//カメラアングルの移動量を0にする

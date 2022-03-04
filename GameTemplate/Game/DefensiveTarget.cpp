@@ -3,7 +3,7 @@
 
 namespace {
 	/// @brief 防衛対象のモデルファイルパス
-	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/box2.tkm";
+	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/bg/house.tkm";
 
 	const char* MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/boxMapModel.tkm";
 	/// @brief 防衛対象の座標
@@ -39,7 +39,7 @@ namespace mainGame {
 
 			//防衛対象のモデルを初期化
 			m_defensiveTargetModel = NewGO<render::model::SkinModelRender>(0);
-			m_defensiveTargetModel->InitDeferrd(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH);
+			m_defensiveTargetModel->InitDeferrd(DEFENSIVE_TARGET_MODEL_TKM_FILEPATH,true);
 
 			m_miniMapdefensiveTargetModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_miniMapdefensiveTargetModel->SetFxFilePath("Assets/shader/mapModel.fx");

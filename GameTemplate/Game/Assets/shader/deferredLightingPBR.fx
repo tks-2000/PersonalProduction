@@ -484,7 +484,7 @@ float3 CalculateRimlight(
 	//法線とライトの方向の内積でリムの強さを求める
 	float power1 = dot(normal,lightDirection);
 	//内積の結果を2乗し結果を1~0の値にする
-	power1 = pow(power1,2.0f);
+	power1 *= power1;
 	//1から2乗した内積の結果を引いた値をリムの強さにする
 	//内積の結果が0に近い(二つのベクトルが直角に近い)ほどリムの強さが上がる
 	power1 = 1.0f - power1;
@@ -492,7 +492,7 @@ float3 CalculateRimlight(
 	//法線とカメラへの方向の内積でリムの強さを求める
 	float power2 = dot(normal,toEye);
 	//内積の結果を2乗し結果を1~0の値にする
-	power2 = pow(power2,2.0f);
+	power2 *= power2;
 	//1から2乗した内積の結果を引いた値をリムの強さにする
 	//内積の結果が0に近い(二つのベクトルが直角に近い)ほどリムの強さが上がる
 	power2 = 1.0f - power2;
@@ -500,13 +500,17 @@ float3 CalculateRimlight(
 	//ライトの方向とカメラへの方向の内積でリムの強さを求める
 	float power3 = dot(lightDirection,toEye);
 	//内積の結果は1~-1の間なのでリムの強さがマイナスにならないように最低でも0にする
-	power3 = max(0.0f,power3);
+	power3 /= 2.0f;
+
+	power3 += 0.5f;
+
+	power3 *= power3;
 
 	//最終的なリムの強さを求める。
 	float limPower = power1 * power2 * power3;
 
 	//pow()を使用して、強さの変化を指数関数的にしてリムの発生範囲を絞る。
-	limPower = pow(limPower,10.0f);
+	limPower = pow(limPower,5.0f);
 
 	//リムライトのカラーを計算する。
 	float3 limColor = limPower * lightColor;

@@ -10,9 +10,9 @@ namespace mainGame {
 
 		const int TIMER_BASE_SPRITE_HEIGHT = 70;
 
-		const Vector2 TIME_FONT_POS = { -125.0f,280.0f };
+		const Vector2 TIME_FONT_POS = { -110.0f,280.0f };
 
-		const Vector2 TIMER_NUM_FONT_POS = { 25.0f,280.0f };
+		const Vector2 TIMER_NUM_FONT_POS = { 35.0f,280.0f };
 
 		const int NUM_SPRITE_NUM = 3;
 

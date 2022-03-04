@@ -56,6 +56,8 @@ namespace mainGame {
 
 			render::model::SkinModelRender* m_backgroundModel = nullptr;
 
+			render::model::SkinModelRender* m_houseModel = nullptr;
+
 			Title* m_title = nullptr;
 		};
 	}

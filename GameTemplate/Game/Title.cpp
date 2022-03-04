@@ -7,9 +7,9 @@ namespace mainGame {
 
 		const int TITLE_SPRITE_HEIGHT = 720;
 
-		const Vector3 TITLE_CAMERA_POS = { 0.0f,500.0f,-1100.0f };
+		const Vector3 TITLE_CAMERA_POS = { 0.0f,100.0f,800.0f };
 
-		const Vector3 TITLE_CAMERA_TARGET_POS = { 0.0f,450.0f,-900.0f };
+		const Vector3 TITLE_CAMERA_TARGET_POS = { 0.0f,50.0f, 0.0f };
 
 		const float TITLE_CAMERA_FAR = 10000.0f;
 

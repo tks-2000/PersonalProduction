@@ -11,7 +11,7 @@ namespace mainGame {
 			"Assets/animData/hero/Hero_Idle.tka",
 			"Assets/animData/hero/Hero_Clear.tka"
 		};
-		const Vector3 PLAYER_MODEL_POS = { 0.0f,300.0f,-650.0f };
+		const Vector3 PLAYER_MODEL_POS = { 0.0f,0.0f,400.0f };
 		const Vector3 PLAYER_MODEL_SCALE = { 2.0f,2.0f,2.0f };
 		/// @brief 剣のモデルファイルパス
 		const char* SWORD_MODEL_FILEPATH = "Assets/modelData/character/Hero_Sword.tkm";
@@ -30,14 +30,15 @@ namespace mainGame {
 		const char* ENEMY_SKELTON_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
 		const char* ENEMY_ANIMATION_FILEPATH = "Assets/animData/unityChan/idle.tka";
 		const Vector3 ENEMY_MODEL_POS[ENEMY_MODEL_NUM] = {
-			{ 350.0f,300.0f,-350.0f },
-			{ -350.0f,300.0f,-350.0f }
+			{ 350.0f,0.0f,0.0f },
+			{ -350.0f,0.0f,0.0f }
 		};
 
-		const char* STAGE_MODEL_FILEPATH = "Assets/modelData/bg/testStage3.tkm";
+		const char* STAGE_MODEL_FILEPATH = "Assets/modelData/bg/Stage2.tkm";
 		const char* BACKGROUND_MODEL_FILEPATH = "Assets/modelData/bg/sky_a.tkm";
+		const char* HOUSE_MODEL_FILEPATH = "Assets/modelData/bg/house.tkm";
 
-		const float PLAYER_MODEL_ANGLE = 170.0f;
+		const float PLAYER_MODEL_ANGLE = -10.0f;
 
 		const float ENEMY_MODEL_ANGLE[ENEMY_MODEL_NUM] = {
 			-150.0f,
@@ -59,6 +60,7 @@ namespace mainGame {
 			}
 			DeleteGO(m_stageModel);
 			DeleteGO(m_backgroundModel);
+			DeleteGO(m_houseModel);
 		}
 
 		void Models::Init(Title* title)
@@ -70,7 +72,7 @@ namespace mainGame {
 			m_plModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_plModel->InitDeferrd(
 				PLAYER_MODEL_FILEPATH,
-				false,
+				true,
 				PLAYER_SKELTON_FILEPATH,
 				m_plAnim,
 				enTitlePlAnimNum
@@ -84,11 +86,11 @@ namespace mainGame {
 			m_plAnimState = enTitlePlIdle;
 
 			m_swordModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH,false);
+			m_swordModel->InitDeferrd(SWORD_MODEL_FILEPATH,true);
 			m_swordModel->CreateShadow();
 
 			m_shieldModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH,false);
+			m_shieldModel->InitDeferrd(SHIELD_MODEL_FILEPATH,true);
 			m_shieldModel->CreateShadow();
 
 			m_enemyAnim[enTitleEnemyIdle].Load(ENEMY_ANIMATION_FILEPATH);
@@ -110,10 +112,13 @@ namespace mainGame {
 			}
 
 			m_stageModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_stageModel->InitDeferrd(STAGE_MODEL_FILEPATH);
+			m_stageModel->InitDeferrd(STAGE_MODEL_FILEPATH,true);
 
 			m_backgroundModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_backgroundModel->InitDeferrd(BACKGROUND_MODEL_FILEPATH);
+			m_backgroundModel->InitDeferrd(BACKGROUND_MODEL_FILEPATH,true);
+
+			m_houseModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			m_houseModel->InitDeferrd(HOUSE_MODEL_FILEPATH,true);
 
 			m_title = title;
 			m_isInitd = true;
@@ -131,6 +136,7 @@ namespace mainGame {
 			}
 			m_stageModel->Execution();
 			m_backgroundModel->Execution();
+			m_houseModel->Execution();
 			SetWeapons();
 		}
 
