@@ -27,6 +27,6 @@ namespace mainGame{
 		};
 
 		static const int MAX_ENEMY_NUM = 20;
-		static const int SPAWN_POS_NUM = 8;
+		static const int SPAWN_POS_NUM = 16;
 	}
 }

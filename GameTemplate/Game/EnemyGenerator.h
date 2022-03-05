@@ -1,5 +1,6 @@
 #pragma once
 #include"EnemyResource.h"
+#include "EnemySpawnPoint.h"
 
 namespace mainGame {
 	namespace enemy {
@@ -20,6 +21,9 @@ namespace mainGame {
 			/// @brief 実行
 			void Execute();
 
+			/// @brief 敵を出現させる
+			bool CreateEnemy(const Vector3& pos);
+
 			/// @brief 出現している敵を削除
 			/// @param enemy 削除する敵のアドレス
 			void DeleteEnemy(Enemy* enemy);
@@ -32,14 +36,10 @@ namespace mainGame {
 
 		private:
 
-			/// @brief 敵を出現させる
-			void CreateEnemy(const EnEnemyType& type,const Vector3& pos);
+			
 
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
-
-			/// @brief 敵の出現フラグ
-			bool m_isSpawn[MAX_ENEMY_NUM] = { false };
 
 			/// @brief 出現している敵の合計数
 			int m_enemySum = 0;
@@ -58,6 +58,14 @@ namespace mainGame {
 				g_vec3Zero,
 				g_vec3Zero,
 				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
+				g_vec3Zero,
 				g_vec3Zero
 			};
 
@@ -69,7 +77,9 @@ namespace mainGame {
 			/// @brief 出現間隔を測るタイマー
 			float m_spawnTimer = 0.0f;
 
+			SpawnPoint m_spawnPoint[SPAWN_POS_NUM];
 
+			bool m_isSpawn = false;
 		};
 	}
 }

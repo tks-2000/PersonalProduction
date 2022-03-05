@@ -488,6 +488,9 @@
     <ClCompile Include="TitleModels.cpp">
       <Filter>inGame\Title</Filter>
     </ClCompile>
+    <ClCompile Include="EnemySpawnPoint.cpp">
+      <Filter>inGame\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -903,6 +906,9 @@
     </ClInclude>
     <ClInclude Include="SpotLight.h">
       <Filter>MyEngine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawnPoint.h">
+      <Filter>inGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

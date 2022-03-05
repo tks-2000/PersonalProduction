@@ -10,6 +10,8 @@ namespace {
 	const float CAMERA_VELOCITY = 0.08f;
 	/// @brief カメラの回転速度
 	const float CAMERA_ROTATION_VELOCITY = 0.02f;
+
+	const float TARGET_HEIGHT = 50.0f;
 	/// @brief TPSカメラの摩擦力
 	const float TPS_CAMERA_FRICTION = 20.0f;
 	/// @brief FPSカメラの摩擦力
@@ -28,7 +30,7 @@ namespace mainGame {
 		m_isInitd = false;
 
 		//カメラの座標が注視点からどれだけ離れているか決める
-		m_targetToCameraPos = { 0.0f,200.0f,-500.0f };
+		m_targetToCameraPos = { 0.0f,300.0f,-400.0f };
 
 		m_playerToCameraPos = { 50.0f,70.0f,-100.0f };
 
@@ -209,6 +211,9 @@ namespace mainGame {
 	{
 		//カメラの目標をプレイヤーの座標にする
 		m_cameraTarget = m_player->GetPlayerPosition();
+
+		//プレイヤーの座標より少し上をカメラの目標にする
+		m_cameraTarget.y += TARGET_HEIGHT;
 
 		//カメラの注視点と目標の距離を計算する
 		m_cameraTargetDistance = m_cameraTarget - m_cameraGazePoint;

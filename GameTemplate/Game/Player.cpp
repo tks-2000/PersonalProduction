@@ -19,7 +19,7 @@ namespace {
 	/// @brief アニメーション補完率
 	const float ANIMATION_COMPLEMENTARY_RATE = 0.2f;
 	/// @brief プレイヤーの初期座標
-	const Vector3 PLAYER_START_POS = { 0.0f,0.0f,400.0f };
+	const Vector3 PLAYER_START_POS = { 0.0f,0.0f,500.0f };
 	/// @brief ダメージから復帰するまでの時間
 	const float PLAYER_DAMAGE_RETURN_TIME = 1.0f;
 

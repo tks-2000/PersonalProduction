@@ -8,14 +8,22 @@ namespace mainGame {
 	namespace enemy {
 		/// @brief 生成器から出現する座標までの距離
 		const Vector3 TO_GENERATOR_POS[SPAWN_POS_NUM]{
-			{1200.0f,0.0f,1200.0f},
-			{1200.0f,0.0f,-1200.0f},
-			{-1200.0f,0.0f,1200.0f},
-			{-1200.0f,0.0f,-1200.0f},
-			{0.0f,0.0f,1200.0f},
-			{0.0f,0.0f,-1200.0f},
-			{1200.0f,0.0f,0.0f},
-			{-1200.0f,0.0f,0.0f}
+			{2000.0f,0.0f,2000.0f},
+			{2000.0f,0.0f,1000.0f},
+			{2000.0f,0.0f,0.0f},
+			{2000.0f,0.0f,-1000.0f},
+			{2000.0f,0.0f,-2000.0f},
+			{-2000.0f,0.0f,2000.0f},
+			{-2000.0f,0.0f,1000.0f},
+			{-2000.0f,0.0f,0.0f},
+			{-2000.0f,0.0f,-1000.0f},
+			{-2000.0f,0.0f,-2000.0f},
+			{1000.0f,0.0f,2000.0f},
+			{0.0f,0.0f,2000.0f},
+			{-1000.0f,0.0f,2000.0f},
+			{1000.0f,0.0f,-2000.0f},
+			{0.0f,0.0f,-2000.0f},
+			{-1000.0f,0.0f,-2000.0f}
 		};
 
 		/// @brief 出現する敵の種類
@@ -59,7 +67,10 @@ namespace mainGame {
 			//敵生成器の中心座標から敵の出現位置を決める
 			for (int posNum = 0; posNum < SPAWN_POS_NUM; posNum++) {
 				m_spawnPos[posNum] = m_position + TO_GENERATOR_POS[posNum];
+				m_spawnPoint[posNum].Init(this, m_spawnPos[posNum]);
 			}
+
+			
 
 			//初期配置
 			//CreateEnemy(enEnemyTypeNormal, m_spawnPos[0]);
@@ -89,6 +100,12 @@ namespace mainGame {
 				return;
 			}
 
+			for (int posNum = 0; posNum < SPAWN_POS_NUM; posNum++) {
+				m_spawnPoint[posNum].Execution();
+			}
+			
+			m_isSpawn = false;
+
 			m_spawnTimer += g_gameTime->GetFrameDeltaTime();
 
 			if (m_spawnTimer > m_spawnInterval) {
@@ -107,7 +124,8 @@ namespace mainGame {
 				num2 %= SPAWN_POS_NUM;
 				//num2 = 0;
 
-				CreateEnemy(enEnemyTypeNormal,m_spawnPos[num2]);
+				//CreateEnemy(m_spawnPos[num2]);
+				m_spawnPoint[num2].SpawnEnemy();
 
 				m_spawnTimer = 0.0f;
 			}
@@ -139,8 +157,7 @@ namespace mainGame {
 
 			//見つかったら…
 			if (it != m_enemys.end()) {
-				//出現フラグを消す
-				m_isSpawn[enemy->GetNumber()] = false;
+				
 				//配列から削除
 				m_enemys.erase(it);
 				//敵の合計数を減らす
@@ -148,14 +165,11 @@ namespace mainGame {
 			}
 		}
 
-		void Generator::CreateEnemy(const EnEnemyType& type, const Vector3& pos)
+		bool Generator::CreateEnemy(const Vector3& pos)
 		{
-			//既に最大数まで出現している場合・引数が不正な値の場合は実行しない
-			if (
-				m_enemySum == MAX_ENEMY_NUM ||
-				type >= enEnemyTypeNum
-				) {
-				return;
+			//既に最大数まで出現している場合は実行しない
+			if (m_enemySum == MAX_ENEMY_NUM || m_isSpawn == true) {
+				return false;
 			}
 
 
@@ -195,7 +209,7 @@ namespace mainGame {
 
 			//敵の初期化情報を作成
 			EnemyInitData enemyInitData;
-			enemyInitData.enemyType = type;
+			enemyInitData.enemyType = enEnemyTypeNormal;
 			enemyInitData.enemyStartPos = pos;
 
 			//初期化情報で敵を初期化
@@ -204,6 +218,9 @@ namespace mainGame {
 			//敵の最大数に加算
 			m_enemySum++;
 
+			m_isSpawn = true;
+
+			return true;
 		}
 	}
 }

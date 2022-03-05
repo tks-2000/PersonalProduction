@@ -62,9 +62,9 @@ namespace render {
 	{
 		
 		m_lig.SetDirectionLightColor(0, { 1.0f, 1.0f, 1.0f });
-		m_lig.SetDirectionLightColor(1, { 1.0f, 0.0f, 0.0f });
-		m_lig.SetDirectionLightColor(2, { 0.0f, 1.0f, 0.0f });
-		m_lig.SetDirectionLightColor(3, { 0.0f, 0.0f, 1.0f });
+		m_lig.SetDirectionLightColor(1, { 1.0f, 1.0f, 1.0f });
+		m_lig.SetDirectionLightColor(2, { 1.0f, 1.0f, 1.0f });
+		m_lig.SetDirectionLightColor(3, { 1.0f, 1.0f, 1.0f });
 		Vector3 dir = { 0.0f,0.0f,-1.0f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(0,dir);
@@ -85,10 +85,10 @@ namespace render {
 		
 		m_lig.SetHemiSphereLifhtGroundColor({ 0.5f,0.2f,0.2f });
 		m_lig.SetHemiSphereLifhtSkyColor({ 0.2f,0.2f,0.5f });
-		m_lig.SetPointLighitPos(0, { 200.0f,200.0f,0.0f });
-		m_lig.SetPointLightColor(0, { 5.0f,5.0f,5.0f });
-		m_lig.SetPointLightRange(0, 1000.0f);
-		m_lig.SetPointLightBlinking(0, 0.5f);
+		//m_lig.SetPointLighitPos(0, { 200.0f,200.0f,0.0f });
+		//m_lig.SetPointLightColor(0, { 5.0f,5.0f,5.0f });
+		//m_lig.SetPointLightRange(0, 1000.0f);
+		//m_lig.SetPointLightBlinking(0, 0.5f);
 		std::vector<Vector3> colors;
 		colors.push_back({ 5.0f,0.0f,0.0f });
 		colors.push_back({ 5.0f,5.0f,0.0f });
@@ -96,13 +96,13 @@ namespace render {
 		colors.push_back({ 0.0f,5.0f,5.0f });
 		colors.push_back({ 0.0f,0.0f,5.0f });
 		colors.push_back({ 5.0f,0.0f,5.0f });
-		m_lig.SetPointLighitPos(1, { -200.0f,200.0f,0.0f });
-		m_lig.SetPointLightColor(1, { 5.0f,0.0f,0.0f });
-		m_lig.SetPointLightRange(1, 1000.0f);
-		m_lig.SetPointLightGradation(1, colors, 0.5f);
-		m_lig.SetSpotLightPos(0, { 0.0f, 400.0f, 300.0f });
-		m_lig.SetSpotLightTarget(0, { 0.0,0.0f,300.0f });
-		m_lig.SetSpotLightColor(0, { 0.0f,0.0f,15.0f });
+		//m_lig.SetPointLighitPos(1, { -200.0f,200.0f,0.0f });
+		//m_lig.SetPointLightColor(1, { 5.0f,0.0f,0.0f });
+		//m_lig.SetPointLightRange(1, 1000.0f);
+		//m_lig.SetPointLightGradation(1, colors, 0.5f);
+		//m_lig.SetSpotLightPos(0, { 0.0f, 400.0f, 300.0f });
+		//m_lig.SetSpotLightTarget(0, { 0.0,0.0f,300.0f });
+		//m_lig.SetSpotLightColor(0, { 0.0f,0.0f,15.0f });
 		/*m_lig->SetDirectionLightFlickering(
 			{ 0.3f,0.3f,0.3f },
 			{ 0.5f,0.5f,0.5f },
