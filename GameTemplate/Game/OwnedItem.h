@@ -26,6 +26,8 @@ namespace mainGame {
 			bool m_isInitd = false;
 			/// @brief アイテムスロットの下地の画像
 			render::sprite::SpriteRender* m_itemSlotBaseSprite = nullptr;
+
+			render::sprite::SpriteRender* m_itemSlotBaseFrame = nullptr;
 			/// @brief アイテムスロットの画像
 			render::sprite::SpriteRender* m_itemSlotSprite[3] = { nullptr };
 			/// @brief アイテムの画像

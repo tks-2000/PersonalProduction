@@ -27,6 +27,8 @@ namespace mainGame {
 
 			render::sprite::SpriteRender* m_timerBaseSprite = nullptr;
 
+			render::sprite::SpriteRender* m_timerBaseFrame = nullptr;
+
 			render::font::FontRender* m_timeFont = nullptr;
 
 			render::font::FontRender* m_timerNumFont = nullptr;

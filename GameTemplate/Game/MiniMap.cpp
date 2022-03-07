@@ -5,7 +5,7 @@ namespace mainGame {
 
 		const Vector3 MINI_MAP_CAMERA_POS = { 0.0f,2000.0f,0.0f };
 
-		const Vector3 MINI_MAP_POS = { 500.0f,150.0f,0.0f };
+		const Vector3 MINI_MAP_POS = { -500.0f,-220.0f,0.0f };
 
 		const float FRICTION = 20.0f;
 
@@ -25,6 +25,8 @@ namespace mainGame {
 			m_renderingEngine->DeleteExpansionModelsRenderTarget(MINI_MAP_RENDER_GROUP);
 			//マップ画像を削除
 			DeleteGO(m_miniMapSprite);
+			DeleteGO(m_miniMapBase);
+			DeleteGO(m_miniMapFrame);
 		}
 
 		void MiniMap::Init()
@@ -59,6 +61,13 @@ namespace mainGame {
 			);
 
 			m_renderingEngine->SetExpansionModlsRenderTarget(MINI_MAP_RENDER_GROUP, &m_miniMapRenderTarget);
+			m_miniMapBase = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+			m_miniMapBase->Init("Assets/Image/base_sprite_3.dds", 300, 520);
+			m_miniMapBase->SetPosition(MINI_MAP_POS);
+			m_miniMapBase->SetColor({ 1.0f,1.0f,1.0f,0.5f });
+			m_miniMapFrame = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+			m_miniMapFrame->Init("Assets/Image/base_sprite_4.dds", 290, 480);
+			m_miniMapFrame->SetPosition(MINI_MAP_POS);
 
 			//マップ画像を作成
 			m_miniMapSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
@@ -110,6 +119,8 @@ namespace mainGame {
 			//画像を更新
 			//m_miniMapSprite->SetRotation(m_spriteQrot);
 			m_miniMapSprite->Execute();
+			m_miniMapBase->Execute();
+			m_miniMapFrame->Execute();
 
 			m_miniMapPos = m_player->GetPlayerPosition();
 			m_miniMapCamera.SetTarget(m_player->GetPlayerPosition());

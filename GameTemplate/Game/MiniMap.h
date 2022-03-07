@@ -57,6 +57,8 @@ namespace mainGame {
 			std::vector<Model*> m_drawModels;
 			/// @brief マップ画像
 			render::sprite::SpriteRender* m_miniMapSprite = nullptr;
+			render::sprite::SpriteRender* m_miniMapBase = nullptr;
+			render::sprite::SpriteRender* m_miniMapFrame = nullptr;
 			/// @brief マップ画像の回転
 			Quaternion m_spriteQrot = g_quatIdentity;
 			/// @brief ゲームカメラ

@@ -6,9 +6,13 @@ namespace mainGame {
 
 		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 427.5f,-190.0f,0.0f };
 
-		const int ITEM_SLOT_BASE_SPRITE_WIDTH = 325;
+		const int ITEM_SLOT_BASE_FRAME_WIDTH = 600;
 
-		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 240;
+		const int ITEM_SLOT_BASE_FRAME_HEIGHT = 600;
+
+		const int ITEM_SLOT_BASE_SPRITE_WIDTH = 625;
+
+		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 640;
 
 		const Vector3 ITEM_SLOT_SPRITE_POS[3] = {
 			{ 327.5f,-250.0f,0.0f },
@@ -47,14 +51,19 @@ namespace mainGame {
 			
 			DeleteGO(m_selectSprite);
 			DeleteGO(m_itemSlotBaseSprite);
+			DeleteGO(m_itemSlotBaseFrame);
 		}
 
 		void OwnedItem::Init()
 		{
+			
 			m_itemSlotBaseSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
-			m_itemSlotBaseSprite->Init("Assets/modelData/bg/lace-wood.dds", ITEM_SLOT_BASE_SPRITE_WIDTH, ITEM_SLOT_BASE_SPRITE_HEIGHT);
+			m_itemSlotBaseSprite->Init("Assets/Image/base_sprite_3.dds", ITEM_SLOT_BASE_SPRITE_WIDTH, ITEM_SLOT_BASE_SPRITE_HEIGHT);
 			m_itemSlotBaseSprite->SetPosition(ITEM_SLOT_BASE_SPRITE_POS);
-			//m_itemSlotBaseSprite->SetColor(g_vec4Black);
+			m_itemSlotBaseSprite->SetColor({1.0f,1.0f,1.0f,0.5f});
+			m_itemSlotBaseFrame = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+			m_itemSlotBaseFrame->Init("Assets/Image/base_sprite_4.dds", ITEM_SLOT_BASE_FRAME_WIDTH, ITEM_SLOT_BASE_FRAME_HEIGHT);
+			m_itemSlotBaseFrame->SetPosition(ITEM_SLOT_BASE_SPRITE_POS);
 
 			m_selectSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 
@@ -88,6 +97,7 @@ namespace mainGame {
 				return;
 			}
 
+			m_itemSlotBaseFrame->Execute();
 			m_itemSlotBaseSprite->Execute();
 
 			for (int slotNum = 0; slotNum < 3; slotNum++) {

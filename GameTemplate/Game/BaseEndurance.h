@@ -29,6 +29,9 @@ namespace mainGame {
 			Vector4 m_enduranceSpriteColor = g_vec4White;
 			/// @brief ‘Ï‹v—Í‚Ì‰º’n‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceBaseSprite = nullptr;
+
+			/// @brief ‘Ï‹v—Í‚Ì
+			render::sprite::SpriteRender* m_enduranceBaseFrame = nullptr;
 			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceSprite = nullptr;
 			/// @brief ‘Ï‹v—Í‚Ì‰º‚Ì‰æ‘œ

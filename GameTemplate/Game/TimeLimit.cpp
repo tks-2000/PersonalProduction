@@ -4,15 +4,15 @@
 namespace mainGame {
 	namespace ui {
 
-		const Vector3 TIMER_BASE_SPRITE_POS = { 0.0f,255.0f,0.0f };
+		const Vector3 TIMER_BASE_SPRITE_POS = { -450.0f,190.0f,0.0f };
 
-		const int TIMER_BASE_SPRITE_WIDTH = 270;
+		const int TIMER_BASE_SPRITE_WIDTH = 300;
 
-		const int TIMER_BASE_SPRITE_HEIGHT = 70;
+		const int TIMER_BASE_SPRITE_HEIGHT = 500;
 
-		const Vector2 TIME_FONT_POS = { -110.0f,280.0f };
+		const Vector2 TIME_FONT_POS = { -560.0f,215.0f };
 
-		const Vector2 TIMER_NUM_FONT_POS = { 35.0f,280.0f };
+		const Vector2 TIMER_NUM_FONT_POS = { -415.0f,215.0f };
 
 		const int NUM_SPRITE_NUM = 3;
 
@@ -40,6 +40,7 @@ namespace mainGame {
 		TimeLimit::~TimeLimit()
 		{
 			DeleteGO(m_timerBaseSprite);
+			DeleteGO(m_timerBaseFrame);
 			DeleteGO(m_timeFont);
 			DeleteGO(m_timerNumFont);
 			for (int spriteNum = 0; spriteNum < NUM_SPRITE_NUM; spriteNum++) {
@@ -66,8 +67,12 @@ namespace mainGame {
 			m_go->SetColor(UI_SPRITE_START_COLOR);
 
 			m_timerBaseSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
-			m_timerBaseSprite->Init("Assets/modelData/bg/lace-wood.dds", TIMER_BASE_SPRITE_WIDTH, TIMER_BASE_SPRITE_HEIGHT);
+			m_timerBaseSprite->Init("Assets/Image/base_sprite_5.dds", TIMER_BASE_SPRITE_WIDTH, TIMER_BASE_SPRITE_HEIGHT);
 			m_timerBaseSprite->SetPosition(TIMER_BASE_SPRITE_POS);
+			m_timerBaseSprite->SetColor({ 1.0f,1.0f,1.0f,0.5f });
+			m_timerBaseFrame = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
+			m_timerBaseFrame->Init("Assets/Image/base_sprite_6.dds", TIMER_BASE_SPRITE_WIDTH, TIMER_BASE_SPRITE_HEIGHT);
+			m_timerBaseFrame->SetPosition(TIMER_BASE_SPRITE_POS);
 			//m_timerBaseSprite->SetColor(g_vec4Black);
 
 			m_timeFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
@@ -115,6 +120,7 @@ namespace mainGame {
 			m_go->Execute();
 			
 			m_timerBaseSprite->Execute();
+			m_timerBaseFrame->Execute();
 			m_timeFont->Execution();
 			m_timerNumFont->Execution();
 		}
