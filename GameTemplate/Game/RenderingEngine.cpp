@@ -249,8 +249,7 @@ namespace render {
 			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 		);
 		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
-		m_finalSprite.ColorUpdate({ 0.5f,0.5f,0.5f,1.0f });
-		m_finalSprite.Update(g_vec3Zero, Quaternion::Identity, g_vec3One);
+
 		m_finalSprite.Draw(rc);
 	}
 

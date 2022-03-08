@@ -491,6 +491,9 @@
     <ClCompile Include="EnemySpawnPoint.cpp">
       <Filter>inGame\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="SceneTransition.cpp">
+      <Filter>inGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -909,6 +912,9 @@
     </ClInclude>
     <ClInclude Include="EnemySpawnPoint.h">
       <Filter>inGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTransition.h">
+      <Filter>inGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

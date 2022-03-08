@@ -3,6 +3,10 @@
 
 namespace mainGame {
 
+	const float FEADIN_RATE = 1.0f;
+
+	const float FEADOUT_RATE = 1.0f;
+
 	GameScene::GameScene()
 	{
 		
@@ -78,6 +82,10 @@ namespace mainGame {
 
 		m_game = FindGO<Game>(GAME_NAME);
 
+		m_sceneTransition = FindGO<SceneTransition>(SCENE_TRANSITION_NAME);
+
+		m_sceneTransition->SetFeadIn(FEADIN_RATE);
+
 		m_isInitd = true;
 		
 	}
@@ -136,10 +144,16 @@ namespace mainGame {
 
 		if (m_gameSceneState == enGameSceneClear || m_gameSceneState == enGameSceneOver) {
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
-				GameSceneEnd();
+				m_endFlag = true;
+				m_sceneTransition->SetFeadOut(FEADOUT_RATE);
 			}
 		}
 
+		if (m_endFlag == true) {
+			if (m_sceneTransition->IsFeadOut() == false) {
+				GameSceneEnd();
+			}
+		}
 	}
 
 	void GameScene::CreateGameScene()

@@ -6,6 +6,7 @@ namespace mainGame {
 	Game::Game()
 	{
 		m_soundPlayer = NewGO<sound::SoundPlayer>(PRIORITY_VERYLOW, sound::SOUND_PLAYER_NAME);	
+		m_sceneTransition = NewGO<SceneTransition>(PRIORITY_VERYLOW, SCENE_TRANSITION_NAME);
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 	}
 
@@ -21,8 +22,10 @@ namespace mainGame {
 
 	bool Game::Start()
 	{
+		m_sceneTransition->Init();
 
 		TitleSceneStart();
+		
 		m_isInitd = true;
 		return true;
 	}
@@ -42,7 +45,8 @@ namespace mainGame {
 		if (m_state == enGameInProgress) {
 			m_gameScene->Execution();
 		}
-		
+
+		m_sceneTransition->Execution();
 	}
 
 	void Game::TitleSceneStart()

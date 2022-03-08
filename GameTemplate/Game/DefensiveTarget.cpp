@@ -70,6 +70,9 @@ namespace mainGame {
 
 			//”j‰ó‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«c
 			if (m_isBreak == false) {
+				if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonSelect)) {
+					m_defensiveTargetHp = 0;
+				}
 
 				//Šg‘å—¦‚ðÝ’è
 				m_defensiveTargetModel->SetScale(m_scale);

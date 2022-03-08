@@ -17,6 +17,10 @@ namespace mainGame {
 
 		const float TITLE_BGM_VOLUME = 0.1f;
 
+		const float FEADIN_RATE = 0.3f;
+
+		const float FEADOUT_RATE = 1.0f;
+
 		Title::Title()
 		{
 
@@ -55,6 +59,10 @@ namespace mainGame {
 
 			m_soundPlayer->PlayBGM(m_titleSoundID, true);
 
+			m_sceneTransition = FindGO<SceneTransition>(SCENE_TRANSITION_NAME);
+
+			m_sceneTransition->SetFeadIn(FEADIN_RATE);
+
 			m_isInitd = true;
 		}
 
@@ -65,8 +73,15 @@ namespace mainGame {
 			}
 
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
-				m_game->GameSceneStart();
-				m_game->DeleteTitleScene();
+				m_endFlag = true;
+				m_sceneTransition->SetFeadOut(FEADOUT_RATE);
+			}
+
+			if (m_endFlag == true) {
+				if (m_sceneTransition->IsFeadOut() == false) {
+					m_game->GameSceneStart();
+					m_game->DeleteTitleScene();
+				}
 			}
 
 			//m_titleSprite->Execute();

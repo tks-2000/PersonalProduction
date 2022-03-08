@@ -29,6 +29,10 @@ namespace mainGame {
 			int m_titleSoundID = 0;
 
 			sound::SoundPlayer* m_soundPlayer = nullptr;
+
+			bool m_endFlag = false;
+
+			SceneTransition* m_sceneTransition = nullptr;
 		};
 	}
 }

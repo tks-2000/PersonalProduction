@@ -1,5 +1,6 @@
 #pragma once
 
+
 class SkinModelRender;
 class SpriteRender;
 class Effect;
@@ -49,6 +50,8 @@ namespace mainGame {
 	class GameScene;
 
 	class GameCamera;
+
+	class SceneTransition;
 
 	/// @brief ƒQ[ƒ€‚Ìó‘Ô‚ğ•\‚·—ñ‹“Œ^
 	enum EnGameState {
@@ -105,6 +108,8 @@ namespace mainGame {
 		sound::SoundPlayer* m_soundPlayer = nullptr;
 
 		render::RenderingEngine* m_renderingEngine = nullptr;
+
+		SceneTransition* m_sceneTransition = nullptr;
 	};
 
 }

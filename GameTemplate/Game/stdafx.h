@@ -23,6 +23,7 @@
 #include "Path.h"
 #include "PathFinding.h"
 #include "Game.h"
+#include "SceneTransition.h"
 #include "Title.h"
 #include "GameScene.h"
 #include "GameCamera.h"
@@ -58,6 +59,7 @@ namespace mainGame {
 	static const char* GAME_NAME = "Game";
 	static const char* GAME_SCENE_NAME = "GameScene";
 	static const char* GAME_CAMERA_NAME = "GameCamera";
+	static const char* SCENE_TRANSITION_NAME = "SceneTransition";
 
 	namespace title{
 		static const char* TITLE_NAME = "Title";

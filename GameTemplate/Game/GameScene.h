@@ -99,5 +99,9 @@ namespace mainGame {
 		render::sprite::SpriteRender* m_sampleSprite = nullptr;
 
 		Game* m_game = nullptr;
+
+		SceneTransition* m_sceneTransition = nullptr;
+
+		bool m_endFlag = false;
 	};
 }
