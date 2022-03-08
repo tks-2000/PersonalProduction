@@ -89,6 +89,8 @@ namespace render {
 
 		shadow::Shadow* GetShadow() { return &m_shadow; }
 
+		void SetFinalSpriteColor(const Vector4& color) { m_finalSprite.ColorUpdate(color); }
+
 	private:
 		/// @brief ライトの更新
 		void LightUpdate();
@@ -96,6 +98,10 @@ namespace render {
 		void DrawExpansionModel(int modelGroupNum,RenderContext& rc);
 
 		DeferredRender m_deferredRender;
+
+		RenderTarget m_deferredRenderTarget;
+
+		Sprite m_deferredSprite;
 		
 		/// @brief ライティング
 		light::Lighting m_lig;

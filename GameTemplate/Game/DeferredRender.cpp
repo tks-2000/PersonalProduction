@@ -3,7 +3,7 @@
 
 namespace render {
 
-	const int RENDER_TARGET_NUM = 6;
+	
 
 	const char* NORMAL_LIGHTING_FILEPATH = "Assets/shader/deferredLighting.fx";
 
@@ -86,23 +86,6 @@ namespace render {
 			DXGI_FORMAT_UNKNOWN
 		);
 
-		m_effectRenderTarget.Create(
-			FRAME_BUFFER_W,
-			FRAME_BUFFER_H,
-			1,
-			1,
-			DXGI_FORMAT_R32G32B32A32_FLOAT,
-			DXGI_FORMAT_D32_FLOAT
-		);
-
-		SpriteInitData effectSpriteInitData;
-		effectSpriteInitData.m_textures[0] = &m_effectRenderTarget.GetRenderTargetTexture();
-		effectSpriteInitData.m_width = FRAME_BUFFER_W;
-		effectSpriteInitData.m_height = FRAME_BUFFER_H;
-		effectSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
-		effectSpriteInitData.m_alphaBlendMode = AlphaBlendMode_Add;
-
-		m_effectSprite.Init(effectSpriteInitData);
 
 		
 		m_defferdLightSpriteInitData.m_width = FRAME_BUFFER_W;
@@ -127,7 +110,13 @@ namespace render {
 		m_defferdLightSpriteInitData.m_expandConstantBufferSize[1] = sizeof(m_renderingEngine->GetShadow()->GetLightCameraMatrix());
 		m_defferdLightSprite.Init(m_defferdLightSpriteInitData);
 	
-
+		m_rts[0] = &m_albedRT;
+		m_rts[1] = &m_normalRT;
+		m_rts[2] = &m_metallicAndSmoothRT;
+		m_rts[3] = &m_worldPosRT;
+		m_rts[4] = &m_normalInViewRT;
+		m_rts[5] = &m_lvpRT;
+		
 		m_isInitd = true;
 	}
 
@@ -137,45 +126,23 @@ namespace render {
 			return;
 		}
 
-		RenderTarget* rts[RENDER_TARGET_NUM] = {
-			&m_albedRT,
-			&m_normalRT,
-			&m_metallicAndSmoothRT,
-			&m_worldPosRT,
-			&m_normalInViewRT,
-			&m_lvpRT
-		};
+		
 
-		rc.WaitUntilToPossibleSetRenderTargets(RENDER_TARGET_NUM, rts);
-		rc.SetRenderTargetsAndViewport(RENDER_TARGET_NUM, rts);
-		rc.ClearRenderTargetViews(RENDER_TARGET_NUM, rts);
+		rc.WaitUntilToPossibleSetRenderTargets(RENDER_TARGET_NUM, m_rts);
+		rc.SetRenderTargetsAndViewport(RENDER_TARGET_NUM, m_rts);
+		rc.ClearRenderTargetViews(RENDER_TARGET_NUM, m_rts);
 		for (int modelNum = 0; modelNum < m_deferredModels.size(); modelNum++)
 		{
 			m_deferredModels[modelNum]->Draw(rc);
 		}
 
-		
 
-		rc.WaitUntilFinishDrawingToRenderTargets(RENDER_TARGET_NUM, rts);
-		/*EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-		EffectEngine::GetInstance()->Draw();*/
-
-		rc.WaitUntilToPossibleSetRenderTarget(m_effectRenderTarget);
-		rc.SetRenderTargetAndViewport(m_effectRenderTarget);
-		rc.ClearRenderTargetView(m_effectRenderTarget);
-
-		EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-		EffectEngine::GetInstance()->Draw();
-
-		rc.WaitUntilFinishDrawingToRenderTarget(m_effectRenderTarget);
-
-		
+		rc.WaitUntilFinishDrawingToRenderTargets(RENDER_TARGET_NUM, m_rts);
 	}
 
 	void DeferredRender::Draw(RenderContext& rc)
 	{
 		m_defferdLightSprite.Draw(rc);
-		m_effectSprite.Draw(rc);
 	}
 
 	void DeferredRender::SetDrawModel(Model* model)

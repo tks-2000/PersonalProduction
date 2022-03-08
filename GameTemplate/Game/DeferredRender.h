@@ -1,6 +1,8 @@
 #pragma once
 namespace render {
 
+	static const int RENDER_TARGET_NUM = 6;
+
 	class RenderingEngine;
 
 	/// @brief ディファードレンダリングを行うクラス
@@ -15,12 +17,15 @@ namespace render {
 		void Draw(RenderContext& rc);
 		void SetDrawModel(Model* model);
 		void DeleteDrawModel(Model* model);
+		D3D12_CPU_DESCRIPTOR_HANDLE GetGbufferDSV() { return m_rts[0]->GetDSVCpuDescriptorHandle(); }
 		
 	private:
 
 		bool m_isInitd = false;
 
 		bool m_isPBR = false;
+
+		RenderTarget* m_rts[RENDER_TARGET_NUM] = { nullptr };
 
 		RenderTarget m_albedRT;
 		RenderTarget m_normalRT;
@@ -31,8 +36,7 @@ namespace render {
 		RenderTarget m_lvpRT;
 
 
-		RenderTarget m_effectRenderTarget;
-		Sprite m_effectSprite;
+		
 
 		/// @brief ディファードレンダリングを行うモデルの配列
 		std::vector<Model*> m_deferredModels;

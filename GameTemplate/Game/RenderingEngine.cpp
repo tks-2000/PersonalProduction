@@ -8,6 +8,21 @@ namespace render {
 		//m_shadow = NewGO<shadow::Shadow>(0, shadow::SHADOW_NAME);
 		m_postEffect = NewGO<postEffect::PostEffect>(0, postEffect::POST_EFFECT_NAME);
 
+		m_deferredRenderTarget.Create(
+			FRAME_BUFFER_W,
+			FRAME_BUFFER_H,
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
+		SpriteInitData deferrdSpriteInitData;
+		deferrdSpriteInitData.m_textures[0] = &m_deferredRenderTarget.GetRenderTargetTexture();
+		deferrdSpriteInitData.m_width = FRAME_BUFFER_W;
+		deferrdSpriteInitData.m_height = FRAME_BUFFER_H;
+		deferrdSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+		m_deferredSprite.Init(deferrdSpriteInitData);
+
 		//メインレンダリングターゲットを作成
 		m_mainRenderTarget.Create(
 			1280,
@@ -26,8 +41,6 @@ namespace render {
 
 		m_mainRenderTargetSprite.Init(m_mainRenderTargetSpriteInitData);
 
-		
-
 		m_finalRenderTarget.Create(
 			1280,
 			720,
@@ -40,7 +53,8 @@ namespace render {
 		m_finalSpriteInitData.m_textures[0] = &m_finalRenderTarget.GetRenderTargetTexture();
 		m_finalSpriteInitData.m_width = 1280;
 		m_finalSpriteInitData.m_height = 720;
-		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/spriteDepth.fx";
+		m_finalSpriteInitData.m_alphaBlendMode = AlphaBlendMode_None;
+		m_finalSpriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
 
 		m_finalSprite.Init(m_finalSpriteInitData);
 		m_lig.Init();
@@ -118,7 +132,7 @@ namespace render {
 		//m_postEffect->SetBlur(&m_mainRenderTarget);
 
 		//ブルームをかける
-		//m_postEffect->SetBloom(&m_mainRenderTarget);
+		m_postEffect->SetBloom(&m_mainRenderTarget);
 
 		return true;
 	}
@@ -141,30 +155,38 @@ namespace render {
 
 		m_deferredRender.Execute(rc);
 
+		rc.WaitUntilToPossibleSetRenderTarget(m_deferredRenderTarget);
+		rc.SetRenderTargetAndViewport(m_deferredRenderTarget);
+		rc.ClearRenderTargetView(m_deferredRenderTarget);
+
+		m_deferredRender.Draw(rc);
+		
+		rc.WaitUntilFinishDrawingToRenderTarget(m_deferredRenderTarget);
+
 		
 
 		//メインレンダリングターゲットを使用可能になるまで待つ
 		rc.WaitUntilToPossibleSetRenderTarget(m_mainRenderTarget);
-		rc.SetRenderTargetAndViewport(m_mainRenderTarget);
+		rc.SetRenderTarget(m_mainRenderTarget.GetRTVCpuDescriptorHandle(),m_deferredRender.GetGbufferDSV());
 		rc.ClearRenderTargetView(m_mainRenderTarget);
 
-		
+		m_deferredSprite.Draw(rc);
 
-		m_deferredRender.Draw(rc);
-		
-
-		if (m_effectFlag == true) {
-			/*EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
-			EffectEngine::GetInstance()->Draw();*/
-		}
 
 		//描画するモデルを全て描画する
 		for (int modelNum = 0; modelNum < m_drawModels.size(); modelNum++) {
 			m_drawModels[modelNum]->Draw(rc);
 		}
+	
+		if (m_effectFlag == true) {
 
-		
 
+
+			EffectEngine::GetInstance()->Update(g_gameTime->GetFrameDeltaTime());
+			EffectEngine::GetInstance()->Draw();
+
+
+		}
 		//メインレンダリングターゲットへ書き込み終了
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderTarget);
 
@@ -175,12 +197,7 @@ namespace render {
 		//ポストエフェクトを実行
 		m_postEffect->Execute(rc);
 
-		// レンダリングターゲットをフレームバッファに戻す
-		rc.SetRenderTarget(
-			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
-			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
-		);
-		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+		
 
 		for (int groupNum = 0; groupNum < EXPANSION_MODEL_GROUP_NUM; groupNum++) {
 			if (m_expansionDrawModels[groupNum].size() > 0 &&
@@ -193,9 +210,9 @@ namespace render {
 		}
 
 
-		/*rc.WaitUntilToPossibleSetRenderTarget(m_finalRenderTarget);
+		rc.WaitUntilToPossibleSetRenderTarget(m_finalRenderTarget);
 		rc.SetRenderTargetAndViewport(m_finalRenderTarget);
-		rc.ClearRenderTargetView(m_finalRenderTarget);*/
+		rc.ClearRenderTargetView(m_finalRenderTarget);
 
 		//メインレンダリングターゲットのコピーのスプライトを表示する
 		m_mainRenderTargetSprite.Draw(rc);
@@ -224,7 +241,17 @@ namespace render {
 
 		}
 
+		rc.WaitUntilFinishDrawingToRenderTarget(m_finalRenderTarget);
 
+		// レンダリングターゲットをフレームバッファに戻す
+		rc.SetRenderTarget(
+			g_graphicsEngine->GetCurrentFrameBuffuerRTV(),
+			g_graphicsEngine->GetCurrentFrameBuffuerDSV()
+		);
+		rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+		m_finalSprite.ColorUpdate({ 0.5f,0.5f,0.5f,1.0f });
+		m_finalSprite.Update(g_vec3Zero, Quaternion::Identity, g_vec3One);
+		m_finalSprite.Draw(rc);
 	}
 
 	void RenderingEngine::LightUpdate()
