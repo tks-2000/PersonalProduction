@@ -128,8 +128,15 @@ namespace mainGame {
 			//ダメージを受ける
 			m_hp -= damage;
 
+			if (m_state == enEnemyMove || m_state == enEnemyAttack) {
+				m_targetAttackPoint->OutTargeted();
+			}
+
+
 			m_state = enEnemyDamage;
 			//m_enemyRotation.StartSeeTheSituation();
+
+
 
 			m_isDamage = true;
 		}
@@ -141,6 +148,12 @@ namespace mainGame {
 			m_player->DeleteEnemyData(this);
 			//自身を削除
 			DeleteGO(this);
+		}
+
+		void Enemy::SearchAttackPointAndTarget()
+		{
+			m_targetAttackPoint = m_defensiveTarget->GetNearestAttackPoint(m_position);
+			m_moveTarget = m_targetAttackPoint->GetPostion();
 		}
 
 		void Enemy::InitData(const EnemyInitData& initData)

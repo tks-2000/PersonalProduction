@@ -494,6 +494,9 @@
     <ClCompile Include="SceneTransition.cpp">
       <Filter>inGame</Filter>
     </ClCompile>
+    <ClCompile Include="AttackPoint.cpp">
+      <Filter>inGame\DefensiveTarget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\system.h">
@@ -915,6 +918,9 @@
     </ClInclude>
     <ClInclude Include="SceneTransition.h">
       <Filter>inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackPoint.h">
+      <Filter>inGame\DefensiveTarget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

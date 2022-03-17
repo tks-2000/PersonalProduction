@@ -188,7 +188,8 @@ namespace mainGame {
 				m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
 			}break;
 			default: {
-				m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
+				m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
+				//m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
 			}break;
 			}
 

@@ -37,6 +37,8 @@ namespace mainGame {
 			//íœŽžŠÔ
 			m_deleteTime = WALKER_DELETE_TIME;
 
+			
+
 			//ƒƒ“ƒoƒNƒ‰ƒX‚ð‰Šú‰»
 			//m_enemyMove.Init(this);
 			m_enemyRouteMove.Init(this);
@@ -52,7 +54,7 @@ namespace mainGame {
 			m_animation = m_enemyAnimation.GetAnimationClip();
 			m_animationNum = m_enemyAnimation.GetAnimationNum();
 			m_mapModelFilepath = WALKER_MAP_MODEL_FILEPATH;
-			m_moveTarget = m_defensiveTarget->GetPosition();
+			
 			
 		}
 

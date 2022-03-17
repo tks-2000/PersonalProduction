@@ -43,6 +43,8 @@ namespace mainGame {
 			//削除時間
 			m_deleteTime = CHASER_DELETE_TIME;
 
+			SearchAttackPointAndTarget();
+
 			//メンバクラスを初期化
 			//m_enemyMove.Init(this);
 			m_enemyRouteMove.Init(this);
@@ -60,7 +62,7 @@ namespace mainGame {
 			m_animationNum = m_enemyAnimation.GetAnimationNum();
 			m_mapModelFilepath = CHASER_MAP_MODEL_FILEPATH;
 
-			m_moveTarget = m_defensiveTarget->GetPosition();
+			
 
 			
 		}
@@ -92,7 +94,8 @@ namespace mainGame {
 					m_moveTarget = m_player->GetPlayerPosition();
 				}
 				else {
-					m_moveTarget = m_defensiveTarget->GetPosition();
+					m_moveTarget = m_targetAttackPoint->GetPostion();
+					
 				}
 
 				//プレイヤーを探す
@@ -177,7 +180,6 @@ namespace mainGame {
 
 						//移動目標をプレイヤーに設定
 						m_moveTarget = m_player->GetPlayerPosition();
-						m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 					}
 				}
 				//内積の結果が探す範囲外のとき…
@@ -207,7 +209,8 @@ namespace mainGame {
 				//その場で様子を見る
 				m_enemyRotation.StartSeeTheSituation();
 				m_state = enEnemySeeTheSituation;
-				m_moveTarget = m_defensiveTarget->GetPosition();
+				m_targetAttackPoint = m_defensiveTarget->GetNearestAttackPoint(m_position);
+				m_moveTarget = m_targetAttackPoint->GetPostion();
 				m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 			}
 		}

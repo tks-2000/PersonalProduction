@@ -201,7 +201,7 @@ PS_BlurInput VSYBlur(VSInput In)
 float4 PSBlur(PS_BlurInput In) : SV_Target0
 {
     // step-15 X,Yブラー用のピクセルシェーダーを実装
-    float4 Color;
+    float4 Color = 0.0f;
 
     // 基準テクセルからプラス方向に8テクセル、重み付きでサンプリング
     Color  = weight[0].x * sceneTexture.Sample(Sampler, In.tex0.xy);

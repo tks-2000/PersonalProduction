@@ -291,6 +291,7 @@
     <ClCompile Include="..\..\MiniEngine\tkFile\TkmFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\tkFile\TksFile.cpp" />
     <ClCompile Include="..\..\MiniEngine\VertexBuffer.cpp" />
+    <ClCompile Include="AttackPoint.cpp" />
     <ClCompile Include="DeferredRender.cpp" />
     <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="EffectRender.cpp" />
@@ -438,6 +439,7 @@
     <ClInclude Include="..\..\MiniEngine\tkFile\TkmFile.h" />
     <ClInclude Include="..\..\MiniEngine\tkFile\TksFile.h" />
     <ClInclude Include="..\..\MiniEngine\VertexBuffer.h" />
+    <ClInclude Include="AttackPoint.h" />
     <ClInclude Include="DeferredRender.h" />
     <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="EffectRender.h" />

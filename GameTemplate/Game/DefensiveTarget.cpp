@@ -1,23 +1,33 @@
 #include "stdafx.h"
 #include "DefensiveTarget.h"
 
-namespace {
-	/// @brief –h‰q‘ÎÛ‚Ìƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹ƒpƒX
-	const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/bg/house.tkm";
-
-	const char* MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/boxMapModel.tkm";
-	/// @brief –h‰q‘ÎÛ‚ÌÀ•W
-	const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
-	/// @brief –h‰q‘ÎÛ‚ÌÅ‘å‘Ï‹v—Í
-	const int MAX_HP = 100;
-
-	const float HP_DECREACE_VEROCITY = 10.0f;
-
-	const float DAMAGE_STOP_AMOUNT = 0.01f;
-}
-
 namespace mainGame {
 	namespace defensiveTarget {
+
+		/// @brief –h‰q‘ÎÛ‚Ìƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹ƒpƒX
+		const  char* DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/bg/house.tkm";
+
+		const char* MINI_MAP_DEFENSIVE_TARGET_MODEL_TKM_FILEPATH = "Assets/modelData/box/boxMapModel.tkm";
+		/// @brief –h‰q‘ÎÛ‚ÌÀ•W
+		const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
+		/// @brief –h‰q‘ÎÛ‚ÌÅ‘å‘Ï‹v—Í
+		const int MAX_HP = 10000;
+
+		const float HP_DECREACE_VEROCITY = 10.0f;
+
+		const float DAMAGE_STOP_AMOUNT = 0.01f;
+
+		const Vector3 ATTACKPOINT_POSTION[ATTACKPOINT_NUM] = {
+			{250.0f,0.0f,0.0f},
+			{-250.0f,0.0f,0.0f},
+			{0.0f,0.0f,250.0f},
+			{0.0f,0.0f,-250.0f},
+			{250.0f,0.0f,250.0f},
+			{250.0f,0.0f,-250.0f},
+			{-250.0f,0.0f,250.0f},
+			{-250.0f,0.0f,-250.0f}
+		};
+
 		DefensiveTarget::DefensiveTarget()
 		{
 			//–¢‰Šú‰»‚ÅŠJn
@@ -56,6 +66,12 @@ namespace mainGame {
 			//ƒ‚ƒfƒ‹‚Ìî•ñ‚©‚ç“–‚½‚è”»’è‚ğì¬
 			m_staticDefensiveTargetObject.CreateFromModel(m_defensiveTargetModel->GetModel(),m_defensiveTargetModel->GetModelWorldMatrix());
 
+
+			for (int num = 0; num < m_attackPoints.size(); num++) {
+				m_attackPoints[num].Init(this);
+				m_attackPoints[num].SetPositon(ATTACKPOINT_POSTION[num]);
+			}
+
 			m_isInitd = true;
 			m_isBreak = false;
 		}
@@ -70,6 +86,9 @@ namespace mainGame {
 
 			//”j‰ó‚³‚ê‚Ä‚¢‚È‚¢‚Æ‚«c
 			if (m_isBreak == false) {
+				for (int num = 0; num < m_attackPoints.size(); num++) {
+					m_attackPoints[num].Execution();
+				}
 				if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonSelect)) {
 					m_defensiveTargetHp = 0;
 				}
@@ -114,6 +133,53 @@ namespace mainGame {
 
 			//ƒ_ƒ[ƒW‚ğó‚¯‚Ä‚¢‚éó‘Ô‚É•ÏX
 			m_isDamage = true;
+		}
+
+		AttackPoint* DefensiveTarget::GetNearestAttackPoint(const Vector3& pos)
+		{
+
+			bool targetdFlag[ATTACKPOINT_NUM] = { false };
+
+			for (int atpNum = 0; atpNum < m_attackPoints.size(); atpNum++) {
+				if (m_attackPoints[atpNum].GetTargetedNum() > 2) {
+					targetdFlag[atpNum] = false;
+				}
+				else {
+					targetdFlag[atpNum] = true;
+				}
+				
+			}
+
+			int nearestNum = ATTACKPOINT_NUM;
+
+			for (int atpNum = 0; atpNum < m_attackPoints.size(); atpNum++) {
+				if (targetdFlag[atpNum] == false) {
+					continue;
+				}
+				else {
+					nearestNum = atpNum;
+					break;
+				}
+			}
+
+			if (nearestNum == ATTACKPOINT_NUM) {
+				return &m_attackPoints[0];
+			}
+
+			for (int targetNum = 0; targetNum < m_attackPoints.size(); targetNum++) {
+				if (targetdFlag[targetNum] == false) {
+					continue;
+				}
+				Vector3 toTarget = m_attackPoints[targetNum].GetPostion() - pos;
+				Vector3 toNearest = m_attackPoints[nearestNum].GetPostion() - pos;
+
+				if (toTarget.Length() < toNearest.Length()) {
+					nearestNum = targetNum;
+				}
+
+			}
+			m_attackPoints[nearestNum].SetTargeted();
+			return &m_attackPoints[nearestNum];
 		}
 
 		void DefensiveTarget::ApplyDamage()

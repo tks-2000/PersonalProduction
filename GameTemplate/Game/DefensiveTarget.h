@@ -1,9 +1,12 @@
 #pragma once
+#include "AttackPoint.h"
 class SkinModelRender;
 
 namespace mainGame {
 
 	namespace defensiveTarget {
+		static const int ATTACKPOINT_NUM = 8;
+
 		/// @brief 防衛対象の機能をまとめたクラス
 		class DefensiveTarget : public IGameObject
 		{
@@ -38,6 +41,8 @@ namespace mainGame {
 			/// @brief 防衛対象がダメージを受けたか？
 			/// @return trueで受けている falseで受けていない
 			bool IsDamage() { return m_isDamage; }
+
+			AttackPoint* GetNearestAttackPoint(const Vector3& pos);
 		private:
 
 			/// @brief ダメージを受ける
@@ -67,6 +72,8 @@ namespace mainGame {
 			render::model::SkinModelRender* m_defensiveTargetModel = nullptr;
 
 			render::model::SkinModelRender* m_miniMapdefensiveTargetModel = nullptr;
+
+			std::array<AttackPoint, ATTACKPOINT_NUM> m_attackPoints;
 
 			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticDefensiveTargetObject;

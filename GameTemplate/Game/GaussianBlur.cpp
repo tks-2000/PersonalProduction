@@ -92,13 +92,13 @@ namespace render {
 
 			SpriteInitData yBlurSpriteInitData;
 			yBlurSpriteInitData.m_fxFilePath = "Assets/shader/gaussianBlur.fx";
-			yBlurSpriteInitData.m_vsEntryPointFunc = "VSXBlur";
+			yBlurSpriteInitData.m_vsEntryPointFunc = "VSYBlur";
 			yBlurSpriteInitData.m_psEntryPoinFunc = "PSBlur";
 
 			yBlurSpriteInitData.m_width = m_yBlurRenderTarget.GetWidth();
 			yBlurSpriteInitData.m_height = m_yBlurRenderTarget.GetHeight();
 
-			yBlurSpriteInitData.m_textures[0] = m_originalTexture;
+			yBlurSpriteInitData.m_textures[0] = &m_xBlurRenderTarget.GetRenderTargetTexture();
 
 			yBlurSpriteInitData.m_expandConstantBuffer[0] = &m_weights;
 			yBlurSpriteInitData.m_expandConstantBufferSize[0] = sizeof(m_weights);

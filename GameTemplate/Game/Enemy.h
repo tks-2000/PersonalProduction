@@ -17,6 +17,7 @@ namespace mainGame {
 
 	namespace defensiveTarget {
 		class DefensiveTarget;
+		class AttackPoint;
 	}
 
 	namespace enemy {
@@ -120,6 +121,8 @@ namespace mainGame {
 			/// @brief íœ
 			void DeleteEnemy();
 
+			void SearchAttackPointAndTarget();
+
 		protected:
 
 			/// @brief ŒÂ•Ê‚Ìî•ñ‚ğ‰Šú‰»
@@ -203,6 +206,8 @@ namespace mainGame {
 			GameScene* m_gameScene = nullptr;
 
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
+
+			defensiveTarget::AttackPoint* m_targetAttackPoint = nullptr;
 		};
 	}
 }

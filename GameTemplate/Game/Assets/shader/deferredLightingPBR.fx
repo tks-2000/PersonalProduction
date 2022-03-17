@@ -693,8 +693,18 @@ float3 CalculateSpotLight(
 	//入射光と射出方向の角度を求める。
 	//dot()を利用して内積を求める。
 	float sAngle = dot(ligDir,spLig.direction);
-	//dot()で求めた値をacosに渡して角度を求める。
-	sAngle = acos(sAngle);
+
+	if(-1.0f < sAngle && sAngle < 1.0f){
+		//dot()で求めた値をacosに渡して角度を求める。
+		sAngle = acos(sAngle);
+	}
+	else if(sAngle > 0.9f){
+		sAngle = 0.0f;
+	}
+	else{
+		sAngle = acos(-1.0f);
+	}
+	
 
 	//角度による影響率を求める。
 	//角度に比例して小さくなっていく影響率を計算する。

@@ -16,9 +16,9 @@ namespace mainGame {
 
 		const float GRAVITY = 100.0f;
 
-		const float ROUTE_MOVE_STOP_DISTANCE = 400.0f;
+		const float ROUTE_MOVE_STOP_DISTANCE = 300.0f;
 
-		const float MOVE_STOP_DISTANCE = 200.0f;
+		const float MOVE_STOP_DISTANCE = 100.0f;
 
 		const float MOVE_STOP_ANGLE_MATCH_RATE = 0.0f;
 
@@ -45,7 +45,7 @@ namespace mainGame {
 
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 
-			m_moveTarget = m_defensiveTarget->GetPosition();
+			m_moveTarget = m_enemy->GetMoveTarget();
 
 			m_searchMoveFlag = true;
 
@@ -78,6 +78,8 @@ namespace mainGame {
 			if (m_isInitd == false) {
 				return;
 			}
+
+			m_moveTarget = m_enemy->GetMoveTarget();
 
 			switch (m_enemy->GetState())
 			{
@@ -113,6 +115,8 @@ namespace mainGame {
 			m_moveStartTimer += g_gameTime->GetFrameDeltaTime();
 
 			if (m_moveStartTimer > ENEMY_MOVE_START_TIME) {
+				m_enemy->SearchAttackPointAndTarget();
+				m_moveTarget = m_enemy->GetMoveTarget();
 				RouteSearch();
 				m_moveStartTimer = 0.0f;
 				m_enemy->SetState(enEnemyMove);

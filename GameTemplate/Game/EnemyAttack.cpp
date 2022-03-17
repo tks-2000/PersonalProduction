@@ -12,7 +12,7 @@ namespace {
 	/// @brief UŒ‚ŠÔŠu
 	const float ATTACK_INTERVAL = 1.0f;
 	/// @brief UŒ‚”ÍˆÍ
-	const float ATTACK_RANGE = 200.0f;
+	const float ATTACK_RANGE = 150.0f;
 }
 
 namespace mainGame {
@@ -73,7 +73,7 @@ namespace mainGame {
 				return;
 			}
 
-			Vector3 toDefensiveTargetPos = m_defensiveTarget->GetPosition() - m_enemy->GetPosition();
+			Vector3 toDefensiveTargetPos = m_enemy->GetMoveTarget() - m_enemy->GetPosition();
 
 			if (toDefensiveTargetPos.Length() > ATTACK_RANGE) {
 				m_enemy->SetState(enEnemyMove);

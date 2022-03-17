@@ -13,7 +13,7 @@ namespace mainGame {
 
 		SpawnPoint::~SpawnPoint()
 		{
-
+			DeleteGO(m_model);
 		}
 
 		void SpawnPoint::Init(Generator* generator, const Vector3& pos)
