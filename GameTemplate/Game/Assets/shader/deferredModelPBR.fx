@@ -28,11 +28,11 @@ struct SPSIn{
 	float4 pos 			: SV_POSITION;	//スクリーン空間でのピクセルの座標。
 	float3 normal		: NORMAL;		//法線
 	float2 uv 			: TEXCOORD0;	//uv座標。
-	float4 metallicAndSmooth : TEXCOORD1;
-	float3 worldPos 	: TEXCOORD2;
-	float3 normalInView : TEXCOORD3;	//カメラ空間の法線
-	float4 posInLVP		: TEXCOORD4;	//ライトビュースクリーン空間でのピクセルの座標
-	float distToEye : TEXCOORD5;
+	//float4 metallicAndSmooth : TEXCOORD1;
+	float3 worldPos 	: TEXCOORD1;
+	float3 normalInView : TEXCOORD2;	//カメラ空間の法線
+	float4 posInLVP		: TEXCOORD3;	//ライトビュースクリーン空間でのピクセルの座標
+	float distToEye : TEXCOORD4;
 
 	float3 tangent : TANGENT;
 	float3 biNormal : BINORMAL;

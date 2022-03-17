@@ -456,18 +456,22 @@ float3 CalculateRimlight(float3 lightDirection, float3 lightColor, float3 normal
 	//ライトの方向とカメラへの方向の内積でリムの強さを求める
 	float power3 = dot(lightDirection,toEye);
 	//内積の結果は1~-1の間なのでリムの強さがマイナスにならないように最低でも0にする
-	power3 = max(0.0f,power3);
+	power3 /= 2.0f;
+
+	power3 += 0.5f;
+
+	power3 *= power3;
 
 	//最終的なリムの強さを求める。
 	float limPower = power1 * power2 * power3;
 
 	//pow()を使用して、強さの変化を指数関数的にしてリムの発生範囲を絞る。
-	limPower = pow(limPower,10.0f);
+	limPower = pow(limPower,5.0f);
 
 	//リムライトのカラーを計算する。
 	float3 limColor = limPower * lightColor;
 
-	return limColor;
+	return float3(0.0f,0.0f,0.0f);
 }
 
 float3 CalculateHemiSphereLight(HemiSphereLight hemLig, float3 normal)

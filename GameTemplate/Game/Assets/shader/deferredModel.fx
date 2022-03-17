@@ -25,11 +25,11 @@ struct SPSIn{
 	float4 pos 			: SV_POSITION;	//スクリーン空間でのピクセルの座標。
 	float3 normal		: NORMAL;		//法線
 	float2 uv 			: TEXCOORD0;	//uv座標。
-	float4 metallicAndSmooth : TEXCOORD1;
-	float3 worldPos 	: TEXCOORD2;
-	float3 normalInView : TEXCOORD3;	//カメラ空間の法線
-	float4 posInLVP		: TEXCOORD4;	//ライトビュースクリーン空間でのピクセルの座標
-	float distToEye : TEXCOORD5;
+	//float4 metallicAndSmooth : TEXCOORD1;
+	float3 worldPos 	: TEXCOORD1;
+	float3 normalInView : TEXCOORD2;	//カメラ空間の法線
+	float4 posInLVP		: TEXCOORD3;	//ライトビュースクリーン空間でのピクセルの座標
+	float distToEye : TEXCOORD4;
 };
 //ピクセルシェーダーからの出力
 struct SPSOut
@@ -126,8 +126,7 @@ SPSIn VSMainCore(SVSIn vsIn, uniform bool hasSkin)
 	psIn.normalInView = normalize(mul(mView,psIn.normal));	//カメラ空間の法線を求める
 	psIn.posInLVP = mul(mLVP,worldPos);
 
-	float3 objectPos = m[3];
-	float4 objectPosInCamera = mul(mView,psIn.worldPos);
+	
 	psIn.distToEye = length(psIn.pos);
 
 	return psIn;
@@ -163,10 +162,15 @@ SPSOut PSMain( SPSIn psIn )
 
 	float clipRate = 1.0f - min(1.0f,eyeToClipRange / 100.0f);
 
-	clip(dither - 64 * clipRate);
+	// clip(dither - 64 * clipRate);
 
 	SPSOut psOut;
-	psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);
+	if(dither - 64 * clipRate < 0.0f){
+		psOut.albedo = float4( 1.0f, 0.0f, 0.0f, 1.0f);
+	}else{
+		psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);
+	}
+	
 	psOut.normal = (psIn.normal/2.0f) + 0.5f;
 	psOut.metallicAndSmooth = float4(0.0f,0.0f,0.0f,0.0f);
 	psOut.worldPos = psIn.worldPos;
