@@ -6,7 +6,7 @@ namespace mainGame {
 
 		const Vector2 BULLET_FONT_POS = { 200.0f,-120.0f };
 
-		const Vector2 BULLET_NUM_FONT_POS = { 375.0f,-97.0f };
+		const Vector2 BULLET_NUM_FONT_POS = { 350.0f,-115.0f };
 
 		const int REMAINING_BULLETS_BASE_SPRITE_WIDTH = 325;
 
@@ -18,7 +18,7 @@ namespace mainGame {
 
 		const int REMAINING_BULLETS_SPRITE_HEIGHT = 100;
 
-		const Vector3 REMAINING_BULLETS_SPRITE_POS = { 327.5f,-120.0f,0.0f };
+		const Vector3 REMAINING_BULLETS_SPRITE_POS = { 300.0f,-140.0f,0.0f };
 
 		RemainingBullets::RemainingBullets()
 		{

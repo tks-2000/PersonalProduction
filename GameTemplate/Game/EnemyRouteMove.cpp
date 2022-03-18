@@ -115,7 +115,7 @@ namespace mainGame {
 			m_moveStartTimer += g_gameTime->GetFrameDeltaTime();
 
 			if (m_moveStartTimer > ENEMY_MOVE_START_TIME) {
-				m_enemy->SearchAttackPointAndTarget();
+				//m_enemy->SearchAttackPointAndTarget();
 				m_moveTarget = m_enemy->GetMoveTarget();
 				RouteSearch();
 				m_moveStartTimer = 0.0f;

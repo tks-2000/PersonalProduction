@@ -471,7 +471,7 @@ float3 CalculateRimlight(float3 lightDirection, float3 lightColor, float3 normal
 	//リムライトのカラーを計算する。
 	float3 limColor = limPower * lightColor;
 
-	return float3(0.0f,0.0f,0.0f);
+	return limColor;
 }
 
 float3 CalculateHemiSphereLight(HemiSphereLight hemLig, float3 normal)

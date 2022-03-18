@@ -180,6 +180,7 @@ namespace mainGame {
 
 						//移動目標をプレイヤーに設定
 						m_moveTarget = m_player->GetPlayerPosition();
+						m_targetAttackPoint->OutTargeted();
 					}
 				}
 				//内積の結果が探す範囲外のとき…

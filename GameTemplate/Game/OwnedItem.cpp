@@ -4,7 +4,7 @@
 namespace mainGame {
 	namespace ui {
 
-		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 427.5f,-190.0f,0.0f };
+		const Vector3 ITEM_SLOT_BASE_SPRITE_POS = { 400.0f,-200.0f,0.0f };
 
 		const int ITEM_SLOT_BASE_FRAME_WIDTH = 600;
 
@@ -15,9 +15,9 @@ namespace mainGame {
 		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 640;
 
 		const Vector3 ITEM_SLOT_SPRITE_POS[3] = {
-			{ 327.5f,-250.0f,0.0f },
-			{ 427.5f,-250.0f,0.0f },
-			{ 527.5f,-250.0f,0.0f }
+			{ 300.0f,-250.0f,0.0f },
+			{ 400.0f,-250.0f,0.0f },
+			{ 500.0f,-250.0f,0.0f }
 		};
 
 		const int ITEM_SLOT_SPRITE_WIDTH = 75;

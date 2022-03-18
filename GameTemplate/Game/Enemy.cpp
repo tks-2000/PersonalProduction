@@ -129,7 +129,7 @@ namespace mainGame {
 			m_hp -= damage;
 
 			if (m_state == enEnemyMove || m_state == enEnemyAttack) {
-				m_targetAttackPoint->OutTargeted();
+				//m_targetAttackPoint->OutTargeted();
 			}
 
 

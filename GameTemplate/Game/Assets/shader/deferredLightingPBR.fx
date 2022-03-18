@@ -510,7 +510,7 @@ float3 CalculateRimlight(
 	float limPower = power1 * power2 * power3;
 
 	//pow()を使用して、強さの変化を指数関数的にしてリムの発生範囲を絞る。
-	limPower = pow(limPower,5.0f);
+	limPower = pow(limPower,6.0f);
 
 	//リムライトのカラーを計算する。
 	float3 limColor = limPower * lightColor;
