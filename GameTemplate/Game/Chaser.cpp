@@ -3,11 +3,11 @@
 
 namespace mainGame {
 	namespace enemy {
-		const char* CHASER_MODEL_TKM_FILEPATH = "Assets/modelData/unityChan/utc_green.tkm";
+		const char* CHASER_MODEL_TKM_FILEPATH = "Assets/modelData/unityChan/utc_PBR.tkm";
 
 		const char* CHASER_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
 		/// @brief 敵モデルのスケルトンファイルパス
-		const char* CHASER_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+		const char* CHASER_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/utc_PBR.tks";
 		/// @brief 敵の最大体力
 		const int CHASER_MAX_HP = 3;
 		/// @brief アニメーション補完率
@@ -101,7 +101,7 @@ namespace mainGame {
 				//プレイヤーを探す
 				PlayerSearch();
 
-				
+				//m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 				//移動を実行
 				m_enemyRouteMove.Execution();
 				//回転を実行
@@ -180,6 +180,7 @@ namespace mainGame {
 
 						//移動目標をプレイヤーに設定
 						m_moveTarget = m_player->GetPlayerPosition();
+						m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 						m_targetAttackPoint->OutTargeted();
 					}
 				}

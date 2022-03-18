@@ -79,7 +79,7 @@ namespace mainGame {
 				return;
 			}
 
-			m_moveTarget = m_enemy->GetMoveTarget();
+			//m_moveTarget = m_enemy->GetMoveTarget();
 
 			switch (m_enemy->GetState())
 			{
@@ -166,18 +166,13 @@ namespace mainGame {
 
 			m_targetDistance = m_toTarget.Length();
 
-			if (m_moveStopDistance >= ROUTE_MOVE_STOP_DISTANCE) {
+			if (m_targetDistance >= ROUTE_MOVE_STOP_DISTANCE) {
 
-				Vector3 targetDirection = m_toTarget;
 
-				targetDirection.Normalize();
+				SetMoveTarget(m_enemy->GetMoveTarget());
+				
+				return;
 
-				float rate = Dot(targetDirection, m_enemy->GetDirection());
-
-				if (rate < MOVE_STOP_ANGLE_MATCH_RATE) {
-					SetMoveTarget(m_enemy->GetMoveTarget());
-					return;
-				}
 			}
 
 			Vector3 moveDirection = m_toTarget;

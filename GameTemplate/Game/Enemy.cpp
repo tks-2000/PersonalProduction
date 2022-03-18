@@ -233,7 +233,7 @@ namespace mainGame {
 			m_enemyModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
 			m_enemyModel->InitDeferrd(
 				m_tkmFilepath,
-				false,
+				true,
 				m_tksFilepath,
 				m_animation,
 				m_animationNum,

@@ -4,11 +4,11 @@
 namespace mainGame {
 	namespace enemy {
 
-		const char* WALKER_MODEL_TKM_FILEPATH = "Assets/modelData/unityChan/utc_red.tkm";
+		const char* WALKER_MODEL_TKM_FILEPATH = "Assets/modelData/unityChan/utc_PBR_red.tkm";
 
 		const char* WALKER_MAP_MODEL_FILEPATH = "Assets/modelData/miniMap/enemyMapModel.tkm";
 		/// @brief 敵モデルのスケルトンファイルパス
-		const char* WALKER_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+		const char* WALKER_MODEL_TKS_FILEPATH = "Assets/modelData/unityChan/utc_PBR.tks";
 		/// @brief 敵の最大体力
 		const int WALKER_MAX_HP = 3;
 		/// @brief アニメーション補完率
@@ -37,7 +37,7 @@ namespace mainGame {
 			//削除時間
 			m_deleteTime = WALKER_DELETE_TIME;
 
-			
+			SearchAttackPointAndTarget();
 
 			//メンバクラスを初期化
 			//m_enemyMove.Init(this);
@@ -47,7 +47,7 @@ namespace mainGame {
 			m_enemyAnimation.Init(this);
 			m_enemyEffect.Init(this);
 
-			
+			m_enemyRouteMove.SetMoveTarget(m_moveTarget);
 
 			m_tkmFilepath = WALKER_MODEL_TKM_FILEPATH;
 			m_tksFilepath = WALKER_MODEL_TKS_FILEPATH;
@@ -66,6 +66,7 @@ namespace mainGame {
 
 			}break;
 			case enGameSceneInProgress: {
+				
 				m_enemyRouteMove.Execution();
 				m_enemyRotation.RotationExecute();
 				m_enemyAttack.Execution();

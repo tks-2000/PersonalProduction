@@ -185,8 +185,8 @@ namespace mainGame {
 			switch (rand1 % 2)
 			{
 			case 1: {
-				//m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
-				m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
+				m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));
+				//m_enemys.push_back(NewGO<Chaser>(PRIORITY_VERYLOW));
 			}break;
 			default: {
 				//m_enemys.push_back(NewGO<Walker>(PRIORITY_VERYLOW));

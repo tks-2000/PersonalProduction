@@ -24,10 +24,10 @@ namespace mainGame {
 
 		const int ENEMY_MODEL_NUM = 2;
 		const char* ENEMY_MODEL_FILEPATH[ENEMY_MODEL_NUM] = {
-			"Assets/modelData/unityChan/utc_green.tkm",
-			"Assets/modelData/unityChan/utc_red.tkm"
+			"Assets/modelData/unityChan/utc_PBR.tkm",
+			"Assets/modelData/unityChan/utc_PBR.tkm"
 		};
-		const char* ENEMY_SKELTON_FILEPATH = "Assets/modelData/unityChan/unityChan.tks";
+		const char* ENEMY_SKELTON_FILEPATH = "Assets/modelData/unityChan/utc_PBR.tks";
 		const char* ENEMY_ANIMATION_FILEPATH = "Assets/animData/unityChan/idle.tka";
 		const Vector3 ENEMY_MODEL_POS[ENEMY_MODEL_NUM] = {
 			{ 350.0f,0.0f,0.0f },
@@ -109,6 +109,7 @@ namespace mainGame {
 				m_enemyModel[enemyModelNum]->SetPosition(ENEMY_MODEL_POS[enemyModelNum]);
 				qRot.SetRotationDegY(ENEMY_MODEL_ANGLE[enemyModelNum]);
 				m_enemyModel[enemyModelNum]->SetRotation(qRot);
+				//m_enemyModel[0]->SetScale({ 2.0f,2.0f,2.0f });
 			}
 
 			m_stageModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
