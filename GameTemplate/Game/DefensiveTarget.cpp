@@ -11,7 +11,7 @@ namespace mainGame {
 		/// @brief –h‰q‘ÎÛ‚ÌÀ•W
 		const Vector3 DEFENSIVE_TARGET_POS = { 0.0f,0.0f,0.0f };
 		/// @brief –h‰q‘ÎÛ‚ÌÅ‘å‘Ï‹v—Í
-		const int MAX_HP = 10000;
+		const int MAX_HP = 200;
 
 		const float HP_DECREACE_VEROCITY = 10.0f;
 

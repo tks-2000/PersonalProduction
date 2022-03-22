@@ -53,6 +53,8 @@ namespace mainGame {
 			std::vector<enemy::Enemy*>* m_enemys = nullptr;
 			/// @brief プレイヤーの攻撃を制御するクラス
 			Attack* m_playerAttack = nullptr;
+
+			render::effect::EffectRender* m_shotEffect = nullptr;
 		};
 	}
 }

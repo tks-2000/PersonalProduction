@@ -16,6 +16,8 @@ namespace mainGame {
 		/// @brief 弾丸の接触する方向一致率
 		const float BULLET_COLLISION_MATCH_RATE = 0.0f;
 
+		const Vector3 SHOT_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
+
 		Bullet::Bullet()
 		{
 			m_isInitd = false;
@@ -23,7 +25,9 @@ namespace mainGame {
 
 		Bullet::~Bullet()
 		{
-			DeleteGO(m_bulletModel);
+			//DeleteGO(m_bulletModel);
+			m_shotEffect->Stop(true);
+			DeleteGO(m_shotEffect);
 		}
 
 		void Bullet::Init(Attack* plAttack, std::vector<enemy::Enemy*>* enemys,const Vector3& pos, const Vector3& target)
@@ -37,9 +41,9 @@ namespace mainGame {
 			m_enemys = enemys;
 
 			//弾丸のモデルを初期化
-			m_bulletModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_bulletModel->Init("Assets/modelData/sphere/sphere.tkm");
-			m_bulletModel->SetScale({ 0.7f,0.7f,0.7f });
+			//m_bulletModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			//m_bulletModel->Init("Assets/modelData/sphere/sphere.tkm");
+			//m_bulletModel->SetScale({ 0.7f,0.7f,0.7f });
 
 			//受け取った座標から移動方向を決める
 			m_startPos = pos;
@@ -47,6 +51,11 @@ namespace mainGame {
 			m_target = target;
 			m_moveDirection = m_target - m_startPos;
 			m_moveDirection.Normalize();
+
+			m_shotEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+			m_shotEffect->Init(u"Assets/effect/shot_pl1.efk");
+			m_shotEffect->SetScale(SHOT_EFFECT_SCALE);
+			m_shotEffect->Play(true);
 
 			//初期化完了
 			m_isInitd = true;
@@ -64,8 +73,16 @@ namespace mainGame {
 			EnemyCollision();
 
 			//モデルに更新したデータを適用
-			m_bulletModel->SetPosition(m_position);
-			m_bulletModel->Execution();
+			//m_bulletModel->SetPosition(m_position);
+			//m_bulletModel->Execution();
+
+			Quaternion qRot = Quaternion::Identity;
+
+			qRot.SetRotationY(atan2(m_moveDirection.x, m_moveDirection.z));
+
+			m_shotEffect->SetPosition(m_position);
+			m_shotEffect->SetRotation(qRot);
+			m_shotEffect->Execution();
 		}
 
 		void Bullet::MoveExecution()

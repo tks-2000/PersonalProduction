@@ -25,7 +25,7 @@ namespace mainGame {
 		const int ENEMY_MODEL_NUM = 2;
 		const char* ENEMY_MODEL_FILEPATH[ENEMY_MODEL_NUM] = {
 			"Assets/modelData/unityChan/utc_PBR.tkm",
-			"Assets/modelData/unityChan/utc_PBR.tkm"
+			"Assets/modelData/unityChan/utc_PBR_red.tkm"
 		};
 		const char* ENEMY_SKELTON_FILEPATH = "Assets/modelData/unityChan/utc_PBR.tks";
 		const char* ENEMY_ANIMATION_FILEPATH = "Assets/animData/unityChan/idle.tka";

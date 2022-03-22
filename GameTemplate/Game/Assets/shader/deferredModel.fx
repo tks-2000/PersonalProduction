@@ -162,15 +162,11 @@ SPSOut PSMain( SPSIn psIn )
 
 	float clipRate = 1.0f - min(1.0f,eyeToClipRange / 100.0f);
 
-	// clip(dither - 64 * clipRate);
+	clip(dither - 64 * clipRate);
 
 	SPSOut psOut;
-	if(dither - 64 * clipRate < 0.0f){
-		psOut.albedo = float4( 1.0f, 0.0f, 0.0f, 1.0f);
-	}else{
-		psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);
-	}
 	
+	psOut.albedo = g_texture.Sample(g_sampler,psIn.uv);
 	psOut.normal = (psIn.normal/2.0f) + 0.5f;
 	psOut.metallicAndSmooth = float4(0.0f,0.0f,0.0f,0.0f);
 	psOut.worldPos = psIn.worldPos;

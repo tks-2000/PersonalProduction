@@ -111,6 +111,7 @@ namespace mainGame {
 
 			Quaternion m_effectRotation = Quaternion::Identity;
 
+			
 		};
 	}
 }

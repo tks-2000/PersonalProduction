@@ -67,7 +67,7 @@ namespace mainGame {
 			m_attackPossibleMatchRate = ATTACK_POSSIBLE_MATCH_RATE;
 
 			m_attackEffect.Init(u"Assets/effect/kick.efk");
-
+			
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;
