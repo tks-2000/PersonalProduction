@@ -13,16 +13,16 @@ namespace mainGame {
 
 		SpawnPoint::~SpawnPoint()
 		{
-			DeleteGO(m_model);
+			//DeleteGO(m_model);
 		}
 
 		void SpawnPoint::Init(Generator* generator, const Vector3& pos)
 		{
 			m_enemyGenerator = generator;
 			m_position = pos;
-			m_model = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_model->InitDeferrd("Assets/modelData/box/box2.tkm");
-			m_model->SetPosition(m_position);
+			//m_model = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
+			//m_model->InitDeferrd("Assets/modelData/box/box2.tkm");
+			//m_model->SetPosition(m_position);
 			m_spawnIntreval = START_SPAWN_INTERVAL;
 
 			m_isInitd = true;
@@ -40,7 +40,7 @@ namespace mainGame {
 				m_spawnTimer = 0.0f;
 			}
 
-			m_model->Execution();
+			//m_model->Execution();
 		}
 
 		void SpawnPoint::SpawnEnemy()

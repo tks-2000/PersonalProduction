@@ -74,11 +74,11 @@ namespace render {
 
 	bool RenderingEngine::Start()
 	{
-		
-		m_lig.SetDirectionLightColor(0, { 1.0f, 1.0f, 1.0f });
-		m_lig.SetDirectionLightColor(1, { 1.0f, 1.0f, 1.0f });
-		m_lig.SetDirectionLightColor(2, { 1.0f, 1.0f, 1.0f });
-		m_lig.SetDirectionLightColor(3, { 1.0f, 1.0f, 1.0f });
+		Vector3 dirColor = { 1.0f,1.0f,1.2f };
+		m_lig.SetDirectionLightColor(0, dirColor);
+		m_lig.SetDirectionLightColor(1, dirColor);
+		m_lig.SetDirectionLightColor(2, dirColor);
+		m_lig.SetDirectionLightColor(3, dirColor);
 		Vector3 dir = { 0.0f,0.0f,-1.0f };
 		dir.Normalize();
 		m_lig.SetDirectionLightDirection(0,dir);
