@@ -72,6 +72,8 @@ namespace mainGame {
 			//防衛対象の情報を持って来る
 			m_defensiveTarget = FindGO<defensiveTarget::DefensiveTarget>(defensiveTarget::DEFENSIVE_TARGET_NAME);
 
+			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
+
 			//初期化完了
 			m_isInitd = true;
 		}
@@ -85,10 +87,11 @@ namespace mainGame {
 			//ダメージを適用する
 			ApplyDamage();
 			
-			//画像の情報を更新する
-			m_enduranceSprite->SetScale(m_enduranceSpriteScale);
-			m_enduranceSprite->SetColor(m_enduranceSpriteColor);
-
+			if (m_gameScene->GetGameSceneState() != enGameSceneClear && m_gameScene->GetGameSceneState() != enGameSceneOver) {
+				//画像の情報を更新する
+				m_enduranceSprite->SetScale(m_enduranceSpriteScale);
+				m_enduranceSprite->SetColor(m_enduranceSpriteColor);
+			}
 			m_enduranceBaseFrame->Execute();
 			m_enduranceBaseSprite->Execute();
 			m_enduranceUnderSprite->Execute();
@@ -107,6 +110,15 @@ namespace mainGame {
 			m_enduranceSpriteColor.Lerp(hpRatio,
 				ENDURANCE_SPRITE_MAX_COLOR,
 				ENDURANCE_SPRITE_MIN_COLOR);
+		}
+
+		void BaseEndurance::HIdeUI()
+		{
+			m_enduranceBaseSprite->SetColor(render::COLORLESS);
+
+			m_enduranceBaseFrame->SetColor(render::COLORLESS);
+			m_enduranceSprite->SetColor(render::COLORLESS);
+			m_enduranceUnderSprite->SetColor(render::COLORLESS);
 		}
 	}
 }

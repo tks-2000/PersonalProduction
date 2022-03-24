@@ -55,6 +55,10 @@ namespace mainGame {
 			Attack* m_playerAttack = nullptr;
 
 			render::effect::EffectRender* m_shotEffect = nullptr;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
+
+			int m_bulletSoundID = 0;
 		};
 	}
 }

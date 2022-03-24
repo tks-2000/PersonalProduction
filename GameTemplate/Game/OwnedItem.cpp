@@ -14,7 +14,7 @@ namespace mainGame {
 
 		const int ITEM_SLOT_BASE_SPRITE_HEIGHT = 640;
 
-		const Vector3 ITEM_SLOT_SPRITE_POS[3] = {
+		const Vector3 ITEM_SLOT_SPRITE_POS[ITEM_SLOT_NUM] = {
 			{ 300.0f,-250.0f,0.0f },
 			{ 400.0f,-250.0f,0.0f },
 			{ 500.0f,-250.0f,0.0f }
@@ -41,7 +41,7 @@ namespace mainGame {
 
 		OwnedItem::~OwnedItem()
 		{
-			for (int slotNum = 0; slotNum < 3; slotNum++) {
+			for (int slotNum = 0; slotNum < ITEM_SLOT_NUM; slotNum++) {
 				DeleteGO(m_itemSlotSprite[slotNum]);
 			
 				if (m_itemSpriteFlag[slotNum] == true) {
@@ -71,7 +71,7 @@ namespace mainGame {
 
 			m_selectSprite->SetColor({1.0f,0.0f,0.0f,1.0f});
 
-			for (int slotNum = 0; slotNum < 3; slotNum++) {
+			for (int slotNum = 0; slotNum < ITEM_SLOT_NUM; slotNum++) {
 				m_itemSlotSprite[slotNum] = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
 				m_itemSlotSprite[slotNum]->Init("Assets/Image/WB.dds", ITEM_SLOT_SPRITE_WIDTH, ITEM_SLOT_SPRITE_HEIGHT);
 				m_itemSlotSprite[slotNum]->SetPosition(ITEM_SLOT_SPRITE_POS[slotNum]);
@@ -100,7 +100,7 @@ namespace mainGame {
 			m_itemSlotBaseFrame->Execute();
 			m_itemSlotBaseSprite->Execute();
 
-			for (int slotNum = 0; slotNum < 3; slotNum++) {
+			for (int slotNum = 0; slotNum < ITEM_SLOT_NUM; slotNum++) {
 
 				if (m_player->IsOwnedItem(slotNum) == true) {
 					if (m_itemSpriteFlag[slotNum] == false) {
@@ -128,6 +128,20 @@ namespace mainGame {
 			m_selectSpritePos = ITEM_SLOT_SPRITE_POS[m_player->GetSelectSlotNum()];
 			m_selectSprite->SetPosition(m_selectSpritePos);
 			m_selectSprite->Execute();
+		}
+
+		void OwnedItem::HideUI()
+		{
+			m_itemSlotBaseSprite->SetColor(render::COLORLESS);
+
+			m_itemSlotBaseFrame->SetColor(render::COLORLESS);
+			for (int slotNum = 0; slotNum < ITEM_SLOT_NUM; slotNum++) {
+				m_itemSlotSprite[slotNum]->SetColor(render::COLORLESS);
+				if (m_itemSpriteFlag[slotNum] == true) {
+					m_itemSprite[slotNum]->SetColor(render::COLORLESS);
+				}
+			}
+			m_selectSprite->SetColor(render::COLORLESS);
 		}
 
 		void OwnedItem::CreateItemSprite(const int slotNum)

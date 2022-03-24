@@ -51,7 +51,7 @@ namespace mainGame {
 		//情報を入手
 		m_player = FindGO<player::Player>(player::PLAYER_NAME);
 
-		m_miniMap = FindGO<map::MiniMap>(map::MINI_MAP_NAME);
+		m_gameUI = FindGO<ui::GameUI>(ui::GAME_UI_NAME);
 
 		render::RenderingEngine* renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 
@@ -137,33 +137,33 @@ namespace mainGame {
 		TpsCameraRotation();
 
 		//RB3でカメラチェンジ
-		if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB3)) {
+		//if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonRB3)) {
 
 
-			//X軸の記憶していた移動量で回転させる
-			m_cameraXRot.SetRotation(m_AxisX, -m_cameraXAngeAmount);
-			//ベクトルに回転を適用する
-			m_cameraXRot.Apply(m_targetToCameraPos);
-			//記憶していた移動量を0にする
-			m_cameraXAngeAmount = 0.0f;
+		//	//X軸の記憶していた移動量で回転させる
+		//	m_cameraXRot.SetRotation(m_AxisX, -m_cameraXAngeAmount);
+		//	//ベクトルに回転を適用する
+		//	m_cameraXRot.Apply(m_targetToCameraPos);
+		//	//記憶していた移動量を0にする
+		//	m_cameraXAngeAmount = 0.0f;
 
-			//カメラの移動量の反対で回転させて初期位置に戻す
-			m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount);
-			//ベクトルに回転を適用する
-			m_cameraYRot.Apply(m_targetToCameraPos);
+		//	//カメラの移動量の反対で回転させて初期位置に戻す
+		//	m_cameraYRot.SetRotation(g_camera3D->GetUp(), -m_cameraYAngeAmount);
+		//	//ベクトルに回転を適用する
+		//	m_cameraYRot.Apply(m_targetToCameraPos);
 
-			//記憶していた回転でカメラを回す
-			m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngeAmount);
+		//	//記憶していた回転でカメラを回す
+		//	m_cameraYRot.SetRotation(g_camera3D->GetUp(), m_cameraYAngeAmount);
 
-			////カメラの回転を適用する
-			m_cameraYRot.Apply(m_cameraToTargetPos);
-			m_cameraYRot.Apply(m_playerToCameraPos);
+		//	////カメラの回転を適用する
+		//	m_cameraYRot.Apply(m_cameraToTargetPos);
+		//	m_cameraYRot.Apply(m_playerToCameraPos);
 
-			m_cameraFriction = FPS_CAMERA_FRICTION;
+		//	m_cameraFriction = FPS_CAMERA_FRICTION;
 
-			//モードを切り替える
-			m_mode = enCameraModeFps;
-		}
+		//	//モードを切り替える
+		//	m_mode = enCameraModeFps;
+		//}
 	}
 
 	void GameCamera::FpsCameraUpdate()
@@ -200,7 +200,7 @@ namespace mainGame {
 
 			Vector3 up = { 0.0f,0.0f,1.0f };
 
-			m_miniMap->SetMapCameraUp(up);
+			m_gameUI->SetMiniMapCameraUp(up);
 
 			//モードを切り替える
 			m_mode = enCameraModeTps;
@@ -434,7 +434,7 @@ namespace mainGame {
 		//現在の角度変化量に計算した角度変化量を加算する
 		m_cameraYAngeAmount += angleAmount;
 
-		
+		m_gameUI->SetMiniMapCameraUp(m_player->GetPlayerDirection());
 		//現在のプレイヤーの角度を記憶しておく
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
 

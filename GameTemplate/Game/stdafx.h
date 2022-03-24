@@ -86,10 +86,7 @@ namespace mainGame {
 		static const char* TIMER_NAME = "Timer";
 	}
 
-	namespace map {
-		static const int MINI_MAP_RENDER_GROUP = render::model::enExpandModelGroup1;
-		static const char* MINI_MAP_NAME = "MIniMap";
-	}
+	
 
 	namespace item {
 		static const char* ITEM_GENERATOR_NAME = "ItemGenerator";
@@ -97,6 +94,8 @@ namespace mainGame {
 
 	namespace ui {
 		static const char* GAME_UI_NAME = "GameUI";
+		static const int MINI_MAP_RENDER_GROUP = render::model::enExpandModelGroup1;
+		static const char* MINI_MAP_NAME = "MIniMap";
 	}
 
 	

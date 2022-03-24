@@ -158,7 +158,7 @@ namespace mainGame {
 		/// @brief ƒvƒŒƒCƒ„[
 		player::Player* m_player = nullptr;
 
-		map::MiniMap* m_miniMap = nullptr;
+		ui::GameUI* m_gameUI = nullptr;
 
 		render::shadow::Shadow* m_shadow = nullptr;
 	};

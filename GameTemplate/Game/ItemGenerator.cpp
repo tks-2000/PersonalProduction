@@ -25,7 +25,7 @@ namespace mainGame {
 		{
 			//SpawnItem(enItemBomb,{ 200.0f,50.0f,200.0f });
 			//SpawnItem(enItemRepairTools,{ -200.0f,50.0f,200.0f });
-			//SpawnItem(enItemNutritionDrink,{ 200.0f,50.0f,-200.0f });
+			SpawnItem(enItemNutritionDrink,{ 200.0f,50.0f,-200.0f });
 
 			m_game = FindGO<Game>(GAME_NAME);
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);

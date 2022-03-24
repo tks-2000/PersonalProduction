@@ -50,6 +50,7 @@ namespace render {
 			m_spriteInitData.m_width = width;
 			m_spriteInitData.m_height = height;
 			m_spriteInitData.m_fxFilePath = "Assets/shader/sprite.fx";
+			m_spriteInitData.m_alphaBlendMode = AlphaBlendMode_Trans;
 
 			m_sprite.Init(m_spriteInitData);
 

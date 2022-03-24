@@ -43,6 +43,10 @@ namespace mainGame {
 			RouteMove m_enemyRouteMove;
 
 			Animation m_enemyAnimation;
+
+			sound::SoundPlayer* m_soundPlayer = nullptr;
+
+			int m_discoverSoundID = 0;
 		};
 	}
 }

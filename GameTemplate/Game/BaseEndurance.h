@@ -17,6 +17,8 @@ namespace mainGame {
 
 			/// @brief ダメージを適用
 			void ApplyDamage();
+
+			void HIdeUI();
 		private:
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
@@ -40,6 +42,7 @@ namespace mainGame {
 			/// @brief 防衛対象
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
 
+			GameScene* m_gameScene = nullptr;
 		};
 	}
 }

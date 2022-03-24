@@ -8,6 +8,8 @@ namespace mainGame {
 
 	namespace ui {
 
+		static const int ITEM_SLOT_NUM = 3;
+
 		/// @brief 所有アイテムを表示するクラス
 		class OwnedItem
 		{
@@ -16,6 +18,7 @@ namespace mainGame {
 			~OwnedItem();
 			void Init();
 			void Execution();
+			void HideUI();
 
 		private:
 			/// @brief アイテム画像を作成
@@ -29,11 +32,11 @@ namespace mainGame {
 
 			render::sprite::SpriteRender* m_itemSlotBaseFrame = nullptr;
 			/// @brief アイテムスロットの画像
-			render::sprite::SpriteRender* m_itemSlotSprite[3] = { nullptr };
+			render::sprite::SpriteRender* m_itemSlotSprite[ITEM_SLOT_NUM] = { nullptr };
 			/// @brief アイテムの画像
-			render::sprite::SpriteRender* m_itemSprite[3] = { nullptr };
+			render::sprite::SpriteRender* m_itemSprite[ITEM_SLOT_NUM] = { nullptr };
 			/// @brief アイテムの画像の表示フラグ
-			bool m_itemSpriteFlag[3] = { false };
+			bool m_itemSpriteFlag[ITEM_SLOT_NUM] = { false };
 			/// @brief プレイヤーが選択しているアイテムを示す画像
 			render::sprite::SpriteRender* m_selectSprite = nullptr;
 

@@ -15,21 +15,31 @@ namespace mainGame {
 
 		const float ADD_MOVE_VEROCITY = 10.0f;
 
+		const char16_t* POWERUP_EFFECT_FILEPATH = u"Assets/effect/itembuff_attackup.efk";
+
+		const Vector3 POWERUP_EFFECT_SCALE = { 10.0f,10.0f,10.0f };
+
 		NutritionDrink::~NutritionDrink()
 		{
-			
+			m_powerUpEffect->Stop(true);
+			DeleteGO(m_powerUpEffect);
 		}
 
 		void NutritionDrink::Activation()
 		{
+			m_powerUpEffect->Play(true);
 			m_isActivate = true;
 		}
 
 		void NutritionDrink::InitData()
 		{
 			m_itemType = enItemNutritionDrink;
-
 			
+			m_powerUpEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
+
+			m_powerUpEffect->Init(POWERUP_EFFECT_FILEPATH);
+			
+			m_powerUpEffect->SetScale(POWERUP_EFFECT_SCALE);
 
 			m_enemyGenerator = FindGO<enemy::Generator>(enemy::ENEMY_GENERATOR_NAME);
 
@@ -47,6 +57,10 @@ namespace mainGame {
 		void NutritionDrink::Efficacy()
 		{
 			m_position = m_player->GetPlayerPosition();
+
+			m_powerUpEffect->SetPosition(m_position);
+
+			m_powerUpEffect->Execution();
 
 			m_player->SetAddVerocity(ADD_MOVE_VEROCITY);
 

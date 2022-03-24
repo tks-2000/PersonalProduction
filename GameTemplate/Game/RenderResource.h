@@ -25,6 +25,6 @@ namespace render {
 	}
 
 	/// @brief ñ≥êF
-	static const Vector3 COLORLESS = { 0.0f,0.0f,0.0f };
+	static const Vector4 COLORLESS = { 0.0f,0.0f,0.0f,0.0f };
 
 }

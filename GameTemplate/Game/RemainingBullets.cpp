@@ -84,5 +84,14 @@ namespace mainGame {
 
 			m_remainingBulletsSprite->Execute();
 		}
+
+		void RemainingBullets::HideUI()
+		{
+			m_remainingBulletsNumFont->SetColor(render::COLORLESS);
+
+			m_remainingBulletsBaseSprite->SetColor(render::COLORLESS);
+
+			m_remainingBulletsSprite->SetColor(render::COLORLESS);
+		}
 	}
 }

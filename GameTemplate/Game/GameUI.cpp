@@ -33,7 +33,7 @@ namespace mainGame {
 			m_timeLimit.Init();
 
 			m_remainingBullets.Init();
-
+			m_miniMap.Init();
 			
 
 			m_gameEndSprite = NewGO<render::sprite::SpriteRender>(PRIORITY_VERYLOW);
@@ -59,7 +59,7 @@ namespace mainGame {
 			m_timeLimit.Execution();
 
 			m_remainingBullets.Execution();
-
+			m_miniMap.Execution();
 			
 
 			if (m_gameEndSpriteFlag == false &&
@@ -95,6 +95,11 @@ namespace mainGame {
 		void GameUI::GameEndSpriteExecution()
 		{
 			m_gameEndSprite->Execute();
+			m_oenedItem.HideUI();
+			m_baseEndurance.HIdeUI();
+			m_remainingBullets.HideUI();
+			m_timeLimit.HideUI();
+			m_miniMap.HideUI();
 		}
 	}
 }

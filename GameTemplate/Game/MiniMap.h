@@ -10,8 +10,8 @@ namespace mainGame {
 
 	class GameCamera;
 
-	namespace map {
-		class MiniMap : public IGameObject
+	namespace ui {
+		class MiniMap
 		{
 		public:
 			MiniMap();
@@ -35,6 +35,8 @@ namespace mainGame {
 			void MapRender(RenderContext& rc);
 
 			void SetMapCameraUp(const Vector3& up) { m_mapCameraUp = up; }
+
+			void HideUI();
 		
 		private:
 

@@ -320,9 +320,6 @@
     <ClCompile Include="PlayerBullet.cpp">
       <Filter>inGame\Player</Filter>
     </ClCompile>
-    <ClCompile Include="MiniMap.cpp">
-      <Filter>inGame</Filter>
-    </ClCompile>
     <ClCompile Include="NameKey.cpp">
       <Filter>MyEngine\Sound</Filter>
     </ClCompile>
@@ -496,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="AttackPoint.cpp">
       <Filter>inGame\DefensiveTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>inGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -742,9 +742,6 @@
     <ClInclude Include="PlayerBullet.h">
       <Filter>inGame\Player</Filter>
     </ClInclude>
-    <ClInclude Include="MiniMap.h">
-      <Filter>inGame</Filter>
-    </ClInclude>
     <ClInclude Include="NameKey.h">
       <Filter>MyEngine\Sound</Filter>
     </ClInclude>
@@ -921,6 +918,9 @@
     </ClInclude>
     <ClInclude Include="AttackPoint.h">
       <Filter>inGame\DefensiveTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>inGame\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

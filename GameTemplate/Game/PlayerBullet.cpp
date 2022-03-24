@@ -18,6 +18,10 @@ namespace mainGame {
 
 		const Vector3 SHOT_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
 
+		const wchar_t* BULLET_SE_FILEPATH = L"Assets/sound/se/bullet.wav";
+
+		const float BULLET_SE_VOLUME = 0.1f;
+
 		Bullet::Bullet()
 		{
 			m_isInitd = false;
@@ -56,6 +60,11 @@ namespace mainGame {
 			m_shotEffect->Init(u"Assets/effect/shot_pl1.efk");
 			m_shotEffect->SetScale(SHOT_EFFECT_SCALE);
 			m_shotEffect->Play(true);
+
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+			m_bulletSoundID = m_soundPlayer->SetSE(BULLET_SE_FILEPATH);
+			m_soundPlayer->SetSEVolume(m_bulletSoundID, BULLET_SE_VOLUME);
+			m_soundPlayer->PlaySE(m_bulletSoundID);
 
 			//‰Šú‰»Š®—¹
 			m_isInitd = true;

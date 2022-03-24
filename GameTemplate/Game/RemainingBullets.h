@@ -12,6 +12,7 @@ namespace mainGame {
 			~RemainingBullets();
 			void Init();
 			void Execution();
+			void HideUI();
 		private:
 			/// @brief ‰Šú‰»ƒtƒ‰ƒO
 			bool m_isInitd = false;

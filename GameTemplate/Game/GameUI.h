@@ -27,6 +27,8 @@ namespace mainGame {
 			/// @brief ゲーム終了時の画像を表示する
 			void DisplayGameEndSprite();
 			
+			void SetMiniMapCameraUp(const Vector3& up) { m_miniMap.SetMapCameraUp(up); }
+
 		private:
 			
 			/// @brief ゲーム終了時の画像表示を実行
@@ -52,6 +54,8 @@ namespace mainGame {
 			GameScene* m_gameScene = nullptr;
 			/// @brief タイマー
 			timer::Timer* m_timer = nullptr;
+
+			MiniMap m_miniMap;
 		};
 	}
 }

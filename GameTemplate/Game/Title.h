@@ -28,6 +28,8 @@ namespace mainGame {
 
 			int m_titleSoundID = 0;
 
+			int m_startSoundID = 0;
+
 			sound::SoundPlayer* m_soundPlayer = nullptr;
 
 			bool m_endFlag = false;

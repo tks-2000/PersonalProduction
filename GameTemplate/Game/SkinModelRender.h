@@ -164,8 +164,6 @@ namespace render {
 			/// @brief ‰Šú‰»Š®—¹ƒtƒ‰ƒO
 			bool m_isInitd = false;
 
-			mainGame::map::MiniMap* m_miniMap = nullptr;
-
 			bool m_isDeferred = false;
 
 			/// @brief ©g‚Ì•`‰ææ

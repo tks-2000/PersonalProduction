@@ -88,13 +88,21 @@ namespace mainGame {
 		/// @brief レンダリングエンジン
 		render::RenderingEngine* m_renderingEngine = nullptr;
 
-		map::MiniMap* m_miniMap = nullptr;
+		//map::MiniMap* m_miniMap = nullptr;
 
 		item::ItemGenerator* m_itemGenerator = nullptr;
 
 		ui::GameUI* m_gameUI = nullptr;
 
-		CSoundSource* m_sound = nullptr;
+		sound::SoundPlayer* m_soundPlayer = nullptr;
+
+		int m_clearSoundID = 0;
+
+		int m_gameOverSoundID = 0;
+
+		int m_pressKeySoundID = 0;
+
+		bool m_isPlayEndSound = false;
 
 		render::sprite::SpriteRender* m_sampleSprite = nullptr;
 
@@ -103,5 +111,9 @@ namespace mainGame {
 		SceneTransition* m_sceneTransition = nullptr;
 
 		bool m_endFlag = false;
+
+		render::font::FontRender* m_pressKeyFont = nullptr;
+
+		Vector4 m_pressKeyFontColor = { 0.0f,0.0f,0.0f,0.0f };
 	};
 }

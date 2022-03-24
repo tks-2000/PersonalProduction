@@ -7,11 +7,21 @@ namespace mainGame {
 
 	const float FEADOUT_RATE = 1.0f;
 
+	const wchar_t* CLEAR_SE_FILEPATH = L"Assets/sound/se/Clear.wav";
+
+	const wchar_t* GAMEOVER_SE_FILEPATH = L"Assets/sound/se/GameOver.wav";
+
+	const wchar_t* PRESSKEY_SE_FILEPATH = L"Assets/sound/se/decision.wav";
+
+	const float SE_VOLUME = 0.1f;
+
+	const Vector2 PRESSKEY_FONT_POS = { -150.0f,-200.0f };
+
 	GameScene::GameScene()
 	{
 		
 
-		m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
+		//m_miniMap = NewGO<map::MiniMap>(PRIORITY_VERYLOW, map::MINI_MAP_NAME);
 		m_player = NewGO<player::Player>(PRIORITY_VERYLOW, player::PLAYER_NAME);
 		m_gameCamera = NewGO<GameCamera>(PRIORITY_VERYLOW, GAME_CAMERA_NAME);
 		m_defensiveTarget = NewGO<defensiveTarget::DefensiveTarget>(PRIORITY_VERYLOW, defensiveTarget::DEFENSIVE_TARGET_NAME);
@@ -24,7 +34,6 @@ namespace mainGame {
 
 		m_sampleSprite = NewGO<render::sprite::SpriteRender>(0);
 
-		m_sound = NewGO<CSoundSource>(PRIORITY_VERYLOW);
 	}
 
 	GameScene::~GameScene()
@@ -35,18 +44,19 @@ namespace mainGame {
 		DeleteGO(m_defensiveTarget);
 		DeleteGO(m_stage);
 		DeleteGO(m_timer);
-		DeleteGO(m_sound);
-		DeleteGO(m_miniMap);
+		//DeleteGO(m_miniMap);
 		DeleteGO(m_itemGenerator);
 		DeleteGO(m_gameUI);
 		DeleteGO(m_sampleSprite);
+
+		DeleteGO(m_pressKeyFont);
 	}
 
 	void GameScene::Init()
 	{
 		m_pause = false;
 
-		m_miniMap->Init();
+		//m_miniMap->Init();
 
 		m_player->Init();
 
@@ -66,11 +76,18 @@ namespace mainGame {
 		m_sampleSprite->SetPosition({ 0.0f,0.0f,0.0f });
 		m_sampleSprite->SetColor({ 1.0f, 1.0f, 1.0f, 0.0f });
 
+		m_pressKeyFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
+		m_pressKeyFont->Init(L"PUSH X BUTTON");
+		m_pressKeyFont->SetPosition(PRESSKEY_FONT_POS);
+		m_pressKeyFont->SetColor(m_pressKeyFontColor);
 
-
-		m_sound->Init(L"Assets/sound/bgm/SpecialBgm.wav");
-		m_sound->SetVolume(1.0f);
-		//m_sound->Play(true);
+		m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+		m_clearSoundID = m_soundPlayer->SetSE(CLEAR_SE_FILEPATH);
+		m_soundPlayer->SetSEVolume(m_clearSoundID, SE_VOLUME);
+		m_gameOverSoundID = m_soundPlayer->SetSE(GAMEOVER_SE_FILEPATH);
+		m_soundPlayer->SetSEVolume(m_gameOverSoundID, SE_VOLUME);
+		m_pressKeySoundID = m_soundPlayer->SetSE(PRESSKEY_SE_FILEPATH);
+		m_soundPlayer->SetSEVolume(m_pressKeySoundID, SE_VOLUME);
 
 		m_gameSceneState = enGameSceneStart;
 
@@ -123,7 +140,7 @@ namespace mainGame {
 		m_player->Execution();
 		m_enemyGenerator->Execute();
 		m_gameCamera->Execution();
-		m_miniMap->Execution();
+		//m_miniMap->Execution();
 		m_itemGenerator->Execution();
 		m_gameUI->Execution();
 		m_defensiveTarget->Execution();
@@ -143,11 +160,25 @@ namespace mainGame {
 		}
 
 		if (m_gameSceneState == enGameSceneClear || m_gameSceneState == enGameSceneOver) {
+			if (m_isPlayEndSound == false) {
+				if (m_gameSceneState == enGameSceneClear) {
+					m_soundPlayer->PlaySE(m_clearSoundID);
+				}
+				else {
+					m_soundPlayer->PlaySE(m_gameOverSoundID);
+				}
+				m_isPlayEndSound = true;
+			}
 			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonX)) {
 				m_endFlag = true;
+				m_soundPlayer->PlaySE(m_pressKeySoundID);
 				m_sceneTransition->SetFeadOut(FEADOUT_RATE);
 			}
+
+			m_pressKeyFontColor = g_vec4White;
 		}
+		m_pressKeyFont->SetColor(m_pressKeyFontColor);
+		m_pressKeyFont->Execution();
 
 		if (m_endFlag == true) {
 			if (m_sceneTransition->IsFeadOut() == false) {

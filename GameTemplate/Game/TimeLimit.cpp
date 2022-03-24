@@ -14,7 +14,7 @@ namespace mainGame {
 
 		const Vector2 TIMER_NUM_FONT_POS = { -415.0f,215.0f };
 
-		const int NUM_SPRITE_NUM = 3;
+		
 
 		const char* NUM_SPRITE_FILEPATH[NUM_SPRITE_NUM] = {
 			"Assets/Image/1.DDS",
@@ -31,6 +31,12 @@ namespace mainGame {
 		const float NUM_SPRITE_HEIGHT = 200.0f;
 
 		const float FADE_RATE = 2.5f;
+
+		const wchar_t* COUNT_SE_FILEPATH = L"Assets/sound/se/count.wav";
+
+		const wchar_t* GO_SE_FILEPATH = L"Assets/sound/se/go.wav";
+
+		const float SE_VOLUME = 0.1f;
 
 		TimeLimit::TimeLimit()
 		{
@@ -85,6 +91,16 @@ namespace mainGame {
 			m_timerNumFont->SetPosition(TIMER_NUM_FONT_POS);
 			m_timerNumFont->SetColor(UI_FONT_START_COLOR);
 
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
+
+			m_countSoundID = m_soundPlayer->SetSE(COUNT_SE_FILEPATH);
+
+			m_soundPlayer->SetSEVolume(m_countSoundID, SE_VOLUME);
+
+			m_goSoundID = m_soundPlayer->SetSE(GO_SE_FILEPATH);
+
+			m_soundPlayer->SetSEVolume(m_goSoundID, SE_VOLUME);
+
 			m_isCountDown = true;
 
 			m_isInitd = true;
@@ -125,6 +141,14 @@ namespace mainGame {
 			m_timerNumFont->Execution();
 		}
 
+		void TimeLimit::HideUI()
+		{
+			m_timerBaseSprite->SetColor(render::COLORLESS);
+			m_timerBaseFrame->SetColor(render::COLORLESS);
+			m_timeFont->SetColor(render::COLORLESS);
+			m_timerNumFont->SetColor(render::COLORLESS);
+		}
+
 		void TimeLimit::CountDown()
 		{
 			
@@ -133,6 +157,10 @@ namespace mainGame {
 
 				if (spriteNum == m_timer->GetStartTimer() - 1) {
 					m_count[spriteNum]->FadeIn(FADE_RATE);
+					if (m_isPlayCountSE[spriteNum] == false) {
+						m_soundPlayer->PlaySE(m_countSoundID);
+						m_isPlayCountSE[spriteNum] = true;
+					}
 				}
 				else {
 					m_count[spriteNum]->FadeOut(FADE_RATE);
@@ -141,6 +169,7 @@ namespace mainGame {
 
 			if (m_timer->GetStartTimer() == 0) {
 				m_go->FadeIn(FADE_RATE);
+				m_soundPlayer->PlaySE(m_goSoundID);
 				m_isCountDown = false;
 			}
 		}

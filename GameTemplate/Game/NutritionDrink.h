@@ -36,6 +36,8 @@ namespace mainGame {
 
 			/// @brief “G¶¬Ší
 			enemy::Generator* m_enemyGenerator = nullptr;
+
+			render::effect::EffectRender* m_powerUpEffect = nullptr;
 		};
 	}
 }

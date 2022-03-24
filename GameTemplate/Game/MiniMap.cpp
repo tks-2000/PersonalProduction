@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MiniMap.h"
 namespace mainGame {
-	namespace map {
+	namespace ui {
 
 		const Vector3 MINI_MAP_CAMERA_POS = { 0.0f,2000.0f,0.0f };
 
@@ -158,6 +158,13 @@ namespace mainGame {
 				g_graphicsEngine->GetCurrentFrameBuffuerDSV()
 			);
 			rc.SetViewportAndScissor(g_graphicsEngine->GetFrameBufferViewport());
+		}
+
+		void MiniMap::HideUI()
+		{
+			m_miniMapSprite->SetColor(render::COLORLESS);
+			m_miniMapBase->SetColor(render::COLORLESS);
+			m_miniMapFrame->SetColor(render::COLORLESS);
 		}
 	}
 }

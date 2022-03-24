@@ -21,6 +21,10 @@ namespace mainGame {
 
 		const float CHASE_END_TIME = 5.0f;
 
+		const wchar_t* DISCOVER_SE_FILEPATH = L"Assets/sound/se/inspiration.wav";
+
+		const float DISCOVER_SE_VOLUME = 0.1f;
+
 		Chaser::Chaser()
 		{
 
@@ -63,7 +67,10 @@ namespace mainGame {
 			m_mapModelFilepath = CHASER_MAP_MODEL_FILEPATH;
 
 			
+			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
 
+			m_discoverSoundID = m_soundPlayer->SetSE(DISCOVER_SE_FILEPATH);
+			m_soundPlayer->SetSEVolume(m_discoverSoundID, DISCOVER_SE_VOLUME);
 			
 		}
 
@@ -177,7 +184,8 @@ namespace mainGame {
 						m_state = enEnemyMove;
 						//追跡状態に移行
 						m_chaseMode = true;
-
+						//発見SEを鳴らす
+						m_soundPlayer->PlaySE(m_discoverSoundID);
 						//移動目標をプレイヤーに設定
 						m_moveTarget = m_player->GetPlayerPosition();
 						m_enemyRouteMove.SetMoveTarget(m_moveTarget);

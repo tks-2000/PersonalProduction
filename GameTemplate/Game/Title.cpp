@@ -17,9 +17,15 @@ namespace mainGame {
 
 		const float TITLE_BGM_VOLUME = 0.1f;
 
+		const wchar_t* START_SE_FILEPATH = L"Assets/sound/se/decision.wav";
+
+		const float START_SE_VOLUME = 0.1f;
+
 		const float FEADIN_RATE = 0.3f;
 
 		const float FEADOUT_RATE = 1.0f;
+
+		
 
 		Title::Title()
 		{
@@ -59,6 +65,10 @@ namespace mainGame {
 
 			m_soundPlayer->PlayBGM(m_titleSoundID, true);
 
+			m_startSoundID = m_soundPlayer->SetSE(START_SE_FILEPATH);
+
+			m_soundPlayer->SetSEVolume(m_startSoundID, START_SE_VOLUME);
+
 			m_sceneTransition = FindGO<SceneTransition>(SCENE_TRANSITION_NAME);
 
 			m_sceneTransition->SetFeadIn(FEADIN_RATE);
@@ -72,8 +82,9 @@ namespace mainGame {
 				return;
 			}
 
-			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA)) {
+			if (g_pad[PLAYER1_CONTROLLER_NUM]->IsTrigger(enButtonA) && m_endFlag == false) {
 				m_endFlag = true;
+				m_soundPlayer->PlaySE(m_startSoundID);
 				m_sceneTransition->SetFeadOut(FEADOUT_RATE);
 			}
 

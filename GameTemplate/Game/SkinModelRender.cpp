@@ -11,7 +11,6 @@ namespace render {
 			m_renderingEngine = FindGO<RenderingEngine>(RENDERING_ENGINE_NAME);
 			m_lig = m_renderingEngine->GetLighting();
 			m_shadow = m_renderingEngine->GetShadow();
-			m_miniMap = FindGO<mainGame::map::MiniMap>(mainGame::map::MINI_MAP_NAME);
 			m_shadowFlag = false;
 			m_animFlag = false;
 			m_modelFilePath = nullptr;

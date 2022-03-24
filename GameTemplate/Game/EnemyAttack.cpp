@@ -10,7 +10,7 @@ namespace {
 	/// @brief ã‚¢UŒ‚—Í
 	const int WEAK_ATTTACK_POWER = 1;
 	/// @brief UŒ‚ŠÔŠu
-	const float ATTACK_INTERVAL = 1.0f;
+	const float ATTACK_INTERVAL = 2.0f;
 	/// @brief UŒ‚”ÍˆÍ
 	const float ATTACK_RANGE = 150.0f;
 }
