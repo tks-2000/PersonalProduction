@@ -48,22 +48,15 @@ namespace mainGame {
 		if (m_isInitd == true) {
 			return;
 		}
-		//î•ñ‚ğ“üè
+		//g—p‚·‚éî•ñ‚ğ“üè
 		m_player = FindGO<player::Player>(player::PLAYER_NAME);
-
 		m_gameUI = FindGO<ui::GameUI>(ui::GAME_UI_NAME);
-
 		render::RenderingEngine* renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
-
 		m_shadow = renderingEngine->GetShadow();
 
-		//m_shadow->SetLightCameraPos(LIGHT_CAMERA_START_POS);
-		//m_shadow->SetLightCameraTarget(LIGHT_CAMERA_START_TARGET);
-
+		//•Ï”‚Ì‰Šú‰»
 		m_oldPlayerAngle = m_player->GetPlayerAngle();
-
 		m_cameraFriction = TPS_CAMERA_FRICTION;
-
 		m_cameraMoveStopDistance = CAMERA_MOVE_STOP_DISTANCE;
 
 		//ƒJƒƒ‰‚Ì‰Šúİ’è
@@ -265,9 +258,6 @@ namespace mainGame {
 			
 			ligCameraTarget += m_cameraMoveDirection * m_cameraMoveDistance.Length() / m_cameraFriction;
 		}
-
-		//m_shadow->SetLightCameraPos(ligCameraPos);
-		//m_shadow->SetLightCameraTarget(ligCameraTarget);
 	}
 
 	void GameCamera::FpsCameraMove()

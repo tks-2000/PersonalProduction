@@ -34,10 +34,16 @@ namespace mainGame {
 			/// @return 移動速度のconst参照
 			const Vector3& GetMoveSpssd() { return m_moveSpeed; }
 
+			/// @brief 移動速度を設定
+			/// @param speed 設定する移動速度
 			void SetMoveSpeed(const Vector3& speed) { m_moveSpeed = speed; }
 
+			/// @brief 加算する速度を設定
+			/// @param addVerocity 設定する加算速度
 			void SetAddVerocity(const float addVerocity) { m_addVerocity = addVerocity; }
 
+			/// @brief 座標を設定
+			/// @param pos 設定する座標
 			void SetPosition(const Vector3& pos) { m_position = pos; m_charaCon.SetPosition(m_position); }
 		private:
 

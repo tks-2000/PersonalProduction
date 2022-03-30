@@ -53,11 +53,11 @@ namespace mainGame {
 			std::vector<enemy::Enemy*>* m_enemys = nullptr;
 			/// @brief プレイヤーの攻撃を制御するクラス
 			Attack* m_playerAttack = nullptr;
-
+			/// @brief 弾丸エフェクト
 			render::effect::EffectRender* m_shotEffect = nullptr;
-
+			/// @brief 音声
 			sound::SoundPlayer* m_soundPlayer = nullptr;
-
+			/// @brief 弾丸の音声番号
 			int m_bulletSoundID = 0;
 		};
 	}

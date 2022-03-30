@@ -5,6 +5,7 @@ namespace mainGame {
 
 	Game::Game()
 	{
+		//ゲームの要素を作成
 		m_soundPlayer = NewGO<sound::SoundPlayer>(PRIORITY_VERYLOW, sound::SOUND_PLAYER_NAME);	
 		m_sceneTransition = NewGO<SceneTransition>(PRIORITY_VERYLOW, SCENE_TRANSITION_NAME);
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
@@ -15,18 +16,17 @@ namespace mainGame {
 		
 	}
 
-	void Game::Init()
-	{
-
-	}
-
 	bool Game::Start()
 	{
+		//初期化を行う
 		m_sceneTransition->Init();
 
+		//タイトルシーンから始める
 		TitleSceneStart();
 		
+		//初期化完了
 		m_isInitd = true;
+
 		return true;
 	}
 

@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "PlayerAnimation.h"
 
-namespace {
-	
-}
-
 namespace mainGame {
 	namespace player {
 
@@ -39,7 +35,6 @@ namespace mainGame {
 		{
 			//データを取得
 			m_player = pl;
-
 			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			//初期化完了
@@ -53,45 +48,62 @@ namespace mainGame {
 				return;
 			}
 
+			//ゲームシーンの状態によって再生するアニメーションを変える
 			switch (m_gameScene->GetGameSceneState())
 			{
+				//ゲーム開始時
 			case enGameSceneStart: {
+				//待機アニメーションを再生
 				m_playerAnimState = enPlayerAnimationIdle;
 			}break;
+				//ゲーム実行中
 			case enGameSceneInProgress: {
-				//状態によって再生するアニメーションを変える
+				
+				//プレイヤーの状態によって再生するアニメーションを変える
 				switch (m_player->GetPlayerStatus())
 				{
+					//待機中
 				case enPlayerIdle: {
+					//待機アニメーションを再生
 					m_playerAnimState = enPlayerAnimationIdle;
 				}break;
+					//歩行中
 				case enPlayerWark: {
+					//歩行アニメーションを再生
 					m_playerAnimState = enPlayerAnimationWark;
 				}break;
+					//走行中
 				case enPlayerRun: {
+					//走行アニメーションを再生
 					m_playerAnimState = enPlayerAnimationRun;
 				}break;
+					//攻撃中
 				case enPlayerAttack: {
+					//攻撃アニメーションを再生
 					m_playerAnimState = enPlayerAnimationAttack;
 				}break;
+					//ダメージ中
 				case enPlayerDamage: {
+					//ダメージアニメーションを再生
 					m_playerAnimState = enPlayerAnimationDamage;
 				}break;
 				default:
 					break;
 				}
 			}break;
+				//ゲームクリア時
 			case enGameSceneClear: {
+				//クリアのアニメーションを再生
 				m_playerAnimState = enPlayerAnimationClear;
 			}break;
+				//ゲームオーバー時
 			case enGameSceneOver: {
+				//ゲームオーバーのアニメーションを再生
 				m_playerAnimState = enPlayerAnimationKneelDown;
 			}
 			default:
 				break;
 			}
-
-			
 		}
 		
 	}

@@ -15,11 +15,11 @@ namespace mainGame {
 		const int BULLET_DAMAGE = 1;
 		/// @brief 弾丸の接触する方向一致率
 		const float BULLET_COLLISION_MATCH_RATE = 0.0f;
-
+		/// @brief 弾丸エフェクトの拡大率
 		const Vector3 SHOT_EFFECT_SCALE = { 20.0f,20.0f,20.0f };
-
+		/// @brief 弾丸エフェクトのファイルパス
 		const wchar_t* BULLET_SE_FILEPATH = L"Assets/sound/se/bullet.wav";
-
+		/// @brief 弾丸の音声の大きさ
 		const float BULLET_SE_VOLUME = 0.1f;
 
 		Bullet::Bullet()
@@ -29,13 +29,14 @@ namespace mainGame {
 
 		Bullet::~Bullet()
 		{
-			//DeleteGO(m_bulletModel);
+			//エフェクトを停止して削除
 			m_shotEffect->Stop(true);
 			DeleteGO(m_shotEffect);
 		}
 
 		void Bullet::Init(Attack* plAttack, std::vector<enemy::Enemy*>* enemys,const Vector3& pos, const Vector3& target)
 		{
+			//未初期化なら実行しない
 			if (m_isInitd == true) {
 				return;
 			}
@@ -44,11 +45,6 @@ namespace mainGame {
 			m_playerAttack = plAttack;
 			m_enemys = enemys;
 
-			//弾丸のモデルを初期化
-			//m_bulletModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			//m_bulletModel->Init("Assets/modelData/sphere/sphere.tkm");
-			//m_bulletModel->SetScale({ 0.7f,0.7f,0.7f });
-
 			//受け取った座標から移動方向を決める
 			m_startPos = pos;
 			m_position = m_startPos;
@@ -56,11 +52,13 @@ namespace mainGame {
 			m_moveDirection = m_target - m_startPos;
 			m_moveDirection.Normalize();
 
+			//弾丸エフェクトを作成
 			m_shotEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
 			m_shotEffect->Init(u"Assets/effect/shot_pl1.efk");
 			m_shotEffect->SetScale(SHOT_EFFECT_SCALE);
 			m_shotEffect->Play(true);
 
+			//音声を設定
 			m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
 			m_bulletSoundID = m_soundPlayer->SetSE(BULLET_SE_FILEPATH);
 			m_soundPlayer->SetSEVolume(m_bulletSoundID, BULLET_SE_VOLUME);
@@ -81,14 +79,11 @@ namespace mainGame {
 			MoveExecution();
 			EnemyCollision();
 
-			//モデルに更新したデータを適用
-			//m_bulletModel->SetPosition(m_position);
-			//m_bulletModel->Execution();
-
 			Quaternion qRot = Quaternion::Identity;
 
 			qRot.SetRotationY(atan2(m_moveDirection.x, m_moveDirection.z));
 
+			//更新した情報をエフェクトに適用
 			m_shotEffect->SetPosition(m_position);
 			m_shotEffect->SetRotation(qRot);
 			m_shotEffect->Execution();

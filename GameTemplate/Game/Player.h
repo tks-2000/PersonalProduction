@@ -40,9 +40,8 @@ namespace mainGame {
 			Player();
 			~Player();
 
+			/// @brief 初期化
 			void Init();
-			bool Start();
-			void Update();
 
 			/// @brief プレイヤーの状態を設定
 			/// @param plState 設定するプレイヤーの状態
@@ -64,14 +63,24 @@ namespace mainGame {
 			/// @param pos 設定するプレイヤーの座標 
 			void SetPlayerPosition(const Vector3& pos) { m_position = pos; }
 
+			/// @brief 移動速度を取得
+			/// @return プレイヤーの移動速度のconst参照
 			const Vector3& GetMoveSpeed() { return m_playerMove.GetMoveSpssd(); }
 
+			/// @brief 移動速度を設定
+			/// @param speed プレイヤーに設定する移動速度
 			void SetMoveSpeed(const Vector3& speed) { m_playerMove.SetMoveSpeed(speed); }
 
+			/// @brief 加算する速度を設定
+			/// @param addVerocity 加算したい速度
 			void SetAddVerocity(const float addVerocity) { m_playerMove.SetAddVerocity(addVerocity); }
 
+			/// @brief プレイヤーの角度を入手
+			/// @return プレイヤーの角度
 			float GetPlayerAngle() { return m_playerRot.GetAngle(); }
 
+			/// @brief プレイヤーの回転を入手
+			/// @return プレイヤーの回転クォータニオン
 			const Quaternion& GetPlayerRotation() {return m_playerRot.GetRotation(); }
 
 			/// @brief プレイヤーの方向を入手
@@ -144,13 +153,14 @@ namespace mainGame {
 			void Execution();
 
 		private:
-			
+			/// @brief ダメージ状態の処理
 			void DamageExecution();
-
+			/// @brief 無敵状態の処理
 			void InvincibleExecution();
-
+			/// @brief プレイヤーの装備モデルの処理
 			void SetWeapons();
 
+			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 			/// @brief 座標
 			Vector3 m_position = g_vec3Zero;
@@ -174,19 +184,19 @@ namespace mainGame {
 			Rotation m_playerRot;
 			/// @brief 攻撃
 			Attack m_playerAttack;
-
+			/// @brief エフェクト生成器
 			EffectGenerator  m_playerEffect;
-
+			/// @brief プレイヤーの音声
 			Sound m_playerSound;
-
+			/// @brief アイテムスロット
 			ItemSlot m_itemSlot;
-
+			/// @brief ダメージ状態の時間を計るタイマー
 			float m_damageTimer = 0.0f;
-
+			/// @brief 無敵フラグ
 			bool m_invincibleFlag = false;
-
+			/// @brief 無敵時間を計るタイマー
 			float m_invincibleTimer = 0.0f;
-
+			/// @brief ゲームシーン
 			GameScene* m_gameScene = nullptr;
 		};
 	}

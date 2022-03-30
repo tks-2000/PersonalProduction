@@ -24,6 +24,8 @@ namespace {
 	const float ATTACK_JUDGEMENT_END_TIME = 0.6f;
 	/// @brief 攻撃が終わるまでの時間
 	const float ATTACK_END_TIME = 1.0f;
+	/// @brief 弾丸の高さ
+	const float BULLET_HEIGHT = 50.0f;
 }
 
 namespace mainGame {
@@ -36,12 +38,16 @@ namespace mainGame {
 
 		Attack::~Attack()
 		{
+			//
 			m_enemys.clear();
 
+			//
 			for (int bulletNum = 0; bulletNum < m_bullets.size(); bulletNum++) {
+				//
 				DeleteGO(m_bullets[bulletNum]);
 			}
 
+			//
 			m_bullets.clear();
 		}
 
@@ -56,17 +62,18 @@ namespace mainGame {
 			//情報を入手
 			m_player = pl;
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
+
+			//変数の初期化を行う
 			m_attackPower = NORMAL_IMPACT_FORCE;
 			m_attackRange = ATTACK_RANGE;
 			m_chargeMeleeAttackTime = CHARGE_MELEE_ATTACK_TIME;
-
 			m_bulletReloadTimer = 0.0f;
 			m_bulletReloadTime = NORMAL_BULLET_RELOAD_TIME;
 			m_maxBulletNum = NORMAL_MAX_BULLET_NUM;
 			m_remainingBullets = m_maxBulletNum;
 			m_attackPossibleMatchRate = ATTACK_POSSIBLE_MATCH_RATE;
 
-			m_attackEffect.Init(u"Assets/effect/kick.efk");
+			
 			
 
 			//初期化完了
@@ -207,38 +214,40 @@ namespace mainGame {
 					m_bulletReloadTimer = 0.0f;
 				}
 			}
-
+			//弾丸の処理を実行
 			BulletExecution();
-			m_effectPos = m_player->GetPlayerPosition();
-			m_effectRotation.SetRotationY(m_player->GetPlayerAngle());
-			m_attackEffect.SetPosition(m_effectPos);
-			m_attackEffect.SetRotation(m_effectRotation);
-			m_attackEffect.SetScale({ 2.0f,2.0f,2.0f });
-			m_attackEffect.Update();
 		}
 
 		void Attack::DeleteEnemyData(enemy::Enemy* enemy)
 		{
+			//イテレータを用意する
 			std::vector<enemy::Enemy*>::iterator it;
+			//配列の中に受け取ったアドレスがあるか調べる
 			it = std::find(
 				m_enemys.begin(),
 				m_enemys.end(),
 				enemy
 			);
+			//イテレータに入っている要素が最後尾でない場合
 			if (it != m_enemys.end()) {
+				//配列から削除する
 				m_enemys.erase(it);
 			}
 		}
 
 		void Attack::DeleteBullet(Bullet* bullet)
 		{
+			//イテレータを用意する
 			std::vector<Bullet*>::iterator it;
+			//配列の中に受け取ったアドレスがあるか調べる
 			it = std::find(
 				m_bullets.begin(),
 				m_bullets.end(),
 				bullet
 			);
+			//イテレータに入っている要素が最後尾でない場合
 			if (it != m_bullets.end()) {
+				//配列から削除する
 				m_bullets.erase(it);
 			}
 		}
@@ -257,29 +266,25 @@ namespace mainGame {
 					//敵へのベクトルで衝撃を与える
 					toEnemyPos.Normalize();
 
+					//内積を使って角度の一致率を求める
 					float matchRate = Dot(toEnemyPos, m_player->GetPlayerDirection());
 
+					//角度が一致していない場合
 					if (matchRate < ATTACK_POSSIBLE_MATCH_RATE) {
+						//処理を終わる
 						return;
 					}
 
-					
+					//敵がダウン状態の場合
+					if (m_enemys[enemyNum]->GetState() == enemy::enEnemyDown) {
+						//処理を終わる
+						return;
+					}
 
 					//敵にダメージを与える
-					if (m_enemys[enemyNum]->GetState() == enemy::enEnemyDown) {
-						return;
-					}
-
 					m_enemys[enemyNum]->SetMoveSpeed(toEnemyPos * m_attackPower);
 					m_enemys[enemyNum]->SetState(enemy::enEnemyDamage);
 					m_enemys[enemyNum]->ReceiveDamage(NORMAL_ATTACK_DAMAGE);
-
-					/*CSoundSource* attackSe = NewGO<CSoundSource>(PRIORITY_VERYLOW);
-					attackSe->Init(L"Assets/sound/se/WeakCollide.wav");
-					attackSe->SetVolume(1.0f);
-					attackSe->Play(false);*/
-
-					//m_attackEffect.Play();
 				}
 			}
 		}
@@ -310,9 +315,12 @@ namespace mainGame {
 
 		void Attack::BulletFiring()
 		{
+			//弾丸を作成する
 			m_bullets.push_back(NewGO<Bullet>(PRIORITY_VERYLOW));
+			//発射地点を設定する
 			Vector3 startPos = m_player->GetPlayerPosition();
-			startPos.y += 50.0f;
+			startPos.y += BULLET_HEIGHT;
+			//発射目標を設定する
 			Vector3 targetPos;
 			if (m_gameCamera->GetCameraMode() == enCameraModeFps) {
 				targetPos = m_gameCamera->GetCameraGazePointPos();
@@ -321,16 +329,18 @@ namespace mainGame {
 				targetPos = m_player->GetPlayerPosition() + m_player->GetPlayerDirection();
 				targetPos.y = startPos.y;
 			}
+			//作成した弾丸を初期化
 			m_bullets[m_bullets.size() - 1]->Init(this, &m_enemys, startPos, targetPos);
+			//残弾数を減らす
 			m_remainingBullets--;
 		}
 
 		void Attack::BulletExecution()
 		{
+			//弾丸の数だけ実行する
 			for (int bulletNum = 0; bulletNum < m_bullets.size(); bulletNum++) {
 				m_bullets[bulletNum]->Execution();
 			}
-
 		}
 	}
 }

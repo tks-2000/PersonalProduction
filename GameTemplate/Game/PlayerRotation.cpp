@@ -3,6 +3,9 @@
 
 namespace mainGame {
 	namespace player {
+		/// @brief 開始時の方向
+		const Vector3 START_DIRECTION = { 0.0f,0.0f,1.0f };
+
 		Rotation::Rotation()
 		{
 			//未初期化で開始
@@ -20,12 +23,15 @@ namespace mainGame {
 				return;
 			}
 
-			//プレイヤーのアドレスを入手
+			//使用する情報を入手
 			m_player = pl;
-
-			m_direction = { 0.0f,0.0f,1.0f };
-
 			m_gameCamera = FindGO<GameCamera>(GAME_CAMERA_NAME);
+
+			//変数を初期化
+			m_direction = START_DIRECTION;
+			m_direction.Normalize();
+
+			
 			//初期化完了
 			m_isInitd = true;
 		}

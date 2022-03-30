@@ -63,24 +63,26 @@ namespace mainGame {
 		enGameStateNum
 	};
 
-	/// @brief ゲーム中の流れを制御するクラス
+	/// @brief ゲーム全体の流れを制御するクラス
 	class Game : public IGameObject
 	{
 	public:
 		Game();
 		~Game();
-		/// @brief 初期化
-		void Init();
-
+		
+		/// @brief 開始時の処理
+		/// @return 
 		bool Start();
+		/// @brief 更新
 		void Update();
 
+		/// @brief タイトルシーン開始の処理
 		void TitleSceneStart();
-
+		/// @brief タイトルシーン削除の処理
 		void DeleteTitleScene(); 
-
+		/// @brief ゲームシーン開始の処理
 		void GameSceneStart();
-
+		/// @brief ゲームシーン削除の処理
 		void DeleteGameScene();
 
 		/// @brief ゲームの状態を変更
@@ -98,17 +100,17 @@ namespace mainGame {
 
 		/// @brief 初期化フラグ
 		bool m_isInitd = false;
-
+		/// @brief ゲームの状態を表すステート
 		EnGameState m_state = enGameStateNum;
-
+		/// @brief タイトル
 		title::Title* m_title = nullptr;
-
+		/// @brief ゲームシーン
 		GameScene* m_gameScene = nullptr;
-
+		/// @brief サウンドプレイヤー
 		sound::SoundPlayer* m_soundPlayer = nullptr;
-
+		/// @brief レンダリングエンジン
 		render::RenderingEngine* m_renderingEngine = nullptr;
-
+		/// @brief シーン遷移
 		SceneTransition* m_sceneTransition = nullptr;
 	};
 

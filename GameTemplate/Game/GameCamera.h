@@ -34,31 +34,39 @@ namespace mainGame {
 
 		/// @brief ゲームカメラの上方向を入手
 		/// @return ゲームカメラの上方向のconst参照
-		const Vector3& GetCameraUp() { return g_camera3D->GetUp(); }
+		const Vector3& GetCameraUp() const { return g_camera3D->GetUp(); }
 
 		/// @brief ゲームカメラの前方向を入手
 		/// @return ゲームカメラの前方向のconst参照
-		const Vector3& GetCameraForward() { return g_camera3D->GetForward(); }
+		const Vector3& GetCameraForward() const { return g_camera3D->GetForward(); }
 
 		/// @brief ゲームカメラの右方向を入手
 		/// @return ゲームカメラの右方向のconst参照
-		const Vector3& GetCameraRight() { return g_camera3D->GetRight(); }
+		const Vector3& GetCameraRight() const { return g_camera3D->GetRight(); }
 
 		/// @brief ゲームカメラの座標を入手
 		/// @return ゲームカメラの座標のconst参照
-		const Vector3& GetCameraPos() { return m_cameraPos; }
+		const Vector3& GetCameraPos() const { return m_cameraPos; }
 
-		const Quaternion& GetCameraYRot() { return m_cameraYRot; }
+		/// @brief カメラのY軸回転クォータニオンを取得
+		/// @return Y軸回転クォータニオンのconst参照
+		const Quaternion& GetCameraYRot() const { return m_cameraYRot; }
 
 		/// @brief カメラのモードを取得
 		/// @return カメラモードのステート
 		const EnCameraMode& GetCameraMode() { return m_mode; }
 
-		const float GetCameraYAngleAmount() { return m_cameraYAngeAmount; }
+		/// @brief カメラのY軸回転角度を取得
+		/// @return カメラのY軸回転角度
+		const float GetCameraYAngleAmount() const { return m_cameraYAngeAmount; }
 
-		const Vector3& GetCameraAxisX() { return m_AxisX; }
+		/// @brief カメラのX軸を取得
+		/// @return カメラのX軸ベクトル
+		const Vector3& GetCameraAxisX() const { return m_AxisX; }
 
-		const float GetCameraXAngleAmount() { return m_cameraXAngeAmount; }
+		/// @brief カメラのX軸回転角度を取得
+		/// @return カメラのX軸回転角度
+		const float GetCameraXAngleAmount() const { return m_cameraXAngeAmount; }
 
 		/// @brief Fpsカメラの座標から注視点への座標を取得
 		/// @return Fpsカメラの座標から注視点への座標のconst参照
@@ -68,9 +76,13 @@ namespace mainGame {
 		/// @return カメラの注視点の座標のconst参照
 		const Vector3& GetCameraGazePointPos() { return m_cameraGazePoint; }
 
-		const float GetCameraFriction() { return m_cameraFriction; }
+		/// @brief カメラの摩擦力を取得
+		/// @return カメラの摩擦力
+		const float GetCameraFriction() const { return m_cameraFriction; }
 
-		const float GetCameraMoveStopDistance() { return m_cameraMoveStopDistance; }
+		/// @brief カメラの移動停止距離を取得
+		/// @return カメラの移動停止距離
+		const float GetCameraMoveStopDistance() const { return m_cameraMoveStopDistance; }
 
 		/// @brief 実行
 		void Execution();
@@ -158,8 +170,10 @@ namespace mainGame {
 		/// @brief プレイヤー
 		player::Player* m_player = nullptr;
 
+		/// @brief UI
 		ui::GameUI* m_gameUI = nullptr;
 
+		/// @brief 影
 		render::shadow::Shadow* m_shadow = nullptr;
 	};
 

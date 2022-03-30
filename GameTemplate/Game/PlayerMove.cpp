@@ -97,10 +97,11 @@ namespace mainGame {
 			case enPlayerRun: {
 				MoveExecute(RUN_VEROCITY + m_addVerocity);
 			}break;
+				//çUåÇ
 			case enPlayerAttack: {
 				IdleExecute();
 			}break;
-				//
+				//É_ÉÅÅ[ÉW
 			case enPlayerDamage: {
 				IdleExecute();
 			}break;

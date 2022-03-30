@@ -40,9 +40,9 @@ namespace mainGame {
 			/// @return trueなら持っている falseならもっていない
 			bool IsOwnedItem(const int slotNum)const;
 			
-			/// @brief 
-			/// @param slotNum 
-			/// @return 
+			/// @brief スロットにあるアイテムの種類を取得
+			/// @param slotNum 調べるスロット番号
+			/// @return アイテムの種類
 			const item::EnItemType& GetItemType(const int slotNum);
 
 		private:
@@ -50,18 +50,21 @@ namespace mainGame {
 			/// @brief 使用するアイテムスロット選択を行う関数
 			void ItemSelect();
 
+			/// @brief 初期化フラグ
 			bool m_isInitd = false;
 
-			enum { 
+			enum {
+				/// @brief アイテムの最小所持数
 				MIN_ITEM_NUM = 0,
+				/// @brief アイテムの最大所持数
 				MAX_ITEM_NUM = 3 
 			};
 			
 			/// @brief 選択しているアイテム番号
 			int m_selectNo = 0;
-
+			/// @brief アイテム
 			item::Item* m_items[MAX_ITEM_NUM] = { nullptr };
-
+			/// @brief プレイヤー
 			Player* m_player = nullptr;
 		};
 

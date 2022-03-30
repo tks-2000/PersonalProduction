@@ -36,21 +36,32 @@ namespace mainGame {
 			/// @param enemy 敵クラスのアドレス
 			void DeleteEnemyData(enemy::Enemy* enemy);
 
+			/// @brief 弾丸を削除
+			/// @param bullet 弾丸のアドレス
 			void DeleteBullet(Bullet* bullet);
 
 			/// @brief 弾丸の情報を入手
 			/// @return 弾丸の配列のアドレス
 			std::vector<Bullet*>* GetBullets() { return &m_bullets; }
 
-
+			/// @brief 残弾数を取得
+			/// @return 残弾数
 			const int GetRemainingBullets()const { return m_remainingBullets; }
 			
+			/// @brief 攻撃判定が出ているか？
+			/// @return trueで出ている falseで出ていない
 			const bool IsAttackJudgement() const { return m_isAttackJudgement; }
 
+			/// @brief チャージ完了しているか？
+			/// @return trueでしている falseでしていない
 			const bool IsFollCharge() const{ return m_isFollCharge; }
 
+			/// @brief 攻撃可能な方向の一致率を取得
+			/// @return プレイヤーが攻撃可能な方向一致率
 			const float GetAttackPossibleMatchRate() const{ return m_attackPossibleMatchRate; }
 
+			/// @brief 攻撃を開始しているか？
+			/// @return trueで開始している falseで開始していない
 			const bool IsAttackStart() { return m_isAttackStart; }
 
 		private:
@@ -58,9 +69,9 @@ namespace mainGame {
 			void MeleeAttack();
 			/// @brief チャージ近接攻撃を実行
 			void ChargeMeleeAttack();
-			/// @brief 
+			/// @brief 弾丸を発射する処理
 			void BulletFiring();
-
+			/// @brief 弾丸の処理を実行
 			void BulletExecution();
 
 			
@@ -104,14 +115,6 @@ namespace mainGame {
 			std::vector<Bullet*> m_bullets;
 			/// @brief ゲームカメラ
 			GameCamera* m_gameCamera = nullptr;
-
-			Effect m_attackEffect;
-
-			Vector3 m_effectPos = g_vec3Zero;
-
-			Quaternion m_effectRotation = Quaternion::Identity;
-
-			
 		};
 	}
 }

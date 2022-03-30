@@ -10,14 +10,22 @@ namespace mainGame {
 
 		/// @brief アニメーションの種類の列挙型
 		enum EnPlayerAnimations {
-			enPlayerAnimationIdle,	//待機
-			enPlayerAnimationWark,	//歩き
+			/// @brief 待機
+			enPlayerAnimationIdle,
+			/// @brief 歩行
+			enPlayerAnimationWark,
+			/// @brief 走行
 			enPlayerAnimationRun,
+			/// @brief 攻撃
 			enPlayerAnimationAttack,
+			/// @brief クリア
 			enPlayerAnimationClear,
+			/// @brief ダメージ
 			enPlayerAnimationDamage,
+			/// @brief ダウン
 			enPlayerAnimationKneelDown,
-			enPlayerAnimationNum	//合計数
+			/// @brief 合計数
+			enPlayerAnimationNum
 		};
 
 		/// @brief プレイヤーのアニメーションを制御するクラス
@@ -54,7 +62,7 @@ namespace mainGame {
 			AnimationClip m_playerAnimationClip[enPlayerAnimationNum];
 			/// @brief プレイヤー
 			Player* m_player = nullptr;
-
+			/// @brief ゲームシーン
 			GameScene* m_gameScene = nullptr;
 		};
 	}
