@@ -12,7 +12,7 @@ namespace mainGame {
 			~Stage();
 			/// @brief	初期化
 			void Init();
-			/// @brief 
+			/// @brief 実行
 			void Execution();
 		private:
 			/// @brief 初期化フラグ
@@ -27,15 +27,15 @@ namespace mainGame {
 			render::model::SkinModelRender* m_stageModel = nullptr;
 			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticStageObject;
-
+			/// @brief 背景モデル
 			render::model::SkinModelRender* m_bgModel = nullptr;
-
+			/// @brief ミニマップモデル
 			render::model::SkinModelRender* m_miniMapModel = nullptr;
-
+			/// @brief ステージのサウンドID
 			int m_stageSoundID = 0;
-
+			/// @brief サウンドプレイヤー
 			sound::SoundPlayer* m_soundPlayer = nullptr;
-
+			/// @brief ゲームシーン
 			GameScene* m_gameScene = nullptr;
 		};
 	}

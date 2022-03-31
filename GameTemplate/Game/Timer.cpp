@@ -7,7 +7,8 @@ namespace mainGame {
 		const int START_TIME = 4;
 		/// @brief ゲーム中のカウント数
 		const int INGAME_TIME = 120;
-
+		/// @brief タイマーフォントの座標
+		const Vector2 TIMER_FONT_POS = { 0.0f,300.0f };
 
 		Timer::Timer()
 		{
@@ -28,18 +29,13 @@ namespace mainGame {
 				return;
 			}
 
-			//タイマーの量を設定
+			//変数を初期化
 			m_startTimer = START_TIME;
 			m_inGameTimer = INGAME_TIME;
-
-			//タイマー表示のフォントを作成
-			
 			m_timeNum = m_startTimer + 1.0f;
+			m_timeFontPos = TIMER_FONT_POS;
 			
-			m_timeFontPos = { 0.0f,300.0f };
-			
-
-			
+			//必要な情報を取得
 			m_gameScene = FindGO<GameScene>(GAME_SCENE_NAME);
 
 			//初期化完了
@@ -53,13 +49,17 @@ namespace mainGame {
 				return;
 			}
 
-			//状態によって実行する処理を決める
+			//ゲームシーンの状態によって実行する処理を決める
 			switch (m_gameScene->GetGameSceneState())
 			{
+				//ゲーム開始時
 			case enGameSceneStart: {
+				//開始時のタイマーを進める
 				ExecuteStartTimer();
 			}break;
+				//ゲーム中
 			case enGameSceneInProgress: {
+				//ゲーム中のタイマーを進める
 				ExecuteInGameTimer();
 			}break;
 			
@@ -83,7 +83,7 @@ namespace mainGame {
 			if (m_startTimer <= 0.0f) {
 				//ゲーム中のカウントを進め始める
 				m_state = enTimerExecute;
-				
+				//ゲームシーンをゲーム中に変更
 				m_gameScene->SetGameSceneState(enGameSceneInProgress);
 				return;
 			}
@@ -104,6 +104,7 @@ namespace mainGame {
 			if (m_inGameTimer <= 0.0f) {
 				//ゲーム終了後のカウントを進め始める
 				m_state = enTimerEnd;
+				//ゲームシーンをクリア状態に変更
 				m_gameScene->SetGameSceneState(enGameSceneClear);
 				return;
 			}

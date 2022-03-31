@@ -26,14 +26,20 @@ namespace mainGame {
 
 			/// @brief 初期化
 			void Init();
+
 			/// @brief 実行
 			void Execution();
+
 			/// @brief タイマーの状態を取得
 			/// @return タイマーが何を行っているかのステート
 			const EnTimerState& GetTimerState() { return m_state; }
 
+			/// @brief タイマーを取得
+			/// @return タイマーの値
 			const int GetTimer() const { return m_timeNum; }
 
+			/// @brief 開始時のタイマーを取得
+			/// @return 開始時のタイマーの値
 			const int GetStartTimer() const { return m_startTimeNum; }
 
 		private:
@@ -48,17 +54,14 @@ namespace mainGame {
 			float m_startTimer = 0.0f;
 			/// @brief ゲーム中のタイマー
 			float m_inGameTimer = 0.0f;
-
 			int m_startTimeNum = 0;
 			/// @brief フォントに設定する数値
 			int m_timeNum = 0;
 			/// @brief フォントの状態を表すステート
 			EnTimerState m_state = enTimerStart;
-			
 			/// @brief タイマーの表示位置
 			Vector2 m_timeFontPos = g_vec2Zero;
-
-
+			/// @brief ゲームシーン
 			GameScene* m_gameScene = nullptr;
 		};
 	}
