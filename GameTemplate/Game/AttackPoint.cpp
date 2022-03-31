@@ -10,29 +10,24 @@ namespace mainGame {
 
 		AttackPoint::~AttackPoint()
 		{
-			//DeleteGO(m_model);
+			
 		}
 
 		void AttackPoint::Init(DefensiveTarget* defensiveTarget)
 		{
-
+			//g—p‚·‚éî•ñ‚ğİ’è
 			m_defensiveTarget = defensiveTarget;
 
-			//m_model = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-
-			//m_model->Init("Assets/modelData/box/box2.tkm");
-
+			//‰Šú‰»Š®—¹
 			m_isInitd = true;
 		}
 
 		void AttackPoint::Execution()
 		{
+			//–¢‰Šú‰»‚È‚çÀs‚µ‚È‚¢
 			if (m_isInitd == false) {
 				return;
 			}
-
-			//m_model->SetPosition(m_postion);
-			//m_model->Execution();
 		}
 	}
 }

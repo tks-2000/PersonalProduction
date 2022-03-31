@@ -40,6 +40,7 @@ namespace mainGame {
 
 		Player::~Player()
 		{
+			//ƒ‚ƒfƒ‹‚ğíœ
 			DeleteGO(m_playerModel);
 			DeleteGO(m_swordModel);
 			DeleteGO(m_shieldModel);

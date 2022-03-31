@@ -55,25 +55,33 @@ namespace mainGame {
 
 	void GameScene::Init()
 	{
-		//初期化を行う
-		m_pause = false;
+		
+		
 
+		//初期化を行う
 		m_player->Init();
 		m_defensiveTarget->Init();
 		m_gameCamera->Init();
 		m_enemyGenerator->Init(g_vec3Zero);
 		m_stage->Init();
 		m_timer->Init();
+		m_pause = false;
+		m_gameSceneState = enGameSceneStart;
+		m_itemGenerator->Init();
+		m_gameUI->Init();
 
+		//画像の初期化
 		m_sampleSprite->Init("Assets/image/sight.dds", SPRITE_WIDTH, SPRITE_HEIGHT);
 		m_sampleSprite->SetPosition(g_vec3Zero);
 		m_sampleSprite->SetColor(SPRITE_COLOR);
 
+		//フォントの初期化
 		m_pressKeyFont = NewGO<render::font::FontRender>(PRIORITY_VERYLOW);
 		m_pressKeyFont->Init(L"PUSH X BUTTON");
 		m_pressKeyFont->SetPosition(PRESSKEY_FONT_POS);
 		m_pressKeyFont->SetColor(m_pressKeyFontColor);
 
+		//サウンドの初期化
 		m_soundPlayer = FindGO<sound::SoundPlayer>(sound::SOUND_PLAYER_NAME);
 		m_clearSoundID = m_soundPlayer->SetSE(CLEAR_SE_FILEPATH);
 		m_soundPlayer->SetSEVolume(m_clearSoundID, SE_VOLUME);
@@ -82,14 +90,11 @@ namespace mainGame {
 		m_pressKeySoundID = m_soundPlayer->SetSE(PRESSKEY_SE_FILEPATH);
 		m_soundPlayer->SetSEVolume(m_pressKeySoundID, SE_VOLUME);
 
-		m_gameSceneState = enGameSceneStart;
-		m_itemGenerator->Init();
-		m_gameUI->Init();
-
 		//使用する情報を取得
 		m_renderingEngine = FindGO<render::RenderingEngine>(render::RENDERING_ENGINE_NAME);
 		m_game = FindGO<Game>(GAME_NAME);
 		m_sceneTransition = FindGO<SceneTransition>(SCENE_TRANSITION_NAME);
+
 		//フェードインを始める
 		m_sceneTransition->SetFeadIn(FEADIN_RATE);
 

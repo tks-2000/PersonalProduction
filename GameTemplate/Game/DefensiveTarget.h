@@ -42,9 +42,11 @@ namespace mainGame {
 			/// @return trueで受けている falseで受けていない
 			bool IsDamage() { return m_isDamage; }
 
+			/// @brief 最も近い攻撃ポイントを取得
+			/// @param pos 計算する座標
+			/// @return 最も近い攻撃ポイントの参照
 			AttackPoint* GetNearestAttackPoint(const Vector3& pos);
 		private:
-
 			/// @brief ダメージを受ける
 			void ApplyDamage();
 
@@ -62,19 +64,16 @@ namespace mainGame {
 			float m_hpDecreaseAmount = 0.0f;
 			/// @brief ダメージ後の体力
 			float m_afterDamageHp = 0.0f;
-
 			/// @brief ダメージフラグ
 			bool m_isDamage = false;
 			/// @brief 破壊フラグ
 			bool m_isBreak = false;
-
 			/// @brief モデル
 			render::model::SkinModelRender* m_defensiveTargetModel = nullptr;
-
+			/// @brief ミニマップ上のモデル
 			render::model::SkinModelRender* m_miniMapdefensiveTargetModel = nullptr;
-
+			/// @brief 攻撃ポイント
 			std::array<AttackPoint, ATTACKPOINT_NUM> m_attackPoints;
-
 			/// @brief 静的物理オブジェクト
 			PhysicsStaticObject m_staticDefensiveTargetObject;
 		};
