@@ -17,7 +17,8 @@ namespace mainGame {
 
 			/// @brief ƒ_ƒ[ƒW‚ğ“K—p
 			void ApplyDamage();
-
+			
+			/// @brief UI‚ğ”ñ•\¦
 			void HIdeUI();
 		private:
 			/// @brief ‰Šú‰»ƒtƒ‰ƒO
@@ -31,17 +32,15 @@ namespace mainGame {
 			Vector4 m_enduranceSpriteColor = g_vec4White;
 			/// @brief ‘Ï‹v—Í‚Ì‰º’n‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceBaseSprite = nullptr;
-
-			/// @brief ‘Ï‹v—Í‚Ì
+			/// @brief ‘Ï‹v—Í‚Ì‰º’n‚Ì˜g‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceBaseFrame = nullptr;
 			/// @brief ‘Ï‹v—Í‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceSprite = nullptr;
 			/// @brief ‘Ï‹v—Í‚Ì‰º‚Ì‰æ‘œ
 			render::sprite::SpriteRender* m_enduranceUnderSprite = nullptr;
-
 			/// @brief –h‰q‘ÎÛ
 			defensiveTarget::DefensiveTarget* m_defensiveTarget = nullptr;
-
+			/// @brief ƒQ[ƒ€ƒV[ƒ“
 			GameScene* m_gameScene = nullptr;
 		};
 	}
