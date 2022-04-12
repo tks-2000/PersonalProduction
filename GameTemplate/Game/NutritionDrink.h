@@ -9,6 +9,8 @@ namespace mainGame {
 	}
 
 	namespace item {
+
+		/// @brief プレイヤーを強化する栄養ドリンク
 		class NutritionDrink : public Item
 		{
 		public:
@@ -21,6 +23,7 @@ namespace mainGame {
 			/// @brief 個別の情報の初期化
 			void InitData() override;
 
+			/// @brief 出現時の処理
 			void Spawn() override;
 
 			/// @brief 効果発動中の処理
@@ -37,6 +40,7 @@ namespace mainGame {
 			/// @brief 敵生成器
 			enemy::Generator* m_enemyGenerator = nullptr;
 
+			/// @brief エフェクト
 			render::effect::EffectRender* m_powerUpEffect = nullptr;
 		};
 	}

@@ -12,25 +12,26 @@ namespace mainGame {
 
 		class Item;
 
-		
-
 		/// @brief アイテム生成器
 		class ItemGenerator : public IGameObject
 		{
 		public:
 			ItemGenerator();
 			~ItemGenerator();
-
+			/// @brief 初期化
 			void Init();
-
+			/// @brief 実行
 			void Execution();
-
+			/// @brief アイテムを出現させる
+			/// @param itemType 出現させるアイテムの種類
+			/// @param pos 出現させる座標
 			void SpawnItem(const EnItemType& itemType, const Vector3& pos);
-
+			/// @brief アイテムを削除
+			/// @param item 削除するアイテムのアドレス
 			void DeleteItem(Item* item);
 
 		private:
-
+			/// @brief 出現判定を行う
 			void SpawnJudgement();
 			/// @brief 初期化フラグ
 			bool m_isInitd = false;
@@ -50,7 +51,7 @@ namespace mainGame {
 			enemy::Enemy* m_dropEnemy = nullptr;
 			/// @brief 敵の情報を格納する配列のポインタ
 			std::vector<enemy::Enemy*>* m_enemys = nullptr;
-
+			/// @brief ゲーム
 			Game* m_game = nullptr;
 		};
 	}
