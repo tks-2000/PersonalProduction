@@ -38,6 +38,7 @@ namespace mainGame {
 
 		EffectGenerator::EffectGenerator()
 		{
+			//エフェクトを作成
 			m_spawnEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
 			m_damageEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
 			m_stanEffect = NewGO<render::effect::EffectRender>(PRIORITY_VERYLOW);
@@ -47,6 +48,7 @@ namespace mainGame {
 
 		EffectGenerator::~EffectGenerator()
 		{
+			//エフェクトを削除
 			DeleteGO(m_spawnEffect);
 			DeleteGO(m_damageEffect);
 			m_stanEffect->Stop(true);
@@ -72,26 +74,29 @@ namespace mainGame {
 
 			m_spawnEffect->Play(false);
 
+			//初期化完了
 			m_isInitd = true;
 		}
 
 		void EffectGenerator::Execution()
 		{
+			//未初期化なら実行しない
 			if (m_isInitd == false) {
 				return;
 			}
 
+			//全てのエフェクトの処理を実行
 			SpawnEffectExecution();
 			DamageEffectExecution();
 			AttackEffectExecution();
 			DeathEffectExecution();
-
 		}
 
 		
 
 		void EffectGenerator::SpawnEffectExecution()
 		{
+			//エネミーの位置にエフェクトを発生させる
 			Vector3 efkPos = m_enemy->GetPosition();
 			efkPos.y += SPAWN_EFFECT_HEIGHT;
 			m_spawnEffect->SetPosition(efkPos);
@@ -106,7 +111,7 @@ namespace mainGame {
 			efkPos.y += STAN_EFFECT_HEIGHT;
 			m_stanEffect->SetPosition(efkPos);
 
-			//敵がダメージを受けたとき…
+			//エネミーがダメージを受けたとき…
 			if (m_enemy->IsDamage() == true) {
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += DAMAGE_EFFECT_HEIGHT;
@@ -123,39 +128,45 @@ namespace mainGame {
 				m_stanEffect->Stop(true);
 			}
 
-			//エフェクトを更新
+			//エフェクトの処理を実行
 			m_damageEffect->Execution();
 			m_stanEffect->Execution();
 		}
 
 		void EffectGenerator::AttackEffectExecution()
 		{
+			//攻撃が命中したら…
 			if (m_enemy->IsHitAttack() == true) {
+				//ヒットエフェクトを再生
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += ATTACK_EFFECT_HEIGHT;
 				m_attackEffect->SetPosition(efkPos);
 				m_attackEffect->SetRotation(m_enemy->GetRotation());
-
 				m_attackEffect->Play(false);
 			}
+			//攻撃が命中していない場合
 			else {
+				//エフェクトを止める
 				m_attackEffect->Stop(false);
 			}
 
+			//エフェクトを実行
 			m_attackEffect->Execution();
 		}
 
 		void EffectGenerator::DeathEffectExecution()
 		{
+			//エネミーの削除タイマーが死亡エフェクトの再生時間を超えた場合…
 			if (m_enemy->GetDeleteTimer() > m_enemy->GetDeleteTime() * DEATH_EFFECT_PLAY_TAME_RATE) {
+				//死亡エフェクトを再生
 				Vector3 efkPos = m_enemy->GetPosition();
 				efkPos.y += DEATH_EFFECT_HEIGHT;
 				m_deathEffect->SetPosition(efkPos);
 				m_deathEffect->SetRotation(m_enemy->GetRotation());
-
 				m_deathEffect->Play(false);
 			}
 
+			//エフェクトの処理を実行
 			m_deathEffect->Execution();
 		}
 	}

@@ -24,7 +24,7 @@ namespace mainGame {
 
 		class Generator;
 
-		/// @brief 敵の状態を表すステート
+		/// @brief エネミーの状態を表すステート
 		enum EnEnemyState {
 			/// @brief 待機・しばらくすると動き出す
 			enEnemyIdle,
@@ -42,7 +42,7 @@ namespace mainGame {
 			enEnemyStateNum
 		};
 
-		/// @brief 敵の処理をまとめたクラス
+		/// @brief エネミーの処理をまとめたクラス
 		class Enemy : public IGameObject
 		{
 		public:
@@ -68,6 +68,8 @@ namespace mainGame {
 			/// @param speed 設定する移動速度
 			virtual void SetMoveSpeed(const Vector3& speed);
 
+			/// @brief 
+			/// @return 
 			virtual const Vector3& GetMoveSpeed() const { return g_vec3Zero; }
 
 			/// @brief 攻撃を行ったか？
@@ -78,8 +80,12 @@ namespace mainGame {
 			/// @return trueで命中した falseで命中しなかった
 			virtual const bool IsHitAttack() { return false; };
 
+			/// @brief 
+			/// @return 
 			const Vector3& GetDirection() { return m_enemyRotation.GetDirection(); }
 
+			/// @brief 
+			/// @return 
 			const Quaternion& GetRotation() { return m_enemyRotation.GetRotation(); }
 
 			void SetRotation(const Quaternion qRot) { m_qRot = qRot; }

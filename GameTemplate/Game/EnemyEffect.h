@@ -4,7 +4,7 @@ namespace mainGame {
 	namespace enemy {
 		
 
-		/// @brief エフェクト発生器
+		/// @brief エネミーのエフェクト発生器
 		class EffectGenerator
 		{
 		public:
@@ -12,7 +12,7 @@ namespace mainGame {
 			~EffectGenerator();
 
 			/// @brief 初期化
-			/// @param enemy 敵クラスのアドレス
+			/// @param enemy エネミークラスのアドレス
 			void Init(Enemy* enemy);
 
 			/// @brief 実行

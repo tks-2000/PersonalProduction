@@ -32,6 +32,7 @@ namespace mainGame {
 			/// @brief 敵との接触を判定
 			void EnemyCollision();
 
+			/// @brief 効果終了時の処理
 			void DeleteEfficacy();
 
 			/// @brief 敵の配列のポインタ

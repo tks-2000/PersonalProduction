@@ -4,7 +4,7 @@
 namespace mainGame {
 	namespace item {
 		/// @brief アイテムモデルのファイルパス
-		const char* ITEM_MODEL_FILEPATH = "Assets/modelData/item/item_guardup.tkm";
+		const char* TOOLS_MODEL_FILEPATH = "Assets/modelData/item/item_guardup.tkm";
 		/// @brief 効果発動から終了までの時間
 		const float DISAPPEARANCE_TIME = 3.0f;
 		/// @brief 回復ダメージ
@@ -33,7 +33,7 @@ namespace mainGame {
 		{
 			//モデルを作成
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->InitDeferrd(ITEM_MODEL_FILEPATH);
+			m_itemModel->InitDeferrd(TOOLS_MODEL_FILEPATH);
 		}
 
 		void RepairTools::Efficacy()

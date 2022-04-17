@@ -5,7 +5,7 @@ namespace mainGame {
 
 	namespace item {
 		/// @brief アイテムモデルのファイルパス
-		const char* ITEM_MODEL_FILEPATH = "Assets/modelData/item/item_speedup.tkm";
+		const char* DRINK_MODEL_FILEPATH = "Assets/modelData/item/item_speedup.tkm";
 		/// @brief 効果終了までの時間
 		const float DISAPPEARANCE_TIME = 10.0f;
 		/// @brief エネミーと接触する距離
@@ -56,7 +56,7 @@ namespace mainGame {
 		{
 			//
 			m_itemModel = NewGO<render::model::SkinModelRender>(PRIORITY_VERYLOW);
-			m_itemModel->InitDeferrd(ITEM_MODEL_FILEPATH);
+			m_itemModel->InitDeferrd(DRINK_MODEL_FILEPATH);
 		}
 
 		void NutritionDrink::Efficacy()

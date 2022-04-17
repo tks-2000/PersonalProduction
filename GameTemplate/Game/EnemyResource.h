@@ -26,7 +26,9 @@ namespace mainGame{
 			Vector3 enemyStartPos = g_vec3Zero;
 		};
 
+		/// @brief エネミーの最大出現数
 		static const int MAX_ENEMY_NUM = 20;
+		/// @brief 出現位置の数
 		static const int SPAWN_POS_NUM = 16;
 	}
 }
