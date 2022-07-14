@@ -3,6 +3,8 @@
 #include "HID/GamePad.h"
 #include "TResourceBank.h"
 #include "tkFile/TkmFile.h"
+#include "tkFile/TksFile.h"
+#include "tkFile/TkaFile.h"
 #include "Shader.h"
 #include <MiniEngine.h>
 
@@ -61,11 +63,33 @@ public:
 		m_lowTextureBank.Regist(filePath, textureLow);
 	}
 
+	TksFile* GetTksFileFromBank(const char* filePath)
+	{
+		return m_tksFileBank.Get(filePath);
+	}
+
+	void RegistTksFileToBank(const char* filePath, TksFile* tksFIle)
+	{
+		m_tksFileBank.Regist(filePath, tksFIle);
+	}
+
+	TkaFile* GetTkaFileFromBank(const char* filePath)
+	{
+		return m_tkaFileBank.Get(filePath);
+	}
+
+	void RegistTkaFileToBank(const char* filePath, TkaFile* tkaFile)
+	{
+		m_tkaFileBank.Regist(filePath, tkaFile);
+	}
+
 private:
 	GraphicsEngine* m_graphicsEngine = nullptr;		//グラフィックエンジン。
-	TResourceBank<TkmFile> m_tkmFileBank;
-	TResourceBank<Shader> m_shaderBank;
-	TResourceBank<LowTexture> m_lowTextureBank;
+	TResourceBank<TkmFile> m_tkmFileBank;			//tkmファイルのリソースバンク
+	TResourceBank<Shader> m_shaderBank;				//シェーダーリソースバンク
+	TResourceBank<LowTexture> m_lowTextureBank;		//Lowテクスチャのリソースバンク
+	TResourceBank<TksFile> m_tksFileBank;			//tksファイルのリソースバンク
+	TResourceBank<TkaFile> m_tkaFileBank;			//tkaファイルのリソースバンク
 	GamePad m_pad[GamePad::CONNECT_PAD_MAX];		//ゲームパッド。
 	GameTime m_gameTime;							//ゲームタイム。
 	

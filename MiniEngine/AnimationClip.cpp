@@ -13,18 +13,24 @@ AnimationClip::~AnimationClip()
 
 void AnimationClip::Load(const char* filePath)
 {
-	m_tkaFile.Load(filePath);
+	TkaFile* tkaFile = g_engine->GetTkaFileFromBank(filePath);
+	if (tkaFile == nullptr) {
+		tkaFile = new TkaFile;
+		tkaFile->Load(filePath);
+		g_engine->RegistTkaFileToBank(filePath, tkaFile);
+	}
+	m_tkaFile = tkaFile;
 	BuildKeyFramesAndAnimationEvents();
 }
 
 void AnimationClip::BuildKeyFramesAndAnimationEvents()
 {
 	//アニメーションイベントの構築。
-	auto numAnimEvent = m_tkaFile.GetNumAnimationEvent();
+	auto numAnimEvent = m_tkaFile->GetNumAnimationEvent();
 	if (numAnimEvent > 0) {
 		m_animationEvent = std::make_unique<AnimationEvent[]>(numAnimEvent);
 		int eventNo = 0;
-		m_tkaFile.QueryAnimationEvents([&](const TkaFile::AnimationEvent & animEvent) {
+		m_tkaFile->QueryAnimationEvents([&](const TkaFile::AnimationEvent & animEvent) {
 			static wchar_t wEventName[256];
 
 			mbstowcs(wEventName, animEvent.eventName.c_str(), 255);
@@ -35,8 +41,8 @@ void AnimationClip::BuildKeyFramesAndAnimationEvents()
 
 	}
 	//キーフレーム情報の構築。
-	m_keyframes.reserve(m_tkaFile.GetNumKeyFrame());
-	m_tkaFile.QueryKeyFrames([&](const TkaFile::KeyFrame & tkaKeyFrame) {
+	m_keyframes.reserve(m_tkaFile->GetNumKeyFrame());
+	m_tkaFile->QueryKeyFrames([&](const TkaFile::KeyFrame & tkaKeyFrame) {
 		auto keyframe = std::make_unique<KeyFrame>();
 		keyframe->boneIndex = tkaKeyFrame.boneIndex;
 		keyframe->transform = g_matIdentity;
